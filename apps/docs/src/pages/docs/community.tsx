@@ -1,9 +1,9 @@
-import { type ReactElement } from 'react';
-import { Animator, Animated, Text, BleepsOnAnimator, aa, aaVisibility } from '@arwes/react';
-import { FastArrowRight } from 'iconoir-react';
-import communityApps from '@repository/static/assets/community/apps/apps.json';
-import type { BleepNames } from '@app/types';
-import { PageContentLayout, Card } from '@app/ui';
+import { type ReactElement } from 'react'
+import { Animator, Animated, Text, BleepsOnAnimator, aa, aaVisibility } from '@arwes/react'
+import { FastArrowRight } from 'iconoir-react'
+import communityApps from '@repository/static/assets/community/apps/apps.json'
+import type { BleepNames } from '@app/types'
+import { PageContentLayout, Card } from '@app/ui'
 
 const Page = (): ReactElement => {
   return (
@@ -43,35 +43,33 @@ const Page = (): ReactElement => {
         }
       `}</style>
 
-      <Animator combine manager='stagger'>
+      <Animator combine manager="stagger">
         <Animator duration={{ enter: 0.4 }}>
           <BleepsOnAnimator<BleepNames> transitions={{ entering: 'assemble' }} />
         </Animator>
-        <PageContentLayout
-          animated={aa('y', 12, 0)}
-          frame={false}
-          floating
-        >
-          <div className='sections'>
+        <PageContentLayout animated={aa('y', 12, 0)} frame={false} floating>
+          <div className="sections">
             <header>
               <Animator>
-                <Text as='h1' fixed>Community</Text>
+                <Text as="h1" fixed>
+                  Community
+                </Text>
               </Animator>
               <Animator>
-                <Animated as='hr' animated={aa('scaleX', 0, 1)} />
+                <Animated as="hr" animated={aa('scaleX', 0, 1)} />
               </Animator>
             </header>
 
             <section>
               <Animator>
-                <Text as='h2' fixed>
-                  <FastArrowRight className='heading-icon' />
+                <Text as="h2" fixed>
+                  <FastArrowRight className="heading-icon" />
                   <span> Applications</span>
                 </Text>
               </Animator>
 
-              <Animator combine manager='stagger'>
-                <div className='grid'>
+              <Animator combine manager="stagger">
+                <div className="grid">
                   {communityApps.map((app, index) => (
                     <Animator key={index}>
                       <Card
@@ -79,15 +77,17 @@ const Page = (): ReactElement => {
                         src={`/assets/community/apps/images/${app.image}`}
                         srcAlt={app.name}
                         title={
-                          <a href={app.url} target='_blank'>
+                          <a href={app.url} target="_blank">
                             {app.name}
                           </a>
                         }
                       >
                         {!!app.repository && (
-                          <p style={{ width: '100%', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          <p
+                            style={{ width: '100%', overflow: 'hidden', textOverflow: 'ellipsis' }}
+                          >
                             <small>
-                              <a href={app.repository} target='_blank' title='Go to repository'>
+                              <a href={app.repository} target="_blank" title="Go to repository">
                                 {String(app.repository).replace('https://github.com', '')}
                               </a>
                             </small>
@@ -103,8 +103,8 @@ const Page = (): ReactElement => {
 
             <section>
               <Animator>
-                <Text as='h2' fixed>
-                  <FastArrowRight className='heading-icon' />
+                <Text as="h2" fixed>
+                  <FastArrowRight className="heading-icon" />
                   <span> Contributors</span>
                 </Text>
               </Animator>
@@ -115,8 +115,8 @@ const Page = (): ReactElement => {
 
             <section>
               <Animator>
-                <Text as='h2' fixed>
-                  <FastArrowRight className='heading-icon' />
+                <Text as="h2" fixed>
+                  <FastArrowRight className="heading-icon" />
                   <span> Similars</span>
                 </Text>
               </Animator>
@@ -128,7 +128,7 @@ const Page = (): ReactElement => {
         </PageContentLayout>
       </Animator>
     </>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page

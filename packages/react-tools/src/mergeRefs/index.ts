@@ -1,1 +1,1 @@
-export * from './mergeRefs.js';
+export * from './mergeRefs.js'

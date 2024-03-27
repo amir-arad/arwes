@@ -1,1 +1,1 @@
-export * from './transitionTextDecipher.js';
+export * from './transitionTextDecipher.js'

@@ -1,4 +1,4 @@
-import { type ReactElement, type CSSProperties, type ReactNode } from 'react';
+import { type ReactElement, type CSSProperties, type ReactNode } from 'react'
 import {
   type AnimatedProp,
   Animator,
@@ -7,9 +7,9 @@ import {
   FrameSVGOctagon,
   Illuminator,
   aaVisibility
-} from '@arwes/react';
+} from '@arwes/react'
 
-import * as classes from './PageContentLayout.css';
+import * as classes from './PageContentLayout.css'
 
 interface PageContentLayoutProps {
   className?: string
@@ -21,18 +21,11 @@ interface PageContentLayoutProps {
 }
 
 const PageContentLayout = (props: PageContentLayoutProps): ReactElement => {
-  const {
-    className,
-    style,
-    animated,
-    children,
-    frame = true,
-    floating
-  } = props;
+  const { className, style, animated, children, frame = true, floating } = props
 
   return (
     <Animated
-      as='main'
+      as="main"
       className={cx(classes.root, floating && classes.floating, className)}
       style={style}
       animated={animated}
@@ -40,21 +33,19 @@ const PageContentLayout = (props: PageContentLayoutProps): ReactElement => {
       {frame && (
         <Animator>
           <Animated className={classes.frame} animated={aaVisibility()}>
-            <FrameSVGOctagon className='page-document__svg' />
-            <Illuminator color='hsl(180 50% 50% / 5%)' size={400} />
+            <FrameSVGOctagon className="page-document__svg" />
+            <Illuminator color="hsl(180 50% 50% / 5%)" size={400} />
           </Animated>
         </Animator>
       )}
       <div className={classes.overflow}>
         <div className={classes.container}>
-          <div className={classes.content}>
-            {children}
-          </div>
+          <div className={classes.content}>{children}</div>
         </div>
       </div>
     </Animated>
-  );
-};
+  )
+}
 
-export type { PageContentLayoutProps };
-export { PageContentLayout };
+export type { PageContentLayoutProps }
+export { PageContentLayout }

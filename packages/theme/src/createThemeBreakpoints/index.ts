@@ -1,1 +1,1 @@
-export { createThemeBreakpoints } from './createThemeBreakpoints.js';
+export { createThemeBreakpoints } from './createThemeBreakpoints.js'

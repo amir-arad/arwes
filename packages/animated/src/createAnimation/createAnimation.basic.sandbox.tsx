@@ -1,6 +1,6 @@
-import { createAnimation } from '@arwes/animated';
+import { createAnimation } from '@arwes/animated'
 
-const rootElement = document.querySelector('#root') as HTMLElement;
+const rootElement = document.querySelector('#root') as HTMLElement
 
 rootElement.innerHTML = `
   <style>
@@ -13,17 +13,17 @@ rootElement.innerHTML = `
   </style>
 
   <div class="item"></div>
-`;
+`
 
-const itemElement = rootElement.querySelector('.item') as HTMLDivElement;
+const itemElement = rootElement.querySelector('.item') as HTMLDivElement
 
 createAnimation({
   duration: 1,
   easing: 'inOutSine',
-  onUpdate: progress => {
-    itemElement.style.transform = `translateX(${progress * 200}px)`;
+  onUpdate: (progress) => {
+    itemElement.style.transform = `translateX(${progress * 200}px)`
   },
   onComplete: () => {
-    itemElement.style.backgroundColor = '#ff0';
+    itemElement.style.backgroundColor = '#ff0'
   }
-});
+})

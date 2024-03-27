@@ -1,15 +1,15 @@
 // Change the browser viewport width to test.
 
-import React, { type ReactElement, Fragment } from 'react';
-import { createRoot } from 'react-dom/client';
-import { Global } from '@emotion/react';
-import { createThemeBreakpoints } from '@arwes/theme';
+import React, { type ReactElement, Fragment } from 'react'
+import { createRoot } from 'react-dom/client'
+import { Global } from '@emotion/react'
+import { createThemeBreakpoints } from '@arwes/theme'
 
 const bps = createThemeBreakpoints([
   { key: 'small', value: '400px' },
   { key: 'medium', value: '800px' },
   { key: 'large', value: '1200px' }
-]);
+])
 
 const Sandbox = (): ReactElement => {
   return (
@@ -42,9 +42,9 @@ const Sandbox = (): ReactElement => {
           }
         }}
       />
-      <div className='box' />
+      <div className="box" />
     </Fragment>
-  );
-};
+  )
+}
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
+createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)

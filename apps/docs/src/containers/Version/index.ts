@@ -1,1 +1,1 @@
-export * from './Version';
+export * from './Version'

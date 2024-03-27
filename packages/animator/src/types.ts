@@ -1,4 +1,4 @@
-import type { TOScheduler } from '@arwes/tools';
+import type { TOScheduler } from '@arwes/tools'
 
 export interface AnimatorControl {
   readonly getSettings: () => AnimatorSettings
@@ -8,11 +8,7 @@ export interface AnimatorControl {
   readonly getForeignRef: () => unknown
 }
 
-export type AnimatorState =
-  | 'entered'
-  | 'entering'
-  | 'exiting'
-  | 'exited';
+export type AnimatorState = 'entered' | 'entering' | 'exiting' | 'exited'
 
 export type AnimatorAction =
   | 'setup'
@@ -21,7 +17,7 @@ export type AnimatorAction =
   | 'exit'
   | 'exitEnd'
   | 'update'
-  | 'refresh';
+  | 'refresh'
 
 export type AnimatorManagerName =
   | 'parallel'
@@ -29,9 +25,9 @@ export type AnimatorManagerName =
   | 'staggerReverse'
   | 'sequence'
   | 'sequenceReverse'
-  | 'switch';
+  | 'switch'
 
-export type AnimatorSubscriber = (node: AnimatorNode) => void;
+export type AnimatorSubscriber = (node: AnimatorNode) => void
 
 export interface AnimatorManager {
   readonly name: AnimatorManagerName
@@ -47,9 +43,9 @@ export interface AnimatorNode {
   readonly children: Set<AnimatorNode>
   readonly subscribers: Set<AnimatorSubscriber>
   readonly scheduler: TOScheduler
-  readonly duration: { enter: number, exit: number }
+  readonly duration: { enter: number; exit: number }
   readonly state: AnimatorState
-  readonly subscribe: (subscriber: AnimatorSubscriber) => (() => void)
+  readonly subscribe: (subscriber: AnimatorSubscriber) => () => void
   readonly unsubscribe: (subscriber: AnimatorSubscriber) => void
   readonly send: (newAction: AnimatorAction) => void
   manager: AnimatorManager
@@ -58,7 +54,10 @@ export interface AnimatorNode {
 export interface AnimatorSystem {
   readonly id: string
   readonly root: AnimatorNode | null
-  readonly register: (parentNode: AnimatorNode | undefined | null, control: AnimatorControl) => AnimatorNode
+  readonly register: (
+    parentNode: AnimatorNode | undefined | null,
+    control: AnimatorControl
+  ) => AnimatorNode
   readonly unregister: (node: AnimatorNode) => void
 }
 
@@ -86,7 +85,7 @@ export interface AnimatorSettings {
 // not be present. Right now it allows `undefined` values which triggers errors.
 export type AnimatorSettingsPartial = Partial<Omit<AnimatorSettings, 'duration'>> & {
   duration?: Partial<AnimatorDuration>
-};
+}
 
 export interface AnimatorInterface {
   readonly system: AnimatorSystem

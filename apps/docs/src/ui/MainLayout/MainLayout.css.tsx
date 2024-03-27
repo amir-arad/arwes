@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css'
 
 export const root = style({
   position: 'absolute',
@@ -8,7 +8,7 @@ export const root = style({
   background: 'radial-gradient(50% 50% at 50% 50%, #04252B 0%, #002424 0.01%, #001515 100%)',
   minWidth: 0,
   minHeight: 0
-});
+})
 
 export const container = style({
   zIndex: 100,
@@ -20,4 +20,4 @@ export const container = style({
   alignItems: 'center',
   minWidth: 0,
   minHeight: 0
-});
+})

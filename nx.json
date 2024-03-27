@@ -12,13 +12,7 @@
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
         "parallel": 8,
-        "cacheableOperations": [
-          "build",
-          "build-esm",
-          "build-cjs",
-          "build-umd",
-          "build-types"
-        ]
+        "cacheableOperations": ["build", "build-esm", "build-cjs", "build-umd", "build-types"]
       }
     }
   },

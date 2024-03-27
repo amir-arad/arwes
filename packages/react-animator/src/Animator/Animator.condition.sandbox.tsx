@@ -1,7 +1,7 @@
-import React, { type ReactElement, useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
-import { type AnimatorProps, Animator } from '@arwes/react-animator';
-import { Animated } from '@arwes/react-animated';
+import React, { type ReactElement, useState, useEffect } from 'react'
+import { createRoot } from 'react-dom/client'
+import { type AnimatorProps, Animator } from '@arwes/react-animator'
+import { Animated } from '@arwes/react-animated'
 
 interface ItemProps extends AnimatorProps {}
 
@@ -19,32 +19,30 @@ const Item = (props: ItemProps): ReactElement => {
         hideOnExited={false}
       />
     </Animator>
-  );
-};
+  )
+}
 
 const Sandbox = (): ReactElement => {
-  const [active, setActive] = useState(true);
-  const [enabled, setEnabled] = useState(false);
+  const [active, setActive] = useState(true)
+  const [enabled, setEnabled] = useState(false)
 
   useEffect(() => {
-    const tid = setInterval(() => setActive(active => !active), 2000);
-    return () => clearInterval(tid);
-  }, []);
+    const tid = setInterval(() => setActive((active) => !active), 2000)
+    return () => clearInterval(tid)
+  }, [])
 
   return (
     <div>
       <div>
-        <button onClick={() => setEnabled(v => !v)}>
-          {enabled ? 'Disable' : 'Enable'}
-        </button>
+        <button onClick={() => setEnabled((v) => !v)}>{enabled ? 'Disable' : 'Enable'}</button>
       </div>
 
       <Animator
         active={active}
         combine
-        manager='stagger'
+        manager="stagger"
         checkToSend={[enabled]}
-        checkToSendAction='refresh'
+        checkToSendAction="refresh"
       >
         <Item />
         <Item />
@@ -53,7 +51,7 @@ const Sandbox = (): ReactElement => {
         <Item />
       </Animator>
     </div>
-  );
-};
+  )
+}
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
+createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)

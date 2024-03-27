@@ -1,5 +1,5 @@
-import { style, globalStyle } from '@vanilla-extract/css';
-import { createFrameOctagonClip } from '@arwes/react';
+import { style, globalStyle } from '@vanilla-extract/css'
+import { createFrameOctagonClip } from '@arwes/react'
 
 export const root = style({
   position: 'relative',
@@ -11,9 +11,9 @@ export const root = style({
   width: '100%',
   minWidth: 0,
   minHeight: 0
-});
+})
 
-export const floating = style({});
+export const floating = style({})
 
 export const frame = style({
   zIndex: 1,
@@ -34,21 +34,21 @@ export const frame = style({
       display: 'block'
     }
   }
-});
+})
 
 globalStyle(`${frame} path`, {
   transitionProperty: 'color',
   transitionDuration: '200ms',
   transitionTimingFunction: 'ease-out'
-});
+})
 
 globalStyle(`${frame} [data-name=bg]`, {
   color: 'hsla(180, 100%, 10%, 0.1)'
-});
+})
 
 globalStyle(`${frame} [data-name=line]`, {
   color: 'hsla(180, 100%, 10%, 0.5)'
-});
+})
 
 export const overflow = style({
   zIndex: 2,
@@ -65,7 +65,7 @@ export const overflow = style({
       padding: '2rem 1rem'
     }
   }
-});
+})
 
 export const container = style({
   flex: 1,
@@ -75,7 +75,7 @@ export const container = style({
   width: '100%',
   minWidth: 0,
   minHeight: 0
-});
+})
 
 export const content = style({
   padding: '2.5rem 1.25rem',
@@ -110,4 +110,4 @@ export const content = style({
       padding: '3rem'
     }
   }
-});
+})

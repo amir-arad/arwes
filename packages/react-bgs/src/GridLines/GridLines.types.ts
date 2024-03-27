@@ -1,4 +1,4 @@
-import type { CSSProperties, ForwardedRef } from 'react';
+import type { CSSProperties, ForwardedRef } from 'react'
 
 export interface GridLinesProps {
   elementRef?: ForwardedRef<HTMLCanvasElement>
@@ -12,4 +12,4 @@ export interface GridLinesProps {
    * Distance between each line.
    */
   distance?: number
-};
+}

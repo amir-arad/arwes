@@ -1,33 +1,33 @@
-import { test, expect } from 'vitest';
+import { test, expect } from 'vitest'
 
-import type { AnimatorControl } from '../types';
-import { ANIMATOR_DEFAULT_SETTINGS } from '../constants';
-import { createAnimatorSystem } from './createAnimatorSystem';
+import type { AnimatorControl } from '../types'
+import { ANIMATOR_DEFAULT_SETTINGS } from '../constants'
+import { createAnimatorSystem } from './createAnimatorSystem'
 
 test('Should create a system with predefined structure', () => {
-  const system = createAnimatorSystem();
+  const system = createAnimatorSystem()
   expect(system).toEqual({
     id: expect.any(String),
     register: expect.any(Function),
     unregister: expect.any(Function)
-  });
-});
+  })
+})
 
 test('Should create system id with format "s#"', () => {
-  const system = createAnimatorSystem();
-  expect(system.id).toMatch(/^s\d+$/);
-});
+  const system = createAnimatorSystem()
+  expect(system.id).toMatch(/^s\d+$/)
+})
 
 test('Should register new root node with predefined structure', () => {
-  const system = createAnimatorSystem();
+  const system = createAnimatorSystem()
   const control: AnimatorControl = {
     getSettings: () => ANIMATOR_DEFAULT_SETTINGS,
     getDynamicSettings: () => ({}),
     setDynamicSettings: () => {},
     getForeignRef: () => {},
     setForeignRef: () => {}
-  };
-  const node = system.register(undefined, control);
+  }
+  const node = system.register(undefined, control)
   expect(node).toEqual({
     id: expect.any(String),
     control,
@@ -44,19 +44,19 @@ test('Should register new root node with predefined structure', () => {
     unsubscribe: expect.any(Function),
     send: expect.any(Function),
     manager: expect.any(Object)
-  });
-});
+  })
+})
 
 test('Should create node id with format "s#-n#" with parent system id', () => {
-  const system = createAnimatorSystem();
+  const system = createAnimatorSystem()
   const control: AnimatorControl = {
     getSettings: () => ANIMATOR_DEFAULT_SETTINGS,
     getDynamicSettings: () => ({}),
     setDynamicSettings: () => {},
     getForeignRef: () => {},
     setForeignRef: () => {}
-  };
-  const node = system.register(undefined, control);
-  expect(node.id).toMatch(/^s\d+-n\d+$/);
-  expect(node.id.startsWith(system.id + '-')).toBeTruthy();
-});
+  }
+  const node = system.register(undefined, control)
+  expect(node.id).toMatch(/^s\d+-n\d+$/)
+  expect(node.id.startsWith(system.id + '-')).toBeTruthy()
+})

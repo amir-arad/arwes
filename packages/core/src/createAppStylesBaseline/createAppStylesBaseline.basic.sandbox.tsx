@@ -1,11 +1,11 @@
-import React, { type ReactElement } from 'react';
-import { createRoot } from 'react-dom/client';
-import { type CSSObject, Global } from '@emotion/react';
-import { createAppTheme } from '@arwes/theme';
-import { createAppStylesBaseline } from '@arwes/core';
+import React, { type ReactElement } from 'react'
+import { createRoot } from 'react-dom/client'
+import { type CSSObject, Global } from '@emotion/react'
+import { createAppTheme } from '@arwes/theme'
+import { createAppStylesBaseline } from '@arwes/core'
 
-const theme = createAppTheme();
-const stylesBaseline = createAppStylesBaseline(theme);
+const theme = createAppTheme()
+const stylesBaseline = createAppStylesBaseline(theme)
 
 const Sandbox = (): ReactElement => (
   <main style={{ padding: '2rem' }}>
@@ -19,10 +19,9 @@ const Sandbox = (): ReactElement => (
     <h6>h6. Lorem ipsum lov sit amet</h6>
     <hr />
     <p>
-      Lorem ipsum lov sit amet, consectetur adipiscing elit, sed
-      do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-      nisi ut aliquip ex ea commodo consequat.
+      Lorem ipsum lov sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+      laboris nisi ut aliquip ex ea commodo consequat.
     </p>
     <p>
       Lorem ipsum <b>lov sit amet, consectetur</b> adipiscing elit.
@@ -40,7 +39,7 @@ const Sandbox = (): ReactElement => (
       Lorem ipsum <sup>lov sit</sup> amet, <sub>consectetur</sub> adipiscing elit.
     </p>
     <p>
-      Lorem ipsum <a href='#'>lov sit amet, consectetur</a> adipiscing elit.
+      Lorem ipsum <a href="#">lov sit amet, consectetur</a> adipiscing elit.
     </p>
 
     <ul>
@@ -78,22 +77,20 @@ const Sandbox = (): ReactElement => (
       Lorem ipsum lov sit amet.
     </pre>
 
-    <blockquote>
+    <blockquote>Lorem ipsum lov sit amet, consectetur adipiscing elit.</blockquote>
+    <blockquote data-arwes-global-palette="secondary">
       Lorem ipsum lov sit amet, consectetur adipiscing elit.
     </blockquote>
-    <blockquote data-arwes-global-palette='secondary'>
+    <blockquote data-arwes-global-palette="info">
       Lorem ipsum lov sit amet, consectetur adipiscing elit.
     </blockquote>
-    <blockquote data-arwes-global-palette='info'>
+    <blockquote data-arwes-global-palette="success">
       Lorem ipsum lov sit amet, consectetur adipiscing elit.
     </blockquote>
-    <blockquote data-arwes-global-palette='success'>
+    <blockquote data-arwes-global-palette="warning">
       Lorem ipsum lov sit amet, consectetur adipiscing elit.
     </blockquote>
-    <blockquote data-arwes-global-palette='warning'>
-      Lorem ipsum lov sit amet, consectetur adipiscing elit.
-    </blockquote>
-    <blockquote data-arwes-global-palette='error'>
+    <blockquote data-arwes-global-palette="error">
       Lorem ipsum lov sit amet, consectetur adipiscing elit.
     </blockquote>
 
@@ -129,10 +126,10 @@ const Sandbox = (): ReactElement => (
     </table>
 
     <figure>
-      <img src='/assets/images/background-large.jpg' />
+      <img src="/assets/images/background-large.jpg" />
       <figcaption>Lorem ipsum lov sit amet.</figcaption>
     </figure>
   </main>
-);
+)
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
+createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)

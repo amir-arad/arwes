@@ -1,1 +1,1 @@
-export * from './ModalNavigate';
+export * from './ModalNavigate'

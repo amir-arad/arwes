@@ -43,4 +43,12 @@ yarn-error.log
 yarn-error.log*
 .yarn-integrity
 *.tsbuildinfo
+
+public
+static
+out
 www
+.github
+.deprecated
+.next
+apps/docs/src/dynamics.ts

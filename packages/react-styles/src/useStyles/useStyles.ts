@@ -1,38 +1,37 @@
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
-import { type Styles, type StylesCreatorFunction, type StylesCreator } from '../types.js';
-import { STYLES_EMPTY } from '../constants.js';
-import { mergeThemeStyles } from '../internal/mergeThemeStyles.js';
+import { type Styles, type StylesCreatorFunction, type StylesCreator } from '../types.js'
+import { STYLES_EMPTY } from '../constants.js'
+import { mergeThemeStyles } from '../internal/mergeThemeStyles.js'
 
 const useStyles = <P = undefined>(
   stylesList: [StylesCreatorFunction<P>, StylesCreator<P>],
   props: P,
   dependencies: unknown[]
 ): Styles => {
-  const [createBaseStyles, createUserStyles] = stylesList;
+  const [createBaseStyles, createUserStyles] = stylesList
 
-  const userStylesType = typeof createUserStyles === 'boolean'
-    ? 'boolean'
-    : typeof (createUserStyles || undefined);
+  const userStylesType =
+    typeof createUserStyles === 'boolean' ? 'boolean' : typeof (createUserStyles || undefined)
 
   return useMemo(() => {
     if (typeof createUserStyles === 'boolean') {
-      return STYLES_EMPTY;
+      return STYLES_EMPTY
     }
 
-    const baseStyles = createBaseStyles(props);
+    const baseStyles = createBaseStyles(props)
 
     if (typeof createUserStyles === 'function') {
-      const userStyles = createUserStyles(props);
-      return mergeThemeStyles(baseStyles, userStyles);
+      const userStyles = createUserStyles(props)
+      return mergeThemeStyles(baseStyles, userStyles)
     }
 
     if (typeof createUserStyles === 'object' && createUserStyles !== null) {
-      return mergeThemeStyles(baseStyles, createUserStyles);
+      return mergeThemeStyles(baseStyles, createUserStyles)
     }
 
-    return baseStyles;
-  }, [userStylesType, ...dependencies]);
-};
+    return baseStyles
+  }, [userStylesType, ...dependencies])
+}
 
-export { useStyles };
+export { useStyles }

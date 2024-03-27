@@ -1,4 +1,4 @@
-import type { CSSProperties, ForwardedRef } from 'react';
+import type { CSSProperties, ForwardedRef } from 'react'
 
 export interface MovingLinesProps {
   elementRef?: ForwardedRef<HTMLCanvasElement>
@@ -14,7 +14,7 @@ export interface MovingLinesProps {
    * Sets of lines per interval animation.
    */
   sets?: number
-};
+}
 
 export interface MovingLinesLineConfig {
   distance: number

@@ -1,28 +1,28 @@
-import { vi, test, expect, beforeEach, afterEach } from 'vitest';
-import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { vi, test, expect, beforeEach, afterEach } from 'vitest'
+import React from 'react'
+import { render, cleanup } from '@testing-library/react'
 
-import { BleepsProvider } from './index';
+import { BleepsProvider } from './index'
 
 beforeEach(() => {
   class AudioContext {
-    createGain (): object {
+    createGain(): object {
       return {
         connect: vi.fn(),
         gain: {
           setValueAtTime: vi.fn()
         }
-      };
+      }
     }
-  };
-  window.AudioContext = AudioContext as any;
-});
+  }
+  window.AudioContext = AudioContext as any
+})
 
 afterEach(() => {
-  window.AudioContext = null as any;
+  window.AudioContext = null as any
 
-  cleanup();
-});
+  cleanup()
+})
 
 test('Should render bleeps provider content', () => {
   const { container } = render(
@@ -39,6 +39,6 @@ test('Should render bleeps provider content', () => {
     >
       Furutistic <b>Sci-Fi</b> UI Web Framework
     </BleepsProvider>
-  );
-  expect(container.innerHTML).toBe('Furutistic <b>Sci-Fi</b> UI Web Framework');
-});
+  )
+  expect(container.innerHTML).toBe('Furutistic <b>Sci-Fi</b> UI Web Framework')
+})

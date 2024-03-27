@@ -4,7 +4,7 @@ import type {
   AnimatorManagerName,
   AnimatorDuration,
   AnimatorSettings
-} from './types.js';
+} from './types.js'
 
 // States
 export const ANIMATOR_STATES: { [P in AnimatorState]: P } = Object.freeze({
@@ -12,7 +12,7 @@ export const ANIMATOR_STATES: { [P in AnimatorState]: P } = Object.freeze({
   entering: 'entering',
   exiting: 'exiting',
   exited: 'exited'
-});
+})
 
 // Actions
 export const ANIMATOR_ACTIONS: { [P in AnimatorAction]: P } = Object.freeze({
@@ -23,7 +23,7 @@ export const ANIMATOR_ACTIONS: { [P in AnimatorAction]: P } = Object.freeze({
   exitEnd: 'exitEnd',
   update: 'update',
   refresh: 'refresh'
-});
+})
 
 // Managers
 export const ANIMATOR_MANAGER_NAMES: { [P in AnimatorManagerName]: P } = Object.freeze({
@@ -33,7 +33,7 @@ export const ANIMATOR_MANAGER_NAMES: { [P in AnimatorManagerName]: P } = Object.
   sequence: 'sequence',
   sequenceReverse: 'sequenceReverse',
   switch: 'switch'
-});
+})
 
 export const ANIMATOR_DEFAULT_DURATION: AnimatorDuration = Object.freeze({
   enter: 0.4,
@@ -41,7 +41,7 @@ export const ANIMATOR_DEFAULT_DURATION: AnimatorDuration = Object.freeze({
   delay: 0,
   offset: 0,
   stagger: 0.04
-});
+})
 
 export const ANIMATOR_DEFAULT_SETTINGS: AnimatorSettings = Object.freeze({
   active: true,
@@ -50,4 +50,4 @@ export const ANIMATOR_DEFAULT_SETTINGS: AnimatorSettings = Object.freeze({
   merge: false,
   combine: false,
   initialState: 'exited'
-});
+})

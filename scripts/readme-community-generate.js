@@ -1,16 +1,16 @@
 // Updates the README.md file content with the list of the community projects.
 
-const path = require('path');
-const { readFileSync, writeFileSync } = require('fs');
-const appsItems = require('../static/assets/community/apps/apps.json');
+const path = require('path')
+const { readFileSync, writeFileSync } = require('fs')
+const appsItems = require('../static/assets/community/apps/apps.json')
 
-const README_FILE_PATH = path.join(process.cwd(), 'README.md');
-const README_FILE_ENCODING = 'utf-8';
-const APPS_ITEMS_PER_LINE = 3;
-const APPS_ITEM_WIDTH = 252; // In desktop, the GitHub readme page width divided by 3.
+const README_FILE_PATH = path.join(process.cwd(), 'README.md')
+const README_FILE_ENCODING = 'utf-8'
+const APPS_ITEMS_PER_LINE = 3
+const APPS_ITEM_WIDTH = 252 // In desktop, the GitHub readme page width divided by 3.
 
 const appsRowsHTML = appsItems
-  .map(item => ({
+  .map((item) => ({
     ...item,
     repositoryName: item.repository.replace(/^https?:\/\/[^/]+\//, ''),
     imageRelativePath: './' + path.join('static/assets/community/apps/images', item.image)
@@ -28,32 +28,32 @@ const appsRowsHTML = appsItems
   )
   .reduce((rows, item) => {
     if (!rows.length) {
-      return [[item]];
+      return [[item]]
     }
 
-    const lastRow = rows[rows.length - 1];
+    const lastRow = rows[rows.length - 1]
 
     if (lastRow.length < APPS_ITEMS_PER_LINE) {
-      lastRow.push(item);
-      return rows;
+      lastRow.push(item)
+      return rows
     }
 
-    return [...rows, [item]];
+    return [...rows, [item]]
   }, [])
-  .map(row => row.join('\n'))
-  .join('</tr>\n<tr>');
+  .map((row) => row.join('\n'))
+  .join('</tr>\n<tr>')
 
-const showcaseTableHTML = `<table>\n<tr>\n${appsRowsHTML}\n</tr>\n</table>`;
+const showcaseTableHTML = `<table>\n<tr>\n${appsRowsHTML}\n</tr>\n</table>`
 
 const readmeOriginalContent = readFileSync(README_FILE_PATH, {
   encoding: README_FILE_ENCODING
-});
+})
 
 const readmeNewContent = readmeOriginalContent.replace(
   /<!-- ARWES-COMMUNITY-APPS:START -->[\s\S]*<!-- ARWES-COMMUNITY-APPS:END -->/,
   `<!-- ARWES-COMMUNITY-APPS:START -->\n${showcaseTableHTML}\n<!-- ARWES-COMMUNITY-APPS:END -->`
-);
+)
 
 writeFileSync(README_FILE_PATH, readmeNewContent, {
   encoding: README_FILE_ENCODING
-});
+})

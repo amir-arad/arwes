@@ -1,6 +1,6 @@
-import { createBleepsManager } from '@arwes/bleeps';
+import { createBleepsManager } from '@arwes/bleeps'
 
-const rootElement = document.querySelector('#root') as HTMLElement;
+const rootElement = document.querySelector('#root') as HTMLElement
 
 rootElement.innerHTML = `
   <div style="color:#ddd;">
@@ -29,15 +29,15 @@ rootElement.innerHTML = `
       <button class="type">Readout</button>
     </div>
   </div>
-`;
+`
 
-const volumeElement = rootElement.querySelector('.volume') as HTMLInputElement;
-const disableElement = rootElement.querySelector('.disable') as HTMLInputElement;
-const clickElement = rootElement.querySelector('.click') as HTMLButtonElement;
-const errorElement = rootElement.querySelector('.error') as HTMLButtonElement;
-const assembleElement = rootElement.querySelector('.type') as HTMLButtonElement;
+const volumeElement = rootElement.querySelector('.volume') as HTMLInputElement
+const disableElement = rootElement.querySelector('.disable') as HTMLInputElement
+const clickElement = rootElement.querySelector('.click') as HTMLButtonElement
+const errorElement = rootElement.querySelector('.error') as HTMLButtonElement
+const assembleElement = rootElement.querySelector('.type') as HTMLButtonElement
 
-type BleepsNames = 'click' | 'error' | 'type';
+type BleepsNames = 'click' | 'error' | 'type'
 
 const bleepsManager = createBleepsManager<BleepsNames>({
   master: {
@@ -68,30 +68,30 @@ const bleepsManager = createBleepsManager<BleepsNames>({
       sources: [{ src: '/assets/sounds/type.webm', type: 'audio/webm' }]
     }
   }
-});
+})
 
 volumeElement.addEventListener('change', () => {
-  const volume = volumeElement.valueAsNumber;
+  const volume = volumeElement.valueAsNumber
   bleepsManager?.update({
     master: { volume }
-  });
-});
+  })
+})
 
 disableElement.addEventListener('change', () => {
-  const disabled = disableElement.checked;
+  const disabled = disableElement.checked
   bleepsManager?.update({
     common: { disabled }
-  });
-});
+  })
+})
 
 clickElement.addEventListener('click', () => {
-  bleepsManager?.bleeps.click?.play();
-});
+  bleepsManager?.bleeps.click?.play()
+})
 
 errorElement.addEventListener('click', () => {
-  bleepsManager?.bleeps.error?.play();
-});
+  bleepsManager?.bleeps.error?.play()
+})
 
 assembleElement.addEventListener('click', () => {
-  bleepsManager?.bleeps.type?.play();
-});
+  bleepsManager?.bleeps.type?.play()
+})

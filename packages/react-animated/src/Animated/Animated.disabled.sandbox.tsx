@@ -1,7 +1,7 @@
-import React, { type ReactElement } from 'react';
-import { createRoot } from 'react-dom/client';
-import { Animator } from '@arwes/react-animator';
-import { Animated } from '@arwes/react-animated';
+import React, { type ReactElement } from 'react'
+import { createRoot } from 'react-dom/client'
+import { Animator } from '@arwes/react-animator'
+import { Animated } from '@arwes/react-animated'
 
 const Sandbox = (): ReactElement => {
   return (
@@ -17,7 +17,7 @@ const Sandbox = (): ReactElement => {
         }}
       />
     </Animator>
-  );
-};
+  )
+}
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
+createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)

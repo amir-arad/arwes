@@ -1,9 +1,9 @@
-import { type ReactElement } from 'react';
-import { Html, Head, Main, NextScript } from 'next/document';
+import { type ReactElement } from 'react'
+import { Html, Head, Main, NextScript } from 'next/document'
 
 const Page = (): ReactElement => {
   return (
-    <Html lang='en'>
+    <Html lang="en">
       <Head>
         <style>{`
           html {
@@ -17,7 +17,7 @@ const Page = (): ReactElement => {
         <NextScript />
       </body>
     </Html>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page

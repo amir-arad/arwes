@@ -1,12 +1,8 @@
-import React, { useMemo, type ReactElement } from 'react';
-import { cx } from '@arwes/tools';
-import {
-  type FrameSVGPathGeneric,
-  type FrameSVGPath,
-  type FrameSVGStyle
-} from '@arwes/frames';
+import React, { useMemo, type ReactElement } from 'react'
+import { cx } from '@arwes/tools'
+import { type FrameSVGPathGeneric, type FrameSVGPath, type FrameSVGStyle } from '@arwes/frames'
 
-import { type FrameSVGProps, FrameSVG } from '../FrameSVG/index.js';
+import { type FrameSVGProps, FrameSVG } from '../FrameSVG/index.js'
 
 interface FrameSVGLinesProps extends FrameSVGProps {
   largeLineWidth?: number
@@ -22,17 +18,17 @@ const FrameSVGLines = (props: FrameSVGLinesProps): ReactElement => {
     smallLineLength: sll = 16,
     className,
     ...otherProps
-  } = props;
+  } = props
 
   const paths: FrameSVGPathGeneric[] = useMemo(() => {
     const polylineStyle: FrameSVGStyle = {
       strokeLinecap: 'square',
       stroke: 'currentcolor',
       fill: 'none'
-    };
+    }
 
-    const llo = llw / 2;
-    const slo = slw / 2;
+    const llo = llw / 2
+    const slo = slw / 2
 
     const largePolylines: FrameSVGPath[] = [
       // Top
@@ -54,7 +50,7 @@ const FrameSVGLines = (props: FrameSVGLinesProps): ReactElement => {
         ['M', `100% - ${llo}`, `100% - ${llo}`],
         ['L', '50% - 0.1', `100% - ${llo}`]
       ]
-    ];
+    ]
 
     const smallPolylines: FrameSVGPath[] = [
       // Top
@@ -76,7 +72,7 @@ const FrameSVGLines = (props: FrameSVGLinesProps): ReactElement => {
         ['M', `100% - ${slo}`, `100% - ${llw + slo}`],
         ['L', `100% - ${sll + slo}`, `100% - ${llw + slo}`]
       ]
-    ];
+    ]
 
     return [
       {
@@ -92,7 +88,7 @@ const FrameSVGLines = (props: FrameSVGLinesProps): ReactElement => {
           ['L', '100%', 0]
         ]
       },
-      ...largePolylines.map(polyline => ({
+      ...largePolylines.map((polyline) => ({
         name: 'line',
         style: {
           ...polylineStyle,
@@ -100,7 +96,7 @@ const FrameSVGLines = (props: FrameSVGLinesProps): ReactElement => {
         },
         path: polyline
       })),
-      ...smallPolylines.map(polyline => ({
+      ...smallPolylines.map((polyline) => ({
         name: 'line',
         style: {
           ...polylineStyle,
@@ -108,8 +104,8 @@ const FrameSVGLines = (props: FrameSVGLinesProps): ReactElement => {
         },
         path: polyline
       }))
-    ];
-  }, [llw, slw, sll]);
+    ]
+  }, [llw, slw, sll])
 
   return (
     <FrameSVG
@@ -117,8 +113,8 @@ const FrameSVGLines = (props: FrameSVGLinesProps): ReactElement => {
       className={cx('arwes-react-frames-framesvglines', className)}
       paths={paths}
     />
-  );
-};
+  )
+}
 
-export type { FrameSVGLinesProps };
-export { FrameSVGLines };
+export type { FrameSVGLinesProps }
+export { FrameSVGLines }

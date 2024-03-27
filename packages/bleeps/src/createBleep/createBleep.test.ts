@@ -1,46 +1,46 @@
-import { vi, test, expect, beforeEach, afterEach } from 'vitest';
+import { vi, test, expect, beforeEach, afterEach } from 'vitest'
 
-import { createBleep } from './createBleep';
+import { createBleep } from './createBleep'
 
-const mockAudioContextDestination = Symbol('destination');
+const mockAudioContextDestination = Symbol('destination')
 
 beforeEach(() => {
   class AudioContext {
-    state = 'suspended';
-    destination = mockAudioContextDestination;
-    resume = vi.fn();
+    state = 'suspended'
+    destination = mockAudioContextDestination
+    resume = vi.fn()
 
-    createGain (): object {
+    createGain(): object {
       return {
         connect: vi.fn(),
         gain: {
           value: 0,
           setValueAtTime: vi.fn()
         }
-      };
+      }
     }
-  };
-
-  class Audio {
-    canPlayType = vi.fn(type => type === 'audio/mpeg' ? 'probably' : '');
   }
 
-  window.AudioContext = AudioContext as any;
-  window.Audio = Audio as any;
-  window.fetch = vi.fn();
-});
+  class Audio {
+    canPlayType = vi.fn((type) => (type === 'audio/mpeg' ? 'probably' : ''))
+  }
+
+  window.AudioContext = AudioContext as any
+  window.Audio = Audio as any
+  window.fetch = vi.fn()
+})
 
 afterEach(() => {
-  window.AudioContext = null as any;
-  window.Audio = null as any;
-  window.fetch = null as any;
-});
+  window.AudioContext = null as any
+  window.Audio = null as any
+  window.fetch = null as any
+})
 
 test('Should create bleep with provided settings', () => {
   const bleep = createBleep({
     sources: [{ src: 'sound.mp3', type: 'audio/mpeg' }],
     preload: false
-  });
+  })
   expect(bleep).toMatchObject({
     duration: expect.any(Number),
     isLoaded: expect.any(Boolean),
@@ -50,8 +50,8 @@ test('Should create bleep with provided settings', () => {
     load: expect.any(Function),
     unload: expect.any(Function),
     update: expect.any(Function)
-  });
-});
+  })
+})
 
 /* TODO:
 test('Should allow playing the sound as shared sound', () => {

@@ -1,1 +1,1 @@
-export * from './formatAnimatedCSSPropsShorthands.js';
+export * from './formatAnimatedCSSPropsShorthands.js'

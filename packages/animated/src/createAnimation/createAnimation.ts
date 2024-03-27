@@ -1,4 +1,4 @@
-import { type Easing, easing } from '../easing/index.js';
+import { type Easing, easing } from '../easing/index.js'
 
 interface AnimationProps {
   /**
@@ -25,55 +25,54 @@ const createAnimation = (props: AnimationProps): Animation => {
     onUpdate,
     onComplete,
     onCancel
-  } = props;
+  } = props
 
-  const ease = typeof easingName === 'function' ? easingName : easing[easingName];
-  const duration = durationProvided * 1000; // seconds to ms
+  const ease = typeof easingName === 'function' ? easingName : easing[easingName]
+  const duration = durationProvided * 1000 // seconds to ms
 
-  let currentAnimationFrame: number | null = null;
-  let start = window.performance.now();
-  let slapsed = 0;
+  let currentAnimationFrame: number | null = null
+  let start = window.performance.now()
+  let slapsed = 0
 
   const nextAnimation = (timestamp: number): void => {
     if (!start) {
-      start = timestamp;
+      start = timestamp
     }
 
-    slapsed = Math.max(timestamp - start, 0);
+    slapsed = Math.max(timestamp - start, 0)
 
     if (direction === 'reverse') {
-      slapsed = duration - slapsed;
+      slapsed = duration - slapsed
     }
 
-    const progress = Math.min(1, Math.max(0, ease(slapsed / duration)));
-    const continueAnimation = direction === 'normal' ? slapsed < duration : slapsed > 0;
+    const progress = Math.min(1, Math.max(0, ease(slapsed / duration)))
+    const continueAnimation = direction === 'normal' ? slapsed < duration : slapsed > 0
 
-    onUpdate(progress);
+    onUpdate(progress)
 
     if (continueAnimation) {
-      currentAnimationFrame = window.requestAnimationFrame(nextAnimation);
+      currentAnimationFrame = window.requestAnimationFrame(nextAnimation)
+    } else {
+      currentAnimationFrame = null
+      onComplete?.()
     }
-    else {
-      currentAnimationFrame = null;
-      onComplete?.();
-    }
-  };
+  }
 
-  currentAnimationFrame = window.requestAnimationFrame(nextAnimation);
+  currentAnimationFrame = window.requestAnimationFrame(nextAnimation)
 
   const isPending = (): boolean => {
-    return currentAnimationFrame !== null;
-  };
+    return currentAnimationFrame !== null
+  }
 
   const cancel = (): void => {
     if (currentAnimationFrame !== null) {
-      window.cancelAnimationFrame(currentAnimationFrame);
-      onCancel?.();
+      window.cancelAnimationFrame(currentAnimationFrame)
+      onCancel?.()
     }
-  };
+  }
 
-  return { isPending, cancel };
-};
+  return { isPending, cancel }
+}
 
-export type { AnimationProps, Animation };
-export { createAnimation };
+export type { AnimationProps, Animation }
+export { createAnimation }

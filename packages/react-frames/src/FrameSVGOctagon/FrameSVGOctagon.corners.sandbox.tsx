@@ -1,16 +1,18 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/react';
-import { type ReactElement } from 'react';
-import { createRoot } from 'react-dom/client';
-import { FrameSVGOctagon } from '@arwes/react-frames';
+import { jsx } from '@emotion/react'
+import { type ReactElement } from 'react'
+import { createRoot } from 'react-dom/client'
+import { FrameSVGOctagon } from '@arwes/react-frames'
 
 const Sandbox = (): ReactElement => {
   return (
-    <div style={{
-      position: 'relative',
-      width: 150,
-      height: 300
-    }}>
+    <div
+      style={{
+        position: 'relative',
+        width: 150,
+        height: 300
+      }}
+    >
       <FrameSVGOctagon
         css={{
           '[data-name=bg]': {
@@ -26,7 +28,7 @@ const Sandbox = (): ReactElement => {
         leftBottom={false}
       />
     </div>
-  );
-};
+  )
+}
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
+createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)

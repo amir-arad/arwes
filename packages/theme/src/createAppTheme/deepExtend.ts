@@ -1,18 +1,21 @@
 // TODO: Set typing.
-function deepExtend (target: any = {}, extension: any = {}): any {
+function deepExtend(target: any = {}, extension: any = {}): any {
   for (const key in extension) {
-    if (typeof extension[key] === 'object' && !Array.isArray(extension[key]) && extension[key] !== null) {
+    if (
+      typeof extension[key] === 'object' &&
+      !Array.isArray(extension[key]) &&
+      extension[key] !== null
+    ) {
       if (target[key] === undefined || target[key] === null) {
-        target[key] = {};
+        target[key] = {}
       }
-      deepExtend(target[key], extension[key]);
-    }
-    else {
-      target[key] = extension[key];
+      deepExtend(target[key], extension[key])
+    } else {
+      target[key] = extension[key]
     }
   }
 
-  return target;
+  return target
 }
 
-export { deepExtend };
+export { deepExtend }

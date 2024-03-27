@@ -1,31 +1,29 @@
-import { createTOScheduler } from '@arwes/tools';
+import { createTOScheduler } from '@arwes/tools'
 
-import type {
-  AnimatorControl,
-  AnimatorSubscriber,
-  AnimatorNode,
-  AnimatorSystem
-} from '../types.js';
-import { createAnimatorMachine } from '../internal/createAnimatorMachine/index.js';
-import { createAnimatorManager } from '../internal/createAnimatorManager/index.js';
+import type { AnimatorControl, AnimatorSubscriber, AnimatorNode, AnimatorSystem } from '../types.js'
+import { createAnimatorMachine } from '../internal/createAnimatorMachine/index.js'
+import { createAnimatorManager } from '../internal/createAnimatorManager/index.js'
 
 const createAnimatorSystem = (): AnimatorSystem => {
-  const systemId = `s${Math.random()}`.replace('.', '');
+  const systemId = `s${Math.random()}`.replace('.', '')
 
-  let nodeIdCounter = 0;
-  let root: AnimatorNode | undefined;
+  let nodeIdCounter = 0
+  let root: AnimatorNode | undefined
 
-  const createNode = (parent: AnimatorNode | undefined | null, control: AnimatorControl): AnimatorNode => {
-    const nodeId = `${systemId}-n${nodeIdCounter++}`;
+  const createNode = (
+    parent: AnimatorNode | undefined | null,
+    control: AnimatorControl
+  ): AnimatorNode => {
+    const nodeId = `${systemId}-n${nodeIdCounter++}`
 
     // The node object reference is passed around in multiple places with some
     // circular references, so this is an object base and later is modified
     // with specific readonly and writable properties.
-    const node = { id: nodeId } as unknown as AnimatorNode;
+    const node = { id: nodeId } as unknown as AnimatorNode
 
-    const settings = control.getSettings();
-    const machine = createAnimatorMachine(node, settings.initialState);
-    const manager = createAnimatorManager(node, settings.manager);
+    const settings = control.getSettings()
+    const machine = createAnimatorMachine(node, settings.initialState)
+    const manager = createAnimatorManager(node, settings.manager)
 
     const nodeProps: { [P in keyof AnimatorNode]: PropertyDescriptor } = {
       id: {
@@ -53,13 +51,13 @@ const createAnimatorSystem = (): AnimatorSystem => {
         enumerable: true
       },
       duration: {
-        get: (): { enter: number, exit: number } => {
-          const { duration, combine } = node.control.getSettings();
+        get: (): { enter: number; exit: number } => {
+          const { duration, combine } = node.control.getSettings()
           const enter = combine
             ? node.manager.getDurationEnter(Array.from(node.children))
-            : duration.enter || 0;
-          const exit = duration.exit || 0;
-          return { enter, exit };
+            : duration.enter || 0
+          const exit = duration.exit || 0
+          return { enter, exit }
         },
         enumerable: true
       },
@@ -69,15 +67,15 @@ const createAnimatorSystem = (): AnimatorSystem => {
       },
       subscribe: {
         value: (subscriber: AnimatorSubscriber): (() => void) => {
-          node.subscribers.add(subscriber);
-          subscriber(node);
-          return () => node.subscribers.delete(subscriber);
+          node.subscribers.add(subscriber)
+          subscriber(node)
+          return () => node.subscribers.delete(subscriber)
         },
         enumerable: true
       },
       unsubscribe: {
         value: (subscriber: AnimatorSubscriber): void => {
-          node.subscribers.delete(subscriber);
+          node.subscribers.delete(subscriber)
         },
         enumerable: true
       },
@@ -90,64 +88,69 @@ const createAnimatorSystem = (): AnimatorSystem => {
         enumerable: true,
         writable: true
       }
-    };
-
-    Object.defineProperties(node, nodeProps);
-
-    if (parent) {
-      parent.children.add(node);
     }
 
-    return node;
-  };
+    Object.defineProperties(node, nodeProps)
+
+    if (parent) {
+      parent.children.add(node)
+    }
+
+    return node
+  }
 
   const removeNode = (node: AnimatorNode): void => {
-    node.scheduler.stopAll();
+    node.scheduler.stopAll()
 
     for (const child of node.children) {
-      removeNode(child);
+      removeNode(child)
     }
 
     if (node.parent) {
-      node.parent.children.delete(node);
+      node.parent.children.delete(node)
     }
 
-    node.children.clear();
-    node.subscribers.clear();
-  };
+    node.children.clear()
+    node.subscribers.clear()
+  }
 
-  const register = (parentNode: AnimatorNode | undefined | null, control: AnimatorControl): AnimatorNode => {
+  const register = (
+    parentNode: AnimatorNode | undefined | null,
+    control: AnimatorControl
+  ): AnimatorNode => {
     if (parentNode === undefined || parentNode === null) {
       if (root) {
-        throw new Error('The root node must be unregistered before registering another root node.');
+        throw new Error('The root node must be unregistered before registering another root node.')
       }
 
-      root = createNode(undefined, control);
+      root = createNode(undefined, control)
 
-      return root;
+      return root
     }
 
     if (!root) {
-      throw new Error('A root node needs to be registered first in the system before registering children nodes.');
+      throw new Error(
+        'A root node needs to be registered first in the system before registering children nodes.'
+      )
     }
 
-    return createNode(parentNode, control);
-  };
+    return createNode(parentNode, control)
+  }
 
   const unregister = (node: AnimatorNode): void => {
     if (!root) {
-      return;
+      return
     }
 
-    removeNode(node);
+    removeNode(node)
 
     if (root.id === node.id) {
-      root = undefined;
+      root = undefined
     }
-  };
+  }
 
   // System object reference so it can have dynamic object properties setup later.
-  const system = {} as unknown as AnimatorSystem;
+  const system = {} as unknown as AnimatorSystem
 
   const systemProps: { [P in keyof AnimatorSystem]: PropertyDescriptor } = {
     id: {
@@ -166,11 +169,11 @@ const createAnimatorSystem = (): AnimatorSystem => {
       value: unregister,
       enumerable: true
     }
-  };
+  }
 
-  Object.defineProperties(system, systemProps);
+  Object.defineProperties(system, systemProps)
 
-  return system;
-};
+  return system
+}
 
-export { createAnimatorSystem };
+export { createAnimatorSystem }

@@ -1,44 +1,43 @@
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
 import type {
   AnimatedAnimations,
   AnimatedAnimationsCreator,
   AnimatedAnimationsCreatorFunction
-} from '../types.js';
-import { ANIMATED_ANIMATIONS_EMPTY } from '../constants.js';
+} from '../types.js'
+import { ANIMATED_ANIMATIONS_EMPTY } from '../constants.js'
 
 const useAnimatedAnimations = <P = undefined>(
-  animationsList: [
-    AnimatedAnimationsCreatorFunction<P>,
-    AnimatedAnimationsCreator<P>
-  ],
+  animationsList: [AnimatedAnimationsCreatorFunction<P>, AnimatedAnimationsCreator<P>],
   props: P,
   dependencies: unknown[]
 ): AnimatedAnimations => {
-  const [createBaseAnimatedAnimations, createUserAnimatedAnimations] = animationsList;
+  const [createBaseAnimatedAnimations, createUserAnimatedAnimations] = animationsList
 
-  const createUserAnimatedAnimationsType = typeof createUserAnimatedAnimations === 'boolean'
-    ? 'boolean'
-    : typeof (createUserAnimatedAnimations || undefined);
+  const createUserAnimatedAnimationsType =
+    typeof createUserAnimatedAnimations === 'boolean'
+      ? 'boolean'
+      : typeof (createUserAnimatedAnimations || undefined)
 
   return useMemo(() => {
     if (createUserAnimatedAnimations === false) {
-      return ANIMATED_ANIMATIONS_EMPTY;
+      return ANIMATED_ANIMATIONS_EMPTY
     }
 
     if (createUserAnimatedAnimations) {
-      const userAnimatedAnimations = typeof createUserAnimatedAnimations === 'function'
-        ? createUserAnimatedAnimations(props)
-        : createUserAnimatedAnimations;
+      const userAnimatedAnimations =
+        typeof createUserAnimatedAnimations === 'function'
+          ? createUserAnimatedAnimations(props)
+          : createUserAnimatedAnimations
 
       return {
         ...createBaseAnimatedAnimations(props),
         ...userAnimatedAnimations
-      };
+      }
     }
 
-    return createBaseAnimatedAnimations(props);
-  }, [createUserAnimatedAnimationsType, ...dependencies]);
-};
+    return createBaseAnimatedAnimations(props)
+  }, [createUserAnimatedAnimationsType, ...dependencies])
+}
 
-export { useAnimatedAnimations };
+export { useAnimatedAnimations }

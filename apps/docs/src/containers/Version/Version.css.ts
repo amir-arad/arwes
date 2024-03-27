@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css'
 
 export const root = style({
   padding: '0.25rem',
@@ -10,4 +10,4 @@ export const root = style({
   ':focus': {
     opacity: 1
   }
-});
+})

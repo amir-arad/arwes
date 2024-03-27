@@ -1,1 +1,1 @@
-export * from './useAnimatedAnimations.js';
+export * from './useAnimatedAnimations.js'

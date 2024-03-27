@@ -1,1 +1,1 @@
-export * from './useFrameSVGAssemblingAnimation.js';
+export * from './useFrameSVGAssemblingAnimation.js'

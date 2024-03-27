@@ -1,9 +1,9 @@
-import React, { type ReactElement } from 'react';
-import { createRoot } from 'react-dom/client';
-import { createThemeColor } from '@arwes/theme';
+import React, { type ReactElement } from 'react'
+import { createRoot } from 'react-dom/client'
+import { createThemeColor } from '@arwes/theme'
 
 // Calculated color alpha is always 0.5.
-const color = createThemeColor(() => [180, 100, 75, 0.5]);
+const color = createThemeColor(() => [180, 100, 75, 0.5])
 
 const Sandbox = (): ReactElement => {
   return (
@@ -22,7 +22,7 @@ const Sandbox = (): ReactElement => {
       <div style={{ background: color(0, { alpha: 0.5 }) }} />
       <div style={{ background: color(0, { alpha: 0.25 }) }} />
     </div>
-  );
-};
+  )
+}
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
+createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)

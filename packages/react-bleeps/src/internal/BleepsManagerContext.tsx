@@ -1,6 +1,6 @@
-import { createContext } from 'react';
-import type { BleepsManager } from '@arwes/bleeps';
+import { createContext } from 'react'
+import type { BleepsManager } from '@arwes/bleeps'
 
-const BleepsManagerContext = createContext<BleepsManager | null>(null);
+const BleepsManagerContext = createContext<BleepsManager | null>(null)
 
-export { BleepsManagerContext };
+export { BleepsManagerContext }

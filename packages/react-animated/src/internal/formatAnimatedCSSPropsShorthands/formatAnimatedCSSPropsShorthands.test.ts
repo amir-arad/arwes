@@ -1,32 +1,32 @@
-import { test, expect } from 'vitest';
+import { test, expect } from 'vitest'
 
-import { formatAnimatedCSSPropsShorthands } from './formatAnimatedCSSPropsShorthands';
+import { formatAnimatedCSSPropsShorthands } from './formatAnimatedCSSPropsShorthands'
 
 test('Should return undefined if undefined is received', () => {
-  expect(formatAnimatedCSSPropsShorthands()).toBeUndefined();
-});
+  expect(formatAnimatedCSSPropsShorthands()).toBeUndefined()
+})
 
 test('Should merge transform distances shorthands', () => {
   const received = formatAnimatedCSSPropsShorthands({
     opacity: 0,
     x: 100,
     y: 200
-  });
+  })
   const expected = {
     opacity: 0,
     transform: 'translateX(100px) translateY(200px)'
-  };
-  expect(received).toEqual(expected);
-});
+  }
+  expect(received).toEqual(expected)
+})
 
 test('Should pass no-shorthands props', () => {
   const received = formatAnimatedCSSPropsShorthands({
     opacity: 0.5,
     width: '100px'
-  });
+  })
   const expected = {
     opacity: 0.5,
     width: '100px'
-  };
-  expect(received).toEqual(expected);
-});
+  }
+  expect(received).toEqual(expected)
+})

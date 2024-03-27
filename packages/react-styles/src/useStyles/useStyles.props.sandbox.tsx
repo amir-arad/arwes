@@ -1,8 +1,8 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React, { type ReactNode, type ReactElement, Fragment } from 'react';
-import { createRoot } from 'react-dom/client';
-import { type Styles, type StylesCreator, useStyles } from '@arwes/react-styles';
+import { jsx } from '@emotion/react'
+import React, { type ReactNode, type ReactElement, Fragment } from 'react'
+import { createRoot } from 'react-dom/client'
+import { type Styles, type StylesCreator, useStyles } from '@arwes/react-styles'
 
 interface CardProps {
   styles?: StylesCreator<CardProps>
@@ -11,7 +11,7 @@ interface CardProps {
   children: ReactNode
 }
 
-const createCardBaseStyles: StylesCreator<CardProps> = props => ({
+const createCardBaseStyles: StylesCreator<CardProps> = (props) => ({
   root: {
     display: 'block',
     margin: 20,
@@ -27,28 +27,22 @@ const createCardBaseStyles: StylesCreator<CardProps> = props => ({
   description: {
     margin: 0
   }
-});
+})
 
 const Card = (props: CardProps): ReactElement => {
-  const { styles: customStyles, disabled, title, children } = props;
+  const { styles: customStyles, disabled, title, children } = props
 
-  const styles = useStyles(
-    [createCardBaseStyles, customStyles],
-    props,
-    [disabled]
-  );
+  const styles = useStyles([createCardBaseStyles, customStyles], props, [disabled])
 
   return (
     <article css={styles.root}>
       <h1 css={styles.title}>
         {title} {disabled ? ' (Disabled)' : ''}
       </h1>
-      <p css={styles.description}>
-        {children}
-      </p>
+      <p css={styles.description}>{children}</p>
     </article>
-  );
-};
+  )
+}
 
 const Sandbox = (): ReactElement => {
   const customPlainStyles: Styles = {
@@ -59,7 +53,7 @@ const Sandbox = (): ReactElement => {
     title: {
       textShadow: '0 0 2px #ff0'
     }
-  };
+  }
 
   const customFunctionStyles: StylesCreator<CardProps> = () => ({
     root: {
@@ -69,27 +63,25 @@ const Sandbox = (): ReactElement => {
     title: {
       textShadow: '0 0 2px #333'
     }
-  });
+  })
 
   return (
     <Fragment>
-      <Card title='useStyles'>
-        default styles
-      </Card>
-      <Card title='useStyles' styles={customPlainStyles}>
+      <Card title="useStyles">default styles</Card>
+      <Card title="useStyles" styles={customPlainStyles}>
         custom plain styles
       </Card>
-      <Card title='useStyles' styles={customFunctionStyles}>
+      <Card title="useStyles" styles={customFunctionStyles}>
         custom function styles
       </Card>
-      <Card title='useStyles' disabled>
+      <Card title="useStyles" disabled>
         props customization
       </Card>
-      <Card title='useStyles' styles={false}>
+      <Card title="useStyles" styles={false}>
         removed styles
       </Card>
     </Fragment>
-  );
-};
+  )
+}
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
+createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)

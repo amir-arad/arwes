@@ -1,1 +1,1 @@
-export const ARWES_BGS = '@arwes/bgs';
+export const ARWES_BGS = '@arwes/bgs'

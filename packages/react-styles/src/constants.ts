@@ -1,3 +1,3 @@
-import type { Styles } from './types.js';
+import type { Styles } from './types.js'
 
-export const STYLES_EMPTY: Styles = Object.freeze({});
+export const STYLES_EMPTY: Styles = Object.freeze({})

@@ -1,8 +1,8 @@
-import React, { useMemo, type ReactElement } from 'react';
-import { cx } from '@arwes/tools';
-import { type FrameSVGPathGeneric } from '@arwes/frames';
+import React, { useMemo, type ReactElement } from 'react'
+import { cx } from '@arwes/tools'
+import { type FrameSVGPathGeneric } from '@arwes/frames'
 
-import { type FrameSVGProps, FrameSVG } from '../FrameSVG/index.js';
+import { type FrameSVGProps, FrameSVG } from '../FrameSVG/index.js'
 
 interface FrameSVGUnderlineProps extends FrameSVGProps {
   squareSize?: number
@@ -12,16 +12,10 @@ interface FrameSVGUnderlineProps extends FrameSVGProps {
 }
 
 const FrameSVGUnderline = (props: FrameSVGUnderlineProps): ReactElement => {
-  const {
-    squareSize: ss = 16,
-    strokeWidth: sw = 1,
-    inverted,
-    className,
-    ...otherProps
-  } = props;
+  const { squareSize: ss = 16, strokeWidth: sw = 1, inverted, className, ...otherProps } = props
 
   const paths = useMemo(() => {
-    const so = sw / 2;
+    const so = sw / 2
 
     return [
       {
@@ -53,8 +47,8 @@ const FrameSVGUnderline = (props: FrameSVGUnderlineProps): ReactElement => {
           ['L', `100% - ${so}`, `100% - ${ss - so}`]
         ]
       }
-    ] as FrameSVGPathGeneric[];
-  }, [ss, sw, inverted]);
+    ] as FrameSVGPathGeneric[]
+  }, [ss, sw, inverted])
 
   return (
     <FrameSVG
@@ -62,8 +56,8 @@ const FrameSVGUnderline = (props: FrameSVGUnderlineProps): ReactElement => {
       className={cx('arwes-react-frames-framesvgunderline', className)}
       paths={paths}
     />
-  );
-};
+  )
+}
 
-export type { FrameSVGUnderlineProps };
-export { FrameSVGUnderline };
+export type { FrameSVGUnderlineProps }
+export { FrameSVGUnderline }

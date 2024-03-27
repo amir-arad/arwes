@@ -1,8 +1,8 @@
 /** @jsx jsx */
-import { jsx, ThemeProvider } from '@emotion/react';
-import React, { type ReactNode, type ReactElement } from 'react';
-import { createRoot } from 'react-dom/client';
-import { type Styles, type StylesThemeCreator, useThemeStyles } from '@arwes/react-styles';
+import { jsx, ThemeProvider } from '@emotion/react'
+import React, { type ReactNode, type ReactElement } from 'react'
+import { createRoot } from 'react-dom/client'
+import { type Styles, type StylesThemeCreator, useThemeStyles } from '@arwes/react-styles'
 
 // useThemeStyles uses the `useTheme` hook which returns a `Theme`.
 // So the proper type should be set globally.
@@ -23,7 +23,7 @@ interface CardProps {
   children: ReactNode
 }
 
-const cardBaseStyles: StylesThemeCreator = theme => ({
+const cardBaseStyles: StylesThemeCreator = (theme) => ({
   root: {
     display: 'block',
     margin: theme.space,
@@ -38,20 +38,20 @@ const cardBaseStyles: StylesThemeCreator = theme => ({
   description: {
     margin: 0
   }
-});
+})
 
 const Card = (props: CardProps): ReactElement => {
-  const { styles: customStyles, title, children } = props;
+  const { styles: customStyles, title, children } = props
 
-  const styles = useThemeStyles([cardBaseStyles, customStyles], undefined, []);
+  const styles = useThemeStyles([cardBaseStyles, customStyles], undefined, [])
 
   return (
     <article css={styles.root}>
       <h1 css={styles.title}>{title}</h1>
       <p css={styles.description}>{children}</p>
     </article>
-  );
-};
+  )
+}
 
 const Sandbox = (): ReactElement => {
   const appTheme: AppTheme = {
@@ -59,7 +59,7 @@ const Sandbox = (): ReactElement => {
     fontFamily: 'monospace',
     color: '#0ff',
     backgroundColor: '#333'
-  };
+  }
 
   const customPlainStyles: Styles = {
     root: {
@@ -69,9 +69,9 @@ const Sandbox = (): ReactElement => {
     title: {
       textShadow: '0 0 2px #ff0'
     }
-  };
+  }
 
-  const customThemeStyles: StylesThemeCreator = theme => ({
+  const customThemeStyles: StylesThemeCreator = (theme) => ({
     root: {
       color: theme.backgroundColor,
       backgroundColor: theme.color
@@ -79,24 +79,22 @@ const Sandbox = (): ReactElement => {
     title: {
       textShadow: `0 0 2px ${theme.backgroundColor}`
     }
-  });
+  })
 
   return (
     <ThemeProvider theme={appTheme}>
-      <Card title='useThemeStyles'>
-        default styles
-      </Card>
-      <Card title='useThemeStyles' styles={customPlainStyles}>
+      <Card title="useThemeStyles">default styles</Card>
+      <Card title="useThemeStyles" styles={customPlainStyles}>
         custom plain styles
       </Card>
-      <Card title='useThemeStyles' styles={customThemeStyles}>
+      <Card title="useThemeStyles" styles={customThemeStyles}>
         custom theme styles
       </Card>
-      <Card title='useThemeStyles' styles={false}>
+      <Card title="useThemeStyles" styles={false}>
         removed styles
       </Card>
     </ThemeProvider>
-  );
-};
+  )
+}
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
+createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)

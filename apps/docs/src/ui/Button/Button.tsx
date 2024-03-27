@@ -1,4 +1,4 @@
-import { type HTMLProps, type ReactElement, type ReactNode } from 'react';
+import { type HTMLProps, type ReactElement, type ReactNode } from 'react'
 import {
   type AnimatedProp,
   Animated,
@@ -6,10 +6,10 @@ import {
   Illuminator,
   useBleeps,
   cx
-} from '@arwes/react';
+} from '@arwes/react'
 
-import type { BleepNames } from '@app/types';
-import * as classes from './Button.css';
+import type { BleepNames } from '@app/types'
+import * as classes from './Button.css'
 
 interface ButtonProps extends Omit<HTMLProps<HTMLButtonElement>, 'size'> {
   className?: string
@@ -35,14 +35,14 @@ const Button = (props: ButtonProps): ReactElement => {
     onClick,
     children,
     ...otherProps
-  } = props;
+  } = props
 
-  const bleeps = useBleeps<BleepNames>();
+  const bleeps = useBleeps<BleepNames>()
 
   return (
     <Animated<HTMLButtonElement, HTMLProps<HTMLButtonElement>>
       {...otherProps}
-      as='button'
+      as="button"
       className={cx(
         classes.root,
         size === 'medium' && classes.medium,
@@ -55,29 +55,25 @@ const Button = (props: ButtonProps): ReactElement => {
       tabIndex={tabIndex}
       title={title}
       onClick={() => {
-        onClick?.();
-        bleeps.click?.play();
+        onClick?.()
+        bleeps.click?.play()
       }}
     >
-      {frame === 'simple' && (
-        <div className={cx(classes.frameElement, classes.frameSimpleDeco)} />
-      )}
+      {frame === 'simple' && <div className={cx(classes.frameElement, classes.frameSimpleDeco)} />}
       {frame === 'hexagon' && (
         <div className={cx(classes.frameElement, classes.frameHexagonClip)}>
           <Illuminator
             className={classes.frameHexagonIlluminator}
-            color='hsl(60 50% 90% / 8%)'
+            color="hsl(60 50% 90% / 8%)"
             size={200}
           />
           <FrameSVGOctagon squareSize={12} leftBottom={false} rightTop={false} />
         </div>
       )}
-      <div className={classes.content}>
-        {children}
-      </div>
+      <div className={classes.content}>{children}</div>
     </Animated>
-  );
-};
+  )
+}
 
-export type { ButtonProps };
-export { Button };
+export type { ButtonProps }
+export { Button }

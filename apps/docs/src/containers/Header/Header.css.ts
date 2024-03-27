@@ -1,6 +1,6 @@
-import { style, globalStyle } from '@vanilla-extract/css';
+import { style, globalStyle } from '@vanilla-extract/css'
 
-export const menuItem = style({});
+export const menuItem = style({})
 
 globalStyle(`${menuItem} a, ${menuItem} button`, {
   height: '2.5rem',
@@ -12,10 +12,10 @@ globalStyle(`${menuItem} a, ${menuItem} button`, {
       lineHeight: '3.5rem'
     }
   }
-});
+})
 
 export const button = style({
   appearance: 'none',
   background: 'none',
   fontSize: '1rem'
-});
+})

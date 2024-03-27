@@ -1,5 +1,5 @@
-import { style, globalStyle } from '@vanilla-extract/css';
-import { createFrameOctagonClip } from '@arwes/react';
+import { style, globalStyle } from '@vanilla-extract/css'
+import { createFrameOctagonClip } from '@arwes/react'
 
 export const root = style({
   position: 'relative',
@@ -40,7 +40,7 @@ export const root = style({
       fontSize: 14
     }
   }
-});
+})
 
 export const medium = style({
   padding: '0 32px',
@@ -56,7 +56,7 @@ export const medium = style({
       fontSize: 16
     }
   }
-});
+})
 
 export const content = style({
   display: 'inline-grid',
@@ -66,17 +66,17 @@ export const content = style({
   columnGap: 8,
   zIndex: 2,
   textDecoration: 'none'
-});
+})
 
 globalStyle(`${content} svg`, {
   margin: 0
-});
+})
 
-export const frameElement = style({});
+export const frameElement = style({})
 
 // Frame Simple
 
-export const frameSimple = style({});
+export const frameSimple = style({})
 
 export const frameSimpleDeco = style({
   ':before': {
@@ -112,11 +112,11 @@ export const frameSimpleDeco = style({
       transform: 'translate(0, 0) scale(1)'
     }
   }
-});
+})
 
 // Frame Hexagon
 
-export const frameHexagon = style({});
+export const frameHexagon = style({})
 
 export const frameHexagonClip = style({
   position: 'absolute',
@@ -127,42 +127,43 @@ export const frameHexagonClip = style({
   height: '100%',
   overflow: 'hidden',
   clipPath: createFrameOctagonClip({ squareSize: 12, leftBottom: false, rightTop: false })
-});
+})
 
 export const frameHexagonIlluminator = style({
   zIndex: 1
-});
+})
 
 export const onHoverAnimateIcons = style({
   zIndex: 1
-});
+})
 
 globalStyle(`${root} svg, ${root} path`, {
-  transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, outline',
+  transitionProperty:
+    'color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, outline',
   transitionDuration: '200ms',
   transitionTimingFunction: 'ease-out'
-});
+})
 
 globalStyle(`${onHoverAnimateIcons}:hover span + svg`, {
   transform: 'translateX(0.25rem)'
-});
+})
 
 globalStyle(`${onHoverAnimateIcons}:hover svg:first-child`, {
   transform: 'translateX(-0.25rem)'
-});
+})
 
 globalStyle(`${root} ${frameElement} [data-name=bg]`, {
   color: 'hsl(60deg 100% 40% / 8%)'
-});
+})
 
 globalStyle(`${root} ${frameElement} [data-name=line]`, {
   color: 'hsl(60deg 100% 40% / 14%)'
-});
+})
 
 globalStyle(`${root}:hover ${frameElement} [data-name=bg]`, {
   color: 'hsl(60deg 100% 40% / 16%)'
-});
+})
 
 globalStyle(`${root}:hover ${frameElement} [data-name=line]`, {
   color: 'hsl(60deg 100% 40% / 22%)'
-});
+})

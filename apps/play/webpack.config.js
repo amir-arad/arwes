@@ -1,14 +1,14 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
-const REPOSITORY_PATH = path.join(__dirname, '../../');
-const SRC_PATH = path.join(__dirname, 'src');
-const BUILD_PATH = path.join(__dirname, 'build');
-const BASE_PATH = '/play/'; // Must end with "/".
+const REPOSITORY_PATH = path.join(__dirname, '../../')
+const SRC_PATH = path.join(__dirname, 'src')
+const BUILD_PATH = path.join(__dirname, 'build')
+const BASE_PATH = '/play/' // Must end with "/".
 
-const mode = process.env.NODE_ENV || 'development';
-const isProduction = mode === 'production';
+const mode = process.env.NODE_ENV || 'development'
+const isProduction = mode === 'production'
 
 module.exports = {
   mode,
@@ -59,39 +59,49 @@ module.exports = {
       filename: path.join(BUILD_PATH, BASE_PATH, 'sandbox/index.html'),
       chunks: ['sandbox']
     }),
-    isProduction && new CopyWebpackPlugin({
-      patterns: [{
-        from: path.join(REPOSITORY_PATH, 'static'),
-        to: BUILD_PATH,
-        info: { minimized: true }
-      }]
-    }),
-    isProduction && new CopyWebpackPlugin({
-      patterns: [{
-        from: path.join(REPOSITORY_PATH, 'node_modules/noxtron/build/umd/'),
-        to: path.join(BUILD_PATH, BASE_PATH, 'noxtron/'),
-        info: { minimized: true }
-      }]
-    })
+    isProduction &&
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.join(REPOSITORY_PATH, 'static'),
+            to: BUILD_PATH,
+            info: { minimized: true }
+          }
+        ]
+      }),
+    isProduction &&
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.join(REPOSITORY_PATH, 'node_modules/noxtron/build/umd/'),
+            to: path.join(BUILD_PATH, BASE_PATH, 'noxtron/'),
+            info: { minimized: true }
+          }
+        ]
+      })
   ].filter(Boolean),
   devServer: {
-    static: [{
-      directory: path.join(REPOSITORY_PATH, 'static'),
-      publicPath: '/',
-      watch: true
-    }, {
-      directory: path.join(REPOSITORY_PATH, 'node_modules/noxtron/build/umd/'),
-      publicPath: path.join(BASE_PATH, 'noxtron/'),
-      watch: true
-    }, {
-      directory: BUILD_PATH,
-      publicPath: BASE_PATH,
-      watch: true
-    }],
+    static: [
+      {
+        directory: path.join(REPOSITORY_PATH, 'static'),
+        publicPath: '/',
+        watch: true
+      },
+      {
+        directory: path.join(REPOSITORY_PATH, 'node_modules/noxtron/build/umd/'),
+        publicPath: path.join(BASE_PATH, 'noxtron/'),
+        watch: true
+      },
+      {
+        directory: BUILD_PATH,
+        publicPath: BASE_PATH,
+        watch: true
+      }
+    ],
     allowedHosts: 'all',
     compress: true,
     host: '127.0.0.1',
     port: 9000,
     open: BASE_PATH
   }
-};
+}

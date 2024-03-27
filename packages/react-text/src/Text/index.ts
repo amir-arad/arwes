@@ -1,7 +1,7 @@
-import { memo } from '@arwes/react-tools';
-import { Text as Component } from './Text.js';
+import { memo } from '@arwes/react-tools'
+import { Text as Component } from './Text.js'
 
-const Text = memo(Component);
+const Text = memo(Component)
 
-export * from './Text.js';
-export { Text };
+export * from './Text.js'
+export { Text }

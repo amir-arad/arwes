@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css'
 
 export const root = style({
   display: 'block',
@@ -11,4 +11,4 @@ export const root = style({
       height: '1.25rem'
     }
   }
-});
+})

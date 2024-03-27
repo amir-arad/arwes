@@ -1,18 +1,18 @@
-import { createBleepsManager } from '@arwes/bleeps';
+import { createBleepsManager } from '@arwes/bleeps'
 
-const rootElement = document.querySelector('#root') as HTMLElement;
+const rootElement = document.querySelector('#root') as HTMLElement
 
 rootElement.innerHTML = `
   <button class="click">Click</button>
   <button class="error">Error</button>
   <button class="type">Readout</button>
-`;
+`
 
-const clickElement = rootElement.querySelector('.click') as HTMLButtonElement;
-const errorElement = rootElement.querySelector('.error') as HTMLButtonElement;
-const assembleElement = rootElement.querySelector('.type') as HTMLButtonElement;
+const clickElement = rootElement.querySelector('.click') as HTMLButtonElement
+const errorElement = rootElement.querySelector('.error') as HTMLButtonElement
+const assembleElement = rootElement.querySelector('.type') as HTMLButtonElement
 
-type BleepNames = 'click' | 'error' | 'type';
+type BleepNames = 'click' | 'error' | 'type'
 
 const bleepsManager = createBleepsManager<BleepNames>({
   common: {
@@ -43,16 +43,16 @@ const bleepsManager = createBleepsManager<BleepNames>({
       sources: [{ src: '/assets/sounds/type.webm', type: 'audio/webm' }]
     }
   }
-});
+})
 
 clickElement.addEventListener('click', () => {
-  bleepsManager?.bleeps.click?.play();
-});
+  bleepsManager?.bleeps.click?.play()
+})
 
 errorElement.addEventListener('click', () => {
-  bleepsManager?.bleeps.error?.play();
-});
+  bleepsManager?.bleeps.error?.play()
+})
 
 assembleElement.addEventListener('click', () => {
-  bleepsManager?.bleeps.type?.play();
-});
+  bleepsManager?.bleeps.type?.play()
+})

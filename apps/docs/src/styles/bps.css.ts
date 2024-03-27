@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css'
 
 // Ups
 
@@ -8,7 +8,7 @@ export const hiddenXS = style({
       display: 'none'
     }
   }
-});
+})
 
 export const hiddenSM = style({
   '@media': {
@@ -16,7 +16,7 @@ export const hiddenSM = style({
       display: 'none'
     }
   }
-});
+})
 
 export const hiddenMD = style({
   '@media': {
@@ -24,7 +24,7 @@ export const hiddenMD = style({
       display: 'none'
     }
   }
-});
+})
 
 export const hiddenLG = style({
   '@media': {
@@ -32,7 +32,7 @@ export const hiddenLG = style({
       display: 'none'
     }
   }
-});
+})
 
 export const hiddenXL = style({
   '@media': {
@@ -40,7 +40,7 @@ export const hiddenXL = style({
       display: 'none'
     }
   }
-});
+})
 
 // Downs
 
@@ -50,7 +50,7 @@ export const hiddenXSDown = style({
       display: 'none'
     }
   }
-});
+})
 
 export const hiddenSMDown = style({
   '@media': {
@@ -58,7 +58,7 @@ export const hiddenSMDown = style({
       display: 'none'
     }
   }
-});
+})
 
 export const hiddenMDDown = style({
   '@media': {
@@ -66,7 +66,7 @@ export const hiddenMDDown = style({
       display: 'none'
     }
   }
-});
+})
 
 export const hiddenLGDown = style({
   '@media': {
@@ -74,7 +74,7 @@ export const hiddenLGDown = style({
       display: 'none'
     }
   }
-});
+})
 
 export const hiddenXLDown = style({
   '@media': {
@@ -82,4 +82,4 @@ export const hiddenXLDown = style({
       display: 'none'
     }
   }
-});
+})

@@ -1,7 +1,7 @@
-import React, { type ReactElement } from 'react';
-import { createRoot } from 'react-dom/client';
-import { createFrameOctagonClip } from '@arwes/frames';
-import { Illuminator } from '@arwes/react-frames';
+import React, { type ReactElement } from 'react'
+import { createRoot } from 'react-dom/client'
+import { createFrameOctagonClip } from '@arwes/frames'
+import { Illuminator } from '@arwes/react-frames'
 
 const Sandbox = (): ReactElement => {
   return (
@@ -14,13 +14,10 @@ const Sandbox = (): ReactElement => {
           clipPath: createFrameOctagonClip({ squareSize: 50 })
         }}
       >
-        <Illuminator
-          color='hsl(180 50% 50% / 20%)'
-          size={300}
-        />
+        <Illuminator color="hsl(180 50% 50% / 20%)" size={300} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
+createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)

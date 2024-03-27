@@ -1,6 +1,6 @@
-import type { CSSProperties, ForwardedRef } from 'react';
+import type { CSSProperties, ForwardedRef } from 'react'
 
-export type DotsPropsOrigin = 'left' | 'right' | 'top' | 'bottom' | 'center' | [number, number];
+export type DotsPropsOrigin = 'left' | 'right' | 'top' | 'bottom' | 'center' | [number, number]
 
 export interface DotsProps {
   elementRef?: ForwardedRef<HTMLCanvasElement>
@@ -33,4 +33,4 @@ export interface DotsProps {
    * Invert the animation to work "to origin" point instead "from origin" point.
    */
   originInverted?: boolean
-};
+}

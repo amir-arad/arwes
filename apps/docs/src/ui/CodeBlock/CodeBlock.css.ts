@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css'
 
 export const root = style({
   display: 'block',
@@ -6,18 +6,18 @@ export const root = style({
   width: '100%',
   minWidth: 0,
   minHeight: 0
-});
+})
 
 export const pre = style({
   display: 'block',
   width: '100%',
   minWidth: 700, // TODO:
   minHeight: 0
-});
+})
 
 export const line = style({
   display: 'block',
   width: '100%',
   minWidth: 0,
   minHeight: 0
-});
+})

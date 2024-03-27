@@ -1,9 +1,9 @@
-import { type HTMLProps, type ReactElement } from 'react';
-import { Highlight, themes } from 'prism-react-renderer';
-import { type AnimatedProp, Animated, cx } from '@arwes/react';
+import { type HTMLProps, type ReactElement } from 'react'
+import { Highlight, themes } from 'prism-react-renderer'
+import { type AnimatedProp, Animated, cx } from '@arwes/react'
 
-import { theme as t } from '@app/theme';
-import * as classes from './CodeBlock.css';
+import { theme as t } from '@app/theme'
+import * as classes from './CodeBlock.css'
 
 interface CodeBlockProps extends HTMLProps<HTMLPreElement> {
   className?: string
@@ -12,21 +12,17 @@ interface CodeBlockProps extends HTMLProps<HTMLPreElement> {
 }
 
 const CodeBlock = (props: CodeBlockProps): ReactElement => {
-  const { className, animated, code, ...otherProps } = props;
+  const { className, animated, code, ...otherProps } = props
 
   // TODO: Fix type.
 
   return (
     <Animated<HTMLPreElement, HTMLProps<HTMLPreElement>>
-      {...otherProps as any}
+      {...(otherProps as any)}
       animated={animated}
       className={cx(classes.root, className)}
     >
-      <Highlight
-        theme={themes.vsDark}
-        code={code}
-        language="tsx"
-      >
+      <Highlight theme={themes.vsDark} code={code} language="tsx">
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre
             className={cx(classes.pre, className)}
@@ -43,21 +39,21 @@ const CodeBlock = (props: CodeBlockProps): ReactElement => {
           >
             {tokens.map((line, i) => {
               // TODO: Fix overflow content parent resize.
-              const tokenProps = getLineProps({ line });
+              const tokenProps = getLineProps({ line })
               return (
                 <div key={i} {...tokenProps} className={cx(classes.line, tokenProps.className)}>
                   {line.map((token, key) => (
                     <span key={key} {...getTokenProps({ token })} />
                   ))}
                 </div>
-              );
+              )
             })}
           </pre>
         )}
       </Highlight>
     </Animated>
-  );
-};
+  )
+}
 
-export type { CodeBlockProps };
-export { CodeBlock };
+export type { CodeBlockProps }
+export { CodeBlock }

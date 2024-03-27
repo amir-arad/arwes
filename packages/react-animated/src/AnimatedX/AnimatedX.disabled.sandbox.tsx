@@ -1,6 +1,6 @@
-import React, { type ReactElement } from 'react';
-import { createRoot } from 'react-dom/client';
-import { AnimatedX } from '@arwes/react-animated';
+import React, { type ReactElement } from 'react'
+import { createRoot } from 'react-dom/client'
+import { AnimatedX } from '@arwes/react-animated'
 
 const Sandbox = (): ReactElement => {
   return (
@@ -16,7 +16,7 @@ const Sandbox = (): ReactElement => {
         }
       }}
     />
-  );
-};
+  )
+}
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
+createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)

@@ -1,13 +1,13 @@
-import { type ReactElement, useRef } from 'react';
-import React, { useId, useEffect } from 'react';
-import { type AnimatorState } from '@arwes/animator';
-import { useAnimator } from '@arwes/react-animator';
-import { type Bleep } from '@arwes/bleeps';
-import { useBleeps } from '@arwes/react-bleeps';
+import { type ReactElement, useRef } from 'react'
+import React, { useId, useEffect } from 'react'
+import { type AnimatorState } from '@arwes/animator'
+import { useAnimator } from '@arwes/react-animator'
+import { type Bleep } from '@arwes/bleeps'
+import { useBleeps } from '@arwes/react-bleeps'
 
 type Transitions<BleepsNames extends string> = {
   [p in AnimatorState]?: BleepsNames
-};
+}
 
 interface BleepsOnAnimatorProps<BleepsNames extends string = string> {
   id?: string
@@ -15,50 +15,52 @@ interface BleepsOnAnimatorProps<BleepsNames extends string = string> {
   continuous?: boolean
 }
 
-const BleepsOnAnimator = <BleepsNames extends string = string>(props: BleepsOnAnimatorProps<BleepsNames>): ReactElement => {
-  const { id: externalId, transitions, continuous } = props;
+const BleepsOnAnimator = <BleepsNames extends string = string>(
+  props: BleepsOnAnimatorProps<BleepsNames>
+): ReactElement => {
+  const { id: externalId, transitions, continuous } = props
 
-  const internalId = useId();
-  const transitionsRef = useRef<Transitions<BleepsNames>>(transitions);
-  const animator = useAnimator();
-  const bleeps = useBleeps<BleepsNames>();
+  const internalId = useId()
+  const transitionsRef = useRef<Transitions<BleepsNames>>(transitions)
+  const animator = useAnimator()
+  const bleeps = useBleeps<BleepsNames>()
 
   // To prevent multiple executions of the useEffect to check for Animator node updates.
-  transitionsRef.current = transitions;
+  transitionsRef.current = transitions
 
-  const id = externalId || internalId;
+  const id = externalId || internalId
 
   useEffect(() => {
     if (!animator) {
-      return;
+      return
     }
 
-    let currentBleep: Bleep | null = null;
+    let currentBleep: Bleep | null = null
 
-    const cancelSubscription = animator.node.subscribe(node => {
-      const bleepName = transitionsRef.current[node.state];
+    const cancelSubscription = animator.node.subscribe((node) => {
+      const bleepName = transitionsRef.current[node.state]
 
       if (!continuous) {
-        currentBleep?.stop(id);
+        currentBleep?.stop(id)
       }
 
-      const newBleep: Bleep | null = bleeps[bleepName];
+      const newBleep: Bleep | null = bleeps[bleepName]
 
       if (newBleep) {
-        currentBleep?.stop(id);
-        currentBleep = newBleep;
-        currentBleep.play(id);
+        currentBleep?.stop(id)
+        currentBleep = newBleep
+        currentBleep.play(id)
       }
-    });
+    })
 
     return () => {
-      cancelSubscription();
-      currentBleep?.stop(id);
-    };
-  }, [id, animator, bleeps]);
+      cancelSubscription()
+      currentBleep?.stop(id)
+    }
+  }, [id, animator, bleeps])
 
-  return <></>;
-};
+  return <></>
+}
 
-export type { BleepsOnAnimatorProps };
-export { BleepsOnAnimator };
+export type { BleepsOnAnimatorProps }
+export { BleepsOnAnimator }

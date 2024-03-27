@@ -1,23 +1,23 @@
-import '@app/styles/global.css';
+import '@app/styles/global.css'
 
-import type { ReactElement } from 'react';
-import { type NextPage } from 'next';
-import { type AppProps } from 'next/app';
-import Head from 'next/head';
-import { useEffect } from 'react';
-import { useAtomValue } from 'jotai';
+import type { ReactElement } from 'react'
+import { type NextPage } from 'next'
+import { type AppProps } from 'next/app'
+import Head from 'next/head'
+import { useEffect } from 'react'
+import { useAtomValue } from 'jotai'
 import {
   type AnimatorGeneralProviderSettings,
   type BleepsProviderSettings,
   AnimatorGeneralProvider,
   Animator,
   BleepsProvider
-} from '@arwes/react';
+} from '@arwes/react'
 
-import type { BleepNames } from '@app/types';
-import { MainLayout } from '@app/ui';
-import { Header } from '@app/containers';
-import { setupGoogleFonts, setupGoogleAnalytics, atomMotion, atomAudio } from '@app/utils';
+import type { BleepNames } from '@app/types'
+import { MainLayout } from '@app/ui'
+import { Header } from '@app/containers'
+import { setupGoogleFonts, setupGoogleAnalytics, atomMotion, atomAudio } from '@app/utils'
 
 interface ClientAppProps extends AppProps {
   Component: NextPage
@@ -29,7 +29,7 @@ const animatorsSettings: AnimatorGeneralProviderSettings = {
     exit: 0.15,
     stagger: 0.05
   }
-};
+}
 
 const bleepsSettings: BleepsProviderSettings<BleepNames> = {
   master: { volume: 0.8 },
@@ -106,18 +106,18 @@ const bleepsSettings: BleepsProviderSettings<BleepNames> = {
       loop: true
     }
   }
-};
+}
 
 const ClientApp = (props: ClientAppProps): ReactElement => {
-  const { Component, pageProps } = props;
+  const { Component, pageProps } = props
 
   useEffect(() => {
-    setupGoogleFonts();
-    setupGoogleAnalytics();
-  }, []);
+    setupGoogleFonts()
+    setupGoogleAnalytics()
+  }, [])
 
-  const motion = useAtomValue(atomMotion);
-  const audio = useAtomValue(atomAudio);
+  const motion = useAtomValue(atomMotion)
+  const audio = useAtomValue(atomAudio)
 
   return (
     <AnimatorGeneralProvider {...animatorsSettings} disabled={!motion}>
@@ -139,7 +139,7 @@ const ClientApp = (props: ClientAppProps): ReactElement => {
           <meta name="twitter:site" content="@arwesjs" />
         </Head>
 
-        <Animator combine manager='stagger'>
+        <Animator combine manager="stagger">
           <MainLayout>
             <Header />
             <Component {...pageProps} />
@@ -147,11 +147,11 @@ const ClientApp = (props: ClientAppProps): ReactElement => {
 
           {/* Element used to render all modals for them to be above all other
               application components. */}
-          <div id='app-modal-container' />
+          <div id="app-modal-container" />
         </Animator>
       </BleepsProvider>
     </AnimatorGeneralProvider>
-  );
-};
+  )
+}
 
-export default ClientApp;
+export default ClientApp

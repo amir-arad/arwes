@@ -1,21 +1,21 @@
-import type { ReactElement } from 'react';
-import React, { useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
-import { Animator } from '@arwes/react-animator';
-import { Animated, aa } from '@arwes/react-animated';
-import type { BleepsManagerProps } from '@arwes/bleeps';
-import { BleepsProvider } from '@arwes/react-bleeps';
-import { BleepsOnAnimator } from '@arwes/react-core';
+import type { ReactElement } from 'react'
+import React, { useState, useEffect } from 'react'
+import { createRoot } from 'react-dom/client'
+import { Animator } from '@arwes/react-animator'
+import { Animated, aa } from '@arwes/react-animated'
+import type { BleepsManagerProps } from '@arwes/bleeps'
+import { BleepsProvider } from '@arwes/react-bleeps'
+import { BleepsOnAnimator } from '@arwes/react-core'
 
-type BleepsNames = 'click' | 'assemble';
+type BleepsNames = 'click' | 'assemble'
 
 const Sandbox = (): ReactElement => {
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(true)
 
   useEffect(() => {
-    const tid = setInterval(() => setActive(active => !active), 2000);
-    return () => clearInterval(tid);
-  }, []);
+    const tid = setInterval(() => setActive((active) => !active), 2000)
+    return () => clearInterval(tid)
+  }, [])
 
   const [settings] = useState<BleepsManagerProps<BleepsNames>>({
     master: {
@@ -30,7 +30,7 @@ const Sandbox = (): ReactElement => {
         loop: true
       }
     }
-  });
+  })
 
   return (
     <BleepsProvider {...settings}>
@@ -47,7 +47,7 @@ const Sandbox = (): ReactElement => {
         />
       </Animator>
     </BleepsProvider>
-  );
-};
+  )
+}
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
+createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)

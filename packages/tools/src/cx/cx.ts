@@ -1,5 +1,5 @@
 const cx = (...classNames: Array<string | boolean | undefined | null>): string => {
-  return classNames.filter(Boolean).join(' ');
-};
+  return classNames.filter(Boolean).join(' ')
+}
 
-export { cx };
+export { cx }

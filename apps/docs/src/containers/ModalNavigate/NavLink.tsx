@@ -1,10 +1,10 @@
-import { type ReactElement, type ReactNode } from 'react';
-import Link from 'next/link';
-import { NavArrowLeft, NavArrowRight } from 'iconoir-react';
-import { type AnimatedSettings, cx, Animator, Animated, aaOpacity, useBleeps } from '@arwes/react';
+import { type ReactElement, type ReactNode } from 'react'
+import Link from 'next/link'
+import { NavArrowLeft, NavArrowRight } from 'iconoir-react'
+import { type AnimatedSettings, cx, Animator, Animated, aaOpacity, useBleeps } from '@arwes/react'
 
-import { linkPrimary, linkSecondary } from '@app/styles';
-import * as classes from './ModalNavigate.css';
+import { linkPrimary, linkSecondary } from '@app/styles'
+import * as classes from './ModalNavigate.css'
 
 interface NavLinkProps {
   href: string
@@ -17,19 +17,24 @@ interface NavLinkProps {
 }
 
 const NavLink = (props: NavLinkProps): ReactElement => {
-  const { href, active, children, animated, onClose, onLeft, onRight } = props;
+  const { href, active, children, animated, onClose, onLeft, onRight } = props
 
-  const bleeps = useBleeps();
+  const bleeps = useBleeps()
 
   return (
     <Animator>
       <Animated className={classes.link} animated={[aaOpacity(), animated]}>
         {!!onLeft && (
           <button
-            className={cx(linkPrimary, classes.linkButton, classes.linkButtonLeft, classes.surfacePrimary)}
+            className={cx(
+              linkPrimary,
+              classes.linkButton,
+              classes.linkButtonLeft,
+              classes.surfacePrimary
+            )}
             onClick={() => {
-              onLeft();
-              bleeps.click?.play();
+              onLeft()
+              bleeps.click?.play()
             }}
           >
             <NavArrowLeft />
@@ -51,10 +56,15 @@ const NavLink = (props: NavLinkProps): ReactElement => {
 
         {!!onRight && (
           <button
-            className={cx(linkPrimary, classes.linkButton, classes.linkButtonRight, classes.surfacePrimary)}
+            className={cx(
+              linkPrimary,
+              classes.linkButton,
+              classes.linkButtonRight,
+              classes.surfacePrimary
+            )}
             onClick={() => {
-              onRight();
-              bleeps.click?.play();
+              onRight()
+              bleeps.click?.play()
             }}
           >
             <NavArrowRight />
@@ -62,8 +72,8 @@ const NavLink = (props: NavLinkProps): ReactElement => {
         )}
       </Animated>
     </Animator>
-  );
-};
+  )
+}
 
-export type { NavLinkProps };
-export { NavLink };
+export type { NavLinkProps }
+export { NavLink }

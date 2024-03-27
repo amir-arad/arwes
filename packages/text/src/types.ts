@@ -1,6 +1,6 @@
-import { type easing } from '@arwes/animated';
+import { type easing } from '@arwes/animated'
 
-export type TextTransitionManager = 'sequence' | 'decipher';
+export type TextTransitionManager = 'sequence' | 'decipher'
 
 export interface TextTransitionProps {
   rootElement: HTMLElement

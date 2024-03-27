@@ -3,7 +3,7 @@
 // This is just a brief example.
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 
-import { animate } from 'motion';
+import { animate } from 'motion'
 import {
   type AnimatorControl,
   type AnimatorNode,
@@ -12,9 +12,9 @@ import {
   ANIMATOR_DEFAULT_DURATION,
   ANIMATOR_DEFAULT_SETTINGS,
   createAnimatorSystem
-} from '@arwes/animator';
+} from '@arwes/animator'
 
-const rootElement = document.querySelector('#root') as HTMLElement;
+const rootElement = document.querySelector('#root') as HTMLElement
 
 rootElement.innerHTML = `
   <style>
@@ -37,9 +37,9 @@ rootElement.innerHTML = `
       <div id="child3" class="item"></div>
     </div>
   </div>
-`;
+`
 
-const system = createAnimatorSystem();
+const system = createAnimatorSystem()
 
 const createNode = (
   parentNode: AnimatorNode | null,
@@ -52,7 +52,7 @@ const createNode = (
     // If a node is a parent, it will expect an "active" value to change from
     // transition between states. Otherwise, it will listen to its parent node.
     getSettings: () => {
-      const providedSettings = getSettings?.();
+      const providedSettings = getSettings?.()
       return {
         // Send the default animator settings.
         ...ANIMATOR_DEFAULT_SETTINGS,
@@ -61,21 +61,21 @@ const createNode = (
           ...ANIMATOR_DEFAULT_DURATION,
           ...providedSettings?.duration
         } as AnimatorDuration
-      };
+      }
     },
     getDynamicSettings: () => null,
     setDynamicSettings: () => null,
     getForeignRef: () => null,
     setForeignRef: () => null
-  };
+  }
 
   // Create a new node in the system with the parent node reference.
   // If parent is not defined, it will be the root node.
-  const node = system.register(parentNode, control);
+  const node = system.register(parentNode, control)
 
   // Subscribe to node state changes.
   node.subscribe(() => {
-    const { duration } = node;
+    const { duration } = node
 
     switch (node.state) {
       case 'entering': {
@@ -83,43 +83,42 @@ const createNode = (
           element,
           { x: [0, 50], backgroundColor: ['#0ff', '#ff0'] },
           { duration: duration.enter }
-        );
-        break;
+        )
+        break
       }
       case 'exiting': {
         animate(
           element,
           { x: [50, 0], backgroundColor: ['#ff0', '#0ff'] },
           { duration: duration.exit }
-        );
-        break;
+        )
+        break
       }
     }
-  });
+  })
 
   // Setup initial node state based on "control.getSettings()" value.
-  node.send('setup');
+  node.send('setup')
 
-  return node;
-};
+  return node
+}
 
 // A variable to know when the parent node should be active or not.
-let isActive = true;
+let isActive = true
 
-const parentNode = createNode(
-  null,
-  rootElement.querySelector('#parent') as HTMLDivElement,
-  () => ({ active: isActive, manager: 'stagger' })
-);
+const parentNode = createNode(null, rootElement.querySelector('#parent') as HTMLDivElement, () => ({
+  active: isActive,
+  manager: 'stagger'
+}))
 
-createNode(parentNode, rootElement.querySelector('#child1') as HTMLDivElement);
-createNode(parentNode, rootElement.querySelector('#child2') as HTMLDivElement);
-createNode(parentNode, rootElement.querySelector('#child3') as HTMLDivElement);
+createNode(parentNode, rootElement.querySelector('#child1') as HTMLDivElement)
+createNode(parentNode, rootElement.querySelector('#child2') as HTMLDivElement)
+createNode(parentNode, rootElement.querySelector('#child3') as HTMLDivElement)
 
 setInterval(() => {
-  isActive = !isActive;
+  isActive = !isActive
 
   // When a node updates its settings, trigger an update event so it can
   // review the changes and act accordingly.
-  parentNode.send('update');
-}, 2000);
+  parentNode.send('update')
+}, 2000)

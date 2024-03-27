@@ -199,4 +199,4 @@ export const typeDefinitions = [
     filename: 'file:///node_modules/@arwes/react/index.d.ts',
     code: require('!raw-loader?esModule=false!@arwes/react/build/types/index.d.ts')
   }
-];
+]

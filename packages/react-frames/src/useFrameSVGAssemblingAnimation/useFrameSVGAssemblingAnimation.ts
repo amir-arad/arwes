@@ -1,137 +1,140 @@
-import { type RefObject, useRef, useCallback, useEffect } from 'react';
-import { animate, type AnimationControls } from 'motion';
-import { ANIMATOR_STATES as STATES } from '@arwes/animator';
-import { useAnimator } from '@arwes/react-animator';
+import { type RefObject, useRef, useCallback, useEffect } from 'react'
+import { animate, type AnimationControls } from 'motion'
+import { ANIMATOR_STATES as STATES } from '@arwes/animator'
+import { useAnimator } from '@arwes/react-animator'
 
 interface FrameSVGAssemblingAnimation {
   onRender: () => void
 }
 
-const useFrameSVGAssemblingAnimation = (svgRef: RefObject<SVGSVGElement>): FrameSVGAssemblingAnimation => {
-  const animator = useAnimator();
-  const animationControlRef = useRef<AnimationControls | null>(null);
+const useFrameSVGAssemblingAnimation = (
+  svgRef: RefObject<SVGSVGElement>
+): FrameSVGAssemblingAnimation => {
+  const animator = useAnimator()
+  const animationControlRef = useRef<AnimationControls | null>(null)
 
   useEffect(() => {
-    const svg = svgRef.current;
+    const svg = svgRef.current
 
     if (!svg) {
-      return;
+      return
     }
 
-    const bgs = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=bg]'));
-    const lines = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=line]'));
+    const bgs = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=bg]'))
+    const lines = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=line]'))
 
-    bgs.concat(lines).forEach(path => {
-      path.style.opacity = '1';
-      path.style.strokeDasharray = '';
-      path.style.strokeDashoffset = '';
-    });
+    bgs.concat(lines).forEach((path) => {
+      path.style.opacity = '1'
+      path.style.strokeDasharray = ''
+      path.style.strokeDashoffset = ''
+    })
 
     if (!animator) {
-      return;
+      return
     }
 
-    const unsubscribe = animator.node.subscribe(node => {
-      const { duration } = node;
+    const unsubscribe = animator.node.subscribe((node) => {
+      const { duration } = node
 
-      animationControlRef.current?.cancel();
+      animationControlRef.current?.cancel()
 
       switch (node.state) {
         case 'exited': {
-          bgs.concat(lines).forEach(path => {
-            path.style.opacity = '0';
-            path.style.strokeDasharray = '';
-            path.style.strokeDashoffset = '';
-          });
-          break;
+          bgs.concat(lines).forEach((path) => {
+            path.style.opacity = '0'
+            path.style.strokeDasharray = ''
+            path.style.strokeDashoffset = ''
+          })
+          break
         }
 
         case 'entering': {
           for (const polyline of lines) {
-            const length = polyline.getTotalLength();
-            polyline.style.opacity = '1';
-            polyline.style.strokeDasharray = String(length);
-            polyline.dataset.length = String(length);
+            const length = polyline.getTotalLength()
+            polyline.style.opacity = '1'
+            polyline.style.strokeDasharray = String(length)
+            polyline.dataset.length = String(length)
           }
 
           animationControlRef.current = animate(
-            progress => {
+            (progress) => {
               for (const shape of bgs) {
-                shape.style.opacity = String(progress);
+                shape.style.opacity = String(progress)
               }
 
               for (const polyline of lines) {
-                const length = Number(polyline.dataset.length);
-                polyline.style.strokeDashoffset = String((1 - progress) * length);
+                const length = Number(polyline.dataset.length)
+                polyline.style.strokeDashoffset = String((1 - progress) * length)
               }
             },
             { duration: duration.enter }
-          );
-          break;
+          )
+          break
         }
 
         case 'entered': {
-          bgs.concat(lines).forEach(path => {
-            path.style.opacity = '1';
-            path.style.strokeDasharray = '';
-            path.style.strokeDashoffset = '';
-          });
-          break;
+          bgs.concat(lines).forEach((path) => {
+            path.style.opacity = '1'
+            path.style.strokeDasharray = ''
+            path.style.strokeDashoffset = ''
+          })
+          break
         }
 
         case 'exiting': {
           for (const polyline of lines) {
-            const length = polyline.getTotalLength();
-            polyline.style.strokeDasharray = String(length);
-            polyline.dataset.length = String(length);
+            const length = polyline.getTotalLength()
+            polyline.style.strokeDasharray = String(length)
+            polyline.dataset.length = String(length)
           }
 
           animationControlRef.current = animate(
-            progress => {
+            (progress) => {
               for (const shape of bgs) {
-                shape.style.opacity = String(1 - progress);
+                shape.style.opacity = String(1 - progress)
               }
 
               for (const polyline of lines) {
-                const length = Number(polyline.dataset.length);
-                polyline.style.strokeDashoffset = String(progress * length);
+                const length = Number(polyline.dataset.length)
+                polyline.style.strokeDashoffset = String(progress * length)
               }
             },
             { duration: duration.exit }
-          );
-          break;
+          )
+          break
         }
       }
-    });
+    })
 
     return () => {
-      animationControlRef.current?.cancel();
-      unsubscribe();
-    };
-  }, [animator]);
+      animationControlRef.current?.cancel()
+      unsubscribe()
+    }
+  }, [animator])
 
   const onRender = useCallback(() => {
     if (!animator || !svgRef.current) {
-      return;
+      return
     }
 
-    const svg = svgRef.current;
-    const bgs = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=bg]'));
-    const lines = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=line]'));
+    const svg = svgRef.current
+    const bgs = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=bg]'))
+    const lines = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=line]'))
 
-    const isVisible = animator.node.state === STATES.entering || animator.node.state === STATES.entered;
+    const isVisible =
+      animator.node.state === STATES.entering || animator.node.state === STATES.entered
 
-    animationControlRef.current?.cancel();
+    animationControlRef.current?.cancel()
 
-    bgs.concat(lines).forEach(path => {
-      path.style.opacity = isVisible ? '1' : '0';
-      path.style.strokeDasharray = '';
-      path.style.strokeDashoffset = '';
-    });
-  }, [animator]);
+    bgs.concat(lines).forEach((path) => {
+      path.style.opacity = isVisible ? '1' : '0'
+      path.style.strokeDasharray = ''
+      path.style.strokeDashoffset = ''
+    })
+  }, [animator])
 
-  return { onRender };
-};
+  return { onRender }
+}
 
-export type { FrameSVGAssemblingAnimation };
-export { useFrameSVGAssemblingAnimation };
+export type { FrameSVGAssemblingAnimation }
+export { useFrameSVGAssemblingAnimation }

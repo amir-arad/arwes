@@ -9,19 +9,19 @@ import {
   useRef,
   useMemo,
   useEffect
-} from 'react';
-import { animate } from 'motion';
+} from 'react'
+import { animate } from 'motion'
 
-import { type NoInfer } from '@arwes/tools';
-import { mergeRefs } from '@arwes/react-tools';
+import { type NoInfer } from '@arwes/tools'
+import { mergeRefs } from '@arwes/react-tools'
 
 import type {
   AnimatedSettings,
   AnimatedSettingsTransition,
   AnimatedSettingsTransitionFunctionReturn,
   AnimatedProp
-} from '../types.js';
-import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js';
+} from '../types.js'
+import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js'
 
 interface AnimatedXProps<E extends HTMLElement | SVGElement = HTMLDivElement> {
   elementRef?: ForwardedRef<E>
@@ -36,7 +36,9 @@ interface AnimatedXProps<E extends HTMLElement | SVGElement = HTMLDivElement> {
 const AnimatedX = <
   E extends HTMLElement | SVGElement = HTMLDivElement,
   P extends HTMLProps<HTMLElement> | SVGProps<SVGElement> = HTMLProps<HTMLDivElement>
->(props: AnimatedXProps<E> & NoInfer<P>): ReactElement => {
+>(
+  props: AnimatedXProps<E> & NoInfer<P>
+): ReactElement => {
   const {
     as: asProvided,
     state: animatedState,
@@ -45,77 +47,74 @@ const AnimatedX = <
     style,
     elementRef: externalElementRef,
     ...otherProps
-  } = props;
+  } = props
 
-  const hasState = animatedState !== undefined && animatedState !== null;
-  const as = useMemo(() => asProvided || 'div', []);
-  const elementRef = useRef<E | null>(null);
-  const animatedSettingsRef = useRef<AnimatedSettings[]>([]);
-  const animationControlsRef = useRef<AnimatedSettingsTransitionFunctionReturn[]>([]);
+  const hasState = animatedState !== undefined && animatedState !== null
+  const as = useMemo(() => asProvided || 'div', [])
+  const elementRef = useRef<E | null>(null)
+  const animatedSettingsRef = useRef<AnimatedSettings[]>([])
+  const animationControlsRef = useRef<AnimatedSettingsTransitionFunctionReturn[]>([])
 
-  const animatedSettingsListReceived = Array.isArray(animated) ? animated : [animated];
-  const animatedSettingsList = animatedSettingsListReceived.filter(Boolean) as AnimatedSettings[];
+  const animatedSettingsListReceived = Array.isArray(animated) ? animated : [animated]
+  const animatedSettingsList = animatedSettingsListReceived.filter(Boolean) as AnimatedSettings[]
 
   // The animations list is passed as a reference so the Animator node subscription
   // and its respective functionalities are only initialized once for performance.
-  animatedSettingsRef.current = animatedSettingsList;
+  animatedSettingsRef.current = animatedSettingsList
 
   useEffect(() => {
     if (!hasState) {
-      return;
+      return
     }
 
-    animationControlsRef.current = [];
+    animationControlsRef.current = []
 
-    const element = elementRef.current;
-    const settingsList = animatedSettingsRef.current;
+    const element = elementRef.current
+    const settingsList = animatedSettingsRef.current
 
     // Weird case if the element is removed and the subscription is not cancelled.
     if (!element) {
-      return;
+      return
     }
 
     settingsList
-      .map(settingsItem => settingsItem.transitions?.[animatedState] as AnimatedSettingsTransition)
+      .map(
+        (settingsItem) => settingsItem.transitions?.[animatedState] as AnimatedSettingsTransition
+      )
       .filter(Boolean)
-      .map(transitions => Array.isArray(transitions) ? transitions : [transitions])
+      .map((transitions) => (Array.isArray(transitions) ? transitions : [transitions]))
       .flat(1)
-      .forEach(transition => {
+      .forEach((transition) => {
         if (typeof transition === 'function') {
-          const control = transition({ element, duration: 0 });
+          const control = transition({ element, duration: 0 })
           if (control) {
-            animationControlsRef.current.push(control);
+            animationControlsRef.current.push(control)
           }
+        } else {
+          const { duration, delay, easing, options, ...definition } = transition
+          const control = animate(element, definition, { duration, delay, easing, ...options })
+          animationControlsRef.current.push(control)
         }
-        else {
-          const { duration, delay, easing, options, ...definition } = transition;
-          const control = animate(
-            element,
-            definition,
-            { duration, delay, easing, ...options }
-          );
-          animationControlsRef.current.push(control);
-        }
-      });
+      })
 
     return () => {
-      animationControlsRef.current.forEach(control => control.stop());
-    };
-  }, [hasState, animatedState]);
+      animationControlsRef.current.forEach((control) => control.stop())
+    }
+  }, [hasState, animatedState])
 
-  let initialAttributes: object | undefined;
+  let initialAttributes: object | undefined
   if (hasState) {
     // TODO: Fix type.
     initialAttributes = animatedSettingsList
-      .map(item => item?.initialAttributes)
-      .reduce<any>((total: object, item: object | undefined) => ({ ...total, ...item }), {});
+      .map((item) => item?.initialAttributes)
+      .reduce<any>((total: object, item: object | undefined) => ({ ...total, ...item }), {})
   }
 
-  let dynamicStyles: CSSProperties | undefined;
+  let dynamicStyles: CSSProperties | undefined
   if (hasState) {
     dynamicStyles = animatedSettingsList
-      .map(item => formatAnimatedCSSPropsShorthands(item?.initialStyle))
-      .reduce((total, item) => ({ ...total, ...item }), {});
+      .map((item) => formatAnimatedCSSPropsShorthands(item?.initialStyle))
+      .reduce((total, item) => ({ ...total, ...item }), {})
   }
 
   return createElement(as, {
@@ -127,8 +126,8 @@ const AnimatedX = <
       ...dynamicStyles
     },
     ref: mergeRefs(externalElementRef, elementRef)
-  });
-};
+  })
+}
 
-export type { AnimatedXProps };
-export { AnimatedX };
+export type { AnimatedXProps }
+export { AnimatedX }

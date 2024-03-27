@@ -1,1 +1,1 @@
-export * from './Text/index.js';
+export * from './Text/index.js'

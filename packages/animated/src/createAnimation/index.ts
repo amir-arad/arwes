@@ -1,1 +1,1 @@
-export * from './createAnimation.js';
+export * from './createAnimation.js'

@@ -1,6 +1,6 @@
-import { easing, createAnimation } from '@arwes/animated';
+import { easing, createAnimation } from '@arwes/animated'
 
-const rootElement = document.querySelector('#root') as HTMLElement;
+const rootElement = document.querySelector('#root') as HTMLElement
 
 rootElement.innerHTML = `
   <style>
@@ -17,22 +17,22 @@ rootElement.innerHTML = `
   </style>
 
   <div class="easings"></div>
-`;
+`
 
-const easingsElement = rootElement.querySelector('.easings') as HTMLDivElement;
-const easingNames = Object.keys(easing) as Array<keyof typeof easing>;
+const easingsElement = rootElement.querySelector('.easings') as HTMLDivElement
+const easingNames = Object.keys(easing) as Array<keyof typeof easing>
 
-easingNames.forEach(easingName => {
-  const itemElement = document.createElement('div');
-  itemElement.classList.add('item');
-  itemElement.textContent = easingName;
-  easingsElement.appendChild(itemElement);
+easingNames.forEach((easingName) => {
+  const itemElement = document.createElement('div')
+  itemElement.classList.add('item')
+  itemElement.textContent = easingName
+  easingsElement.appendChild(itemElement)
 
   createAnimation({
     duration: 1,
     easing: easingName,
-    onUpdate: progress => {
-      itemElement.style.transform = `translateX(${progress * 200}px)`;
+    onUpdate: (progress) => {
+      itemElement.style.transform = `translateX(${progress * 200}px)`
     }
-  });
-});
+  })
+})

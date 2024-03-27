@@ -1,15 +1,15 @@
-import { style, keyframes } from '@vanilla-extract/css';
+import { style, keyframes } from '@vanilla-extract/css'
 
 export const root = style({
   display: 'block',
   margin: 0
-});
+})
 
 const blink = keyframes({
   '0%': { opacity: 0.8 },
   '1%': { opacity: 1 },
   '2%': { opacity: 0.8 }
-});
+})
 
 export const link = style({
   display: 'grid',
@@ -37,12 +37,12 @@ export const link = style({
       columnGap: '0.5rem'
     }
   }
-});
+})
 
 const rotation = keyframes({
   from: { transform: 'rotate(0deg)' },
   to: { transform: 'rotate(360deg)' }
-});
+})
 
 export const logo = style({
   display: 'block',
@@ -56,4 +56,4 @@ export const logo = style({
       height: '1.5rem'
     }
   }
-});
+})

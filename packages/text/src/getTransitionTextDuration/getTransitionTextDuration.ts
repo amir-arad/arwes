@@ -14,17 +14,13 @@ interface GetTransitionTextDurationProps {
 }
 
 const getTransitionTextDuration = (props: GetTransitionTextDurationProps): number => {
-  const {
-    length,
-    maxDuration = 4,
-    cps = 400
-  } = props;
+  const { length, maxDuration = 4, cps = 400 } = props
 
   // The time it will take to add/remove a character per frame multiplied by
   // the total characters length.
-  const realDuration = ((1000 / cps) * length) / 1000;
+  const realDuration = ((1000 / cps) * length) / 1000
 
-  return Math.min(realDuration, maxDuration);
-};
+  return Math.min(realDuration, maxDuration)
+}
 
-export { getTransitionTextDuration };
+export { getTransitionTextDuration }

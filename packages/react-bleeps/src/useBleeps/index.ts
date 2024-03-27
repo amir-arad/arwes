@@ -1,1 +1,1 @@
-export * from './useBleeps.js';
+export * from './useBleeps.js'

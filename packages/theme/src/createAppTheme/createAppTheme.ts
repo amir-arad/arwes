@@ -1,4 +1,4 @@
-import type { PartialDeep } from '@arwes/tools';
+import type { PartialDeep } from '@arwes/tools'
 import type {
   ThemeCreatorStructure,
   ThemeSettingsUnit,
@@ -9,9 +9,9 @@ import type {
   ThemeStyle,
   ThemeSettingsMultiplier,
   ThemeMultiplier
-} from '../types.js';
-import { createCreateTheme } from '../createCreateTheme/index.js';
-import { deepExtend } from './deepExtend.js';
+} from '../types.js'
+import { createCreateTheme } from '../createCreateTheme/index.js'
+import { deepExtend } from './deepExtend.js'
 
 // THEME SETTINGS TYPES
 
@@ -86,7 +86,7 @@ interface AppThemeColors {
   error: AppThemePalette
 }
 
-type AppThemeHues = AppThemeSettingsHues;
+type AppThemeHues = AppThemeSettingsHues
 
 interface AppTheme {
   dark: boolean
@@ -122,7 +122,7 @@ const APP_THEME_STRUCTURE_PALETTE: ThemeCreatorStructure = {
   deco: 'color',
   bg: 'color',
   ol: 'color'
-};
+}
 
 const APP_THEME_STRUCTURE: ThemeCreatorStructure = {
   dark: 'other',
@@ -162,11 +162,11 @@ const APP_THEME_STRUCTURE: ThemeCreatorStructure = {
     duration: 'unit',
     durationN: 'multiplier'
   }
-};
+}
 
 // CREATOR
 
-interface CreateAppThemeProps <AppThemeSettingsExt extends AppThemeSettings = AppThemeSettings> {
+interface CreateAppThemeProps<AppThemeSettingsExt extends AppThemeSettings = AppThemeSettings> {
   structure?: ThemeCreatorStructure
   settings?: PartialDeep<AppThemeSettingsExt>
 }
@@ -180,13 +180,15 @@ const createAppThemePalette = (hue: number): AppThemeSettingsPalette => ({
   bg: (i: number) => [hue, 10, 2 + i * 2],
   ol: (i: number) => [hue, 80 + 1, 2 + i * 2],
   deco: (i: number) => [hue, 80 + 1, 50, 0.025 + i * 0.025]
-});
+})
 
 const createAppTheme = <
   AppThemeSettingsExt extends AppThemeSettings = AppThemeSettings,
   AppThemeExt extends AppTheme = AppTheme
->(props: CreateAppThemeProps<AppThemeSettingsExt> = {}): AppThemeExt => {
-  const dark = props.settings?.dark === undefined ? true : !!props.settings?.dark;
+>(
+  props: CreateAppThemeProps<AppThemeSettingsExt> = {}
+): AppThemeExt => {
+  const dark = props.settings?.dark === undefined ? true : !!props.settings?.dark
 
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   const hues = {
@@ -197,22 +199,24 @@ const createAppTheme = <
     warning: 40,
     error: 0,
     ...props.settings?.hues
-  } as AppTheme['hues'];
+  } as AppTheme['hues']
 
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   const fontFamilies = {
-    title: '"Segoe UI Web (West European)","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif',
+    title:
+      '"Segoe UI Web (West European)","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif',
     body: '"Segoe UI Web (West European)","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif',
     cta: '"Segoe UI Web (West European)","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif',
-    input: '"Segoe UI Web (West European)","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif',
+    input:
+      '"Segoe UI Web (West European)","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif',
     code: 'JetBrains Mono,Menlo,Monaco,Consolas,Courier New,monospace',
     ...props.settings?.fontFamilies
-  } as AppTheme['fontFamilies'];
+  } as AppTheme['fontFamilies']
 
   const appThemeSettingsBase: AppThemeSettings = {
     dark,
-    space: index => `${index * 0.25}rem`,
-    spaceN: index => index * 4,
+    space: (index) => `${index * 0.25}rem`,
+    spaceN: (index) => index * 4,
     hues,
     colors: {
       primary: createAppThemePalette(hues.primary),
@@ -238,9 +242,24 @@ const createAppTheme = <
         { fontFamily: fontFamilies.body, fontWeight: '400', fontSize: '0.875rem' }
       ],
       cta: [
-        { fontFamily: fontFamilies.cta, fontWeight: '500', fontSize: '1rem', textTransform: 'uppercase' },
-        { fontFamily: fontFamilies.cta, fontWeight: '500', fontSize: '0.875rem', textTransform: 'uppercase' },
-        { fontFamily: fontFamilies.cta, fontWeight: '500', fontSize: '0.75rem', textTransform: 'uppercase' }
+        {
+          fontFamily: fontFamilies.cta,
+          fontWeight: '500',
+          fontSize: '1rem',
+          textTransform: 'uppercase'
+        },
+        {
+          fontFamily: fontFamilies.cta,
+          fontWeight: '500',
+          fontSize: '0.875rem',
+          textTransform: 'uppercase'
+        },
+        {
+          fontFamily: fontFamilies.cta,
+          fontWeight: '500',
+          fontSize: '0.75rem',
+          textTransform: 'uppercase'
+        }
       ],
       input: [
         { fontFamily: fontFamilies.input, fontWeight: '400', fontSize: '1rem' },
@@ -254,20 +273,20 @@ const createAppTheme = <
       ]
     },
     transitions: {
-      duration: index => `${index * 0.15}s`,
-      durationN: index => index * 0.15
+      duration: (index) => `${index * 0.15}s`,
+      durationN: (index) => index * 0.15
     }
-  };
+  }
 
   const createTheme = createCreateTheme<AppThemeSettings, AppTheme>(
     deepExtend(APP_THEME_STRUCTURE, props.structure),
     deepExtend(appThemeSettingsBase, props.settings)
-  );
+  )
 
-  const theme = createTheme();
+  const theme = createTheme()
 
-  return theme as AppThemeExt;
-};
+  return theme as AppThemeExt
+}
 
 export type {
   AppThemeSettingsColors,
@@ -279,10 +298,5 @@ export type {
   AppThemeHues,
   AppTheme,
   CreateAppThemeProps
-};
-export {
-  APP_THEME_STRUCTURE_PALETTE,
-  APP_THEME_STRUCTURE,
-  createAppThemePalette,
-  createAppTheme
-};
+}
+export { APP_THEME_STRUCTURE_PALETTE, APP_THEME_STRUCTURE, createAppThemePalette, createAppTheme }

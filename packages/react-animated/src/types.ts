@@ -1,6 +1,6 @@
-import type { CSSProperties, HTMLProps, SVGProps } from 'react';
-import type { MotionKeyframesDefinition, AnimationOptionsWithOverrides } from '@motionone/dom';
-import type { AnimatorState } from '@arwes/animator';
+import type { CSSProperties, HTMLProps, SVGProps } from 'react'
+import type { MotionKeyframesDefinition, AnimationOptionsWithOverrides } from '@motionone/dom'
+import type { AnimatorState } from '@arwes/animator'
 
 export interface AnimatedCSSPropsShorthands {
   x?: number | string
@@ -19,14 +19,15 @@ export interface AnimatedCSSPropsShorthands {
   scaleZ?: number | string
 }
 
-export type AnimatedCSSProps = Omit<CSSProperties, keyof AnimatedCSSPropsShorthands> & AnimatedCSSPropsShorthands;
+export type AnimatedCSSProps = Omit<CSSProperties, keyof AnimatedCSSPropsShorthands> &
+  AnimatedCSSPropsShorthands
 
 export type AnimatedSettingsTransitionDefinition = MotionKeyframesDefinition & {
   duration?: number
   delay?: AnimationOptionsWithOverrides['delay']
   easing?: AnimationOptionsWithOverrides['easing']
   options?: AnimationOptionsWithOverrides
-};
+}
 
 export interface AnimatedSettingsTransitionFunctionConfig {
   element: HTMLElement | SVGElement
@@ -39,11 +40,15 @@ export interface AnimatedSettingsTransitionFunctionReturn {
 
 export type AnimatedSettingsTransitionFunction =
   | ((config: AnimatedSettingsTransitionFunctionConfig) => AnimatedSettingsTransitionFunctionReturn)
-  | ((config: AnimatedSettingsTransitionFunctionConfig) => void);
+  | ((config: AnimatedSettingsTransitionFunctionConfig) => void)
 
-export type AnimatedSettingsTransitionTypes = AnimatedSettingsTransitionFunction | AnimatedSettingsTransitionDefinition;
+export type AnimatedSettingsTransitionTypes =
+  | AnimatedSettingsTransitionFunction
+  | AnimatedSettingsTransitionDefinition
 
-export type AnimatedSettingsTransition = AnimatedSettingsTransitionTypes | AnimatedSettingsTransitionTypes[];
+export type AnimatedSettingsTransition =
+  | AnimatedSettingsTransitionTypes
+  | AnimatedSettingsTransitionTypes[]
 
 export interface AnimatedSettings {
   initialAttributes?: HTMLProps<HTMLDivElement> | SVGProps<SVGPathElement>
@@ -53,14 +58,18 @@ export interface AnimatedSettings {
   } & {
     [P in string]?: AnimatedSettingsTransition | undefined
   }
-};
+}
 
-export type AnimatedProp = AnimatedSettings | Array<AnimatedSettings | undefined> | undefined;
+export type AnimatedProp = AnimatedSettings | Array<AnimatedSettings | undefined> | undefined
 
-export type AnimatedAnimation = AnimatedSettings | AnimatedSettings[];
+export type AnimatedAnimation = AnimatedSettings | AnimatedSettings[]
 
-export type AnimatedAnimations = { [P in AnimatorState]?: AnimatedAnimation };
+export type AnimatedAnimations = { [P in AnimatorState]?: AnimatedAnimation }
 
-export type AnimatedAnimationsCreatorFunction<P = undefined> = (props: P) => AnimatedAnimations;
+export type AnimatedAnimationsCreatorFunction<P = undefined> = (props: P) => AnimatedAnimations
 
-export type AnimatedAnimationsCreator<P = undefined> = undefined | false | AnimatedAnimations | AnimatedAnimationsCreatorFunction<P>;
+export type AnimatedAnimationsCreator<P = undefined> =
+  | undefined
+  | false
+  | AnimatedAnimations
+  | AnimatedAnimationsCreatorFunction<P>

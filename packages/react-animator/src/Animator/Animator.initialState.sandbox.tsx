@@ -1,18 +1,18 @@
-import React, { type ReactElement, useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
-import { Animator } from '@arwes/react-animator';
-import { Animated } from '@arwes/react-animated';
+import React, { type ReactElement, useState, useEffect } from 'react'
+import { createRoot } from 'react-dom/client'
+import { Animator } from '@arwes/react-animator'
+import { Animated } from '@arwes/react-animated'
 
 const Sandbox = (): ReactElement => {
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(true)
 
   useEffect(() => {
-    const tid = setInterval(() => setActive(active => !active), 2000);
-    return () => clearInterval(tid);
-  }, []);
+    const tid = setInterval(() => setActive((active) => !active), 2000)
+    return () => clearInterval(tid)
+  }, [])
 
   return (
-    <Animator active={active} initialState='entered'>
+    <Animator active={active} initialState="entered">
       <Animated
         style={{ margin: 10, width: 40, height: 20, backgroundColor: '#777' }}
         animated={{
@@ -25,7 +25,7 @@ const Sandbox = (): ReactElement => {
         hideOnExited={false}
       />
     </Animator>
-  );
-};
+  )
+}
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
+createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)

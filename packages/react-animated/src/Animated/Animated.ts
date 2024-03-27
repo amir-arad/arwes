@@ -10,21 +10,21 @@ import {
   useMemo,
   useState,
   useEffect
-} from 'react';
-import { animate } from 'motion';
+} from 'react'
+import { animate } from 'motion'
 
-import { type NoInfer } from '@arwes/tools';
-import { mergeRefs } from '@arwes/react-tools';
-import { ANIMATOR_STATES as STATES } from '@arwes/animator';
-import { useAnimator } from '@arwes/react-animator';
+import { type NoInfer } from '@arwes/tools'
+import { mergeRefs } from '@arwes/react-tools'
+import { ANIMATOR_STATES as STATES } from '@arwes/animator'
+import { useAnimator } from '@arwes/react-animator'
 
 import type {
   AnimatedSettings,
   AnimatedSettingsTransition,
   AnimatedSettingsTransitionFunctionReturn,
   AnimatedProp
-} from '../types.js';
-import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js';
+} from '../types.js'
+import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js'
 
 interface AnimatedProps<E extends HTMLElement | SVGElement = HTMLDivElement> {
   elementRef?: ForwardedRef<E>
@@ -40,7 +40,9 @@ interface AnimatedProps<E extends HTMLElement | SVGElement = HTMLDivElement> {
 const Animated = <
   E extends HTMLElement | SVGElement = HTMLDivElement,
   P extends HTMLProps<HTMLElement> | SVGProps<SVGElement> = HTMLProps<HTMLDivElement>
->(props: AnimatedProps<E> & NoInfer<P>): ReactElement => {
+>(
+  props: AnimatedProps<E> & NoInfer<P>
+): ReactElement => {
   const {
     as: asProvided,
     animated,
@@ -50,94 +52,95 @@ const Animated = <
     hideOnExited = true,
     hideOnEntered,
     ...otherProps
-  } = props;
+  } = props
 
-  const animator = useAnimator();
+  const animator = useAnimator()
 
-  const as = useMemo(() => asProvided || 'div', []);
-  const elementRef = useRef<E | null>(null);
-  const animatedSettingsRef = useRef<AnimatedSettings[]>([]);
-  const animationControlsRef = useRef<AnimatedSettingsTransitionFunctionReturn[]>([]);
-  const [isExited, setIsExited] = useState(() => animator?.node.state === STATES.exited);
-  const [isEntered, setIsEntered] = useState(() => animator?.node.state === STATES.entered);
+  const as = useMemo(() => asProvided || 'div', [])
+  const elementRef = useRef<E | null>(null)
+  const animatedSettingsRef = useRef<AnimatedSettings[]>([])
+  const animationControlsRef = useRef<AnimatedSettingsTransitionFunctionReturn[]>([])
+  const [isExited, setIsExited] = useState(() => animator?.node.state === STATES.exited)
+  const [isEntered, setIsEntered] = useState(() => animator?.node.state === STATES.entered)
 
-  const animatedSettingsListReceived = Array.isArray(animated) ? animated : [animated];
-  const animatedSettingsList = animatedSettingsListReceived.filter(Boolean) as AnimatedSettings[];
+  const animatedSettingsListReceived = Array.isArray(animated) ? animated : [animated]
+  const animatedSettingsList = animatedSettingsListReceived.filter(Boolean) as AnimatedSettings[]
 
   // The animations list is passed as a reference so the Animator node subscription
   // and its respective functionalities are only initialized once for performance.
-  animatedSettingsRef.current = animatedSettingsList;
+  animatedSettingsRef.current = animatedSettingsList
 
   useEffect(() => {
     if (!animator) {
-      return;
+      return
     }
 
-    const cancelSubscription = animator.node.subscribe(node => {
-      setIsExited(node.state === STATES.exited);
-      setIsEntered(node.state === STATES.entered);
+    const cancelSubscription = animator.node.subscribe((node) => {
+      setIsExited(node.state === STATES.exited)
+      setIsEntered(node.state === STATES.entered)
 
-      animationControlsRef.current = [];
+      animationControlsRef.current = []
 
-      const element = elementRef.current;
+      const element = elementRef.current
 
       // Weird case if the element is removed and the subscription is not cancelled.
       if (!element) {
-        return;
+        return
       }
 
-      const settingsList = animatedSettingsRef.current;
-      const { duration } = node;
-      const durationTransition = node.state === STATES.entering || node.state === STATES.entered
-        ? duration.enter
-        : duration.exit;
+      const settingsList = animatedSettingsRef.current
+      const { duration } = node
+      const durationTransition =
+        node.state === STATES.entering || node.state === STATES.entered
+          ? duration.enter
+          : duration.exit
 
       settingsList
-        .map(settingsItem => settingsItem.transitions?.[node.state] as AnimatedSettingsTransition)
+        .map((settingsItem) => settingsItem.transitions?.[node.state] as AnimatedSettingsTransition)
         .filter(Boolean)
-        .map(transitions => Array.isArray(transitions) ? transitions : [transitions])
+        .map((transitions) => (Array.isArray(transitions) ? transitions : [transitions]))
         .flat(1)
-        .forEach(transition => {
+        .forEach((transition) => {
           if (typeof transition === 'function') {
             const control = transition({
               element,
               duration: durationTransition
-            });
+            })
             if (control) {
-              animationControlsRef.current.push(control);
+              animationControlsRef.current.push(control)
             }
+          } else {
+            const { duration, delay, easing, options, ...definition } = transition
+            const control = animate(element, definition, {
+              duration: duration || durationTransition,
+              delay,
+              easing,
+              ...options
+            })
+            animationControlsRef.current.push(control)
           }
-          else {
-            const { duration, delay, easing, options, ...definition } = transition;
-            const control = animate(
-              element,
-              definition,
-              { duration: duration || durationTransition, delay, easing, ...options }
-            );
-            animationControlsRef.current.push(control);
-          }
-        });
-    });
+        })
+    })
 
     return () => {
-      cancelSubscription();
-      animationControlsRef.current.forEach(control => control.stop());
-    };
-  }, [animator]);
+      cancelSubscription()
+      animationControlsRef.current.forEach((control) => control.stop())
+    }
+  }, [animator])
 
-  let initialAttributes: object | undefined;
+  let initialAttributes: object | undefined
   if (animator) {
     // TODO: Fix type.
     initialAttributes = animatedSettingsList
-      .map(item => item?.initialAttributes)
-      .reduce<any>((total: object, item: object | undefined) => ({ ...total, ...item }), {});
+      .map((item) => item?.initialAttributes)
+      .reduce<any>((total: object, item: object | undefined) => ({ ...total, ...item }), {})
   }
 
-  let dynamicStyles: CSSProperties | undefined;
+  let dynamicStyles: CSSProperties | undefined
   if (animator) {
     dynamicStyles = animatedSettingsList
-      .map(item => formatAnimatedCSSPropsShorthands(item?.initialStyle))
-      .reduce((total, item) => ({ ...total, ...item }), {});
+      .map((item) => formatAnimatedCSSPropsShorthands(item?.initialStyle))
+      .reduce((total, item) => ({ ...total, ...item }), {})
   }
 
   return createElement(as, {
@@ -147,11 +150,14 @@ const Animated = <
     style: {
       ...style,
       ...dynamicStyles,
-      visibility: animator && ((hideOnExited && isExited) || (hideOnEntered && isEntered)) ? 'hidden' : 'visible'
+      visibility:
+        animator && ((hideOnExited && isExited) || (hideOnEntered && isEntered))
+          ? 'hidden'
+          : 'visible'
     },
     ref: mergeRefs(externalElementRef, elementRef)
-  });
-};
+  })
+}
 
-export type { AnimatedProps };
-export { Animated };
+export type { AnimatedProps }
+export { Animated }

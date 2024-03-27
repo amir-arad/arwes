@@ -1,12 +1,8 @@
-import React, { useMemo, type ReactElement } from 'react';
-import { cx } from '@arwes/tools';
-import {
-  type FrameSVGPath,
-  type FrameSVGStyle,
-  type FrameSVGPathGeneric
-} from '@arwes/frames';
+import React, { useMemo, type ReactElement } from 'react'
+import { cx } from '@arwes/tools'
+import { type FrameSVGPath, type FrameSVGStyle, type FrameSVGPathGeneric } from '@arwes/frames'
 
-import { type FrameSVGProps, FrameSVG } from '../FrameSVG/index.js';
+import { type FrameSVGProps, FrameSVG } from '../FrameSVG/index.js'
 
 interface FrameSVGKranoxProps extends FrameSVGProps {
   squareSize?: number
@@ -17,10 +13,9 @@ interface FrameSVGKranoxProps extends FrameSVGProps {
   className?: string
 }
 
-type Point = [number | string, number | string];
+type Point = [number | string, number | string]
 
-const toPath = (points: Point[]): FrameSVGPath =>
-  points.map((p, i) => [i === 0 ? 'M' : 'L', ...p]);
+const toPath = (points: Point[]): FrameSVGPath => points.map((p, i) => [i === 0 ? 'M' : 'L', ...p])
 
 const FrameSVGKranox = (props: FrameSVGKranoxProps): ReactElement => {
   const {
@@ -31,10 +26,10 @@ const FrameSVGKranox = (props: FrameSVGKranoxProps): ReactElement => {
     padding: p = 0,
     className,
     ...otherProps
-  } = props;
+  } = props
 
   const paths = useMemo(() => {
-    const so = strokeWidth / 2; // Stroke offset.
+    const so = strokeWidth / 2 // Stroke offset.
 
     const polylineStyle: FrameSVGStyle = {
       stroke: 'currentcolor',
@@ -42,7 +37,7 @@ const FrameSVGKranox = (props: FrameSVGKranoxProps): ReactElement => {
       strokeLinejoin: 'round',
       strokeWidth: String(strokeWidth),
       fill: 'none'
-    };
+    }
 
     // Left-bottom > left-top > right-top.
     const leftTopLine: Point[] = [
@@ -59,7 +54,7 @@ const FrameSVGKranox = (props: FrameSVGKranoxProps): ReactElement => {
       [so + p + ss * 2, so + p],
       // Right-top.
       [`100% - ${so + p + ss * 2}`, so + p]
-    ];
+    ]
 
     // Right-top > Right-bottom > Left-bottom.
     const rightBottomLine: Point[] = [
@@ -76,7 +71,7 @@ const FrameSVGKranox = (props: FrameSVGKranoxProps): ReactElement => {
       [`100% - ${so + p + ss * 2}`, `100% - ${so + p}`],
       // Left-bottom.
       [so + p + ss * 2, `100% - ${so + p}`]
-    ];
+    ]
 
     const paths: FrameSVGPathGeneric[] = [
       {
@@ -97,10 +92,10 @@ const FrameSVGKranox = (props: FrameSVGKranoxProps): ReactElement => {
         style: polylineStyle,
         path: toPath(rightBottomLine)
       }
-    ];
+    ]
 
-    return paths;
-  }, [sll, lll, ss, strokeWidth, p]);
+    return paths
+  }, [sll, lll, ss, strokeWidth, p])
 
   return (
     <FrameSVG
@@ -108,8 +103,8 @@ const FrameSVGKranox = (props: FrameSVGKranoxProps): ReactElement => {
       className={cx('arwes-react-frames-framesvgkranox', className)}
       paths={paths}
     />
-  );
-};
+  )
+}
 
-export type { FrameSVGKranoxProps };
-export { FrameSVGKranox };
+export type { FrameSVGKranoxProps }
+export { FrameSVGKranox }

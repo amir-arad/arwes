@@ -6,11 +6,11 @@ import React, {
   type CSSProperties,
   useRef,
   useCallback
-} from 'react';
-import { cx } from '@arwes/tools';
-import { mergeRefs } from '@arwes/react-tools';
-import { type FrameSVGPathGeneric, renderFrameSVGPaths } from '@arwes/frames';
-import { useFrameSVGRenderer } from '../useFrameSVGRenderer/index.js';
+} from 'react'
+import { cx } from '@arwes/tools'
+import { mergeRefs } from '@arwes/react-tools'
+import { type FrameSVGPathGeneric, renderFrameSVGPaths } from '@arwes/frames'
+import { useFrameSVGRenderer } from '../useFrameSVGRenderer/index.js'
 
 interface FrameSVGProps extends SVGProps<SVGSVGElement> {
   paths?: FrameSVGPathGeneric[]
@@ -30,28 +30,31 @@ const FrameSVG = (props: FrameSVGProps): ReactElement => {
     elementRef,
     children,
     ...otherProps
-  } = props;
+  } = props
 
-  const svgRef = useRef<SVGSVGElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null)
 
-  const onRender = useCallback((svg: SVGSVGElement, width: number, height: number) => {
-    if (paths) {
-      renderFrameSVGPaths(svg, width, height, paths);
-    }
-    onRenderExternal?.(svg, width, height);
-  }, [paths]);
+  const onRender = useCallback(
+    (svg: SVGSVGElement, width: number, height: number) => {
+      if (paths) {
+        renderFrameSVGPaths(svg, width, height, paths)
+      }
+      onRenderExternal?.(svg, width, height)
+    },
+    [paths]
+  )
 
-  useFrameSVGRenderer(svgRef, onRender);
+  useFrameSVGRenderer(svgRef, onRender)
 
   return (
     <svg
-      role='presentation'
+      role="presentation"
       ref={mergeRefs(svgRef, elementRef)}
       className={cx('arwes-react-frames-framesvg', className)}
-      xmlns='http://www.w3.org/2000/svg'
+      xmlns="http://www.w3.org/2000/svg"
       // Even if it is still resized automatically, in case there is a delay
       // or the ResizeObserver API is not available, the SVG should be resized.
-      preserveAspectRatio='none'
+      preserveAspectRatio="none"
       style={{
         position: 'absolute',
         zIndex: -1,
@@ -71,8 +74,8 @@ const FrameSVG = (props: FrameSVGProps): ReactElement => {
     >
       {children}
     </svg>
-  );
-};
+  )
+}
 
-export type { FrameSVGProps };
-export { FrameSVG };
+export type { FrameSVGProps }
+export { FrameSVG }

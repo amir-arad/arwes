@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css'
 
 export const root = style({
   display: 'grid',
@@ -16,4 +16,4 @@ export const root = style({
       fontSize: '1rem'
     }
   }
-});
+})

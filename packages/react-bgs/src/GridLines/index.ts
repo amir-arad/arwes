@@ -1,7 +1,7 @@
-import { memo } from '@arwes/react-tools';
-import { GridLines as Component } from './GridLines.js';
+import { memo } from '@arwes/react-tools'
+import { GridLines as Component } from './GridLines.js'
 
-const GridLines = memo(Component);
+const GridLines = memo(Component)
 
-export * from './GridLines.types.js';
-export { GridLines };
+export * from './GridLines.types.js'
+export { GridLines }

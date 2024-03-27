@@ -1,4 +1,4 @@
-import type { AnimatorDuration } from '@arwes/animator';
+import type { AnimatorDuration } from '@arwes/animator'
 
 export interface AnimatorGeneralProviderSettings {
   /**

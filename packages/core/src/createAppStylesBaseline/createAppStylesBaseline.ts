@@ -1,28 +1,31 @@
-import type { Properties as CSSProperties } from 'csstype';
-import { type AppTheme } from '@arwes/theme';
-import { createFrameOctagonClip } from '@arwes/frames';
+import type { Properties as CSSProperties } from 'csstype'
+import { type AppTheme } from '@arwes/theme'
+import { createFrameOctagonClip } from '@arwes/frames'
 
 const createAppStylesBaseline = (theme: AppTheme): Record<string, CSSProperties> => {
-  const { dark, space, colors, fontFamilies, typography, transitions } = theme;
+  const { dark, space, colors, fontFamilies, typography, transitions } = theme
 
   // Remove "fontSize" from main typography styles since the browser should set this value.
-  const { fontSize: _typographyMainStylesFontSize, ...typographyMainStyles } = typography.body(1);
+  const { fontSize: _typographyMainStylesFontSize, ...typographyMainStyles } = typography.body(1)
 
-  type PaletteName = keyof typeof theme.colors;
-  const themeNames = Object.keys(theme.colors) as unknown as PaletteName[];
+  type PaletteName = keyof typeof theme.colors
+  const themeNames = Object.keys(theme.colors) as unknown as PaletteName[]
 
-  const blockquotesThemes = themeNames.reduce((themes: Record<string, CSSProperties>, themeName: PaletteName) => {
-    const palette = colors[themeName];
-    themes[`blockquote[data-arwes-global-palette=${String(themeName)}]`] = {
-      borderColor: palette.main(4),
-      background: `linear-gradient(
+  const blockquotesThemes = themeNames.reduce(
+    (themes: Record<string, CSSProperties>, themeName: PaletteName) => {
+      const palette = colors[themeName]
+      themes[`blockquote[data-arwes-global-palette=${String(themeName)}]`] = {
+        borderColor: palette.main(4),
+        background: `linear-gradient(
         to right,
         ${palette.main(4, { alpha: 0.15 })},
         ${palette.main(4, { alpha: 0.05 })}
       )`
-    };
-    return themes;
-  }, {});
+      }
+      return themes
+    },
+    {}
+  )
 
   return {
     '*, *::before, *::after': {
@@ -62,7 +65,8 @@ const createAppStylesBaseline = (theme: AppTheme): Record<string, CSSProperties>
     '::-webkit-scrollbar-thumb': {
       border: `0.2rem solid ${dark ? colors.primary.bg(4) : 'white'}`,
       background: colors.secondary.main(7),
-      transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, outline',
+      transitionProperty:
+        'color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, outline',
       transitionTimingFunction: 'ease-out',
       transitionDuration: transitions.duration(1)
     },
@@ -150,7 +154,8 @@ const createAppStylesBaseline = (theme: AppTheme): Record<string, CSSProperties>
       color: colors.secondary.text(dark ? 3 : 7),
       textShadow: dark ? `0 0 1px ${colors.secondary.text(3)}` : undefined,
       textDecoration: 'none',
-      transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, outline',
+      transitionProperty:
+        'color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, outline',
       transitionDuration: transitions.duration(1),
       transitionTimingFunction: 'ease-out'
     },
@@ -254,15 +259,11 @@ const createAppStylesBaseline = (theme: AppTheme): Record<string, CSSProperties>
     },
 
     ':where(tbody tr)': {
-      backgroundColor: dark
-        ? colors.primary.main(8, { alpha: 0.1 })
-        : undefined
+      backgroundColor: dark ? colors.primary.main(8, { alpha: 0.1 }) : undefined
     },
 
     ':where(tbody tr:hover)': {
-      backgroundColor: dark
-        ? colors.primary.main(8, { alpha: 0.3 })
-        : colors.primary.deco(4)
+      backgroundColor: dark ? colors.primary.main(8, { alpha: 0.3 }) : colors.primary.deco(4)
     },
 
     'th, td': {
@@ -271,7 +272,8 @@ const createAppStylesBaseline = (theme: AppTheme): Record<string, CSSProperties>
     },
 
     tr: {
-      transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, outline',
+      transitionProperty:
+        'color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, outline',
       transitionTimingFunction: 'ease-out',
       transitionDuration: transitions.duration(1)
     },
@@ -295,9 +297,7 @@ const createAppStylesBaseline = (theme: AppTheme): Record<string, CSSProperties>
 
     figcaption: {
       padding: space([2, 4]),
-      backgroundColor: dark
-        ? colors.primary.main(8, { alpha: 0.2 })
-        : colors.primary.text(0),
+      backgroundColor: dark ? colors.primary.main(8, { alpha: 0.2 }) : colors.primary.text(0),
       color: dark ? undefined : colors.primary.text(7),
       clipPath: createFrameOctagonClip({
         squareSize: space(3),
@@ -336,7 +336,7 @@ const createAppStylesBaseline = (theme: AppTheme): Record<string, CSSProperties>
           borderBottom: `1px solid ${colors.primary.deco(10)}`
         }
       : {}
-  };
-};
+  }
+}
 
-export { createAppStylesBaseline };
+export { createAppStylesBaseline }

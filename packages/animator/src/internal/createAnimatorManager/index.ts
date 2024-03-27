@@ -1,1 +1,1 @@
-export * from './createAnimatorManager.js';
+export * from './createAnimatorManager.js'

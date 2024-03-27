@@ -1,20 +1,27 @@
-import React, { type ReactElement, useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
-import { AnimatedX } from '@arwes/react-animated';
+import React, { type ReactElement, useState, useEffect } from 'react'
+import { createRoot } from 'react-dom/client'
+import { AnimatedX } from '@arwes/react-animated'
 
 const Sandbox = (): ReactElement => {
-  const [position, setPosition] = useState('a');
+  const [position, setPosition] = useState('a')
 
   useEffect(() => {
-    const tid = setInterval(() => setPosition(p => {
-      switch (p) {
-        case 'a': return 'b';
-        case 'b': return 'c';
-        default: return 'a';
-      }
-    }), 1000);
-    return () => clearInterval(tid);
-  }, []);
+    const tid = setInterval(
+      () =>
+        setPosition((p) => {
+          switch (p) {
+            case 'a':
+              return 'b'
+            case 'b':
+              return 'c'
+            default:
+              return 'a'
+          }
+        }),
+      1000
+    )
+    return () => clearInterval(tid)
+  }, [])
 
   return (
     <AnimatedX
@@ -29,7 +36,7 @@ const Sandbox = (): ReactElement => {
         }
       }}
     />
-  );
-};
+  )
+}
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
+createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)

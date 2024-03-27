@@ -1,1 +1,1 @@
-export * from './getTransitionTextDuration.js';
+export * from './getTransitionTextDuration.js'
