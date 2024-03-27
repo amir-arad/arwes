@@ -34,4 +34,6 @@ const aaVisibility = (): AnimatedSettings => {
   };
 };
 
-export { aa, aaOpacity, aaVisibility };
+const aaFlicker = aaVisibility;
+
+export { aa, aaOpacity, aaVisibility, aaFlicker };
