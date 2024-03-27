@@ -15,6 +15,7 @@ jobs:
           node-version: 20
       - run: npm install
       - run: npm run build
+      - run: npm run format-check
       - run: npm run lint-js
       - run: npm run lint-md
       - run: npm run test -- --run
