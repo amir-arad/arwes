@@ -1,4 +1,4 @@
-/* eslint-env jest */
+import { vi, test, expect, beforeEach, afterEach } from 'vitest';
 
 import { createBleepsManager } from './createBleepsManager';
 
@@ -6,9 +6,9 @@ beforeEach(() => {
   class AudioContext {
     createGain (): object {
       return {
-        connect: jest.fn(),
+        connect: vi.fn(),
         gain: {
-          setValueAtTime: jest.fn()
+          setValueAtTime: vi.fn()
         }
       };
     }
@@ -38,6 +38,7 @@ test('Should create bleeps manager structure', () => {
   });
 });
 
+// TODO:
 /*
 test('Should create and update bleeps with common and category settings changes', () => {
   let bleeps: any;

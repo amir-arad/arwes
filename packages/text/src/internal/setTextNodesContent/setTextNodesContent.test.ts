@@ -1,4 +1,4 @@
-/* eslint-env jest */
+import { test } from 'vitest';
 
 test.todo('Should set the node children text nodes length as provided new length');
 

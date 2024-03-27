@@ -1,4 +1,4 @@
-/* eslint-env jest */
+import { vi, test, expect, beforeEach, afterEach } from 'vitest';
 
 import { createBleep } from './createBleep';
 
@@ -8,26 +8,26 @@ beforeEach(() => {
   class AudioContext {
     state = 'suspended';
     destination = mockAudioContextDestination;
-    resume = jest.fn();
+    resume = vi.fn();
 
     createGain (): object {
       return {
-        connect: jest.fn(),
+        connect: vi.fn(),
         gain: {
           value: 0,
-          setValueAtTime: jest.fn()
+          setValueAtTime: vi.fn()
         }
       };
     }
   };
 
   class Audio {
-    canPlayType = jest.fn(type => type === 'audio/mpeg' ? 'probably' : '');
+    canPlayType = vi.fn(type => type === 'audio/mpeg' ? 'probably' : '');
   }
 
   window.AudioContext = AudioContext as any;
   window.Audio = Audio as any;
-  window.fetch = jest.fn();
+  window.fetch = vi.fn();
 });
 
 afterEach(() => {

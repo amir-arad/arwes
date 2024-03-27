@@ -1,4 +1,4 @@
-/* eslint-env jest */
+import { test, expect } from 'vitest';
 
 import type { AnimatorControl } from '../types';
 import { ANIMATOR_DEFAULT_SETTINGS } from '../constants';

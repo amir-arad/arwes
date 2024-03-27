@@ -1,4 +1,4 @@
-/* eslint-env jest */
+import { test, expect } from 'vitest';
 
 import type { AnimatorNode } from '../../types';
 import { ANIMATOR_MANAGER_NAMES } from '../../constants';

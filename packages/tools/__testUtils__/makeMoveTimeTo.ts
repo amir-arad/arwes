@@ -1,9 +1,10 @@
-/* eslint-env jest */
 /* istanbul ignore file */
 
-type JestMoveTimeTo = (timeToMoveSeconds: number) => void;
+import { vi } from 'vitest';
 
-function makeJestMoveTimeTo (): JestMoveTimeTo {
+type MoveTimeTo = (timeToMoveSeconds: number) => void;
+
+function makeMoveTimeTo (): MoveTimeTo {
   let currentTimeMoved = 0;
 
   function jestMoveTimeTo (timeToMoveSeconds: number): void {
@@ -16,11 +17,11 @@ function makeJestMoveTimeTo (): JestMoveTimeTo {
 
     currentTimeMoved = timeToMoveMs;
 
-    jest.advanceTimersByTime(timeOffset);
+    vi.advanceTimersByTime(timeOffset);
   };
 
   return jestMoveTimeTo;
 }
 
-export type { JestMoveTimeTo };
-export { makeJestMoveTimeTo };
+export type { MoveTimeTo };
+export { makeMoveTimeTo };
