@@ -1,6 +1,6 @@
 import { timeline } from 'motion';
 
-import type { AnimatedSettings } from '../types';
+import type { AnimatedSettings } from '../types.js';
 
 const aa = (prop: string, from: number | string, to: number | string, back?: number | string): AnimatedSettings => ({
   transitions: {

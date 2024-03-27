@@ -1,4 +1,4 @@
-import type { FrameSVGPath, FrameSVGPathCommand, FrameSVGPathDimension } from '../types';
+import type { FrameSVGPath, FrameSVGPathCommand, FrameSVGPathDimension } from '../types.js';
 
 const formatDimension = (size: number, dimension: FrameSVGPathDimension): string => {
   if (typeof dimension === 'number') {

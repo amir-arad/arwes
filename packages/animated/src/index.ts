@@ -1,2 +1,2 @@
-export * from './easing/index';
-export * from './createAnimation/index';
+export * from './easing/index.js';
+export * from './createAnimation/index.js';

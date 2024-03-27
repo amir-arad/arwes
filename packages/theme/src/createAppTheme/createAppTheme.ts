@@ -9,9 +9,9 @@ import type {
   ThemeStyle,
   ThemeSettingsMultiplier,
   ThemeMultiplier
-} from '../types';
-import { createCreateTheme } from '../createCreateTheme/index';
-import { deepExtend } from './deepExtend';
+} from '../types.js';
+import { createCreateTheme } from '../createCreateTheme/index.js';
+import { deepExtend } from './deepExtend.js';
 
 // THEME SETTINGS TYPES
 

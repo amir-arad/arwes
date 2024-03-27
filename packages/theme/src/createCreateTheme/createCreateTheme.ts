@@ -1,11 +1,11 @@
 import type { PartialDeep } from '@arwes/tools';
 
-import type { ThemeCreatorStructure, ThemeCreator } from '../types';
-import { createThemeMultiplier } from '../createThemeMultiplier/index';
-import { createThemeUnit } from '../createThemeUnit/index';
-import { createThemeColor } from '../createThemeColor/index';
-import { createThemeStyle } from '../createThemeStyle/index';
-import { createThemeBreakpoints } from '../createThemeBreakpoints/index';
+import type { ThemeCreatorStructure, ThemeCreator } from '../types.js';
+import { createThemeMultiplier } from '../createThemeMultiplier/index.js';
+import { createThemeUnit } from '../createThemeUnit/index.js';
+import { createThemeColor } from '../createThemeColor/index.js';
+import { createThemeStyle } from '../createThemeStyle/index.js';
+import { createThemeBreakpoints } from '../createThemeBreakpoints/index.js';
 
 // TODO: Set typing.
 const extendDeepObject = (structure: any, defaults: any, extension: any): any => {

@@ -10,7 +10,7 @@ import React, {
 import { cx } from '@arwes/tools';
 import { mergeRefs } from '@arwes/react-tools';
 import { type FrameSVGPathGeneric, renderFrameSVGPaths } from '@arwes/frames';
-import { useFrameSVGRenderer } from '../useFrameSVGRenderer/index';
+import { useFrameSVGRenderer } from '../useFrameSVGRenderer/index.js';
 
 interface FrameSVGProps extends SVGProps<SVGSVGElement> {
   paths?: FrameSVGPathGeneric[]

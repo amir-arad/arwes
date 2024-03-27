@@ -1,1 +1,1 @@
-export * from './createBleepsManager';
+export * from './createBleepsManager.js';

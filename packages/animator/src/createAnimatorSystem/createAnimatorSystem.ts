@@ -5,9 +5,9 @@ import type {
   AnimatorSubscriber,
   AnimatorNode,
   AnimatorSystem
-} from '../types';
-import { createAnimatorMachine } from '../internal/createAnimatorMachine/index';
-import { createAnimatorManager } from '../internal/createAnimatorManager/index';
+} from '../types.js';
+import { createAnimatorMachine } from '../internal/createAnimatorMachine/index.js';
+import { createAnimatorManager } from '../internal/createAnimatorManager/index.js';
 
 const createAnimatorSystem = (): AnimatorSystem => {
   const systemId = `s${Math.random()}`.replace('.', '');

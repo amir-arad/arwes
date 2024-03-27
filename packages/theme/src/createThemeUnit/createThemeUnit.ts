@@ -1,4 +1,4 @@
-import type { ThemeSettingsUnit, ThemeUnit } from '../types';
+import type { ThemeSettingsUnit, ThemeUnit } from '../types.js';
 
 const getSeriesItem = (list: string[], indexProvided: number): string => {
   const index = Math.round(indexProvided);

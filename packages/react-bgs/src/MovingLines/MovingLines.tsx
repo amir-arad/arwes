@@ -6,7 +6,7 @@ import { easing } from '@arwes/animated';
 import { ANIMATOR_STATES, type AnimatorNode } from '@arwes/animator';
 import { useAnimator } from '@arwes/react-animator';
 
-import { type MovingLinesProps, type MovingLinesLineConfig, type MovingLinesLine } from './MovingLines.types';
+import { type MovingLinesProps, type MovingLinesLineConfig, type MovingLinesLine } from './MovingLines.types.js';
 
 const { entering, exiting, exited } = ANIMATOR_STATES;
 

@@ -1,1 +1,1 @@
-export * from './createFrameKranoxClip';
+export * from './createFrameKranoxClip.js';

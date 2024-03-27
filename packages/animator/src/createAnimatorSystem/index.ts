@@ -1,1 +1,1 @@
-export * from './createAnimatorSystem';
+export * from './createAnimatorSystem.js';

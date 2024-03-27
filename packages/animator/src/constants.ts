@@ -4,7 +4,7 @@ import type {
   AnimatorManagerName,
   AnimatorDuration,
   AnimatorSettings
-} from './types';
+} from './types.js';
 
 // States
 export const ANIMATOR_STATES: { [P in AnimatorState]: P } = Object.freeze({

@@ -1,7 +1,7 @@
 import { memo } from '@arwes/react-tools';
-import { FrameSVGKranox as Component } from './FrameSVGKranox';
+import { FrameSVGKranox as Component } from './FrameSVGKranox.js';
 
 const FrameSVGKranox = memo(Component);
 
-export * from './FrameSVGKranox';
+export * from './FrameSVGKranox.js';
 export { FrameSVGKranox };

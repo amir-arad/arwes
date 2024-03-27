@@ -2,7 +2,7 @@ import React, { useMemo, type ReactElement } from 'react';
 import { cx } from '@arwes/tools';
 import { type FrameSVGPathGeneric, type FrameSVGPath } from '@arwes/frames';
 
-import { type FrameSVGProps, FrameSVG } from '../FrameSVG/index';
+import { type FrameSVGProps, FrameSVG } from '../FrameSVG/index.js';
 
 interface FrameSVGCornersProps extends FrameSVGProps {
   strokeWidth?: number

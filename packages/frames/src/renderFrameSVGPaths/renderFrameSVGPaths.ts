@@ -1,5 +1,5 @@
-import type { FrameSVGPathGeneric } from '../types';
-import { formatFrameSVGPath } from '../formatFrameSVGPath/index';
+import type { FrameSVGPathGeneric } from '../types.js';
+import { formatFrameSVGPath } from '../formatFrameSVGPath/index.js';
 
 const renderFrameSVGPaths = (
   parentElement: SVGElement,

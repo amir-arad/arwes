@@ -23,8 +23,8 @@ import type {
   AnimatedSettingsTransition,
   AnimatedSettingsTransitionFunctionReturn,
   AnimatedProp
-} from '../types';
-import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index';
+} from '../types.js';
+import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js';
 
 interface AnimatedProps<E extends HTMLElement | SVGElement = HTMLDivElement> {
   elementRef?: ForwardedRef<E>

@@ -1,1 +1,1 @@
-export * from './walkTextNodes';
+export * from './walkTextNodes.js';

@@ -6,7 +6,7 @@ import { easing } from '@arwes/animated';
 import { ANIMATOR_STATES, type AnimatorNode } from '@arwes/animator';
 import { useAnimator } from '@arwes/react-animator';
 
-import { type PuffsProps } from './Puffs.types';
+import { type PuffsProps } from './Puffs.types.js';
 
 type AnimateControl = ReturnType<typeof animate>;
 

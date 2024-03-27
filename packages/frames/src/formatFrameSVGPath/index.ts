@@ -1,1 +1,1 @@
-export * from './formatFrameSVGPath';
+export * from './formatFrameSVGPath.js';

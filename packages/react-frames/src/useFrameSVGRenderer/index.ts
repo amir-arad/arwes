@@ -1,1 +1,1 @@
-export * from './useFrameSVGRenderer';
+export * from './useFrameSVGRenderer.js';

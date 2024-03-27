@@ -1,1 +1,1 @@
-export * from './createAppTheme';
+export * from './createAppTheme.js';

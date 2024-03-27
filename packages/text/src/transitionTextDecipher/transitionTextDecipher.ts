@@ -1,9 +1,9 @@
 import { randomizeList } from '@arwes/tools';
 import { type Animation, createAnimation } from '@arwes/animated';
 
-import type { TextTransitionProps } from '../types';
-import { walkTextNodes } from '../internal/walkTextNodes/index';
-import { setTextNodesContent } from '../internal/setTextNodesContent/index';
+import type { TextTransitionProps } from '../types.js';
+import { walkTextNodes } from '../internal/walkTextNodes/index.js';
+import { setTextNodesContent } from '../internal/setTextNodesContent/index.js';
 
 const LETTERS = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ>!·$%&/()=?¿≤|@#';
 

@@ -6,7 +6,7 @@ import {
   type FrameSVGStyle
 } from '@arwes/frames';
 
-import { type FrameSVGProps, FrameSVG } from '../FrameSVG/index';
+import { type FrameSVGProps, FrameSVG } from '../FrameSVG/index.js';
 
 interface FrameSVGLinesProps extends FrameSVGProps {
   largeLineWidth?: number

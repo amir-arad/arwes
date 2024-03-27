@@ -1,4 +1,4 @@
-import type { Styles } from '../types';
+import type { Styles } from '../types.js';
 
 // TODO: Merge deeply nested style objects.
 

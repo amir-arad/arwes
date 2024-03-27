@@ -3,7 +3,7 @@ import React, { useMemo, useEffect } from 'react';
 import type { BleepsManagerProps } from '@arwes/bleeps';
 import { createBleepsManager } from '@arwes/bleeps';
 
-import { BleepsManagerContext } from '../internal/BleepsManagerContext';
+import { BleepsManagerContext } from '../internal/BleepsManagerContext.js';
 
 interface BleepsProviderSettings <BleepsNames extends string = string> extends BleepsManagerProps<BleepsNames> {}
 

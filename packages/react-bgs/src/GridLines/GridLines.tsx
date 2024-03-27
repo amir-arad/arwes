@@ -5,7 +5,7 @@ import { mergeRefs } from '@arwes/react-tools';
 import { ANIMATOR_STATES, type AnimatorNode } from '@arwes/animator';
 import { useAnimator } from '@arwes/react-animator';
 
-import { type GridLinesProps } from './GridLines.types';
+import { type GridLinesProps } from './GridLines.types.js';
 
 const { entering, exiting } = ANIMATOR_STATES;
 

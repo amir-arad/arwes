@@ -1,4 +1,4 @@
-import type { ThemeSettingsMultiplierFunction, ThemeSettingsMultiplier } from '../types';
+import type { ThemeSettingsMultiplierFunction, ThemeSettingsMultiplier } from '../types.js';
 
 const createThemeMultiplier = (settings: ThemeSettingsMultiplier) => (index: number): number => {
   if (Number.isFinite(settings)) {

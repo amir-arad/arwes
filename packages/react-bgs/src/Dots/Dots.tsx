@@ -5,8 +5,8 @@ import { mergeRefs } from '@arwes/react-tools';
 import { ANIMATOR_STATES, type AnimatorNode } from '@arwes/animator';
 import { useAnimator } from '@arwes/react-animator';
 
-import { type DotsProps } from './Dots.types';
-import { getDistanceFromOriginToCornerProgress } from './getDistanceFromOriginToCornerProgress';
+import { type DotsProps } from './Dots.types.js';
+import { getDistanceFromOriginToCornerProgress } from './getDistanceFromOriginToCornerProgress.js';
 
 const { entering, exiting } = ANIMATOR_STATES;
 

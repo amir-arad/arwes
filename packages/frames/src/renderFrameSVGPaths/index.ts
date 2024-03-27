@@ -1,1 +1,1 @@
-export * from './renderFrameSVGPaths';
+export * from './renderFrameSVGPaths.js';

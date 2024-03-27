@@ -5,8 +5,8 @@ import type {
   BleepsManagerPropsUpdatable,
   BleepsManager,
   BleepsManagerProps
-} from '../types';
-import { createBleep } from '../createBleep/index';
+} from '../types.js';
+import { createBleep } from '../createBleep/index.js';
 
 const createBleepsManager = <Names extends string>(
   props: BleepsManagerProps<Names>

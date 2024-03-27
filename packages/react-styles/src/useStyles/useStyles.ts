@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 
-import { type Styles, type StylesCreatorFunction, type StylesCreator } from '../types';
-import { STYLES_EMPTY } from '../constants';
-import { mergeThemeStyles } from '../internal/mergeThemeStyles';
+import { type Styles, type StylesCreatorFunction, type StylesCreator } from '../types.js';
+import { STYLES_EMPTY } from '../constants.js';
+import { mergeThemeStyles } from '../internal/mergeThemeStyles.js';
 
 const useStyles = <P = undefined>(
   stylesList: [StylesCreatorFunction<P>, StylesCreator<P>],

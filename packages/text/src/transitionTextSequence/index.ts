@@ -1,1 +1,1 @@
-export * from './transitionTextSequence';
+export * from './transitionTextSequence.js';

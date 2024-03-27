@@ -1,4 +1,4 @@
-import type { ThemeSettingsBreakpoints, ThemeBreakpoints } from '../types';
+import type { ThemeSettingsBreakpoints, ThemeBreakpoints } from '../types.js';
 
 const createThemeBreakpoints = (settings: ThemeSettingsBreakpoints = []): ThemeBreakpoints => {
   const getBreakpointValue = (key: string | number): string => {

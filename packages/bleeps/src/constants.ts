@@ -1,4 +1,4 @@
-import type { BleepCategory } from './types';
+import type { BleepCategory } from './types.js';
 
 export const BLEEPS_CATEGORIES: { [P in BleepCategory]: P } = {
   background: 'background',

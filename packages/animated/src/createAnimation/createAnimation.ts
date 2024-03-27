@@ -1,4 +1,4 @@
-import { type Easing, easing } from '../easing/index';
+import { type Easing, easing } from '../easing/index.js';
 
 interface AnimationProps {
   /**

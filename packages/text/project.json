@@ -41,19 +41,6 @@
         }
       ]
     },
-    "build-umd": {
-      "executor": "nx:run-script",
-      "options": {
-        "script": "build-umd"
-      },
-      "outputs": ["build/umd"],
-      "dependsOn": [
-        {
-          "target": "build-umd",
-          "projects": "dependencies"
-        }
-      ]
-    },
     "build-types": {
       "executor": "nx:run-script",
       "options": {

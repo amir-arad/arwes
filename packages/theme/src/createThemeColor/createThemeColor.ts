@@ -1,4 +1,4 @@
-import type { ThemeSettingsColor, ThemeColorOptions, ThemeColor } from '../types';
+import type { ThemeSettingsColor, ThemeColorOptions, ThemeColor } from '../types.js';
 
 const minMax = (min: number, max: number) => (value: number) => Math.min(max, Math.max(min, value));
 const minMax0to360 = minMax(0, 360);

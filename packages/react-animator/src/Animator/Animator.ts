@@ -22,9 +22,9 @@ import {
   ANIMATOR_ACTIONS as ACTIONS,
   createAnimatorSystem
 } from '@arwes/animator';
-import { AnimatorContext } from '../internal/AnimatorContext/index';
-import { AnimatorGeneralContext } from '../internal/AnimatorGeneralContext/index';
-import type { AnimatorProps } from './Animator.types';
+import { AnimatorContext } from '../internal/AnimatorContext/index.js';
+import { AnimatorGeneralContext } from '../internal/AnimatorGeneralContext/index.js';
+import type { AnimatorProps } from './Animator.types.js';
 
 const setNodeRefValue = (nodeRef: ForwardedRef<AnimatorNode> | undefined, node: AnimatorNode | null): void => {
   if (typeof nodeRef === 'function') {

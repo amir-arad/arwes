@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { useTheme } from '@emotion/react';
 
-import { type Styles, type StylesThemeCreator, type StylesThemeCreatorFunction } from '../types';
-import { STYLES_EMPTY } from '../constants';
-import { mergeThemeStyles } from '../internal/mergeThemeStyles';
+import { type Styles, type StylesThemeCreator, type StylesThemeCreatorFunction } from '../types.js';
+import { STYLES_EMPTY } from '../constants.js';
+import { mergeThemeStyles } from '../internal/mergeThemeStyles.js';
 
 const useThemeStyles = <P = null>(
   styleCreators: [StylesThemeCreatorFunction<P>, StylesThemeCreator<P>?],

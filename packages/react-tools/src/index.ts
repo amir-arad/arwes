@@ -1,2 +1,2 @@
-export * from './memo/index';
-export * from './mergeRefs/index';
+export * from './memo/index.js';
+export * from './mergeRefs/index.js';

@@ -1,1 +1,1 @@
-export * from './useAnimatorGeneral';
+export * from './useAnimatorGeneral.js';

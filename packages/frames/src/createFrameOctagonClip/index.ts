@@ -1,1 +1,1 @@
-export * from './createFrameOctagonClip';
+export * from './createFrameOctagonClip.js';

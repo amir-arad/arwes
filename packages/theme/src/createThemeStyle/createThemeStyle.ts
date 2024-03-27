@@ -1,4 +1,4 @@
-import type { ThemeSettingsStyle, ThemeStyleValue } from '../types';
+import type { ThemeSettingsStyle, ThemeStyleValue } from '../types.js';
 
 const createThemeStyle = (series: ThemeSettingsStyle) => {
   return (indexProvided: number): ThemeStyleValue => {

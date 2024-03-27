@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import type { BleepsManager } from '@arwes/bleeps';
 
-import { BleepsManagerContext } from '../internal/BleepsManagerContext';
+import { BleepsManagerContext } from '../internal/BleepsManagerContext.js';
 
 interface UseBleepsProps {
   disabled?: boolean | undefined

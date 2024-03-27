@@ -4,8 +4,8 @@ import type {
   AnimatedAnimations,
   AnimatedAnimationsCreator,
   AnimatedAnimationsCreatorFunction
-} from '../types';
-import { ANIMATED_ANIMATIONS_EMPTY } from '../constants';
+} from '../types.js';
+import { ANIMATED_ANIMATIONS_EMPTY } from '../constants.js';
 
 const useAnimatedAnimations = <P = undefined>(
   animationsList: [

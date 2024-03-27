@@ -1,1 +1,1 @@
-export { createCreateTheme } from './createCreateTheme';
+export { createCreateTheme } from './createCreateTheme.js';
