@@ -1,5 +1,4 @@
-/* eslint-env jest */
-
+import { vi, test, expect, beforeEach, afterEach } from 'vitest';
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 
@@ -9,9 +8,9 @@ beforeEach(() => {
   class AudioContext {
     createGain (): object {
       return {
-        connect: jest.fn(),
+        connect: vi.fn(),
         gain: {
-          setValueAtTime: jest.fn()
+          setValueAtTime: vi.fn()
         }
       };
     }

@@ -1,5 +1,4 @@
-/* eslint-env jest */
-
+import { test, expect, afterEach } from 'vitest';
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 
