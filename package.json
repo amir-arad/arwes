@@ -31,7 +31,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "glob": "^10.2.2",
-    "husky": "^8.0.3",
+    "husky": "^9.0.11",
     "jsdom": "^24.0.0",
     "lerna": "^6.6.1",
     "markdownlint": "^0.28.1",
@@ -48,7 +48,7 @@
     "webpack-dev-server": "^4.13.3"
   },
   "scripts": {
-    "postinstall": "husky install && lerna bootstrap",
+    "postinstall": "husky && lerna bootstrap",
     "lint": "npm run lint-js && npm run lint-md",
     "lint-js": "eslint .",
     "lint-js-fix": "eslint . --fix",
