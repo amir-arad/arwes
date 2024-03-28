@@ -25,6 +25,8 @@
     "**/out",
     "**/.next",
     "**/.deprecated",
-    "**/__testUtils__"
+    "**/__testUtils__",
+    "**/webpack.config.js",
+    "**/next.config.js"
   ]
 }

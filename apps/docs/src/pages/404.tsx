@@ -1,5 +1,5 @@
 import { type ReactElement, useRef } from 'react'
-import { VoiceError } from 'iconoir-react'
+import { VoiceXmark } from 'iconoir-react'
 import {
   Animator,
   Animated,
@@ -95,7 +95,7 @@ const Page = (): ReactElement => {
                   }
                 ]}
               >
-                <VoiceError role="presentation" className="icon" />
+                <VoiceXmark role="presentation" className="icon" />
                 <h1 className="title">Not Found</h1>
               </Animated>
             </Animator>

@@ -113,7 +113,7 @@ module.exports = {
     allowedHosts: 'all',
     compress: true,
     host: '127.0.0.1',
-    port: 9100,
+    port: 9001,
     open: '/perf'
   }
 }

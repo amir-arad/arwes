@@ -11,6 +11,6 @@
   "scripts": {
     "build": "sh ./scripts/build.sh",
     "dev": "sh ./scripts/dev.sh",
-    "start": "serve ./build -p 9100"
+    "start": "serve ./build -p 9001"
   }
 }

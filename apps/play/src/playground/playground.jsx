@@ -1,9 +1,8 @@
 /** @jsx jsx */
 /* eslint-disable import/no-webpack-loader-syntax */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 
 import LERNA_SETTINGS from '@repository/lerna.json'
-
-const GA_TRACKING_ID = 'UA-50433259-2'
 
 // TODO: Use the same icons for the docs website and the playground.
 const ICONS = {
@@ -135,29 +134,6 @@ window.noxtron.setupPlayground(({ emotion, Icon }) => {
       ]
     },
     getTypeDefinitions: () => import('./typeDefinitions.js').then((m) => m.typeDefinitions),
-    getSandboxes: () => import('./sandboxes.js').then((m) => m.sandboxes),
-    onSandboxChange: () => {
-      // Google Analytics page tracking.
-      const { pathname, search } = window.location
-      window.gtag?.('config', GA_TRACKING_ID, { page_path: `${pathname}${search}` })
-    }
+    getSandboxes: () => import('./sandboxes.js').then((m) => m.sandboxes)
   }
 })
-
-// Google Analytics.
-if (process.env.NODE_ENV === 'production' && window.location.host.includes('arwes.dev')) {
-  const gtagScript = document.createElement('script')
-  gtagScript.async = true
-  gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_TRACKING_ID
-  document.head.appendChild(gtagScript)
-  const win = window
-  win.dataLayer = win.dataLayer || []
-  function gtag() {
-    win.dataLayer.push(arguments)
-  }
-  win.gtag = gtag
-  // @ts-expect-error
-  gtag('js', new Date())
-  // @ts-expect-error
-  gtag('config', GA_TRACKING_ID)
-}

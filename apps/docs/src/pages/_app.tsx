@@ -17,7 +17,7 @@ import {
 import type { BleepNames } from '@app/types'
 import { MainLayout } from '@app/ui'
 import { Header } from '@app/containers'
-import { setupGoogleFonts, setupGoogleAnalytics, atomMotion, atomAudio } from '@app/utils'
+import { setupGoogleFonts, atomMotion, atomAudio } from '@app/utils'
 
 interface ClientAppProps extends AppProps {
   Component: NextPage
@@ -113,7 +113,6 @@ const ClientApp = (props: ClientAppProps): ReactElement => {
 
   useEffect(() => {
     setupGoogleFonts()
-    setupGoogleAnalytics()
   }, [])
 
   const motion = useAtomValue(atomMotion)

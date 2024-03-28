@@ -13,6 +13,8 @@
     "**/.next",
     "**/.deprecated",
     "**/__testUtils__",
+    "**/webpack.config.js",
+    "**/next.config.js",
     "**/*.test.ts",
     "**/*.test.tsx",
     "**/*.sandbox.ts",

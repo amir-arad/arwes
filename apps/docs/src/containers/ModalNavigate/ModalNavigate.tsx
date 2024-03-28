@@ -1,6 +1,6 @@
 import { type ReactElement, useState } from 'react'
 import { useRouter } from 'next/router'
-import { GitHub, Discord, Twitter, Heart } from 'iconoir-react'
+import { Github, Discord, Twitter, Heart } from 'iconoir-react'
 import { cx, Animator, Animated, BleepsOnAnimator, aaVisibility, useBleeps, aa } from '@arwes/react'
 
 import type { BleepNames } from '@app/types'
@@ -53,8 +53,8 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
                 className={cx(linkPrimary, classes.surfacePrimary, classes.socialLink)}
                 animated={[aa('y', '1rem', 0, 0)]}
               >
-                <GitHub />
-                <span className={hiddenSMDown}>GitHub</span>
+                <Github />
+                <span className={hiddenSMDown}>Github</span>
               </Animated>
               <Animated
                 as="a"

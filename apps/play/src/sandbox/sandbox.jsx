@@ -5,7 +5,7 @@ import * as emotionReact from '@emotion/react'
 import * as motion from 'motion'
 import * as empanada from 'empanada'
 
-// Vanilla
+// Arwes Vanilla
 import * as tools from '@arwes/tools'
 import * as theme from '@arwes/theme'
 import * as animator from '@arwes/animator'
@@ -17,7 +17,7 @@ import * as bgs from '@arwes/bgs'
 import * as core from '@arwes/core'
 import * as arwes from 'arwes'
 
-// React
+// Arwes React
 import * as reactTools from '@arwes/react-tools'
 import * as reactAnimator from '@arwes/react-animator'
 import * as reactAnimated from '@arwes/react-animated'

@@ -13,6 +13,8 @@
     ".deprecated",
     ".cache",
     ".next",
+    "webpack.config.js",
+    "next.config.js",
     "apps/docs/next-env.d.ts"
   ],
   "parser": "@typescript-eslint/parser",

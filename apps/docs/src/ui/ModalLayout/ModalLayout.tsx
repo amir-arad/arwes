@@ -1,5 +1,5 @@
 import { type ReactElement, type ReactNode, useRef } from 'react'
-import { Cancel } from 'iconoir-react'
+import { Xmark } from 'iconoir-react'
 import {
   Animator,
   Animated,
@@ -96,7 +96,7 @@ const ModalLayout = (props: ModalLayoutProps): ReactElement => {
                     animated={aaVisibility()}
                     onClick={onClose}
                   >
-                    <Cancel />
+                    <Xmark />
                   </Animated>
                 </Animator>
               </header>

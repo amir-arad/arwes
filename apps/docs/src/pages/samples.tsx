@@ -1,5 +1,5 @@
 import { type ReactElement, useRef } from 'react'
-import { DroneError } from 'iconoir-react'
+import { DroneXmark } from 'iconoir-react'
 import {
   Animator,
   Animated,
@@ -95,7 +95,7 @@ const Page = (): ReactElement => {
                   }
                 ]}
               >
-                <DroneError role="presentation" className="icon" />
+                <DroneXmark role="presentation" className="icon" />
                 <h1 className="title">Samples</h1>
               </Animated>
             </Animator>

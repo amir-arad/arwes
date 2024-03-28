@@ -7,11 +7,11 @@ import {
   Codepen,
   CollageFrame,
   DashboardSpeed,
-  GitHub,
+  Github,
   Discord,
   Twitter,
   Keyframes,
-  RemoveKeyframes,
+  KeyframesMinus,
   SoundHigh,
   SoundOff,
   Menu as MenuIcon,
@@ -154,8 +154,8 @@ const Header = (props: HeaderProps): ReactElement => {
               </Animator>
               <Animator>
                 <MenuItem className={classes.menuItem} animated={rightItemAnimation}>
-                  <a href="https://github.com/arwes/arwes" target="github" title="Go to GitHub">
-                    <GitHub />
+                  <a href="https://github.com/arwes/arwes" target="github" title="Go to Github">
+                    <Github />
                   </a>
                 </MenuItem>
               </Animator>
@@ -185,7 +185,7 @@ const Header = (props: HeaderProps): ReactElement => {
                     title={motion ? 'Disable motion' : 'Enable motion'}
                     onClick={() => setMotion(!motion)}
                   >
-                    {motion ? <Keyframes /> : <RemoveKeyframes />}
+                    {motion ? <Keyframes /> : <KeyframesMinus />}
                   </button>
                 </MenuItem>
               </Animator>
