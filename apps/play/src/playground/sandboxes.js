@@ -1,7 +1,5 @@
 /* eslint-disable import/no-webpack-loader-syntax */
 
-const isProduction = process.env.NODE_ENV === 'production'
-
 export const sandboxes = [
   {
     name: 'Visual Design',
@@ -92,39 +90,8 @@ export const sandboxes = [
             ]
           }
         ]
-      },
-      !isProduction && {
-        name: '@arwes/react-styles',
-        children: [
-          {
-            name: 'useStyles',
-            children: [
-              {
-                name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-styles/src/useStyles/useStyles.basic.sandbox.tsx')
-              },
-              {
-                name: 'props',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-styles/src/useStyles/useStyles.props.sandbox.tsx')
-              }
-            ]
-          },
-          {
-            name: 'useThemeStyles',
-            children: [
-              {
-                name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-styles/src/useThemeStyles/useThemeStyles.basic.sandbox.tsx')
-              },
-              {
-                name: 'props',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-styles/src/useThemeStyles/useThemeStyles.props.sandbox.tsx')
-              }
-            ]
-          }
-        ]
       }
-    ].filter(Boolean)
+    ]
   },
   {
     name: 'Motion Design',

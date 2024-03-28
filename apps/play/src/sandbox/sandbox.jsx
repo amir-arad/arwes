@@ -19,7 +19,6 @@ import * as arwes from 'arwes'
 
 // React
 import * as reactTools from '@arwes/react-tools'
-import * as reactStyles from '@arwes/react-styles'
 import * as reactAnimator from '@arwes/react-animator'
 import * as reactAnimated from '@arwes/react-animated'
 import * as reactBleeps from '@arwes/react-bleeps'
@@ -48,7 +47,6 @@ window.noxtron.setupSandbox(() => ({
     { name: '@arwes/core', pkg: core },
     { name: 'arwes', pkg: arwes },
     { name: '@arwes/react-tools', pkg: reactTools },
-    { name: '@arwes/react-styles', pkg: reactStyles },
     { name: '@arwes/react-animator', pkg: reactAnimator },
     { name: '@arwes/react-animated', pkg: reactAnimated },
     { name: '@arwes/react-bleeps', pkg: reactBleeps },

@@ -19,10 +19,6 @@ export const typeDefinitions = [
     code: require('!raw-loader?esModule=false!../../../../node_modules/@types/react/global.d.ts')
   },
   {
-    filename: 'file:///node_modules/@types/scheduler/tracing.d.ts',
-    code: require('!raw-loader?esModule=false!../../../../node_modules/@types/scheduler/tracing.d.ts')
-  },
-  {
     filename: 'file:///node_modules/@types/react-dom/index.d.ts',
     code: require('!raw-loader?esModule=false!../../../../node_modules/@types/react-dom/index.d.ts')
   },
@@ -162,10 +158,6 @@ export const typeDefinitions = [
   {
     filename: 'file:///node_modules/arwes/index.d.ts',
     code: require('!raw-loader?esModule=false!arwes/build/types/index.d.ts')
-  },
-  {
-    filename: 'file:///node_modules/@arwes/react-styles/index.d.ts',
-    code: require('!raw-loader?esModule=false!@arwes/react-styles/build/types/index.d.ts')
   },
   {
     filename: 'file:///node_modules/@arwes/react-animator/index.d.ts',
