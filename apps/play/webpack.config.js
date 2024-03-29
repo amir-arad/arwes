@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const generateTypes = require('./scripts/generateTypes')
 
 const REPOSITORY_PATH = path.join(__dirname, '../../')
 const SRC_PATH = path.join(__dirname, 'src')
@@ -9,6 +10,8 @@ const BASE_PATH = '/play/' // Must end with "/".
 
 const mode = process.env.NODE_ENV || 'development'
 const isProduction = mode === 'production'
+
+generateTypes()
 
 module.exports = {
   mode,

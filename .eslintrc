@@ -15,7 +15,9 @@
     ".next",
     "webpack.config.js",
     "next.config.js",
-    "apps/docs/next-env.d.ts"
+    "apps/docs/next-env.d.ts",
+    "apps/docs/src/dynamics.ts",
+    "apps/play/src/playground/typeDefinitions.js"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

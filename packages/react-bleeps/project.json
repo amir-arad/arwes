@@ -40,19 +40,6 @@
           "projects": "dependencies"
         }
       ]
-    },
-    "build-types": {
-      "executor": "nx:run-script",
-      "options": {
-        "script": "build-types"
-      },
-      "outputs": ["build/types"],
-      "dependsOn": [
-        {
-          "target": "build-types",
-          "projects": "dependencies"
-        }
-      ]
     }
   }
 }

@@ -44,10 +44,9 @@
     "tslib": "^2.3.1"
   },
   "scripts": {
-    "build": "npm run build-esm && npm run build-cjs && npm run build-types",
+    "build": "npm run build-esm && npm run build-cjs",
     "build-esm": "sh ../../scripts/pkg-build-esm.sh",
     "build-cjs": "sh ../../scripts/pkg-build-cjs.sh",
-    "build-types": "sh ../../scripts/pkg-build-types.sh",
     "dev": "sh ../../scripts/pkg-build-esm.sh --watch"
   }
 }
