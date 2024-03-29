@@ -40,12 +40,12 @@
   "module": "./build/esm/index.js",
   "main": "./build/cjs/index.js",
   "peerDependencies": {
-    "@arwes/animated": "^1.0.0-alpha.20",
-    "@arwes/tools": "^1.0.0-alpha.20",
     "motion": "10"
   },
   "dependencies": {
-    "tslib": "^2.3.1"
+    "@arwes/animated": "^1.0.0-alpha.20",
+    "@arwes/tools": "^1.0.0-alpha.20",
+    "tslib": "2"
   },
   "scripts": {
     "build": "npm run build-esm && npm run build-cjs",

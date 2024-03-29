@@ -40,16 +40,16 @@
   "module": "./build/esm/index.js",
   "main": "./build/cjs/index.js",
   "peerDependencies": {
+    "motion": "10",
+    "react": "18"
+  },
+  "dependencies": {
     "@arwes/animator": "^1.0.0-alpha.20",
     "@arwes/bleeps": "^1.0.0-alpha.20",
     "@arwes/react-animator": "^1.0.0-alpha.20",
     "@arwes/react-bleeps": "^1.0.0-alpha.20",
     "@arwes/react-tools": "^1.0.0-alpha.20",
-    "motion": "10",
-    "react": "18"
-  },
-  "dependencies": {
-    "tslib": "^2.3.1"
+    "tslib": "2"
   },
   "scripts": {
     "build": "npm run build-esm && npm run build-cjs",

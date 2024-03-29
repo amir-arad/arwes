@@ -6,7 +6,12 @@
     "@arwes/react": "^1.0.0-alpha.23",
     "arwes": "^1.0.0-alpha.23",
     "copy-webpack-plugin": "^9.0.1",
-    "html-webpack-plugin": "^5.3.2"
+    "html-webpack-plugin": "^5.3.2",
+    "ts-loader": "^9.5.1",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
   },
   "scripts": {
     "build": "sh ./scripts/build.sh",
