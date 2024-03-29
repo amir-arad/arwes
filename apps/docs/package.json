@@ -1,5 +1,5 @@
 {
-  "name": "@arwes/app-docs",
+  "name": "apps-docs",
   "version": "1.0.0-alpha.23",
   "private": true,
   "dependencies": {

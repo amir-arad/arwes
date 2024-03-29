@@ -1,7 +1,7 @@
 import { type ReactElement } from 'react'
 import Link from 'next/link'
 import { ArrowRight } from 'iconoir-react'
-import { Animator, Animated, Text, BleepsOnAnimator, aa, aaVisibility } from '@arwes/react'
+import { Animator, Animated, Text, BleepsOnAnimator, aa, aaFlicker } from '@arwes/react'
 import type { BleepNames } from '@app/types'
 import { PageContentLayout, Button } from '@app/ui'
 
@@ -46,7 +46,7 @@ const Page = (): ReactElement => {
           <Animated as="hr" animated={aa('scaleX', 0, 1)} />
         </Animator>
         <Animator>
-          <Animated className="badges" data-arwes-global-block animated={aaVisibility()}>
+          <Animated className="badges" data-arwes-global-block animated={aaFlicker()}>
             <a href="https://npmjs.org/package/arwes" target="_blank">
               <img src="https://img.shields.io/npm/v/arwes.svg?style=flat-square" alt="Version" />
             </a>
@@ -158,25 +158,25 @@ const Page = (): ReactElement => {
         <Animator>
           <Text>
             The framework is delivered for the web platform as{' '}
-            <a href="https://www.npmjs.com/">NPM</a> packages in the <code>@arwes/[package]</code>{' '}
-            scope for ES Modules, CommonJS, and UMD formats in JavaScript ES2018 version with strict{' '}
-            <a href="https://www.typescriptlang.org/" target="_blank">
+            <a href="https://www.npmjs.com">NPM</a> packages in the <code>@arwes/[package]</code>{' '}
+            scope for ESModules and CommonJS formats in JavaScript ES2022 version with strict{' '}
+            <a href="https://www.typescriptlang.org" target="_blank">
               TypeScript
             </a>{' '}
-            v4.8+ type definitions.
+            v5+ type definitions.
           </Text>
         </Animator>
         <Animator>
           <Text>
             Latest version of Chrome, Firefox, and Safari, for Android, iOS and desktop are
-            supported. Server-side rendering with Node.js v18+ is supported. There are custom APIs
+            supported. Server-side rendering with Node.js v20+ is supported. There are custom APIs
             for <a href="https://react.dev">React.js</a> v18+ which can be used with tools like{' '}
             <a href="https://nextjs.org">Next.js</a> and <a href="https://remix.run">Remix</a>.
           </Text>
         </Animator>
         <Animator>
           <Text>
-            Since sci-fi UIs are normally very particular with custom visual workflows and user
+            Since sci-fi UIs normally have very particular aesthetics with custom visual workflows and user
             experiences, the tools offered are currently "low/medium level APIs", which means that
             the framework does not provide an entire set of UI components for a common web app but
             rather a set of primitives, utilities, and base components to build a design system.
@@ -188,7 +188,7 @@ const Page = (): ReactElement => {
             <Link href="/docs/develop">
               <Button
                 frame="hexagon"
-                animated={[aaVisibility(), aa('x', -12, 0)]}
+                animated={[aaFlicker(), aa('x', -12, 0)]}
                 onHoverAnimateIcons
                 tabIndex={-1}
                 title="Get started"
