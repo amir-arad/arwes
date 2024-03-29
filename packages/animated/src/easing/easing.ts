@@ -82,10 +82,10 @@ const easing = {
     return x === 0
       ? 0
       : x === 1
-      ? 1
-      : x < 0.5
-      ? pow(2, 20 * x - 10) / 2
-      : (2 - pow(2, -20 * x + 10)) / 2
+        ? 1
+        : x < 0.5
+          ? pow(2, 20 * x - 10) / 2
+          : (2 - pow(2, -20 * x + 10)) / 2
   },
   inCirc: (x: number): number => {
     return 1 - sqrt(1 - pow(x, 2))
@@ -117,10 +117,10 @@ const easing = {
     return x === 0
       ? 0
       : x === 1
-      ? 1
-      : x < 0.5
-      ? -(pow(2, 20 * x - 10) * sin((20 * x - 11.125) * c5)) / 2
-      : (pow(2, -20 * x + 10) * sin((20 * x - 11.125) * c5)) / 2 + 1
+        ? 1
+        : x < 0.5
+          ? -(pow(2, 20 * x - 10) * sin((20 * x - 11.125) * c5)) / 2
+          : (pow(2, -20 * x + 10) * sin((20 * x - 11.125) * c5)) / 2 + 1
   },
   inBounce: (x: number): number => {
     return 1 - bounceOut(1 - x)
