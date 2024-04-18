@@ -24,7 +24,7 @@
     "glob": "^10.3.12",
     "husky": "^9.0.11",
     "jsdom": "^24.0.0",
-    "lerna": "^6.6.2",
+    "lerna": "^8.1.2",
     "markdownlint": "^0.34.0",
     "markdownlint-cli": "^0.39.0",
     "motion": "^10.17.0",
@@ -37,7 +37,7 @@
     "vitest": "^1.5.0"
   },
   "scripts": {
-    "postinstall": "husky && lerna bootstrap",
+    "postinstall": "husky",
     "format-check": "prettier . --check",
     "format": "prettier . --write",
     "lint": "npm run lint-js && npm run lint-md",
