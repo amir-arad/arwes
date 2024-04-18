@@ -90,6 +90,20 @@ export const sandboxes = [
             ]
           }
         ]
+      },
+      {
+        name: '@arwes/styles',
+        children: [
+          {
+            name: 'styleGradientSteps',
+            children: [
+              {
+                name: 'basic',
+                code: require('!raw-loader?esModule=false!@repository/packages/styles/src/styleGradientSteps/styleGradientSteps.basic.sandbox.tsx')
+              }
+            ]
+          }
+        ]
       }
     ]
   },
