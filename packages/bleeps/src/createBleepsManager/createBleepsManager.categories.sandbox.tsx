@@ -1,6 +1,6 @@
 import { createBleepsManager } from '@arwes/bleeps'
 
-const rootElement = document.querySelector('#root') as HTMLElement
+const rootElement = document.querySelector('#root')!
 
 rootElement.innerHTML = `
   <button class="click">Click</button>
@@ -8,9 +8,9 @@ rootElement.innerHTML = `
   <button class="type">Readout</button>
 `
 
-const clickElement = rootElement.querySelector('.click') as HTMLButtonElement
-const errorElement = rootElement.querySelector('.error') as HTMLButtonElement
-const assembleElement = rootElement.querySelector('.type') as HTMLButtonElement
+const clickElement = rootElement.querySelector('.click')!
+const errorElement = rootElement.querySelector('.error')!
+const assembleElement = rootElement.querySelector('.type')!
 
 type BleepNames = 'click' | 'error' | 'type'
 

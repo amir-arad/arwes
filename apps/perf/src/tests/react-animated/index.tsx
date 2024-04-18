@@ -59,4 +59,4 @@ const App = (): ReactElement => {
   )
 }
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<App />)
+createRoot(document.querySelector('#root')!).render(<App />)

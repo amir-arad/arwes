@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 import type { PartialDeep } from '@arwes/tools'
 
 import type { ThemeCreatorStructure, ThemeCreator } from '../types.js'

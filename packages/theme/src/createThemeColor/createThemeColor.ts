@@ -67,7 +67,7 @@ const formatColor = (
   const alphaAdjust = minMax0to1(alpha)
 
   if (hasCurrentAlpha) {
-    const alphaCurrentMatch = searchRegExp(color, /\d+(\.\d+)?%?\)$/) as string
+    const alphaCurrentMatch = searchRegExp(color, /\d+(\.\d+)?%?\)$/)!
     const isPercentage = alphaCurrentMatch.includes('%')
     const alphaCurrent = Number(alphaCurrentMatch.replace(/%?\)$/g, ''))
 

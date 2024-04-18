@@ -18,7 +18,7 @@ const Item = (): ReactElement => {
 
   useEffect(() => {
     animator?.node.subscribers.add((node: AnimatorNode) => {
-      const element = elementRef.current as HTMLDivElement
+      const element = elementRef.current!
 
       switch (node.state) {
         case 'exited':
@@ -88,4 +88,4 @@ const App = (): ReactElement => {
   )
 }
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<App />)
+createRoot(document.querySelector('#root')!).render(<App />)

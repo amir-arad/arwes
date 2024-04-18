@@ -92,6 +92,7 @@ const ModalLayout = (props: ModalLayoutProps): ReactElement => {
                 <Animator>
                   <Animated
                     role="button"
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                     className={cx(linkSecondary, classes.close)}
                     animated={aaVisibility()}
                     onClick={onClose}

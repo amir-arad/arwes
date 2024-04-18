@@ -52,8 +52,8 @@ const Dots = (props: DotsProps): ReactElement => {
       const { duration } = node.control.getSettings()
       const transitionDuration = (active ? duration?.enter : duration?.exit) || 0
 
-      const canvas = elementRef.current as HTMLCanvasElement
-      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
+      const canvas = elementRef.current!
+      const ctx = canvas.getContext('2d')!
 
       const draw = (progress: number): void => {
         const { color, type, distance, size, origin, originInverted } = propsFullRef.current

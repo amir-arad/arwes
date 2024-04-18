@@ -1,6 +1,6 @@
 import { createAnimation } from '@arwes/animated'
 
-const rootElement = document.querySelector('#root') as HTMLElement
+const rootElement = document.querySelector('#root')!
 
 rootElement.innerHTML = `
   <style>
@@ -15,7 +15,7 @@ rootElement.innerHTML = `
   <div class="item"></div>
 `
 
-const itemElement = rootElement.querySelector('.item') as HTMLDivElement
+const itemElement = rootElement.querySelector('.item')!
 
 createAnimation({
   duration: 1,

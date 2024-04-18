@@ -96,6 +96,7 @@ const Animated = <
           : duration.exit
 
       settingsList
+        // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
         .map((settingsItem) => settingsItem.transitions?.[node.state] as AnimatedSettingsTransition)
         .filter(Boolean)
         .map((transitions) => (Array.isArray(transitions) ? transitions : [transitions]))

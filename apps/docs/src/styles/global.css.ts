@@ -2,6 +2,7 @@ import { globalStyle } from '@vanilla-extract/css'
 import { createAppStylesBaseline } from '@arwes/react'
 import { theme } from '@app/theme'
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 const stylesBaseline = createAppStylesBaseline(theme)
 
 Object.keys(stylesBaseline).forEach((styleName) => {

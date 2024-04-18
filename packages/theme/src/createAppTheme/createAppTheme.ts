@@ -279,7 +279,9 @@ const createAppTheme = <
   }
 
   const createTheme = createCreateTheme<AppThemeSettings, AppTheme>(
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     deepExtend(APP_THEME_STRUCTURE, props.structure),
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     deepExtend(appThemeSettingsBase, props.settings)
   )
 

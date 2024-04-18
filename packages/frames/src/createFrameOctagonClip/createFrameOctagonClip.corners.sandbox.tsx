@@ -1,6 +1,6 @@
 import { createFrameOctagonClip } from '@arwes/frames'
 
-const root = document.querySelector('#root') as HTMLDivElement
+const root = document.querySelector('#root')!
 const box = document.createElement('div')
 
 root.appendChild(box)

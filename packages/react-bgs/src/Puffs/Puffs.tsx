@@ -50,8 +50,8 @@ const Puffs = (props: PuffsProps): ReactElement => {
       return
     }
 
-    const canvas = elementRef.current as HTMLCanvasElement
-    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
+    const canvas = elementRef.current!
+    const ctx = canvas.getContext('2d')!
 
     let canvasControl: AnimateControl | undefined
     let puffsControl: AnimateControl | undefined

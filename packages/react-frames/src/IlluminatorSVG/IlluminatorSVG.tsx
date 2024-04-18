@@ -23,7 +23,7 @@ const IlluminatorSVG = (props: IlluminatorSVGProps): ReactElement => {
   const circleElementRef = useRef<SVGCircleElement>(null)
 
   useEffect(() => {
-    const element = circleElementRef.current as SVGCircleElement
+    const element = circleElementRef.current!
     const svg = element.parentElement?.parentElement as unknown as SVGSVGElement // TODO:
 
     element.style.transform = `translate(-${size / 2}px, -${size / 2}px)`

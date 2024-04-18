@@ -1,7 +1,6 @@
 import React, { type ReactElement, useState, useRef, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { animate } from 'motion'
-import { type AnimatorInterface } from '@arwes/animator'
 import {
   type AnimatorGeneralProviderSettings,
   AnimatorGeneralProvider,
@@ -11,7 +10,7 @@ import {
 
 const AnimatorUIListener = (): ReactElement => {
   const elementRef = useRef<HTMLDivElement>(null)
-  const animator = useAnimator() as AnimatorInterface
+  const animator = useAnimator()!
 
   useEffect(() => {
     animator.node.subscribers.add((node) => {
@@ -78,4 +77,4 @@ const Sandbox = (): ReactElement => {
   )
 }
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)
+createRoot(document.querySelector('#root')!).render(<Sandbox />)

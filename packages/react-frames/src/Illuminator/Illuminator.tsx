@@ -21,7 +21,7 @@ const Illuminator = (props: IlluminatorProps): ReactElement => {
   const elementRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const element = elementRef.current as HTMLDivElement
+    const element = elementRef.current!
     const parentElement = element.parentElement as Element
 
     const onMove = (event: MouseEvent): void => {

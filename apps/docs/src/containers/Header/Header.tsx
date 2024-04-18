@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 import { useState, type ReactElement } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'

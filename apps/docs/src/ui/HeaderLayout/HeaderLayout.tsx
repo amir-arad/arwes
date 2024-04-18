@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { type ReactElement, type ReactNode } from 'react'
 import { type AnimatedProp, Animated, Illuminator, cx, aa } from '@arwes/react'
 

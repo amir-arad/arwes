@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { type ReactElement, type ReactNode } from 'react'
 import Link from 'next/link'
 import { NavArrowLeft, NavArrowRight } from 'iconoir-react'

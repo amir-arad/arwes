@@ -1,6 +1,6 @@
 import { createBleepsManager } from '@arwes/bleeps'
 
-const rootElement = document.querySelector('#root') as HTMLElement
+const rootElement = document.querySelector('#root')!
 
 rootElement.innerHTML = `
   <div style="color:#ddd;">
@@ -31,11 +31,11 @@ rootElement.innerHTML = `
   </div>
 `
 
-const volumeElement = rootElement.querySelector('.volume') as HTMLInputElement
-const disableElement = rootElement.querySelector('.disable') as HTMLInputElement
-const clickElement = rootElement.querySelector('.click') as HTMLButtonElement
-const errorElement = rootElement.querySelector('.error') as HTMLButtonElement
-const assembleElement = rootElement.querySelector('.type') as HTMLButtonElement
+const volumeElement = rootElement.querySelector<HTMLInputElement>('.volume')!
+const disableElement = rootElement.querySelector<HTMLInputElement>('.disable')!
+const clickElement = rootElement.querySelector('.click')!
+const errorElement = rootElement.querySelector('.error')!
+const assembleElement = rootElement.querySelector('.type')!
 
 type BleepsNames = 'click' | 'error' | 'type'
 

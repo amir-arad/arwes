@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useEffect, useState, type ReactElement } from 'react'
 import { type AnimatedProp, Animated, cx, useBleeps } from '@arwes/react'
 import lernaSettings from '@repository/lerna.json'

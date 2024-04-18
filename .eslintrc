@@ -15,9 +15,13 @@
     ".next",
     "webpack.config.js",
     "next.config.js",
+    "commitlint.config.js",
+    "scripts/readme-community-generate.js",
     "apps/docs/next-env.d.ts",
     "apps/docs/src/dynamics.ts",
-    "apps/play/src/playground/typeDefinitions.js"
+    "apps/play/scripts/generateTypes.js",
+    "apps/play/src/playground/typeDefinitions.js",
+    "apps/play/src/playground/sandboxes.js"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -39,7 +43,8 @@
       { "varsIgnorePattern": "^jsx$", "ignoreRestSiblings": true }
     ],
     "@typescript-eslint/promise-function-async": ["error", { "checkArrowFunctions": false }],
-    "@typescript-eslint/no-confusing-void-expression": [0],
+    "@typescript-eslint/no-confusing-void-expression": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
     "react/prop-types": "off",
     "no-unused-vars": "off",
     "no-use-before-define": "off",

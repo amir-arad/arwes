@@ -1,6 +1,6 @@
 import { easing, createAnimation } from '@arwes/animated'
 
-const rootElement = document.querySelector('#root') as HTMLElement
+const rootElement = document.querySelector('#root')!
 
 rootElement.innerHTML = `
   <style>
@@ -19,7 +19,7 @@ rootElement.innerHTML = `
   <div class="easings"></div>
 `
 
-const easingsElement = rootElement.querySelector('.easings') as HTMLDivElement
+const easingsElement = rootElement.querySelector('.easings')!
 const easingNames = Object.keys(easing) as Array<keyof typeof easing>
 
 easingNames.forEach((easingName) => {

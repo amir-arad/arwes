@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 import { type ReactElement, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Github, Discord, Twitter, Heart } from 'iconoir-react'

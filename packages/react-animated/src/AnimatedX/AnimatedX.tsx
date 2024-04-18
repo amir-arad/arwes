@@ -79,6 +79,7 @@ const AnimatedX = <
 
     settingsList
       .map(
+        // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
         (settingsItem) => settingsItem.transitions?.[animatedState] as AnimatedSettingsTransition
       )
       .filter(Boolean)

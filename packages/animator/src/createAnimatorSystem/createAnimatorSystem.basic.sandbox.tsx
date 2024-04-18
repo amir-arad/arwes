@@ -14,7 +14,7 @@ import {
   createAnimatorSystem
 } from '@arwes/animator'
 
-const rootElement = document.querySelector('#root') as HTMLElement
+const rootElement = document.querySelector('#root')!
 
 rootElement.innerHTML = `
   <style>
@@ -106,14 +106,14 @@ const createNode = (
 // A variable to know when the parent node should be active or not.
 let isActive = true
 
-const parentNode = createNode(null, rootElement.querySelector('#parent') as HTMLDivElement, () => ({
+const parentNode = createNode(null, rootElement.querySelector('#parent')!, () => ({
   active: isActive,
   manager: 'stagger'
 }))
 
-createNode(parentNode, rootElement.querySelector('#child1') as HTMLDivElement)
-createNode(parentNode, rootElement.querySelector('#child2') as HTMLDivElement)
-createNode(parentNode, rootElement.querySelector('#child3') as HTMLDivElement)
+createNode(parentNode, rootElement.querySelector('#child1')!)
+createNode(parentNode, rootElement.querySelector('#child2')!)
+createNode(parentNode, rootElement.querySelector('#child3')!)
 
 setInterval(() => {
   isActive = !isActive

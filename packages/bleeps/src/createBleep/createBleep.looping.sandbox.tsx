@@ -1,10 +1,10 @@
 import { createBleep } from '@arwes/bleeps'
 
-const rootElement = document.querySelector('#root') as HTMLElement
+const rootElement = document.querySelector('#root')!
 
 rootElement.innerHTML = '<button class="bleep">Play</button>'
 
-const bleepElement = rootElement.querySelector('.bleep') as HTMLButtonElement
+const bleepElement = rootElement.querySelector('.bleep')!
 
 const bleep = createBleep({
   sources: [{ src: '/assets/sounds/type.mp3', type: 'audio/mpeg' }],

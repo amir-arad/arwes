@@ -132,4 +132,4 @@ const Sandbox = (): ReactElement => (
   </main>
 )
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)
+createRoot(document.querySelector('#root')!).render(<Sandbox />)

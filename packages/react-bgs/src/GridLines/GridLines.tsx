@@ -37,8 +37,8 @@ const GridLines = (props: GridLinesProps): ReactElement => {
       return
     }
 
-    const canvas = elementRef.current as HTMLCanvasElement
-    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
+    const canvas = elementRef.current!
+    const ctx = canvas.getContext('2d')!
 
     let transitionControl: ReturnType<typeof animate> | undefined
     let resizeObserver: ResizeObserver | undefined

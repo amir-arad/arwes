@@ -1,6 +1,6 @@
 import React, { type ReactElement, useRef, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { type AnimatorInterface, type AnimatorNode } from '@arwes/animator'
+import { type AnimatorNode } from '@arwes/animator'
 import { Animator, useAnimator } from '@arwes/react-animator'
 import { Animated } from '@arwes/react-animated'
 
@@ -10,10 +10,10 @@ interface AnimatorUIListenerProps {
 
 const AnimatorUIListener = (props: AnimatorUIListenerProps): ReactElement => {
   const elementRef = useRef<HTMLDivElement>(null)
-  const animator = useAnimator() as AnimatorInterface
+  const animator = useAnimator()!
 
   useEffect(() => {
-    const element = elementRef.current as HTMLDivElement
+    const element = elementRef.current!
 
     // Set a reference from the node to the element and viceversa.
     element.dataset.id = animator.node.id
@@ -58,8 +58,8 @@ const Sandbox = (): ReactElement => {
       (entries) => {
         entries.forEach((entry) => {
           const element = entry.target as HTMLDivElement
-          const id = element.dataset.id as string
-          const childNode = childrenNodes.find((node) => id === node.id) as AnimatorNode
+          const id = element.dataset.id!
+          const childNode = childrenNodes.find((node) => id === node.id)!
 
           // If the node element is visible, enter only that child node
           // in the parent node manager.
@@ -110,4 +110,4 @@ const Sandbox = (): ReactElement => {
   )
 }
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />)
+createRoot(document.querySelector('#root')!).render(<Sandbox />)
