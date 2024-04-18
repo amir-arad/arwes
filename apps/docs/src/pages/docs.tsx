@@ -176,10 +176,11 @@ const Page = (): ReactElement => {
         </Animator>
         <Animator>
           <Text>
-            Since sci-fi UIs normally have very particular aesthetics with custom visual workflows and user
-            experiences, the tools offered are currently "low/medium level APIs", which means that
-            the framework does not provide an entire set of UI components for a common web app but
-            rather a set of primitives, utilities, and base components to build a design system.
+            Since sci-fi UIs normally have very particular aesthetics with custom visual workflows
+            and user experiences, the tools offered are currently "low/medium level APIs", which
+            means that the framework does not provide an entire set of UI components for a common
+            web app but rather a set of primitives, utilities, and base components to build a design
+            system.
           </Text>
         </Animator>
 
