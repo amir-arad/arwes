@@ -6,7 +6,7 @@ const generateTypes = require('./scripts/generateTypes')
 const REPOSITORY_PATH = path.join(__dirname, '../../')
 const SRC_PATH = path.join(__dirname, 'src')
 const BUILD_PATH = path.join(__dirname, 'build')
-const BASE_PATH = '/play/' // Must end with "/".
+const BASE_PATH = '/play'
 
 const mode = process.env.NODE_ENV || 'development'
 const isProduction = mode === 'production'

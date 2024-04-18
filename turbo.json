@@ -11,6 +11,9 @@
     "build-cjs": {
       "dependsOn": ["^build"]
     },
+    "dev": {
+      "dependsOn": ["^build"]
+    },
     "test": {
       "dependsOn": ["build"]
     }
