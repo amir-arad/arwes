@@ -1,6 +1,6 @@
 {
   "name": "@arwes/text",
-  "version": "1.0.0-alpha.23",
+  "version": "1.0.0-next.24041801",
   "publishConfig": {
     "access": "public"
   },
@@ -43,8 +43,8 @@
     "motion": "10"
   },
   "dependencies": {
-    "@arwes/animated": "^1.0.0-alpha.20",
-    "@arwes/tools": "^1.0.0-alpha.20",
+    "@arwes/animated": "^1.0.0-next.24041801",
+    "@arwes/tools": "^1.0.0-next.24041801",
     "tslib": "2"
   },
   "scripts": {
