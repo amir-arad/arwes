@@ -8,6 +8,7 @@ import * as empanada from 'empanada'
 // Arwes Vanilla
 import * as tools from '@arwes/tools'
 import * as theme from '@arwes/theme'
+import * as styles from '@arwes/styles'
 import * as animator from '@arwes/animator'
 import * as animated from '@arwes/animated'
 import * as bleeps from '@arwes/bleeps'
@@ -38,6 +39,7 @@ window.noxtron.setupSandbox(() => ({
     { name: 'empanada', pkg: empanada },
     { name: '@arwes/tools', pkg: tools },
     { name: '@arwes/theme', pkg: theme },
+    { name: '@arwes/styles', pkg: styles },
     { name: '@arwes/animator', pkg: animator },
     { name: '@arwes/animated', pkg: animated },
     { name: '@arwes/bleeps', pkg: bleeps },
