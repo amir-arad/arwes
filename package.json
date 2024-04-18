@@ -50,7 +50,7 @@
     "build": "turbo build",
     "www": "npm run build && sh ./scripts/www.sh",
     "integration": "npm run build && npm run format-check && npm run lint && npm run test -- --run",
-    "release": "npm run integration && lerna publish",
+    "release": "npm run integration && lerna publish --force-publish",
     "contributors-add": "all-contributors add",
     "readme-contributors-generate": "all-contributors generate",
     "readme-community-generate": "node ./scripts/readme-community-generate.js"
