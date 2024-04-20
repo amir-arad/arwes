@@ -595,6 +595,10 @@ export const sandboxes = [
               {
                 name: 'tiles',
                 code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/Dots/Dots.tiles.sandbox.tsx')
+              },
+              {
+                name: 'crosses',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/Dots/Dots.crosses.sandbox.tsx')
               }
             ]
           },

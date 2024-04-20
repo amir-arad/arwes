@@ -10,11 +10,14 @@ import { getDistanceFromOriginToCornerProgress } from './getDistanceFromOriginTo
 
 const { entering, exiting } = ANIMATOR_STATES
 
-const defaultProps: Required<Pick<DotsProps, 'color' | 'type' | 'distance' | 'size' | 'origin'>> = {
+const defaultProps: Required<
+  Pick<DotsProps, 'color' | 'type' | 'distance' | 'size' | 'crossSize' | 'origin'>
+> = {
   color: '#777',
   type: 'box',
   distance: 30,
   size: 4,
+  crossSize: 1,
   origin: 'center'
 }
 
@@ -56,7 +59,8 @@ const Dots = (props: DotsProps): ReactElement => {
       const ctx = canvas.getContext('2d')!
 
       const draw = (progress: number): void => {
-        const { color, type, distance, size, origin, originInverted } = propsFullRef.current
+        const { color, type, distance, size, crossSize, origin, originInverted } =
+          propsFullRef.current
 
         const width = canvas.clientWidth
         const height = canvas.clientHeight
@@ -100,10 +104,37 @@ const Dots = (props: DotsProps): ReactElement => {
             ctx.beginPath()
             ctx.globalAlpha = active ? alpha : 1 - alpha
 
-            if (type === 'box') {
-              ctx.rect(x - size / 2, y - size / 2, size, size)
-            } else {
+            if (type === 'circle') {
               ctx.arc(x, y, size, 0, 2 * Math.PI)
+            }
+            //
+            else if (type === 'cross') {
+              const l = size / 2
+              const b = crossSize / 2
+
+              // left
+              ctx.moveTo(x - l, y + b)
+              ctx.lineTo(x - l, y - b)
+              ctx.lineTo(x - b, y - b)
+
+              // top
+              ctx.lineTo(x - b, y - l)
+              ctx.lineTo(x + b, y - l)
+              ctx.lineTo(x + b, y - b)
+
+              // right
+              ctx.lineTo(x + l, y - b)
+              ctx.lineTo(x + l, y + b)
+              ctx.lineTo(x + b, y + b)
+
+              // bottom
+              ctx.lineTo(x + b, y + l)
+              ctx.lineTo(x - b, y + l)
+              ctx.lineTo(x - b, y + b)
+            }
+            //
+            else {
+              ctx.rect(x - size / 2, y - size / 2, size, size)
             }
 
             ctx.fillStyle = color

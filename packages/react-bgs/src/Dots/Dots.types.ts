@@ -11,9 +11,9 @@ export interface DotsProps {
    */
   color?: string
   /**
-   * Shape of the dot.
+   * Shape of the "dot".
    */
-  type?: 'box' | 'circle'
+  type?: 'box' | 'circle' | 'cross'
   /**
    * Distance between each dot center in pixels.
    */
@@ -22,6 +22,10 @@ export interface DotsProps {
    * Dot size in pixels.
    */
   size?: number
+  /**
+   * If type cross, its size in pixels.
+   */
+  crossSize?: number
   /**
    * Rectangle container axis or point [x, y] as percentages of the rectangle
    * dimensions from 0 (0%) to 1 (100%).
