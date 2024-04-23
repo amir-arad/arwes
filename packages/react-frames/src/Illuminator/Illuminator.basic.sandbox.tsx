@@ -9,6 +9,7 @@ const Sandbox = (): ReactElement => {
       <p style={{ color: '#fff' }}>Move mouse over the page.</p>
       <div
         style={{
+          position: 'relative',
           width: 300,
           height: 300,
           clipPath: createFrameOctagonClip({ squareSize: 50 })

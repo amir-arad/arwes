@@ -51,6 +51,8 @@ const Illuminator = (props: IlluminatorProps): ReactElement => {
       className={cx('arwes-react-frames-illuminator', className)}
       style={{
         position: 'absolute',
+        left: 0,
+        top: 0,
         width: size,
         height: size,
         transition: 'opacity 200ms ease-out',
