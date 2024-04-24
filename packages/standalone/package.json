@@ -1,6 +1,6 @@
 {
   "name": "arwes",
-  "version": "1.0.0-next.24041901",
+  "version": "1.0.0-next.24042301",
   "publishConfig": {
     "access": "public"
   },
@@ -40,16 +40,16 @@
   "module": "./build/esm/index.js",
   "main": "./build/cjs/index.js",
   "dependencies": {
-    "@arwes/animated": "^1.0.0-next.24041901",
-    "@arwes/animator": "^1.0.0-next.24041901",
-    "@arwes/bgs": "^1.0.0-next.24041901",
-    "@arwes/bleeps": "^1.0.0-next.24041901",
-    "@arwes/core": "^1.0.0-next.24041901",
-    "@arwes/frames": "^1.0.0-next.24041901",
-    "@arwes/styles": "^1.0.0-next.24041901",
-    "@arwes/text": "^1.0.0-next.24041901",
-    "@arwes/theme": "^1.0.0-next.24041901",
-    "@arwes/tools": "^1.0.0-next.24041901",
+    "@arwes/animated": "^1.0.0-next.24042301",
+    "@arwes/animator": "^1.0.0-next.24042301",
+    "@arwes/bgs": "^1.0.0-next.24042301",
+    "@arwes/bleeps": "^1.0.0-next.24042301",
+    "@arwes/core": "^1.0.0-next.24042301",
+    "@arwes/frames": "^1.0.0-next.24042301",
+    "@arwes/styles": "^1.0.0-next.24042301",
+    "@arwes/text": "^1.0.0-next.24042301",
+    "@arwes/theme": "^1.0.0-next.24042301",
+    "@arwes/tools": "^1.0.0-next.24042301",
     "tslib": "2"
   },
   "scripts": {

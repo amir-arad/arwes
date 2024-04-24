@@ -1,6 +1,6 @@
 {
   "name": "@arwes/core",
-  "version": "1.0.0-next.24041901",
+  "version": "1.0.0-next.24042301",
   "publishConfig": {
     "access": "public"
   },
@@ -40,8 +40,8 @@
   "module": "./build/esm/index.js",
   "main": "./build/cjs/index.js",
   "dependencies": {
-    "@arwes/frames": "^1.0.0-next.24041901",
-    "@arwes/theme": "^1.0.0-next.24041901",
+    "@arwes/frames": "^1.0.0-next.24042301",
+    "@arwes/theme": "^1.0.0-next.24042301",
     "csstype": "3",
     "tslib": "2"
   },
