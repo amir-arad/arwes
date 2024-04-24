@@ -32,12 +32,31 @@ const Dots = (props: DotsProps): ReactElement => {
   propsFullRef.current = propsFull
 
   useEffect(() => {
-    if (!animator) {
+    const canvas = elementRef.current
+
+    if (!animator || !canvas) {
       return
     }
 
     let animationControl: ReturnType<typeof animate> | undefined
     let resizeObserver: ResizeObserver | undefined
+
+    const ctx = canvas.getContext('2d')!
+    const dpr = window.devicePixelRatio || 2
+
+    const setupCanvasSize = (): void => {
+      const { width, height } = canvas.getBoundingClientRect()
+
+      if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
+        canvas.width = width * dpr
+        canvas.height = height * dpr
+      }
+
+      ctx.setTransform(1, 0, 0, 1, 0, 0) // Reset scale to identical.
+      ctx.scale(dpr, dpr)
+    }
+
+    setupCanvasSize()
 
     const cancelAnimationSubscriptions = (): void => {
       animationControl?.cancel()
@@ -55,27 +74,17 @@ const Dots = (props: DotsProps): ReactElement => {
       const { duration } = node.control.getSettings()
       const transitionDuration = (active ? duration?.enter : duration?.exit) || 0
 
-      const canvas = elementRef.current!
-      const ctx = canvas.getContext('2d')!
-
       const draw = (progress: number): void => {
         const { color, type, distance, size, crossSize, origin, originInverted } =
           propsFullRef.current
 
-        const width = canvas.clientWidth
-        const height = canvas.clientHeight
+        const { width, height } = canvas
 
         const xLength = 1 + Math.floor(width / distance)
         const yLength = 1 + Math.floor(height / distance)
 
         const xMargin = width % distance
         const yMargin = height % distance
-
-        // Only assign size if they changed.
-        if (canvas.width !== width || canvas.height !== height) {
-          canvas.width = width
-          canvas.height = height
-        }
 
         ctx.clearRect(0, 0, width, height)
 
@@ -86,8 +95,8 @@ const Dots = (props: DotsProps): ReactElement => {
             const y = yMargin / 2 + yIndex * distance
 
             const distanceFromOriginProgress = getDistanceFromOriginToCornerProgress(
-              width,
-              height,
+              width / dpr,
+              height / dpr,
               x,
               y,
               origin
@@ -151,11 +160,14 @@ const Dots = (props: DotsProps): ReactElement => {
 
       if (window.ResizeObserver) {
         resizeObserver = new window.ResizeObserver(() => {
+          setupCanvasSize()
+
           const currentTime = animationControl?.currentTime || 0
           if (active && currentTime >= transitionDuration) {
             draw(1)
           }
         })
+
         resizeObserver.observe(canvas)
       }
     }
