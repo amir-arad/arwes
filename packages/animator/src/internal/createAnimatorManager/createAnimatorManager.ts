@@ -18,13 +18,19 @@ const createAnimatorManagerParallel: AnimatorManagerCreator = (node) => {
 
   const getDurationEnter = (childrenProvided?: AnimatorNode[]): number => {
     const children = getChildren(childrenProvided)
-    return children.reduce((total, child) => Math.max(total, child.duration.enter), 0)
+    return children.reduce((total, child) => {
+      const delay = child.control.getSettings().duration.delay || 0
+      return Math.max(total, delay + child.duration.enter)
+    }, 0)
   }
 
   const enterChildren = (childrenProvided?: AnimatorNode[]): void => {
     const children = getChildren(childrenProvided)
+
     for (const child of children) {
-      child.send(ACTIONS.enter)
+      const childSettings = child.control.getSettings()
+      const delay = childSettings.duration.delay || 0
+      child.scheduler.start(delay, () => child.send(ACTIONS.enter))
     }
   }
 
@@ -110,6 +116,7 @@ const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
     })
   }
 
+  // TODO: Take into consideration the children offsets and delays durations.
   const getDurationEnter = (childrenProvided?: AnimatorNode[]): number => {
     const children = getChildren(childrenProvided)
     return children.reduce((total, child) => total + child.duration.enter, 0)
