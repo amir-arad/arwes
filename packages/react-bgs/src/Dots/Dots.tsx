@@ -4,6 +4,7 @@ import { cx } from '@arwes/tools'
 import { mergeRefs } from '@arwes/react-tools'
 import { ANIMATOR_STATES, type AnimatorNode } from '@arwes/animator'
 import { useAnimator } from '@arwes/react-animator'
+import { easing } from '@arwes/animated'
 
 import { type DotsProps } from './Dots.types.js'
 import { getDistanceFromOriginToCornerProgress } from './getDistanceFromOriginToCornerProgress.js'
@@ -11,14 +12,15 @@ import { getDistanceFromOriginToCornerProgress } from './getDistanceFromOriginTo
 const { entering, exiting } = ANIMATOR_STATES
 
 const defaultProps: Required<
-  Pick<DotsProps, 'color' | 'type' | 'distance' | 'size' | 'crossSize' | 'origin'>
+  Pick<DotsProps, 'color' | 'type' | 'distance' | 'size' | 'crossSize' | 'origin' | 'easing'>
 > = {
   color: '#777',
   type: 'box',
   distance: 30,
   size: 4,
   crossSize: 1,
-  origin: 'center'
+  origin: 'center',
+  easing: easing.inSine
 }
 
 const Dots = (props: DotsProps): ReactElement => {
@@ -155,7 +157,7 @@ const Dots = (props: DotsProps): ReactElement => {
 
       animationControl = animate(draw, {
         duration: transitionDuration,
-        easing: 'ease-in-out'
+        easing: propsFullRef.current.easing
       })
 
       if (window.ResizeObserver) {

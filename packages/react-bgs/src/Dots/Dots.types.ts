@@ -37,4 +37,8 @@ export interface DotsProps {
    * Invert the animation to work "to origin" point instead "from origin" point.
    */
   originInverted?: boolean
+  /**
+   * Animation easing.
+   */
+  easing?: (x: number) => number
 }
