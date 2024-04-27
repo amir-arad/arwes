@@ -9,7 +9,7 @@ import { easing } from '@arwes/animated'
 import { type DotsProps } from './Dots.types.js'
 import { getDistanceFromOriginToCornerProgress } from './getDistanceFromOriginToCornerProgress.js'
 
-const { entering, exiting } = ANIMATOR_STATES
+const { entering, entered, exiting } = ANIMATOR_STATES
 
 const defaultProps: Required<
   Pick<DotsProps, 'color' | 'type' | 'distance' | 'size' | 'crossSize' | 'origin' | 'easing'>
@@ -36,7 +36,7 @@ const Dots = (props: DotsProps): ReactElement => {
   useEffect(() => {
     const canvas = elementRef.current
 
-    if (!animator || !canvas) {
+    if (!canvas) {
       return
     }
 
@@ -44,9 +44,9 @@ const Dots = (props: DotsProps): ReactElement => {
     let resizeObserver: ResizeObserver | undefined
 
     const ctx = canvas.getContext('2d')!
-    const dpr = window.devicePixelRatio || 2
+    const dpr = Math.min(window.devicePixelRatio || 2, 2)
 
-    const setupCanvasSize = (): void => {
+    const resize = (): void => {
       const { width, height } = canvas.getBoundingClientRect()
 
       if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
@@ -58,119 +58,136 @@ const Dots = (props: DotsProps): ReactElement => {
       ctx.scale(dpr, dpr)
     }
 
-    setupCanvasSize()
+    const draw = (isEntering: boolean, progress: number): void => {
+      const { color, type, distance, size, crossSize, origin, originInverted } =
+        propsFullRef.current
+
+      const { width, height } = canvas
+
+      const xLength = 1 + Math.floor(width / distance)
+      const yLength = 1 + Math.floor(height / distance)
+
+      const xMargin = width % distance
+      const yMargin = height % distance
+
+      ctx.clearRect(0, 0, width, height)
+
+      for (let xIndex = 0; xIndex < xLength; xIndex++) {
+        const x = xMargin / 2 + xIndex * distance
+
+        for (let yIndex = 0; yIndex < yLength; yIndex++) {
+          const y = yMargin / 2 + yIndex * distance
+
+          const distanceFromOriginProgress = getDistanceFromOriginToCornerProgress(
+            width / dpr,
+            height / dpr,
+            x,
+            y,
+            origin
+          )
+
+          const distancePercentage =
+            (isEntering && originInverted) || (!isEntering && !originInverted)
+              ? 1 - distanceFromOriginProgress
+              : distanceFromOriginProgress
+
+          const alphaProgress = progress / distancePercentage
+          const alpha = Math.max(0, Math.min(1, alphaProgress))
+
+          ctx.beginPath()
+          ctx.globalAlpha = isEntering ? alpha : 1 - alpha
+
+          if (type === 'circle') {
+            ctx.arc(x, y, size, 0, 2 * Math.PI)
+          }
+          //
+          else if (type === 'cross') {
+            const l = size / 2
+            const b = crossSize / 2
+
+            // left
+            ctx.moveTo(x - l, y + b)
+            ctx.lineTo(x - l, y - b)
+            ctx.lineTo(x - b, y - b)
+
+            // top
+            ctx.lineTo(x - b, y - l)
+            ctx.lineTo(x + b, y - l)
+            ctx.lineTo(x + b, y - b)
+
+            // right
+            ctx.lineTo(x + l, y - b)
+            ctx.lineTo(x + l, y + b)
+            ctx.lineTo(x + b, y + b)
+
+            // bottom
+            ctx.lineTo(x + b, y + l)
+            ctx.lineTo(x - b, y + l)
+            ctx.lineTo(x - b, y + b)
+          }
+          //
+          else {
+            ctx.rect(x - size / 2, y - size / 2, size, size)
+          }
+
+          ctx.fillStyle = color
+          ctx.fill()
+          ctx.closePath()
+        }
+      }
+    }
+
+    resize()
+
+    if (window.ResizeObserver) {
+      resizeObserver = new window.ResizeObserver(() => {
+        resize()
+
+        if (animator) {
+          switch (animator.node.state) {
+            case entered: {
+              draw(true, 1)
+              break
+            }
+          }
+        } else {
+          draw(true, 1)
+        }
+      })
+
+      resizeObserver.observe(canvas)
+    }
 
     const cancelAnimationSubscriptions = (): void => {
       animationControl?.cancel()
       resizeObserver?.disconnect()
     }
 
+    if (!animator) {
+      return () => {
+        cancelAnimationSubscriptions()
+      }
+    }
+
     const animatorSubscription = (node: AnimatorNode): void => {
-      if (node.state !== entering && node.state !== exiting) {
-        return
-      }
-
-      cancelAnimationSubscriptions()
-
-      const active = node.state === entering
-      const { duration } = node.control.getSettings()
-      const transitionDuration = (active ? duration?.enter : duration?.exit) || 0
-
-      const draw = (progress: number): void => {
-        const { color, type, distance, size, crossSize, origin, originInverted } =
-          propsFullRef.current
-
-        const { width, height } = canvas
-
-        const xLength = 1 + Math.floor(width / distance)
-        const yLength = 1 + Math.floor(height / distance)
-
-        const xMargin = width % distance
-        const yMargin = height % distance
-
-        ctx.clearRect(0, 0, width, height)
-
-        for (let xIndex = 0; xIndex < xLength; xIndex++) {
-          const x = xMargin / 2 + xIndex * distance
-
-          for (let yIndex = 0; yIndex < yLength; yIndex++) {
-            const y = yMargin / 2 + yIndex * distance
-
-            const distanceFromOriginProgress = getDistanceFromOriginToCornerProgress(
-              width / dpr,
-              height / dpr,
-              x,
-              y,
-              origin
-            )
-
-            const distancePercentage =
-              (active && originInverted) || (!active && !originInverted)
-                ? 1 - distanceFromOriginProgress
-                : distanceFromOriginProgress
-
-            const alphaProgress = progress / distancePercentage
-            const alpha = Math.max(0, Math.min(1, alphaProgress))
-
-            ctx.beginPath()
-            ctx.globalAlpha = active ? alpha : 1 - alpha
-
-            if (type === 'circle') {
-              ctx.arc(x, y, size, 0, 2 * Math.PI)
-            }
-            //
-            else if (type === 'cross') {
-              const l = size / 2
-              const b = crossSize / 2
-
-              // left
-              ctx.moveTo(x - l, y + b)
-              ctx.lineTo(x - l, y - b)
-              ctx.lineTo(x - b, y - b)
-
-              // top
-              ctx.lineTo(x - b, y - l)
-              ctx.lineTo(x + b, y - l)
-              ctx.lineTo(x + b, y - b)
-
-              // right
-              ctx.lineTo(x + l, y - b)
-              ctx.lineTo(x + l, y + b)
-              ctx.lineTo(x + b, y + b)
-
-              // bottom
-              ctx.lineTo(x + b, y + l)
-              ctx.lineTo(x - b, y + l)
-              ctx.lineTo(x - b, y + b)
-            }
-            //
-            else {
-              ctx.rect(x - size / 2, y - size / 2, size, size)
-            }
-
-            ctx.fillStyle = color
-            ctx.fill()
-            ctx.closePath()
-          }
+      switch (node.state) {
+        case entering: {
+          cancelAnimationSubscriptions()
+          animationControl = animate((progress) => draw(true, progress), {
+            duration: node.duration.enter,
+            easing: propsFullRef.current.easing
+          })
+          break
         }
-      }
 
-      animationControl = animate(draw, {
-        duration: transitionDuration,
-        easing: propsFullRef.current.easing
-      })
-
-      if (window.ResizeObserver) {
-        resizeObserver = new window.ResizeObserver(() => {
-          setupCanvasSize()
-
-          const currentTime = animationControl?.currentTime || 0
-          if (active && currentTime >= transitionDuration) {
-            draw(1)
-          }
-        })
-
-        resizeObserver.observe(canvas)
+        case exiting: {
+          cancelAnimationSubscriptions()
+          animationControl = animate((progress) => draw(false, progress), {
+            duration: node.duration.exit,
+            easing: propsFullRef.current.easing
+          })
+          break
+        }
       }
     }
 
