@@ -43,10 +43,14 @@ const Dots = (props: DotsProps): ReactElement => {
     let animationControl: ReturnType<typeof animate> | undefined
     let resizeObserver: ResizeObserver | undefined
 
-    const ctx = canvas.getContext('2d')!
+    const ctx = canvas.getContext('2d')
     const dpr = Math.min(window.devicePixelRatio || 2, 2)
 
     const resize = (): void => {
+      if (!ctx) {
+        return
+      }
+
       const { width, height } = canvas.getBoundingClientRect()
 
       if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
@@ -59,6 +63,10 @@ const Dots = (props: DotsProps): ReactElement => {
     }
 
     const draw = (isEntering: boolean, progress: number): void => {
+      if (!ctx) {
+        return
+      }
+
       const { color, type, distance, size, crossSize, origin, originInverted } =
         propsFullRef.current
 
