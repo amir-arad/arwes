@@ -24,16 +24,34 @@ const Illuminator = (props: IlluminatorProps): ReactElement => {
     const element = elementRef.current!
     const parentElement = element.parentElement as Element
 
+    let bounds: DOMRect
+    let x: number
+    let y: number
+    let isVisible: boolean
+    let opacity: string
+
     const onMove = (event: MouseEvent): void => {
-      const bounds = parentElement.getBoundingClientRect()
-      const x = event.clientX - bounds.left
-      const y = event.clientY - bounds.top
-      element.style.opacity = '1'
-      element.style.transform = `translate(calc(${x}px - 50%), calc(${y}px - 50%))`
+      bounds = parentElement.getBoundingClientRect()
+      x = event.clientX - bounds.left
+      y = event.clientY - bounds.top
+      isVisible =
+        x >= -(size / 2) &&
+        x <= bounds.width + size / 2 &&
+        y >= -(size / 2) &&
+        y <= bounds.height + size / 2
+      opacity = isVisible ? '1' : '0'
+
+      if (element.style.opacity !== opacity) element.style.opacity = opacity
+
+      if (isVisible) {
+        element.style.transform = `translate(calc(${x}px - 50%), calc(${y}px - 50%))`
+      }
     }
 
     const onHide = (): void => {
-      element.style.opacity = '0'
+      if (element.style.opacity !== '0') {
+        element.style.opacity = '0'
+      }
     }
 
     document.addEventListener('mousemove', onMove)

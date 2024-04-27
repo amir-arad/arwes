@@ -22,6 +22,8 @@ const IlluminatorSVG = (props: IlluminatorSVGProps): ReactElement => {
   const gradientId = useId()
   const circleElementRef = useRef<SVGCircleElement>(null)
 
+  // TODO: Prevent updates on the element if it is out of bounds.
+
   useEffect(() => {
     const element = circleElementRef.current!
     const svg = element.parentElement?.parentElement as unknown as SVGSVGElement // TODO:
