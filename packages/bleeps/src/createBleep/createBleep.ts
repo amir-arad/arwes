@@ -1,29 +1,48 @@
-import { IS_BROWSER, IS_BROWSER_SAFARI } from '@arwes/tools'
-
 import type { BleepProps, Bleep, BleepPropsUpdatable } from '../types.js'
 
 const createBleep = (props: BleepProps): Bleep | null => {
-  const isBleepsAvailable = IS_BROWSER && !!window.AudioContext
+  const isBrowser: boolean = typeof window !== 'undefined'
+  const isBrowserSafari: boolean =
+    isBrowser &&
+    window.navigator.userAgent.includes('Safari') &&
+    !window.navigator.userAgent.includes('Chrome')
+
+  const isBleepsAvailable = isBrowser && !!window.AudioContext
 
   if (!isBleepsAvailable) {
     return null
   }
 
-  const { sources, preload = true, loop = false, volume = 1.0, fetchHeaders, masterGain } = props
+  const {
+    sources,
+    preload = true,
+    loop = false,
+    volume = 1.0,
+    fetchHeaders,
+    masterGain,
+    maxPlaybackDelay = 0.25
+  } = props
 
   let isBufferLoading = false
   let isBufferError = false
   let isBufferPlaying = false
+  let playbackCallbackTime = 0
+  let hasPlaybackCallback = false
 
   let source: AudioBufferSourceNode | null = null
   let buffer: AudioBuffer | null = null
   let duration = 0
+  let fetchPromise: Promise<void>
 
   const context = props.context ?? new window.AudioContext()
   const gain = context.createGain()
   const callersAccount = new Set<string>()
 
-  const fetchAudioBuffer = (): void => {
+  const getDuration = (): number => duration
+  const getIsPlaying = (): boolean => isBufferPlaying
+  const getIsLoaded = (): boolean => !!buffer
+
+  function fetchAudioBuffer(): void {
     if (buffer || isBufferLoading || isBufferError) {
       return
     }
@@ -39,7 +58,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
     const audioTest = new window.Audio()
     const source = sources.find((source) => {
       // "webm" and "weba" file formats are not supported on Safari.
-      if (IS_BROWSER_SAFARI && source.type.includes('audio/webm')) {
+      if (isBrowserSafari && source.type.includes('audio/webm')) {
         return false
       }
 
@@ -59,8 +78,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
 
     isBufferLoading = true
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    window
+    fetchPromise = window
       .fetch(src, {
         method: 'GET',
         headers: fetchHeaders
@@ -84,16 +102,43 @@ const createBleep = (props: BleepProps): Bleep | null => {
           err
         )
       })
-      .then(() => (isBufferLoading = false))
+      .then(() => {
+        isBufferLoading = false
+      })
   }
 
-  const getDuration = (): number => duration
-  const getIsPlaying = (): boolean => isBufferPlaying
-  const getIsLoaded = (): boolean => !!buffer
-
-  const play = (caller?: string): void => {
+  function play(caller?: string): void {
     if (!buffer) {
+      if (isBufferError) {
+        return
+      }
+
+      // Allow multiple playback schedules since user clicks may change the time difference.
+      playbackCallbackTime = Date.now()
+
+      if (hasPlaybackCallback) {
+        return
+      }
+
       fetchAudioBuffer()
+
+      // Schedule the playback for when the audio buffer is loaded.
+      // If the buffer is loaded after `maxPlaybackDelay` seconds have passed
+      // since the last time the user tried to play the audio, ignore the playback.
+      hasPlaybackCallback = true
+      void fetchPromise.then(() => {
+        const now = Date.now()
+        const isStillGoodToPlay = Number.isFinite(maxPlaybackDelay)
+          ? now <= playbackCallbackTime + maxPlaybackDelay * 1_000
+          : true
+
+        if (buffer && isStillGoodToPlay) {
+          play()
+        }
+
+        hasPlaybackCallback = false
+      })
+
       return
     }
 
@@ -147,10 +192,16 @@ const createBleep = (props: BleepProps): Bleep | null => {
 
     source.onended = () => {
       isBufferPlaying = false
+
+      if (source) {
+        source.stop()
+        source.disconnect(gain)
+        source = null
+      }
     }
   }
 
-  const stop = (caller?: string): void => {
+  function stop(caller?: string): void {
     if (!buffer) {
       return
     }
@@ -172,11 +223,11 @@ const createBleep = (props: BleepProps): Bleep | null => {
     }
   }
 
-  const load = (): void => {
+  function load(): void {
     fetchAudioBuffer()
   }
 
-  const unload = (): void => {
+  function unload(): void {
     if (source) {
       source.stop()
       source.disconnect(gain)
@@ -190,7 +241,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
     isBufferError = false
   }
 
-  const update = (props: BleepPropsUpdatable): void => {
+  function update(props: BleepPropsUpdatable): void {
     if (props.volume !== undefined) {
       const bleepVolume = Math.max(0, Math.min(1, props.volume))
       gain.gain.setValueAtTime(bleepVolume, context.currentTime)

@@ -26,6 +26,8 @@ import type {
 } from '../types.js'
 import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js'
 
+// TODO: Add a way to know when the transition happened on the node.
+
 interface AnimatedProps<E extends HTMLElement | SVGElement = HTMLDivElement> {
   elementRef?: ForwardedRef<E>
   className?: string

@@ -1,4 +1,3 @@
-import { IS_BROWSER } from '@arwes/tools'
 import type {
   Bleep,
   BleepGeneralProps,
@@ -13,7 +12,7 @@ const createBleepsManager = <Names extends string>(
 ): BleepsManager<Names> => {
   // In non-browser environments, the bleeps manager is still created but without
   // actual functionalities.
-  const isBleepsAvailable = IS_BROWSER && !!window.AudioContext
+  const isBleepsAvailable = typeof window !== 'undefined' && !!window.AudioContext
   const context = isBleepsAvailable ? new window.AudioContext() : (null as unknown as AudioContext)
   const masterGain = isBleepsAvailable ? context.createGain() : (null as unknown as GainNode)
 

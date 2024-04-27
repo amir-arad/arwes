@@ -6,6 +6,7 @@ export interface BleepGeneralProps {
   readonly preload?: boolean
   readonly volume?: number
   readonly fetchHeaders?: Headers
+  readonly maxPlaybackDelay?: number
   readonly disabled?: boolean
 }
 
