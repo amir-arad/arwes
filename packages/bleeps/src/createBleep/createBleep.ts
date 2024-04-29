@@ -27,7 +27,6 @@ const createBleep = (props: BleepProps): Bleep | null => {
   let isBufferError = false
   let isBufferPlaying = false
   let playbackCallbackTime = 0
-  let hasPlaybackCallback = false
 
   let source: AudioBufferSourceNode | null = null
   let buffer: AudioBuffer | null = null
@@ -107,39 +106,43 @@ const createBleep = (props: BleepProps): Bleep | null => {
       })
   }
 
+  function onUserAllowAudio(): void {
+    window.removeEventListener('click', onUserAllowAudio)
+
+    if (context.state === 'suspended') {
+      void context.resume()
+    }
+  }
+
   function play(caller?: string): void {
-    if (!buffer) {
-      if (isBufferError) {
-        return
+    const playback = (): void => {
+      if (Date.now() <= playbackCallbackTime + maxPlaybackDelay * 1_000) {
+        play()
       }
+    }
 
-      // Allow multiple playback schedules since user clicks may change the time difference.
-      playbackCallbackTime = Date.now()
+    playbackCallbackTime = Date.now()
 
-      if (hasPlaybackCallback) {
-        return
-      }
+    if (isBufferError) {
+      return
+    }
 
-      fetchAudioBuffer()
-
-      // Schedule the playback for when the audio buffer is loaded.
-      // If the buffer is loaded after `maxPlaybackDelay` seconds have passed
-      // since the last time the user tried to play the audio, ignore the playback.
-      hasPlaybackCallback = true
-      void fetchPromise.then(() => {
-        const now = Date.now()
-        const isStillGoodToPlay = Number.isFinite(maxPlaybackDelay)
-          ? now <= playbackCallbackTime + maxPlaybackDelay * 1_000
-          : true
-
-        if (buffer && isStillGoodToPlay) {
-          play()
-        }
-
-        hasPlaybackCallback = false
-      })
+    if (isBufferLoading) {
+      void fetchPromise.then(playback)
 
       return
+    }
+
+    if (!buffer) {
+      fetchAudioBuffer()
+
+      void fetchPromise.then(playback)
+
+      return
+    }
+
+    if (caller) {
+      callersAccount.add(caller)
     }
 
     if (loop && isBufferPlaying) {
@@ -149,25 +152,21 @@ const createBleep = (props: BleepProps): Bleep | null => {
     // If the user has not yet interacted with the browser, audio is locked
     // so try to unlock it.
     if (context.state === 'suspended') {
-      let isResumeError = false
+      window.addEventListener('click', onUserAllowAudio)
 
-      context.resume().catch((err: Event) => {
-        isResumeError = true
-        console.error(
-          `The bleep audio context with sources "${JSON.stringify(
-            sources
-          )}" could not be resumed to be played:`,
-          err
-        )
-      })
+      context
+        .resume()
+        .then(playback)
+        .catch((err: Event) => {
+          console.error(
+            `The bleep audio context with sources "${JSON.stringify(
+              sources
+            )}" could not be resumed to be played:`,
+            err
+          )
+        })
 
-      if (isResumeError) {
-        return
-      }
-    }
-
-    if (caller) {
-      callersAccount.add(caller)
+      return
     }
 
     isBufferPlaying = true
@@ -239,6 +238,8 @@ const createBleep = (props: BleepProps): Bleep | null => {
 
     isBufferLoading = false
     isBufferError = false
+
+    window.removeEventListener('click', onUserAllowAudio)
   }
 
   function update(props: BleepPropsUpdatable): void {
