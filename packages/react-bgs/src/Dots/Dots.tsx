@@ -180,7 +180,7 @@ const Dots = (props: DotsProps): ReactElement => {
     const animatorSubscription = (node: AnimatorNode): void => {
       switch (node.state) {
         case entering: {
-          cancelAnimationSubscriptions()
+          animationControl?.cancel()
           animationControl = animate((progress) => draw(true, progress), {
             duration: node.duration.enter,
             easing: propsFullRef.current.easing
@@ -189,7 +189,7 @@ const Dots = (props: DotsProps): ReactElement => {
         }
 
         case exiting: {
-          cancelAnimationSubscriptions()
+          animationControl?.cancel()
           animationControl = animate((progress) => draw(false, progress), {
             duration: node.duration.exit,
             easing: propsFullRef.current.easing
