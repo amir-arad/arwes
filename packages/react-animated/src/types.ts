@@ -35,7 +35,7 @@ export interface AnimatedSettingsTransitionFunctionConfig {
 }
 
 export interface AnimatedSettingsTransitionFunctionReturn {
-  stop: () => void
+  cancel: () => void
 }
 
 export type AnimatedSettingsTransitionFunction =

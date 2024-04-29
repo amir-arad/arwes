@@ -99,7 +99,7 @@ const AnimatedX = <
       })
 
     return () => {
-      animationControlsRef.current.forEach((control) => control.stop())
+      animationControlsRef.current.forEach((control) => control.cancel())
     }
   }, [hasState, animatedState])
 

@@ -127,7 +127,7 @@ const Animated = <
 
     return () => {
       cancelSubscription()
-      animationControlsRef.current.forEach((control) => control.stop())
+      animationControlsRef.current.forEach((control) => control.cancel())
     }
   }, [animator])
 
