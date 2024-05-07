@@ -15,7 +15,7 @@ import { animate } from 'motion'
 
 import { type NoInfer } from '@arwes/tools'
 import { mergeRefs } from '@arwes/react-tools'
-import { ANIMATOR_STATES as STATES } from '@arwes/animator'
+import { type AnimatorNode, ANIMATOR_STATES as STATES } from '@arwes/animator'
 import { useAnimator } from '@arwes/react-animator'
 
 import type {
@@ -26,7 +26,7 @@ import type {
 } from '../types.js'
 import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js'
 
-// TODO: Add a way to know when the transition happened on the node.
+// TODO: Fix inferred element attributes.
 
 interface AnimatedProps<E extends HTMLElement | SVGElement = HTMLDivElement> {
   elementRef?: ForwardedRef<E>
@@ -35,13 +35,14 @@ interface AnimatedProps<E extends HTMLElement | SVGElement = HTMLDivElement> {
   animated?: AnimatedProp
   hideOnExited?: boolean
   hideOnEntered?: boolean
+  onTransition?: (element: E, node: AnimatorNode) => void
   as?: keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap
   children?: ReactNode
 }
 
 const Animated = <
   E extends HTMLElement | SVGElement = HTMLDivElement,
-  P extends HTMLProps<HTMLElement> | SVGProps<SVGElement> = HTMLProps<HTMLDivElement>
+  P = E extends HTMLElement ? HTMLProps<E> : SVGProps<E>
 >(
   props: AnimatedProps<E> & NoInfer<P>
 ): ReactElement => {
@@ -53,6 +54,7 @@ const Animated = <
     elementRef: externalElementRef,
     hideOnExited = true,
     hideOnEntered,
+    onTransition,
     ...otherProps
   } = props
 
@@ -61,9 +63,14 @@ const Animated = <
   const as = useMemo(() => asProvided || 'div', [])
   const elementRef = useRef<E | null>(null)
   const animatedSettingsRef = useRef<AnimatedSettings[]>([])
+  const propsRef = useRef<AnimatedProps<E>>(props)
   const animationControlsRef = useRef<AnimatedSettingsTransitionFunctionReturn[]>([])
   const [isExited, setIsExited] = useState(() => animator?.node.state === STATES.exited)
   const [isEntered, setIsEntered] = useState(() => animator?.node.state === STATES.entered)
+
+  // Make a copy of the props to later use in the Animator node subscription without
+  // checking with dependency hooks.
+  propsRef.current = props
 
   const animatedSettingsListReceived = Array.isArray(animated) ? animated : [animated]
   const animatedSettingsList = animatedSettingsListReceived.filter(Boolean) as AnimatedSettings[]
@@ -113,16 +120,19 @@ const Animated = <
               animationControlsRef.current.push(control)
             }
           } else {
-            const { duration, delay, easing, options, ...definition } = transition
+            const { duration, delay, easing, repeat, options, ...definition } = transition
             const control = animate(element, definition, {
               duration: duration || durationTransition,
               delay,
               easing,
+              repeat,
               ...options
             })
             animationControlsRef.current.push(control)
           }
         })
+
+      propsRef.current.onTransition?.(element, node)
     })
 
     return () => {

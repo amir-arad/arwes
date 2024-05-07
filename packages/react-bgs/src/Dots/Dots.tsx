@@ -9,7 +9,7 @@ import { easing } from '@arwes/animated'
 import { type DotsProps } from './Dots.types.js'
 import { getDistanceFromOriginToCornerProgress } from './getDistanceFromOriginToCornerProgress.js'
 
-const { entering, entered, exiting } = ANIMATOR_STATES
+const { entering, entered, exiting, exited } = ANIMATOR_STATES
 
 const defaultProps: Required<
   Pick<DotsProps, 'color' | 'type' | 'distance' | 'size' | 'crossSize' | 'origin' | 'easing'>
@@ -194,6 +194,12 @@ const Dots = (props: DotsProps): ReactElement => {
             duration: node.duration.exit,
             easing: propsFullRef.current.easing
           })
+          break
+        }
+
+        case exited: {
+          // TODO: Cancel subscriptions on exited but re-setup on entering.
+          // cancelAnimationSubscriptions()
           break
         }
       }

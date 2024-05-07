@@ -35,7 +35,7 @@ interface AnimatedXProps<E extends HTMLElement | SVGElement = HTMLDivElement> {
 
 const AnimatedX = <
   E extends HTMLElement | SVGElement = HTMLDivElement,
-  P extends HTMLProps<HTMLElement> | SVGProps<SVGElement> = HTMLProps<HTMLDivElement>
+  P = E extends HTMLElement ? HTMLProps<E> : SVGProps<E>
 >(
   props: AnimatedXProps<E> & NoInfer<P>
 ): ReactElement => {
@@ -92,8 +92,14 @@ const AnimatedX = <
             animationControlsRef.current.push(control)
           }
         } else {
-          const { duration, delay, easing, options, ...definition } = transition
-          const control = animate(element, definition, { duration, delay, easing, ...options })
+          const { duration, delay, easing, repeat, options, ...definition } = transition
+          const control = animate(element, definition, {
+            duration,
+            delay,
+            easing,
+            repeat,
+            ...options
+          })
           animationControlsRef.current.push(control)
         }
       })

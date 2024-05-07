@@ -238,6 +238,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
 
     isBufferLoading = false
     isBufferError = false
+    isBufferPlaying = false
 
     window.removeEventListener('click', onUserAllowAudio)
   }
