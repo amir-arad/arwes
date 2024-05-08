@@ -15,12 +15,16 @@ export type ThemeSettingsColor =
 
 export type ThemeSettingsStyle = ThemeStyleValue[]
 
-export interface ThemeSettingsBreakpointsKeyListItem {
-  key: string
+export interface ThemeSettingsBreakpointsKeyListItem<
+  Keys extends string | number = string | number
+> {
+  key: Keys
   value: string
 }
 
-export type ThemeSettingsBreakpoints = string[] | ThemeSettingsBreakpointsKeyListItem[]
+export type ThemeSettingsBreakpoints<Keys extends string | number = string | number> =
+  | string[]
+  | Array<ThemeSettingsBreakpointsKeyListItem<Keys>>
 
 // Theme Consumer
 
@@ -36,15 +40,11 @@ export type ThemeColor = (index: number, options?: ThemeColorOptions) => string
 export type ThemeStyleValue = CSSProperties
 export type ThemeStyle = (index: number) => ThemeStyleValue
 
-export interface ThemeBreakpoints {
-  settings: ThemeSettingsBreakpoints
-  up: (key: string | number, opts?: { strip?: boolean }) => string
-  down: (key: string | number, opts?: { strip?: boolean }) => string
-  between: (
-    startKey: string | number,
-    endKey: string | number,
-    opts?: { strip?: boolean }
-  ) => string
+export interface ThemeBreakpoints<Keys extends string | number = string | number> {
+  settings: ThemeSettingsBreakpoints<Keys>
+  up: (key: Keys, opts?: { strip?: boolean }) => string
+  down: (key: Keys, opts?: { strip?: boolean }) => string
+  between: (startKey: Keys, endKey: Keys, opts?: { strip?: boolean }) => string
 }
 
 // Theme Creators
