@@ -2,7 +2,7 @@ import React, { type ReactElement, useRef, useEffect } from 'react'
 import { animate } from 'motion'
 import { cx } from '@arwes/tools'
 import { mergeRefs } from '@arwes/react-tools'
-import { ANIMATOR_STATES, type AnimatorNode } from '@arwes/animator'
+import { ANIMATOR_STATES } from '@arwes/animator'
 import { useAnimator } from '@arwes/react-animator'
 import { easing } from '@arwes/animated'
 
@@ -145,41 +145,50 @@ const Dots = (props: DotsProps): ReactElement => {
       }
     }
 
-    resize()
+    const start = (): void => {
+      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+      if (typeof window !== 'undefined' && window.ResizeObserver) {
+        resizeObserver?.disconnect()
+        resizeObserver = new window.ResizeObserver(() => {
+          resize()
 
-    if (window.ResizeObserver) {
-      resizeObserver = new window.ResizeObserver(() => {
-        resize()
-
-        if (animator) {
-          switch (animator.node.state) {
-            case entered: {
-              draw(true, 1)
-              break
+          if (animator) {
+            switch (animator.node.state) {
+              case entered: {
+                draw(true, 1)
+                break
+              }
             }
+          } else {
+            draw(true, 1)
           }
-        } else {
-          draw(true, 1)
-        }
-      })
+        })
+        resizeObserver.observe(canvas)
+      }
 
-      resizeObserver.observe(canvas)
+      resize()
     }
 
-    const cancelAnimationSubscriptions = (): void => {
+    const cancel = (): void => {
       animationControl?.cancel()
+      animationControl = undefined
+
       resizeObserver?.disconnect()
+      resizeObserver = undefined
     }
 
     if (!animator) {
+      start()
+
       return () => {
-        cancelAnimationSubscriptions()
+        cancel()
       }
     }
 
-    const animatorSubscription = (node: AnimatorNode): void => {
+    const unsubscribe = animator.node.subscribe((node) => {
       switch (node.state) {
         case entering: {
+          start()
           animationControl?.cancel()
           animationControl = animate((progress) => draw(true, progress), {
             duration: node.duration.enter,
@@ -188,7 +197,15 @@ const Dots = (props: DotsProps): ReactElement => {
           break
         }
 
+        case entered: {
+          start()
+          animationControl?.cancel()
+          draw(true, 1)
+          break
+        }
+
         case exiting: {
+          start()
           animationControl?.cancel()
           animationControl = animate((progress) => draw(false, progress), {
             duration: node.duration.exit,
@@ -198,18 +215,15 @@ const Dots = (props: DotsProps): ReactElement => {
         }
 
         case exited: {
-          // TODO: Cancel subscriptions on exited but re-setup on entering.
-          // cancelAnimationSubscriptions()
+          cancel()
           break
         }
       }
-    }
-
-    animator.node.subscribers.add(animatorSubscription)
+    })
 
     return () => {
-      animator.node.subscribers.delete(animatorSubscription)
-      cancelAnimationSubscriptions()
+      unsubscribe()
+      cancel()
     }
   }, [animator])
 
