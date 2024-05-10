@@ -1,6 +1,6 @@
 {
   "name": "@arwes/react",
-  "version": "1.0.0-next.24050801",
+  "version": "1.0.0-next.24051001",
   "publishConfig": {
     "access": "public"
   },
@@ -43,15 +43,15 @@
     "react": "18"
   },
   "dependencies": {
-    "@arwes/react-animated": "^1.0.0-next.24050801",
-    "@arwes/react-animator": "^1.0.0-next.24050801",
-    "@arwes/react-bgs": "^1.0.0-next.24050801",
-    "@arwes/react-bleeps": "^1.0.0-next.24050801",
-    "@arwes/react-core": "^1.0.0-next.24050801",
-    "@arwes/react-frames": "^1.0.0-next.24050801",
-    "@arwes/react-text": "^1.0.0-next.24050801",
-    "@arwes/react-tools": "^1.0.0-next.24050801",
-    "arwes": "^1.0.0-next.24050801",
+    "@arwes/react-animated": "^1.0.0-next.24051001",
+    "@arwes/react-animator": "^1.0.0-next.24051001",
+    "@arwes/react-bgs": "^1.0.0-next.24051001",
+    "@arwes/react-bleeps": "^1.0.0-next.24051001",
+    "@arwes/react-core": "^1.0.0-next.24051001",
+    "@arwes/react-frames": "^1.0.0-next.24051001",
+    "@arwes/react-text": "^1.0.0-next.24051001",
+    "@arwes/react-tools": "^1.0.0-next.24051001",
+    "arwes": "^1.0.0-next.24051001",
     "tslib": "2"
   },
   "scripts": {
