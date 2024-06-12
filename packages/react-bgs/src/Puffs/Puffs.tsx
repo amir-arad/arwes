@@ -193,7 +193,7 @@ const Puffs = (props: PuffsProps): ReactElement => {
     <canvas
       role="presentation"
       ref={mergeRefs(elementRef, elementRefExternal)}
-      className={cx('arwes-react-bgs-puffs', className)}
+      className={cx('arwes-bgs-puffs', className)}
       style={{
         position: 'absolute',
         left: 0,
