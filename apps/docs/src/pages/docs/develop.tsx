@@ -228,25 +228,6 @@ const Page = (): ReactElement => {
                 </tr>
                 <tr>
                   <td>
-                    <code>@arwes/core</code>
-                  </td>
-                  <td>
-                    <small style={{ color: 'hsl(30 100% 50%)' }}>Development</small>
-                  </td>
-                  <td>
-                    <img
-                      src="https://img.shields.io/bundlephobia/minzip/@arwes/core?style=flat-square"
-                      alt="npm bundle size (scoped)"
-                    />
-                    <img
-                      src="https://img.shields.io/npm/dm/@arwes/core.svg?style=flat-square"
-                      alt="Downloads"
-                    />
-                  </td>
-                  <td>Core UI functionalities</td>
-                </tr>
-                <tr>
-                  <td>
                     <code>arwes</code>
                   </td>
                   <td>

@@ -74,16 +74,16 @@ const Page = (): ReactElement => {
                 src="https://img.shields.io/npm/dm/arwes?label=installs&style=flat-square"
               />
             </a>
-            <a href="https://twitter.com/arwesjs" target="_blank">
+            <a href="https://x.com/arwesjs" target="_blank">
               <img
-                src="https://img.shields.io/twitter/url?label=ArwesJS&logo=twitter&url=https%3A%2F%2Ftwitter.com%2Farwesjs"
-                alt="Follow on Twitter"
+                src="https://img.shields.io/twitter/follow/arwesjs?style=social"
+                alt="Follow on X"
               />
             </a>
             <a href="https://discord.gg/s5sbTkw" target="_blank">
               <img
-                src="https://img.shields.io/discord/457381046497968128?color=5865F2&logo=discord&logoColor=white"
-                alt="Join us on Discord"
+                src="https://img.shields.io/badge/Discord-Join_Us?style=flat-square&logo=discord&logoColor=%2356F&color=%23505050"
+                alt="Discord"
               />
             </a>
             <a href="https://github.com/arwes/arwes/blob/main/LICENSE" target="_blank">
