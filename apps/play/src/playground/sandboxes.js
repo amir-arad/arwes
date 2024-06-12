@@ -353,24 +353,6 @@ export const sandboxes = [
     name: 'Components',
     children: [
       {
-        name: '@arwes/core',
-        children: [
-          {
-            name: 'createAppStylesBaseline',
-            children: [
-              {
-                name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/core/src/createAppStylesBaseline/createAppStylesBaseline.basic.sandbox.tsx')
-              },
-              {
-                name: 'light',
-                code: require('!raw-loader?esModule=false!@repository/packages/core/src/createAppStylesBaseline/createAppStylesBaseline.light.sandbox.tsx')
-              }
-            ]
-          }
-        ]
-      },
-      {
         name: '@arwes/react-text',
         children: [
           {
