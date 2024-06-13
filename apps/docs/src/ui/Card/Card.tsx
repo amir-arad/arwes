@@ -16,7 +16,7 @@ const Card = (props: CardProps): ReactElement => {
 
   return (
     <Animated as="article" className={cx(classes.root, className)} animated={animated}>
-      <FrameSVGOctagon squareSize={16} leftBottom={false} rightTop={false} />
+      <FrameSVGOctagon squareSize={16} leftBottom={false} rightTop={false} positioned />
       <div className={classes.container}>
         <div className={classes.asset}>
           <img className={classes.image} src={src} alt={srcAlt} />

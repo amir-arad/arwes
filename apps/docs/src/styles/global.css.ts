@@ -12,7 +12,7 @@ const createAppStylesBaseline = (theme: Theme): Record<string, CSSProperties> =>
   const { fontSize: _typographyMainStylesFontSize, ...typographyMainStyles } = typography.body(1)
 
   type PaletteName = keyof typeof theme.colors
-  const themeNames = Object.keys(theme.colors) as unknown as PaletteName[]
+  const themeNames = Object.keys(theme.colors as Record<string, any>) as PaletteName[]
 
   const blockquotesThemes = themeNames.reduce(
     (themes: Record<string, CSSProperties>, themeName: PaletteName) => {

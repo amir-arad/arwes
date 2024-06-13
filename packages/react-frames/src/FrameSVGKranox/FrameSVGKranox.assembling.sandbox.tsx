@@ -34,6 +34,7 @@ const Frame = (): ReactElement => {
         squareSize={12}
         smallLineLength={12}
         largeLineLength={48}
+        positioned
       />
     </div>
   )

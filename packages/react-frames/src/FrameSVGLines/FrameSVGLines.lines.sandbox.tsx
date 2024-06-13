@@ -25,6 +25,7 @@ const Sandbox = (): ReactElement => {
         largeLineWidth={2}
         smallLineWidth={2}
         smallLineLength={32}
+        positioned
       />
     </div>
   )

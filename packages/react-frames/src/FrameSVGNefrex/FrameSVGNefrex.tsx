@@ -85,7 +85,7 @@ const FrameSVGNefrex = (props: FrameSVGNefrexProps): ReactElement => {
   return (
     <FrameSVG
       {...otherProps}
-      className={cx('arwes-react-frames-framesvgnefrex', className)}
+      className={cx('arwes-frames-framesvgnefrex', className)}
       paths={paths}
     />
   )

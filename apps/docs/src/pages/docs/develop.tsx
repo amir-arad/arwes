@@ -547,7 +547,7 @@ const Card = (): ReactElement => {
         \`}</style>
 
         <Animator>
-          <FrameSVGCorners strokeWidth={2} />
+          <FrameSVGCorners strokeWidth={2} positioned />
         </Animator>
 
         <Animator>
@@ -671,7 +671,7 @@ const Card = (): ReactElement => {
         \`}</style>
 
         <Animator>
-          <FrameSVGCorners strokeWidth={2} />
+          <FrameSVGCorners strokeWidth={2} positioned />
         </Animator>
 
         <Animator>

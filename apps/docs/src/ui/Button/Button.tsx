@@ -67,7 +67,7 @@ const Button = (props: ButtonProps): ReactElement => {
             color="hsl(60 50% 90% / 8%)"
             size={200}
           />
-          <FrameSVGOctagon squareSize={12} leftBottom={false} rightTop={false} />
+          <FrameSVGOctagon squareSize={12} leftBottom={false} rightTop={false} positioned />
         </div>
       )}
       <div className={classes.content}>{children}</div>

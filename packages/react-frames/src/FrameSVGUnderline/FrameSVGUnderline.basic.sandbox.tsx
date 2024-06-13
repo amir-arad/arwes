@@ -22,6 +22,7 @@ const Sandbox = (): ReactElement => {
             color: 'hsl(180, 75%, 50%)'
           }
         }}
+        positioned
       />
     </div>
   )

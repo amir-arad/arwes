@@ -100,7 +100,7 @@ const FrameSVGKranox = (props: FrameSVGKranoxProps): ReactElement => {
   return (
     <FrameSVG
       {...otherProps}
-      className={cx('arwes-react-frames-framesvgkranox', className)}
+      className={cx('arwes-frames-framesvgkranox', className)}
       paths={paths}
     />
   )

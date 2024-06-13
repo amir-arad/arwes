@@ -26,7 +26,7 @@ const Frame = (): ReactElement => {
         }
       }}
     >
-      <FrameSVGOctagon elementRef={svgRef} onRender={onRender} padding={4} />
+      <FrameSVGOctagon elementRef={svgRef} onRender={onRender} padding={4} positioned />
     </div>
   )
 }

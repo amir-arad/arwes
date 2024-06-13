@@ -24,7 +24,7 @@ const Frame = (): ReactElement => {
         }
       }}
     >
-      <FrameSVGLines elementRef={svgRef} onRender={onRender} />
+      <FrameSVGLines elementRef={svgRef} onRender={onRender} positioned />
     </div>
   )
 }

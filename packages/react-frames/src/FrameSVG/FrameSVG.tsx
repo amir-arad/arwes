@@ -14,6 +14,7 @@ import { useFrameSVGRenderer } from '../useFrameSVGRenderer/index.js'
 
 interface FrameSVGProps extends SVGProps<SVGSVGElement> {
   paths?: FrameSVGPathGeneric[]
+  positioned?: boolean
   onRender?: (svg: SVGSVGElement, width: number, height: number) => void
   className?: string
   style?: CSSProperties
@@ -24,6 +25,7 @@ interface FrameSVGProps extends SVGProps<SVGSVGElement> {
 const FrameSVG = (props: FrameSVGProps): ReactElement => {
   const {
     paths,
+    positioned,
     onRender: onRenderExternal,
     className,
     style,
@@ -50,24 +52,28 @@ const FrameSVG = (props: FrameSVGProps): ReactElement => {
     <svg
       role="presentation"
       ref={mergeRefs(svgRef, elementRef)}
-      className={cx('arwes-react-frames-framesvg', className)}
+      className={cx('arwes-frames-framesvg', className)}
       xmlns="http://www.w3.org/2000/svg"
       // Even if it is still resized automatically, in case there is a delay
       // or the ResizeObserver API is not available, the SVG should be resized.
       preserveAspectRatio="none"
       style={{
-        position: 'absolute',
-        zIndex: -1,
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        display: 'block',
-        border: 0,
-        margin: 0,
-        padding: 0,
-        width: '100%',
-        height: '100%',
+        ...(positioned
+          ? {
+              position: 'absolute',
+              zIndex: -1,
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              display: 'block',
+              border: 0,
+              margin: 0,
+              padding: 0,
+              width: '100%',
+              height: '100%'
+            }
+          : null),
         ...style
       }}
       {...otherProps}

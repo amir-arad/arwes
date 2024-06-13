@@ -90,7 +90,7 @@ const FrameSVGCorners = (props: FrameSVGCornersProps): ReactElement => {
   return (
     <FrameSVG
       {...otherProps}
-      className={cx('arwes-react-frames-framesvgcorners', className)}
+      className={cx('arwes-frames-framesvgcorners', className)}
       paths={paths}
     />
   )

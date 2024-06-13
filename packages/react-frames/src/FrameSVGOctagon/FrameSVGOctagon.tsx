@@ -104,7 +104,7 @@ const FrameSVGOctagon = (props: FrameSVGOctagonProps): ReactElement => {
   return (
     <FrameSVG
       {...otherProps}
-      className={cx('arwes-react-frames-framesvgoctagon', className)}
+      className={cx('arwes-frames-framesvgoctagon', className)}
       paths={paths}
     />
   )

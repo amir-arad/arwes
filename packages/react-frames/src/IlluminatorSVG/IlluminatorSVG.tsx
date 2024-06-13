@@ -54,7 +54,7 @@ const IlluminatorSVG = (props: IlluminatorSVGProps): ReactElement => {
 
   return (
     <g
-      className={cx('arwes-react-frames-illuminatorsvg', className)}
+      className={cx('arwes-frames-illuminatorsvg', className)}
       style={{
         pointerEvents: 'none',
         ...style

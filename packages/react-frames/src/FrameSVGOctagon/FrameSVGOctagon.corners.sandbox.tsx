@@ -26,6 +26,7 @@ const Sandbox = (): ReactElement => {
         rightTop={true}
         rightBottom={true}
         leftBottom={false}
+        positioned
       />
     </div>
   )

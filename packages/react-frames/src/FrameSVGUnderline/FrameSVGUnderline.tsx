@@ -53,7 +53,7 @@ const FrameSVGUnderline = (props: FrameSVGUnderlineProps): ReactElement => {
   return (
     <FrameSVG
       {...otherProps}
-      className={cx('arwes-react-frames-framesvgunderline', className)}
+      className={cx('arwes-frames-framesvgunderline', className)}
       paths={paths}
     />
   )

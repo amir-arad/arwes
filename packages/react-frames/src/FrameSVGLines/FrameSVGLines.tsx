@@ -110,7 +110,7 @@ const FrameSVGLines = (props: FrameSVGLinesProps): ReactElement => {
   return (
     <FrameSVG
       {...otherProps}
-      className={cx('arwes-react-frames-framesvglines', className)}
+      className={cx('arwes-frames-framesvglines', className)}
       paths={paths}
     />
   )

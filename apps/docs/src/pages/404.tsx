@@ -18,7 +18,13 @@ const Frame = (): ReactElement => {
   const { onRender } = useFrameSVGAssemblingAnimation(svgRef)
 
   return (
-    <FrameSVGLines className="frame" elementRef={svgRef} onRender={onRender} smallLineWidth={3} />
+    <FrameSVGLines
+      className="frame"
+      elementRef={svgRef}
+      onRender={onRender}
+      smallLineWidth={3}
+      positioned
+    />
   )
 }
 

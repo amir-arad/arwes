@@ -24,6 +24,7 @@ const Sandbox = (): ReactElement => {
         }}
         squareSize={32}
         strokeWidth={3}
+        positioned
       />
     </div>
   )

@@ -62,6 +62,7 @@ const ModalLayout = (props: ModalLayoutProps): ReactElement => {
                 squareSize={12}
                 smallLineLength={12}
                 largeLineLength={48}
+                positioned
                 onRender={frame1Animation.onRender}
               />
               <FrameSVGNefrex
@@ -76,6 +77,7 @@ const ModalLayout = (props: ModalLayoutProps): ReactElement => {
                 squareSize={12}
                 smallLineLength={12}
                 largeLineLength={48}
+                positioned
                 onRender={frame2Animation.onRender}
               />
             </Animated>

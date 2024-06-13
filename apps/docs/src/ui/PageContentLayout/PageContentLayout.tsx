@@ -33,7 +33,7 @@ const PageContentLayout = (props: PageContentLayoutProps): ReactElement => {
       {frame && (
         <Animator>
           <Animated className={classes.frame} animated={aaVisibility()}>
-            <FrameSVGOctagon className="page-document__svg" />
+            <FrameSVGOctagon className="page-document__svg" positioned />
             <Illuminator color="hsl(180 50% 50% / 5%)" size={400} />
           </Animated>
         </Animator>
