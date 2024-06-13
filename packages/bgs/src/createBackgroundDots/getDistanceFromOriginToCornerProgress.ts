@@ -1,4 +1,4 @@
-import { type DotsPropsOrigin } from './Dots.types.js'
+import { type CreateBackgroundDotsSettings } from './createBackgroundDots.js'
 
 const getDistanceBetweenTwoPoints = (x1: number, y1: number, x2: number, y2: number): number => {
   return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
@@ -9,7 +9,7 @@ const getDistanceFromOriginToCornerProgress = (
   height: number,
   x1: number,
   y1: number,
-  origin: DotsPropsOrigin
+  origin: Exclude<CreateBackgroundDotsSettings['origin'], undefined>
 ): number => {
   switch (origin) {
     case 'left':

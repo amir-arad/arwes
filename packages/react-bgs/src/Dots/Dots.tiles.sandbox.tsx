@@ -13,7 +13,13 @@ const Sandbox = (): ReactElement => {
 
   return (
     <Animator active={active} duration={{ enter: 0.75, exit: 0.75 }}>
-      <Dots color="hsla(120, 100%, 75%, 0.1)" distance={50} size={45} origin="top" />
+      <Dots
+        style={{ width: '90vw', height: '90vh' }}
+        color="hsla(120, 100%, 75%, 0.1)"
+        distance={50}
+        size={45}
+        origin="top"
+      />
     </Animator>
   )
 }

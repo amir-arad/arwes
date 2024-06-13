@@ -68,7 +68,7 @@ interface Puff {
 }
 
 const defaultProps: Required<CreateBackgroundPuffsSettings> = {
-  color: '#fff',
+  color: '#777',
   quantity: 10,
   padding: 50,
   xOffset: [0, 0],
@@ -90,7 +90,7 @@ const createBackgroundPuffs = (props: CreateBackgroundPuffsProps): CreateBackgro
   }
 
   let resizeObserver: ResizeObserver | undefined
-  let canvasControl: AnimationControls | undefined
+  let transitionControl: AnimationControls | undefined
   let runningControl: AnimationControls | undefined
   let unsubscribe: (() => void) | undefined
   let runningControlTimeoutId: number | undefined
@@ -220,8 +220,8 @@ const createBackgroundPuffs = (props: CreateBackgroundPuffsProps): CreateBackgro
     resizeObserver?.disconnect()
     resizeObserver = undefined
 
-    canvasControl?.cancel()
-    canvasControl = undefined
+    transitionControl?.cancel()
+    transitionControl = undefined
 
     runningControl?.cancel()
     runningControl = undefined
@@ -246,8 +246,12 @@ const createBackgroundPuffs = (props: CreateBackgroundPuffsProps): CreateBackgro
           if (runningControl === undefined) {
             run()
           }
-          canvasControl?.cancel()
-          canvasControl = animate(canvas, { opacity: [0, 1] }, { duration: node.duration.enter })
+          transitionControl?.cancel()
+          transitionControl = animate(
+            canvas,
+            { opacity: [0, 1] },
+            { duration: node.duration.enter }
+          )
           break
         }
 
@@ -261,8 +265,8 @@ const createBackgroundPuffs = (props: CreateBackgroundPuffsProps): CreateBackgro
         }
 
         case 'exiting': {
-          canvasControl?.cancel()
-          canvasControl = animate(canvas, { opacity: [1, 0] }, { duration: node.duration.exit })
+          transitionControl?.cancel()
+          transitionControl = animate(canvas, { opacity: [1, 0] }, { duration: node.duration.exit })
           break
         }
 
