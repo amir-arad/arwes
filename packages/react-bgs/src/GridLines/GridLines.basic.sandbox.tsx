@@ -13,16 +13,7 @@ const Sandbox = (): ReactElement => {
 
   return (
     <Animator active={active} duration={{ enter: 0.5, exit: 0.5 }}>
-      <div
-        style={{
-          position: 'relative',
-          width: '80vw',
-          height: '80vh'
-        }}
-      >
-        {/* Canvas element will ocupy the positioned parent element. */}
-        <GridLines lineColor="hsla(180, 100%, 75%, 0.5)" />
-      </div>
+      <GridLines style={{ width: '90vw', height: '90vh' }} lineColor="hsla(180, 100%, 75%, 0.5)" />
     </Animator>
   )
 }

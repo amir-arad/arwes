@@ -7,6 +7,7 @@ const Sandbox = (): ReactElement => {
   return (
     <Animator duration={{ enter: 0.5, exit: 0.5 }}>
       <GridLines
+        style={{ width: '90vw', height: '90vh' }}
         lineColor="hsla(180, 100%, 75%, 0.2)"
         lineWidth={2}
         distance={40}
