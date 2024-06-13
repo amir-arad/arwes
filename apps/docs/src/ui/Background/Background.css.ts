@@ -26,9 +26,19 @@ export const layer1Image = style({
 })
 
 export const layer2 = style({
-  zIndex: 2
+  zIndex: 2,
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  width: '100%',
+  height: '100%'
 })
 
 export const layer3 = style({
-  zIndex: 2
+  zIndex: 2,
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  width: '100%',
+  height: '100%'
 })

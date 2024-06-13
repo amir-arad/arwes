@@ -19,16 +19,11 @@ const Sandbox = (): ReactElement => {
         interval: 2
       }}
     >
-      <div
-        style={{
-          position: 'relative',
-          width: '80vw',
-          height: '80vh'
-        }}
-      >
-        {/* Canvas element will ocupy the positioned parent element. */}
-        <Puffs color="hsla(180, 100%, 75%, 0.5)" quantity={20} />
-      </div>
+      <Puffs
+        style={{ width: '90vw', height: '90vh' }}
+        color="hsla(180, 100%, 75%, 0.5)"
+        quantity={20}
+      />
     </Animator>
   )
 }
