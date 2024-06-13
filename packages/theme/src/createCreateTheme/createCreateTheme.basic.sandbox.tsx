@@ -55,8 +55,9 @@ const themeDefaults: ThemeSettings = {
   ],
   color: {
     // A function to return a HSLA value as [number, number, number, number?].
-    primary: (i) => [180, 70, i * 5, 1],
-    secondary: (i) => [60, 70, i * 5, 1]
+    // The colors go from light to dark.
+    primary: (i) => [180, 70, 95 - i * 5, 1],
+    secondary: (i) => [60, 70, 95 - i * 5, 1]
   }
 }
 
@@ -77,20 +78,20 @@ const Sandbox = (): ReactElement => {
         styles={{
           html: {
             margin: theme.space(2),
-            backgroundColor: theme.color.primary(1)
+            backgroundColor: theme.color.primary(18)
           },
           h1: {
             ...theme.font(0),
             marginBottom: theme.space(1),
             borderBottomWidth: theme.outline(1),
             borderBottomStyle: 'solid',
-            borderBottomColor: theme.color.primary(10),
+            borderBottomColor: theme.color.primary(14),
             paddingBottom: theme.space(1),
-            color: theme.color.primary(16)
+            color: theme.color.primary(5)
           },
           p: {
             ...theme.font(1),
-            color: theme.color.secondary(16)
+            color: theme.color.secondary(8)
           }
         }}
       />

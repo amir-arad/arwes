@@ -65,6 +65,10 @@ export const sandboxes = [
               {
                 name: 'basic',
                 code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createCreateTheme/createCreateTheme.basic.sandbox.tsx')
+              },
+              {
+                name: 'colors',
+                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createCreateTheme/createCreateTheme.colors.sandbox.tsx')
               }
             ]
           },
