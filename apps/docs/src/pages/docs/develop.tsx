@@ -98,7 +98,7 @@ const Page = (): ReactElement => {
                     <code>@arwes/theme</code>
                   </td>
                   <td>
-                    <small style={{ color: 'hsl(30 100% 50%)' }}>Development</small>
+                    <small style={{ color: 'hsl(150 100% 50%)' }}>Polishing</small>
                   </td>
                   <td>
                     <img
@@ -212,7 +212,7 @@ const Page = (): ReactElement => {
                     <code>@arwes/bgs</code>
                   </td>
                   <td>
-                    <small style={{ color: 'hsl(30 100% 50%)' }}>Development</small>
+                    <small style={{ color: 'hsl(150 100% 50%)' }}>Polishing</small>
                   </td>
                   <td>
                     <img
@@ -909,7 +909,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
                     <code>@arwes/react-core</code>
                   </td>
                   <td>
-                    <small style={{ color: 'hsl(0 100% 50%)' }}>Specification</small>
+                    <small style={{ color: 'hsl(150 100% 50%)' }}>Polishing</small>
                   </td>
                   <td>
                     <img
