@@ -12,7 +12,7 @@
   },
   "scripts": {
     "dev": "sh ./scripts/generateDynamics.sh && next dev -p 9002",
-    "build": "sh ./scripts/generateDynamics.sh && next build && next export",
+    "build": "sh ./scripts/generateDynamics.sh && next build",
     "start": "serve ./out -p 9002"
   }
 }

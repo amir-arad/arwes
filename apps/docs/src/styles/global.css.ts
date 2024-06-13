@@ -1,11 +1,11 @@
 import { globalStyle } from '@vanilla-extract/css'
 import type { Properties as CSSProperties } from 'csstype'
-import { type AppTheme } from '@arwes/theme'
+import { type Theme } from '@app/theme'
 import { createFrameOctagonClip } from '@arwes/frames'
 
 import { theme } from '@app/theme'
 
-const createAppStylesBaseline = (theme: AppTheme): Record<string, CSSProperties> => {
+const createAppStylesBaseline = (theme: Theme): Record<string, CSSProperties> => {
   const { dark, space, colors, fontFamilies, typography, transitions } = theme
 
   // Remove "fontSize" from main typography styles since the browser should set this value.
