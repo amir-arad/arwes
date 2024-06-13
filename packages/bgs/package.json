@@ -1,6 +1,6 @@
 {
   "name": "@arwes/bgs",
-  "version": "1.0.0-next.24051001",
+  "version": "1.0.0-next.24061301",
   "publishConfig": {
     "access": "public"
   },
@@ -43,8 +43,8 @@
     "motion": "10"
   },
   "dependencies": {
-    "@arwes/animated": "^1.0.0-next.24051001",
-    "@arwes/animator": "^1.0.0-next.24051001",
+    "@arwes/animated": "^1.0.0-next.24061301",
+    "@arwes/animator": "^1.0.0-next.24061301",
     "tslib": "2"
   },
   "scripts": {
