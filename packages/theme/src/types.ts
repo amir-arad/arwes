@@ -60,11 +60,6 @@ export interface ThemeCreatorStructure {
     | ThemeCreatorStructure
 }
 
-export interface ThemeCreatorOptions {
-  getCacheColorScheme: () => string | null | undefined
-  setCacheColorScheme: (colorScheme: string) => void
-}
-
 export type ThemeCreator<ThemeSettings, Theme> = (
   themeSettingsExtensions?:
     | PartialDeep<ThemeSettings>
