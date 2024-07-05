@@ -5,7 +5,7 @@ import React, { type ReactElement, useState, useRef, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { animate, stagger } from 'motion'
 import { Animator, useAnimator } from '@arwes/react-animator'
-import { Animated, aaOpacity } from '@arwes/react-animated'
+import { Animated, fade } from '@arwes/react-animated'
 
 const ScrollList = (): ReactElement => {
   const listElementRef = useRef<HTMLDivElement>(null)
@@ -92,7 +92,7 @@ const ScrollList = (): ReactElement => {
         width: 300,
         height: 300
       }}
-      animated={aaOpacity()}
+      animated={fade()}
     >
       {Array(100)
         .fill(null)

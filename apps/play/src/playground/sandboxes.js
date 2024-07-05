@@ -258,11 +258,23 @@ export const sandboxes = [
             ]
           },
           {
-            name: 'animations',
+            name: 'transitions',
             children: [
               {
-                name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/animations/animations.basic.sandbox.tsx')
+                name: 'transition',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/transitions/transitions.transition.sandbox.tsx')
+              },
+              {
+                name: 'fade',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/transitions/transitions.fade.sandbox.tsx')
+              },
+              {
+                name: 'flicker',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/transitions/transitions.flicker.sandbox.tsx')
+              },
+              {
+                name: 'draw',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/transitions/transitions.draw.sandbox.tsx')
               }
             ]
           }
