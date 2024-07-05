@@ -248,10 +248,6 @@ export const sandboxes = [
                 code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/AnimatedX/AnimatedX.basic.sandbox.tsx')
               },
               {
-                name: 'options',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/AnimatedX/AnimatedX.options.sandbox.tsx')
-              },
-              {
                 name: 'disabled',
                 code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/AnimatedX/AnimatedX.disabled.sandbox.tsx')
               }

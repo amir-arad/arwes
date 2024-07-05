@@ -27,6 +27,7 @@ export type AnimatedSettingsTransitionDefinition = MotionKeyframesDefinition & {
   delay?: AnimationOptionsWithOverrides['delay']
   easing?: AnimationOptionsWithOverrides['easing']
   repeat?: AnimationOptionsWithOverrides['repeat']
+  direction?: AnimationOptionsWithOverrides['direction']
   options?: AnimationOptionsWithOverrides
 }
 

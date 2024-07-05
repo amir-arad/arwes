@@ -120,12 +120,14 @@ const Animated = <
               animationControlsRef.current.push(control)
             }
           } else {
-            const { duration, delay, easing, repeat, options, ...definition } = transition
+            const { duration, delay, easing, repeat, direction, options, ...definition } =
+              transition
             const control = animate(element, definition, {
               duration: duration || durationTransition,
               delay,
               easing,
               repeat,
+              direction,
               ...options
             })
             animationControlsRef.current.push(control)

@@ -11,6 +11,12 @@ const Item = (): ReactElement => {
         animated={{
           initialStyle: { x: 0, backgroundColor: '#0ff' },
           transitions: {
+            // Every animation also accepts the settings:
+            // - duration: number
+            // - repeat: number
+            // - delay: number | motion/stagger(value: number)
+            // - easing: 'linear' | (x: number) => number
+            // - direction: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'
             entering: { x: [0, 100], backgroundColor: '#ff0' },
             exiting: { x: [100, 0], backgroundColor: '#0ff' }
           }

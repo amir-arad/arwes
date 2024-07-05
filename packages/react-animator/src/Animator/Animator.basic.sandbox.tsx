@@ -9,10 +9,15 @@ const AnimatorUIListener = (): ReactElement => {
   const animator = useAnimator()!
 
   useEffect(() => {
+    // If the animator are disabled/dismissed, ignore animations.
+    if (!animator) {
+      return
+    }
+
     let animation: { cancel: () => void } | undefined
 
     // A subscription function to be called every time the state changes.
-    const subscriber = (node: AnimatorNode): void => {
+    const unsubscribe = animator.node.subscribe((node: AnimatorNode) => {
       const element = elementRef.current as HTMLElement
       const { duration } = node // Getting the duration once is faster.
 
@@ -36,13 +41,11 @@ const AnimatorUIListener = (): ReactElement => {
           break
         }
       }
-    }
-
-    animator.node.subscribe(subscriber)
+    })
 
     return () => {
       animation?.cancel()
-      animator.node.unsubscribe(subscriber)
+      unsubscribe()
     }
   }, [animator])
 
