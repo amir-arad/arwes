@@ -87,7 +87,7 @@ const AnimatedX = <
       .flat(1)
       .forEach((transition) => {
         if (typeof transition === 'function') {
-          const control = transition({ element, duration: 0 })
+          const control = transition({ element, duration: 0, $: (() => []) as any })
           if (control) {
             animationControlsRef.current.push(control)
           }

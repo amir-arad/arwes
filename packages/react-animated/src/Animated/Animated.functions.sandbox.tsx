@@ -8,14 +8,14 @@ const Item = (): ReactElement => {
   return (
     <Animator>
       <Animated
-        style={{ margin: 10, width: 40, height: 20, backgroundColor: '#777' }}
+        style={{ margin: 10, width: 40, height: 20, background: '#777' }}
         animated={{
-          initialStyle: { backgroundColor: '#0ff' },
+          initialStyle: { background: '#0ff' },
           transitions: {
             entering: ({ element, duration }) =>
-              animate(element, { x: [0, 100], backgroundColor: '#ff0' }, { duration }),
+              animate(element, { x: [0, 100], background: '#ff0' }, { duration }),
             exiting: ({ element, duration }) =>
-              animate(element, { x: [100, 0], backgroundColor: '#0ff' }, { duration })
+              animate(element, { x: [100, 0], background: '#0ff' }, { duration })
           }
         }}
       />

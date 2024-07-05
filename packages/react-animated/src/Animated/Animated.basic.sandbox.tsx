@@ -7,9 +7,9 @@ const Item = (): ReactElement => {
   return (
     <Animator>
       <Animated
-        style={{ margin: 10, width: 40, height: 20, backgroundColor: '#777' }}
+        style={{ margin: 10, width: 40, height: 20, background: '#777' }}
         animated={{
-          initialStyle: { x: 0, backgroundColor: '#0ff' },
+          initialStyle: { x: 0, background: '#0ff' },
           transitions: {
             // Every animation also accepts the settings:
             // - duration: number
@@ -17,8 +17,8 @@ const Item = (): ReactElement => {
             // - delay: number | motion/stagger(value: number)
             // - easing: 'linear' | (x: number) => number
             // - direction: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'
-            entering: { x: [0, 100], backgroundColor: '#ff0' },
-            exiting: { x: [100, 0], backgroundColor: '#0ff' }
+            entering: { x: [0, 100], background: '#ff0' },
+            exiting: { x: [100, 0], background: '#0ff' }
           }
         }}
       />

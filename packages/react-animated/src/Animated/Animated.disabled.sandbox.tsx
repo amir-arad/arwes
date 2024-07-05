@@ -7,12 +7,12 @@ const Sandbox = (): ReactElement => {
   return (
     <Animator disabled>
       <Animated
-        style={{ margin: 10, width: 40, height: 40, backgroundColor: '#777' }}
+        style={{ margin: 10, width: 40, height: 40, background: '#777' }}
         animated={{
-          initialStyle: { x: 0, backgroundColor: '#0ff' },
+          initialStyle: { x: 0, background: '#0ff' },
           transitions: {
-            entering: { x: [0, 100], backgroundColor: '#ff0' },
-            exiting: { x: [100, 0], backgroundColor: '#0ff' }
+            entering: { x: [0, 100], background: '#ff0' },
+            exiting: { x: [100, 0], background: '#0ff' }
           }
         }}
       />

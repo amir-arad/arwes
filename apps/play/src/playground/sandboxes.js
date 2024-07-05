@@ -254,6 +254,15 @@ export const sandboxes = [
             ]
           },
           {
+            name: 'useAnimated',
+            children: [
+              {
+                name: 'basic',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/useAnimated/useAnimated.basic.sandbox.tsx')
+              }
+            ]
+          },
+          {
             name: 'transitions',
             children: [
               {

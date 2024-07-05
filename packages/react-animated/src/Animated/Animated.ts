@@ -7,24 +7,17 @@ import {
   type ReactNode,
   createElement,
   useRef,
-  useMemo,
-  useState,
-  useEffect
+  useMemo
 } from 'react'
-import { animate } from 'motion'
 
 import { type NoInfer } from '@arwes/tools'
 import { mergeRefs } from '@arwes/react-tools'
-import { type AnimatorNode, ANIMATOR_STATES as STATES } from '@arwes/animator'
+import { type AnimatorNode } from '@arwes/animator'
 import { useAnimator } from '@arwes/react-animator'
 
-import type {
-  AnimatedSettings,
-  AnimatedSettingsTransition,
-  AnimatedSettingsTransitionFunctionReturn,
-  AnimatedProp
-} from '../types.js'
+import type { AnimatedSettings, AnimatedProp } from '../types.js'
 import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js'
+import { useAnimated } from '../useAnimated/index.js'
 
 // TODO: Fix inferred element attributes.
 
@@ -52,100 +45,31 @@ const Animated = <
     className,
     style,
     elementRef: externalElementRef,
-    hideOnExited = true,
+    hideOnExited,
     hideOnEntered,
     onTransition,
     ...otherProps
   } = props
 
   const animator = useAnimator()
-
   const as = useMemo(() => asProvided || 'div', [])
   const elementRef = useRef<E | null>(null)
-  const animatedSettingsRef = useRef<AnimatedSettings[]>([])
   const propsRef = useRef<AnimatedProps<E>>(props)
-  const animationControlsRef = useRef<AnimatedSettingsTransitionFunctionReturn[]>([])
-  const [isExited, setIsExited] = useState(() => animator?.node.state === STATES.exited)
-  const [isEntered, setIsEntered] = useState(() => animator?.node.state === STATES.entered)
 
-  // Make a copy of the props to later use in the Animator node subscription without
-  // checking with dependency hooks.
   propsRef.current = props
+
+  useAnimated(elementRef, animated, {
+    renderInitials: false,
+    hideOnExited,
+    hideOnEntered,
+    onTransition
+  })
 
   const animatedSettingsListReceived = Array.isArray(animated) ? animated : [animated]
   const animatedSettingsList = animatedSettingsListReceived.filter(Boolean) as AnimatedSettings[]
 
-  // The animations list is passed as a reference so the Animator node subscription
-  // and its respective functionalities are only initialized once for performance.
-  animatedSettingsRef.current = animatedSettingsList
-
-  useEffect(() => {
-    if (!animator) {
-      return
-    }
-
-    const cancelSubscription = animator.node.subscribe((node) => {
-      setIsExited(node.state === STATES.exited)
-      setIsEntered(node.state === STATES.entered)
-
-      animationControlsRef.current = []
-
-      const element = elementRef.current
-
-      // Weird case if the element is removed and the subscription is not cancelled.
-      if (!element) {
-        return
-      }
-
-      const settingsList = animatedSettingsRef.current
-      const { duration } = node
-      const durationTransition =
-        node.state === STATES.entering || node.state === STATES.entered
-          ? duration.enter
-          : duration.exit
-
-      settingsList
-        // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
-        .map((settingsItem) => settingsItem.transitions?.[node.state] as AnimatedSettingsTransition)
-        .filter(Boolean)
-        .map((transitions) => (Array.isArray(transitions) ? transitions : [transitions]))
-        .flat(1)
-        .forEach((transition) => {
-          if (typeof transition === 'function') {
-            const control = transition({
-              element,
-              duration: durationTransition
-            })
-            if (control) {
-              animationControlsRef.current.push(control)
-            }
-          } else {
-            const { duration, delay, easing, repeat, direction, options, ...definition } =
-              transition
-            const control = animate(element, definition, {
-              duration: duration || durationTransition,
-              delay,
-              easing,
-              repeat,
-              direction,
-              ...options
-            })
-            animationControlsRef.current.push(control)
-          }
-        })
-
-      propsRef.current.onTransition?.(element, node)
-    })
-
-    return () => {
-      cancelSubscription()
-      animationControlsRef.current.forEach((control) => control.cancel())
-    }
-  }, [animator])
-
   let initialAttributes: object | undefined
   if (animator) {
-    // TODO: Fix type.
     initialAttributes = animatedSettingsList
       .map((item) => item?.initialAttributes)
       .reduce<any>((total: object, item: object | undefined) => ({ ...total, ...item }), {})
@@ -161,16 +85,18 @@ const Animated = <
   return createElement(as, {
     ...otherProps,
     ...initialAttributes,
+    ref: mergeRefs(externalElementRef, elementRef),
     className,
     style: {
       ...style,
-      ...dynamicStyles,
       visibility:
-        animator && ((hideOnExited && isExited) || (hideOnEntered && isEntered))
+        animator &&
+        ((hideOnExited && animator.node.state === 'exited') ||
+          (hideOnEntered && animator.node.state === 'entered'))
           ? 'hidden'
-          : 'visible'
-    },
-    ref: mergeRefs(externalElementRef, elementRef)
+          : 'visible',
+      ...dynamicStyles
+    }
   })
 }
 

@@ -13,6 +13,7 @@ interface AnimationProps {
 }
 
 interface Animation {
+  finished: Promise<void>
   isPending: () => boolean
   cancel: () => void
 }
@@ -33,6 +34,7 @@ const createAnimation = (props: AnimationProps): Animation => {
   let currentAnimationFrame: number | null = null
   let start = window.performance.now()
   let slapsed = 0
+  let resolvePromise: () => void
 
   const nextAnimation = (timestamp: number): void => {
     if (!start) {
@@ -55,10 +57,15 @@ const createAnimation = (props: AnimationProps): Animation => {
     } else {
       currentAnimationFrame = null
       onComplete?.()
+      resolvePromise()
     }
   }
 
   currentAnimationFrame = window.requestAnimationFrame(nextAnimation)
+
+  const finished = new Promise<void>((resolve) => {
+    resolvePromise = resolve
+  })
 
   const isPending = (): boolean => {
     return currentAnimationFrame !== null
@@ -71,7 +78,7 @@ const createAnimation = (props: AnimationProps): Animation => {
     }
   }
 
-  return { isPending, cancel }
+  return { finished, isPending, cancel }
 }
 
 export type { AnimationProps, Animation }

@@ -32,11 +32,31 @@ export type AnimatedSettingsTransitionDefinition = MotionKeyframesDefinition & {
 }
 
 export interface AnimatedSettingsTransitionFunctionConfig {
+  /**
+   * Root element.
+   */
   element: HTMLElement | SVGElement
+  /**
+   * Query children elements inside the root element.
+   * @param query - CSS selector.
+   * @returns Array<HTMLElement | SVGElement>
+   */
+  $: <T = HTMLElement | SVGElement>(query: string) => T[]
+  /**
+   * Corresponding animator animation duration.
+   */
   duration: number
 }
 
 export interface AnimatedSettingsTransitionFunctionReturn {
+  /**
+   * A promise which resolves when the animation is finished.
+   */
+  finished?: Promise<void>
+  /**
+   * Cancel the animation inmediately and remove its underlying animated properties
+   * from the element.
+   */
   cancel: () => void
 }
 
@@ -63,15 +83,3 @@ export interface AnimatedSettings {
 }
 
 export type AnimatedProp = AnimatedSettings | Array<AnimatedSettings | undefined> | undefined
-
-export type AnimatedAnimation = AnimatedSettings | AnimatedSettings[]
-
-export type AnimatedAnimations = { [P in AnimatorState]?: AnimatedAnimation }
-
-export type AnimatedAnimationsCreatorFunction<P = undefined> = (props: P) => AnimatedAnimations
-
-export type AnimatedAnimationsCreator<P = undefined> =
-  | undefined
-  | false
-  | AnimatedAnimations
-  | AnimatedAnimationsCreatorFunction<P>
