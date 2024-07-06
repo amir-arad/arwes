@@ -1,6 +1,5 @@
 import { type RefObject, useRef, useCallback, useEffect } from 'react'
 import { animate, type AnimationControls } from 'motion'
-import { ANIMATOR_STATES as STATES } from '@arwes/animator'
 import { useAnimator } from '@arwes/react-animator'
 
 interface FrameSVGAssemblingAnimation {
@@ -22,11 +21,12 @@ const useFrameSVGAssemblingAnimation = (
 
     const bgs = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=bg]'))
     const lines = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=line]'))
+    const elements = [...bgs, ...lines]
 
-    bgs.concat(lines).forEach((path) => {
-      path.style.opacity = '1'
-      path.style.strokeDasharray = ''
-      path.style.strokeDashoffset = ''
+    elements.forEach((element) => {
+      element.style.opacity = '1'
+      element.style.strokeDasharray = ''
+      element.style.strokeDashoffset = ''
     })
 
     if (!animator) {
@@ -40,10 +40,10 @@ const useFrameSVGAssemblingAnimation = (
 
       switch (node.state) {
         case 'exited': {
-          bgs.concat(lines).forEach((path) => {
-            path.style.opacity = '0'
-            path.style.strokeDasharray = ''
-            path.style.strokeDashoffset = ''
+          elements.forEach((element) => {
+            element.style.opacity = '0'
+            element.style.strokeDasharray = ''
+            element.style.strokeDashoffset = ''
           })
           break
         }
@@ -73,10 +73,10 @@ const useFrameSVGAssemblingAnimation = (
         }
 
         case 'entered': {
-          bgs.concat(lines).forEach((path) => {
-            path.style.opacity = '1'
-            path.style.strokeDasharray = ''
-            path.style.strokeDashoffset = ''
+          elements.forEach((element) => {
+            element.style.opacity = '1'
+            element.style.strokeDasharray = ''
+            element.style.strokeDashoffset = ''
           })
           break
         }
@@ -120,16 +120,16 @@ const useFrameSVGAssemblingAnimation = (
     const svg = svgRef.current
     const bgs = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=bg]'))
     const lines = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=line]'))
+    const elements = [...bgs, ...lines]
 
-    const isVisible =
-      animator.node.state === STATES.entering || animator.node.state === STATES.entered
+    const isVisible = animator.node.state === 'entering' || animator.node.state === 'entered'
 
     animationControlRef.current?.cancel()
 
-    bgs.concat(lines).forEach((path) => {
-      path.style.opacity = isVisible ? '1' : '0'
-      path.style.strokeDasharray = ''
-      path.style.strokeDashoffset = ''
+    elements.forEach((element) => {
+      element.style.opacity = isVisible ? '1' : '0'
+      element.style.strokeDasharray = ''
+      element.style.strokeDashoffset = ''
     })
   }, [animator])
 

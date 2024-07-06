@@ -1,6 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react'
-import { type ReactElement, useRef, useState, useEffect } from 'react'
+import React, { type ReactElement, useRef, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Animator } from '@arwes/react-animator'
 import { FrameSVGLines, useFrameSVGAssemblingAnimation } from '@arwes/react-frames'
@@ -10,22 +8,22 @@ const Frame = (): ReactElement => {
   const { onRender } = useFrameSVGAssemblingAnimation(svgRef)
 
   return (
-    <div
-      css={{
-        position: 'relative',
-        width: 300,
-        height: 150,
-
-        '[data-name=bg]': {
-          color: 'hsl(180, 75%, 10%)'
-        },
-        '[data-name=line]': {
-          color: 'hsl(180, 75%, 50%)'
+    <>
+      <style>{`
+        .frame {
+          width: 300px;
+          height: 150px;
         }
-      }}
-    >
-      <FrameSVGLines elementRef={svgRef} onRender={onRender} positioned />
-    </div>
+        .frame [data-name=bg] {
+          color: hsl(180, 75%, 10%);
+        }
+        .frame [data-name=line] {
+          color: hsl(180, 75%, 50%);
+        }
+      `}</style>
+
+      <FrameSVGLines className="frame" elementRef={svgRef} onRender={onRender} />
+    </>
   )
 }
 
@@ -33,7 +31,7 @@ const Sandbox = (): ReactElement => {
   const [active, setActive] = useState(true)
 
   useEffect(() => {
-    const tid = setInterval(() => setActive((active) => !active), 2000)
+    const tid = setInterval(() => setActive((active) => !active), 2_000)
     return () => clearInterval(tid)
   }, [])
 

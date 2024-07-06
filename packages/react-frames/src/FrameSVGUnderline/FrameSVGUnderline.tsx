@@ -1,8 +1,10 @@
 import React, { useMemo, type ReactElement } from 'react'
 import { cx } from '@arwes/tools'
-import { type FrameSVGPathGeneric } from '@arwes/frames'
+import type { FrameSVGPathGeneric } from '@arwes/frames'
 
 import { type FrameSVGProps, FrameSVG } from '../FrameSVG/index.js'
+
+// TODO: Add support for padding.
 
 interface FrameSVGUnderlineProps extends FrameSVGProps {
   squareSize?: number

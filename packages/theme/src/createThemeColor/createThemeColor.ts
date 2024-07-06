@@ -48,7 +48,7 @@ const formatColor = (
   // - Each argument separated by either "," or "space", except fourth one.
   // - Fourth argument is optional and can be separated by either "," or "/".
   // - First argument can be an integer, floating, percentage or degree value.
-  // - Each argument can be aa integer, floating, or percentage value.
+  // - Each argument can be an integer, floating, or percentage value.
   // See:
   // - https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hsl
   // - https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/rgb

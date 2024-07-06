@@ -1,32 +1,25 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react'
-import { type ReactElement } from 'react'
+import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import { FrameSVGUnderline } from '@arwes/react-frames'
 
 const Sandbox = (): ReactElement => {
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: 300,
-        height: 300
-      }}
-    >
-      <FrameSVGUnderline
-        css={{
-          '[data-name=bg]': {
-            color: 'hsl(60, 75%, 10%)'
-          },
-          '[data-name=line]': {
-            color: 'hsl(60, 75%, 50%)'
-          }
-        }}
-        squareSize={32}
-        strokeWidth={3}
-        positioned
-      />
-    </div>
+    <>
+      <style>{`
+        .frame {
+          width: 300px;
+          height: 200px;
+        }
+        .frame [data-name=bg] {
+          color: hsl(120, 75%, 10%);
+        }
+        .frame [data-name=line] {
+          color: hsl(120, 75%, 50%);
+        }
+      `}</style>
+
+      <FrameSVGUnderline className="frame" squareSize={32} strokeWidth={3} />
+    </>
   )
 }
 
