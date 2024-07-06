@@ -5,27 +5,18 @@ const formatDimension = (size: number, dimension: FrameSVGPathDimension): string
     return String(dimension)
   }
 
-  const dimensionNumber = String(dimension)
-    .trim()
-    .replace(/- /g, '-')
-    .replace(/\+ /g, '+')
-    .replace(/\s{2,}/g, ' ')
-    .split(' ')
-    .reduce((total, item) => {
-      const n = Number(item.replace(/[+\-%]/g, ''))
+  if (/[^\d.\-+*/%\s()]/.test(dimension)) {
+    throw new Error(
+      'Arwes formatFrameSVGPath does not support formulas with text different from math expressions.'
+    )
+  }
 
-      if (n === 0) {
-        return total
-      }
+  const formula = String(dimension).replace(/(\d{1,}\.)?\d{1,}%/g, (percentage) =>
+    String(size * (Number(percentage.replace('%', '')) / 100))
+  )
 
-      const isMinus = item.startsWith('-')
-      const isPercentage = item.endsWith('%')
-      const value = isPercentage ? size * (n / 100) : n
-
-      return isMinus ? total - value : total + value
-    }, 0)
-
-  return String(dimensionNumber)
+  // eslint-disable-next-line no-eval
+  return String(eval(formula))
 }
 
 const formatCommand = (width: number, height: number, command: FrameSVGPathCommand): string => {

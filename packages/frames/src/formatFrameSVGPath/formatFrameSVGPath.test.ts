@@ -18,9 +18,20 @@ test('Should format single percentage values', () => {
   expect(path).toBe('M 80,10 L 50,520')
 })
 
-test('Should format value with multiple calculations', () => {
-  const path = formatFrameSVGPath(100, 1000, [['M', '50% + 10 - 5 + 25%', '- 10 - 15% + 50']])
-  expect(path).toBe('M 80,-110')
+test('Should format value with multiple mathematical calculations', () => {
+  const path = formatFrameSVGPath(100, 1000, [
+    ['M', '50% + 10 - 5 + 25%', '- 10 - 15% + 50'],
+    ['L', '- 30 / 3 + 5% * 4', '100% - 100 / 2 + 2 * -3']
+  ])
+  expect(path).toBe('M 80,-110 L 10,944')
+})
+
+test('Should format value with complex multiple mathematical calculations', () => {
+  const path = formatFrameSVGPath(50, 200, [
+    ['H', '50% / (-10%* -1+ 3)'],
+    ['V', '(2*4 + -10%) + (5 * 20%)']
+  ])
+  expect(path).toBe('H 3.125 V 188')
 })
 
 describe('One dimension commands', () => {
@@ -98,5 +109,20 @@ describe('No parameters commands', () => {
   test('Should format "Z", "z" commands', () => {
     const path = formatFrameSVGPath(100, 1000, ['Z', 'z'])
     expect(path).toBe('Z z')
+  })
+})
+
+test('Should throw error if characters different for math are found in the dimension', () => {
+  ;[10, '10', '10%', '10 + 2', '- 10% * (10 / 4 + 2)'].forEach((formula) => {
+    expect(() => {
+      formatFrameSVGPath(10, 10, [['H', formula]])
+    }).not.toThrow()
+  })
+  ;['x', '1_0', '1$ 0', '1 a0', 'console.log(window);', '1e2'].forEach((formula) => {
+    expect(() => {
+      formatFrameSVGPath(10, 10, [['H', formula]])
+    }).toThrow(
+      'Arwes formatFrameSVGPath does not support formulas with text different from math expressions.'
+    )
   })
 })
