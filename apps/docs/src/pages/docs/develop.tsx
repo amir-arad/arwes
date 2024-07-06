@@ -1,7 +1,7 @@
 import { type ReactElement } from 'react'
 import Link from 'next/link'
 import { ArrowRight, FastArrowRight, OpenInBrowser } from 'iconoir-react'
-import { Animator, Animated, Text, BleepsOnAnimator, aa, aaVisibility } from '@arwes/react'
+import { Animator, Animated, Text, BleepsOnAnimator, transition, flicker } from '@arwes/react'
 import type { BleepNames } from '@app/types'
 import { PageContentLayout, Button, CodeBlock } from '@app/ui'
 import lernaSettings from '@repository/lerna.json'
@@ -9,7 +9,7 @@ import lernaSettings from '@repository/lerna.json'
 const Page = (): ReactElement => {
   return (
     <Animator combine manager="stagger">
-      <PageContentLayout animated={aa('y', 12, 0)}>
+      <PageContentLayout animated={transition('y', 12, 0)}>
         <Animator>
           <Text as="h1" fixed>
             Develop
@@ -17,7 +17,7 @@ const Page = (): ReactElement => {
           <BleepsOnAnimator<BleepNames> transitions={{ entering: 'content' }} continuous />
         </Animator>
         <Animator>
-          <Animated as="hr" animated={aa('scaleX', 0, 1)} />
+          <Animated as="hr" animated={transition('scaleX', 0, 1)} />
         </Animator>
         <Animator>
           <Text>
@@ -62,7 +62,7 @@ const Page = (): ReactElement => {
               maxWidth: '100%',
               overflowX: 'auto'
             }}
-            animated={aaVisibility()}
+            animated={flicker()}
           >
             <table style={{ minWidth: 700 }}>
               <thead>
@@ -282,7 +282,7 @@ const Page = (): ReactElement => {
         <Animator>
           <CodeBlock
             data-arwes-global-block
-            animated={aaVisibility()}
+            animated={flicker()}
             code={`// next.config.js
 module.exports = {
   reactStrictMode: false
@@ -295,7 +295,7 @@ module.exports = {
         <Animator>
           <CodeBlock
             data-arwes-global-block
-            animated={aaVisibility()}
+            animated={flicker()}
             code={`npm install @arwes/react@${lernaSettings.version}`}
           />
         </Animator>
@@ -316,7 +316,7 @@ module.exports = {
         <Animator>
           <CodeBlock
             data-arwes-global-block
-            animated={aaVisibility()}
+            animated={flicker()}
             code="npm install @emotion/react"
           />
         </Animator>
@@ -329,7 +329,7 @@ module.exports = {
         <Animator>
           <CodeBlock
             data-arwes-global-block
-            animated={aaVisibility()}
+            animated={flicker()}
             code={`import { type CSSObject, Global } from '@emotion/react';
 import { createAppTheme, createAppStylesBaseline } from '@arwes/react';
 
@@ -356,7 +356,7 @@ const App = (): ReactElement => {
         <Animator>
           <CodeBlock
             data-arwes-global-block
-            animated={aaVisibility()}
+            animated={flicker()}
             code={`import { type ReactElement } from 'react';
 import {
   type AnimatorGeneralProviderSettings,
@@ -389,7 +389,7 @@ const App = (): ReactElement => {
         <Animator>
           <CodeBlock
             data-arwes-global-block
-            animated={aaVisibility()}
+            animated={flicker()}
             code={`import { useState } from 'react';
 import { Animator } from '@arwes/react';
 
@@ -412,7 +412,7 @@ const App = (): ReactElement => {
         <Animator>
           <CodeBlock
             data-arwes-global-block
-            animated={aaVisibility()}
+            animated={flicker()}
             code={`import {
   type BleepsProviderSettings,
   BleepsProvider
@@ -457,7 +457,7 @@ const App = (): ReactElement => {
         <Animator>
           <CodeBlock
             data-arwes-global-block
-            animated={aaVisibility()}
+            animated={flicker()}
             code={`import { GridLines, Dots, MovingLines } from '@arwes/react';
 
 const Background = (): ReactElement => {
@@ -499,15 +499,15 @@ const App = (): ReactElement => {
         <Animator>
           <CodeBlock
             data-arwes-global-block
-            animated={aaVisibility()}
+            animated={flicker()}
             code={`import {
   useBleeps,
   BleepsOnAnimator,
   Animated,
   FrameSVGCorners,
   Text,
-  aa,
-  aaVisibility
+  transition,
+  flicker
 } from '@arwes/react';
 
 const Card = (): ReactElement => {
@@ -532,7 +532,7 @@ const Card = (): ReactElement => {
           textAlign: 'center'
         }}
         // Effects for entering and exiting animation transitions.
-        animated={[aaVisibility(), aa('y', '2rem', 0)]}
+        animated={[flicker(), transition('y', '2rem', 0)]}
         // Play bleep when the card is clicked.
         onClick={() => bleeps.click?.play()}
       >
@@ -602,8 +602,8 @@ import {
   AnimatorGeneralProvider,
   Animator,
   Animated,
-  aaVisibility,
-  aa,
+  flicker,
+  transition,
   type BleepsProviderSettings,
   BleepsProvider,
   useBleeps,
@@ -656,7 +656,7 @@ const Card = (): ReactElement => {
           textAlign: 'center'
         }}
         // Effects for entering and exiting animation transitions.
-        animated={[aaVisibility(), aa('y', '2rem', 0)]}
+        animated={[flicker(), transition('y', '2rem', 0)]}
         // Play bleep when the card is clicked.
         onClick={() => bleeps.click?.play()}
       >
@@ -759,7 +759,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
               maxWidth: '100%',
               overflowX: 'auto'
             }}
-            animated={aaVisibility()}
+            animated={flicker()}
           >
             <table style={{ minWidth: 700 }}>
               <thead>
@@ -960,7 +960,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
             <a href="/play">
               <Button
                 frame="hexagon"
-                animated={[aaVisibility(), aa('x', -12, 0)]}
+                animated={[flicker(), transition('x', -12, 0)]}
                 onHoverAnimateIcons
                 tabIndex={-1}
                 title="Go to play"
@@ -974,7 +974,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
             <Link href="/docs/design">
               <Button
                 frame="hexagon"
-                animated={[aaVisibility(), aa('x', -12, 0)]}
+                animated={[flicker(), transition('x', -12, 0)]}
                 onHoverAnimateIcons
                 tabIndex={-1}
                 title="Go to design"

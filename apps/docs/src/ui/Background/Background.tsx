@@ -1,6 +1,6 @@
 import { type ReactElement } from 'react'
 import { useRouter } from 'next/router'
-import { type AnimatedProp, Animator, Animated, Dots, Puffs, aa, cx } from '@arwes/react'
+import { type AnimatedProp, Animator, Animated, Dots, Puffs, transition, cx } from '@arwes/react'
 
 import * as classes from './Background.css'
 
@@ -26,7 +26,7 @@ const Background = (props: BackgroundProps): ReactElement => {
             style={{
               filter: `brightness(${isIndex ? 0.4 : 0.3}) blur(${isIndex ? 0 : 10}px)`
             }}
-            animated={[aa('opacity', 0.8, 1), aa('scale', 1.05, 1)]}
+            animated={[transition('opacity', 0.8, 1), transition('scale', 1.05, 1)]}
           >
             <source
               media="(min-width:1280px)"

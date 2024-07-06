@@ -1,13 +1,14 @@
 import { type MutableRefObject, useRef, useEffect } from 'react'
 import { animate } from 'motion'
+import { filterProps } from '@arwes/tools'
 import type { AnimatorNode } from '@arwes/animator'
 import { useAnimator } from '@arwes/react-animator'
 
 import type {
   AnimatedProp,
   AnimatedSettings,
-  AnimatedSettingsTransition,
-  AnimatedSettingsTransitionFunctionReturn
+  AnimatedTransition,
+  AnimatedTransitionFunctionReturn
 } from '../types.js'
 import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js'
 
@@ -31,7 +32,7 @@ const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
   const animator = useAnimator()
   const animatedRef = useRef<AnimatedProp>(animatedProp)
   const optionsRef = useRef<UseAnimatedOptions<E> | undefined>(optionsProp)
-  const animationsRef = useRef<Set<AnimatedSettingsTransitionFunctionReturn>>(new Set())
+  const animationsRef = useRef<Set<AnimatedTransitionFunctionReturn>>(new Set())
 
   animatedRef.current = animatedProp
   optionsRef.current = optionsProp
@@ -43,7 +44,7 @@ const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
       return
     }
 
-    const optionsInitial = { ...defaultOptions, ...optionsRef.current }
+    const optionsInitial = { ...defaultOptions, ...filterProps(optionsRef.current ?? ({} as any)) }
 
     if (optionsInitial.renderInitials) {
       const animated = animatedRef.current
@@ -70,11 +71,11 @@ const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
       const animatedListReceived = Array.isArray(animated) ? animated : [animated]
       const animatedList = animatedListReceived.filter(Boolean) as AnimatedSettings[]
 
-      const options = { ...defaultOptions, ...optionsRef.current }
+      const options = { ...defaultOptions, ...filterProps(optionsRef.current ?? ({} as any)) }
 
       element.style.visibility =
-        (options?.hideOnExited && node.state === 'exited') ||
-        (options?.hideOnEntered && node.state === 'entered')
+        (options.hideOnExited && node.state === 'exited') ||
+        (options.hideOnEntered && node.state === 'entered')
           ? 'hidden'
           : 'visible'
 
@@ -85,7 +86,7 @@ const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
 
       animatedList
         // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
-        .map((settingsItem) => settingsItem.transitions?.[node.state] as AnimatedSettingsTransition)
+        .map((settingsItem) => settingsItem.transitions?.[node.state] as AnimatedTransition)
         .filter(Boolean)
         .map((transitions) => (Array.isArray(transitions) ? transitions : [transitions]))
         .flat(1)

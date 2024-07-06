@@ -3,7 +3,15 @@
 import { type ReactElement, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Github, Discord, Twitter, Heart } from 'iconoir-react'
-import { cx, Animator, Animated, BleepsOnAnimator, aaVisibility, useBleeps, aa } from '@arwes/react'
+import {
+  cx,
+  Animator,
+  Animated,
+  BleepsOnAnimator,
+  flicker,
+  useBleeps,
+  transition
+} from '@arwes/react'
 
 import type { BleepNames } from '@app/types'
 import { hiddenSMDown, linkPrimary } from '@app/styles'
@@ -43,7 +51,7 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
                 href="https://github.com/sponsors/romelperez"
                 target="donate"
                 className={cx(linkPrimary, classes.surfacePrimary, classes.socialLink)}
-                animated={[aa('y', '1rem', 0, 0)]}
+                animated={[transition('y', '1rem', 0, 0)]}
               >
                 <Heart />
                 <span className={hiddenSMDown}>Donate</span>
@@ -53,7 +61,7 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
                 href="https://github.com/arwes/arwes"
                 target="github"
                 className={cx(linkPrimary, classes.surfacePrimary, classes.socialLink)}
-                animated={[aa('y', '1rem', 0, 0)]}
+                animated={[transition('y', '1rem', 0, 0)]}
               >
                 <Github />
                 <span className={hiddenSMDown}>Github</span>
@@ -63,7 +71,7 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
                 href="https://discord.gg/s5sbTkw"
                 target="discord"
                 className={cx(linkPrimary, classes.surfacePrimary, classes.socialLink)}
-                animated={[aa('y', '1rem', 0, 0)]}
+                animated={[transition('y', '1rem', 0, 0)]}
               >
                 <Discord />
                 <span className={hiddenSMDown}>Discord</span>
@@ -73,7 +81,7 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
                 href="https://twitter.com/arwesjs"
                 target="twitter"
                 className={cx(linkPrimary, classes.surfacePrimary, classes.socialLink)}
-                animated={[aa('y', '1rem', 0, 0)]}
+                animated={[transition('y', '1rem', 0, 0)]}
               >
                 <Twitter />
                 <span className={hiddenSMDown}>Twitter</span>
@@ -85,7 +93,7 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
             <Version
               className={classes.version}
               prefix="Arwes "
-              animated={[aaVisibility(), aa('y', '1rem', 0)]}
+              animated={[flicker(), transition('y', '1rem', 0)]}
             />
           </Animator>
         </>
@@ -100,7 +108,7 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
             <NavLink
               href="/docs"
               active={url === '/docs'}
-              animated={aa('x', '1rem', 0)}
+              animated={transition('x', '1rem', 0)}
               onClose={close}
               onLeft={() => setNav('/')}
             >
@@ -109,7 +117,7 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
             <NavLink
               href="/docs/develop"
               active={url.startsWith('/docs/develop')}
-              animated={aa('x', '1rem', 0)}
+              animated={transition('x', '1rem', 0)}
               onClose={close}
             >
               Develop
@@ -117,7 +125,7 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
             <NavLink
               href="/docs/design"
               active={url.startsWith('/docs/design')}
-              animated={aa('x', '1rem', 0)}
+              animated={transition('x', '1rem', 0)}
               onClose={close}
             >
               Design
@@ -125,7 +133,7 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
             <NavLink
               href="/docs/community"
               active={url.startsWith('/docs/community')}
-              animated={aa('x', '1rem', 0)}
+              animated={transition('x', '1rem', 0)}
               onClose={close}
             >
               Community
@@ -135,7 +143,7 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
             <NavLink
               href="/docs"
               active={url.startsWith('/docs')}
-              animated={aa('x', '-1rem', 0)}
+              animated={transition('x', '-1rem', 0)}
               onClose={close}
               onRight={() => setNav('/docs')}
             >
@@ -144,7 +152,7 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
             <NavLink
               href="/samples"
               active={url.startsWith('/samples')}
-              animated={aa('x', '-1rem', 0)}
+              animated={transition('x', '-1rem', 0)}
               onClose={close}
             >
               Samples
@@ -152,7 +160,7 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
             <NavLink
               href="/play"
               active={url.startsWith('/play')}
-              animated={aa('x', '-1rem', 0)}
+              animated={transition('x', '-1rem', 0)}
               onClose={close}
             >
               Play
@@ -160,7 +168,7 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
             <NavLink
               href="/perf"
               active={url.startsWith('/perf')}
-              animated={aa('x', '-1rem', 0)}
+              animated={transition('x', '-1rem', 0)}
               onClose={close}
             >
               Perf

@@ -6,9 +6,9 @@ import {
   FrameSVGLines,
   Illuminator,
   Text,
-  aa,
+  transition,
   useFrameSVGAssemblingAnimation,
-  aaVisibility,
+  flicker,
   BleepsOnAnimator
 } from '@arwes/react'
 import type { BleepNames } from '@app/types'
@@ -83,7 +83,7 @@ const Page = (): ReactElement => {
 
       <Animator combine manager="stagger">
         <div className="container">
-          <Animated as="main" className="content" animated={[aa('y', 24, 0)]}>
+          <Animated as="main" className="content" animated={[transition('y', 24, 0)]}>
             <Animator merge duration={{ enter: 0.4, exit: 0.4 }}>
               <Frame />
               <Illuminator color="hsl(100deg 50% 50% / 0.05)" />
@@ -92,7 +92,7 @@ const Page = (): ReactElement => {
             <Animator>
               <Animated
                 animated={[
-                  aaVisibility(),
+                  flicker(),
                   {
                     transitions: {
                       entering: { y: [24, 0], options: { delay: 0.4 } },

@@ -5,7 +5,7 @@ import lernaSettings from '@repository/lerna.json'
 
 import { DEPLOY_TIME } from '@app/dynamics'
 import type { BleepNames } from '@app/types'
-import { transition, linkPrimary } from '@app/styles'
+import { transitionCls, linkPrimary } from '@app/styles'
 import * as classes from './Version.css'
 
 interface VersionProps {
@@ -29,7 +29,7 @@ const Version = (props: VersionProps): ReactElement => {
   return (
     <Animated
       as="a"
-      className={cx(classes.root, transition, linkPrimary, className)}
+      className={cx(classes.root, transitionCls, linkPrimary, className)}
       animated={animated}
       href={
         isNext

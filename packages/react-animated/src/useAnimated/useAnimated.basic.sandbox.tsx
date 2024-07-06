@@ -9,8 +9,8 @@ const UI = (): ReactElement => {
   useAnimated(elementRef, {
     initialStyle: { background: '#fff' },
     transitions: {
-      entering: { x: [0, 100], backgroundColor: '#ff0' },
-      exiting: { x: [100, 0], backgroundColor: '#0ff' }
+      entering: { x: [0, 100], background: '#ff0' },
+      exiting: { x: [100, 0], background: '#0ff' }
     }
   })
 

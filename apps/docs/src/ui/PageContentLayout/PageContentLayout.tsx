@@ -6,7 +6,7 @@ import {
   cx,
   FrameSVGOctagon,
   Illuminator,
-  aaVisibility
+  flicker
 } from '@arwes/react'
 
 import * as classes from './PageContentLayout.css'
@@ -32,7 +32,7 @@ const PageContentLayout = (props: PageContentLayoutProps): ReactElement => {
     >
       {frame && (
         <Animator>
-          <Animated className={classes.frame} animated={aaVisibility()}>
+          <Animated className={classes.frame} animated={flicker()}>
             <FrameSVGOctagon className="page-document__svg" positioned />
             <Illuminator color="hsl(180 50% 50% / 5%)" size={400} />
           </Animated>

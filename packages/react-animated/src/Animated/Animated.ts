@@ -19,8 +19,6 @@ import type { AnimatedSettings, AnimatedProp } from '../types.js'
 import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js'
 import { useAnimated } from '../useAnimated/index.js'
 
-// TODO: Fix inferred element attributes.
-
 interface AnimatedProps<E extends HTMLElement | SVGElement = HTMLDivElement> {
   elementRef?: ForwardedRef<E>
   className?: string

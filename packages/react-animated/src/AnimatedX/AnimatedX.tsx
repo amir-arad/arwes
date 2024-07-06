@@ -7,41 +7,38 @@ import {
   type ReactNode,
   createElement,
   useRef,
-  useMemo,
-  useEffect
+  useMemo
 } from 'react'
-import { animate } from 'motion'
 
-import { type NoInfer } from '@arwes/tools'
+import type { NoInfer } from '@arwes/tools'
 import { mergeRefs } from '@arwes/react-tools'
 
-import type {
-  AnimatedSettings,
-  AnimatedSettingsTransition,
-  AnimatedSettingsTransitionFunctionReturn,
-  AnimatedProp
-} from '../types.js'
+import type { AnimatedSettings, AnimatedXProp } from '../types.js'
+import { useAnimatedX } from '../useAnimatedX/index.js'
 import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js'
 
-interface AnimatedXProps<E extends HTMLElement | SVGElement = HTMLDivElement> {
+interface AnimatedXProps<S extends string, E extends HTMLElement | SVGElement = HTMLDivElement> {
   elementRef?: ForwardedRef<E>
   className?: string
   style?: CSSProperties
-  state?: string
-  animated?: AnimatedProp
+  state: S | undefined | null
+  hideOnStates?: S[]
+  animated?: AnimatedXProp<S>
   as?: keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap
   children?: ReactNode
 }
 
 const AnimatedX = <
+  S extends string,
   E extends HTMLElement | SVGElement = HTMLDivElement,
   P = E extends HTMLElement ? HTMLProps<E> : SVGProps<E>
 >(
-  props: AnimatedXProps<E> & NoInfer<P>
+  props: AnimatedXProps<S, E> & NoInfer<P>
 ): ReactElement => {
   const {
     as: asProvided,
     state: animatedState,
+    hideOnStates = [],
     animated,
     className,
     style,
@@ -52,66 +49,14 @@ const AnimatedX = <
   const hasState = animatedState !== undefined && animatedState !== null
   const as = useMemo(() => asProvided || 'div', [])
   const elementRef = useRef<E | null>(null)
-  const animatedSettingsRef = useRef<AnimatedSettings[]>([])
-  const animationControlsRef = useRef<AnimatedSettingsTransitionFunctionReturn[]>([])
+
+  useAnimatedX<S, E>(animatedState, elementRef, animated, { renderInitials: false, hideOnStates })
 
   const animatedSettingsListReceived = Array.isArray(animated) ? animated : [animated]
   const animatedSettingsList = animatedSettingsListReceived.filter(Boolean) as AnimatedSettings[]
 
-  // The animations list is passed as a reference so the Animator node subscription
-  // and its respective functionalities are only initialized once for performance.
-  animatedSettingsRef.current = animatedSettingsList
-
-  useEffect(() => {
-    if (!hasState) {
-      return
-    }
-
-    animationControlsRef.current = []
-
-    const element = elementRef.current
-    const settingsList = animatedSettingsRef.current
-
-    // Weird case if the element is removed and the subscription is not cancelled.
-    if (!element) {
-      return
-    }
-
-    settingsList
-      .map(
-        // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
-        (settingsItem) => settingsItem.transitions?.[animatedState] as AnimatedSettingsTransition
-      )
-      .filter(Boolean)
-      .map((transitions) => (Array.isArray(transitions) ? transitions : [transitions]))
-      .flat(1)
-      .forEach((transition) => {
-        if (typeof transition === 'function') {
-          const control = transition({ element, duration: 0, $: (() => []) as any })
-          if (control) {
-            animationControlsRef.current.push(control)
-          }
-        } else {
-          const { duration, delay, easing, repeat, options, ...definition } = transition
-          const control = animate(element, definition, {
-            duration,
-            delay,
-            easing,
-            repeat,
-            ...options
-          })
-          animationControlsRef.current.push(control)
-        }
-      })
-
-    return () => {
-      animationControlsRef.current.forEach((control) => control.cancel())
-    }
-  }, [hasState, animatedState])
-
   let initialAttributes: object | undefined
   if (hasState) {
-    // TODO: Fix type.
     initialAttributes = animatedSettingsList
       .map((item) => item?.initialAttributes)
       .reduce<any>((total: object, item: object | undefined) => ({ ...total, ...item }), {})
@@ -127,12 +72,13 @@ const AnimatedX = <
   return createElement(as, {
     ...otherProps,
     ...initialAttributes,
+    ref: mergeRefs(externalElementRef, elementRef),
     className,
     style: {
       ...style,
+      visibility: hasState && hideOnStates.includes(animatedState) ? 'hidden' : 'visible',
       ...dynamicStyles
-    },
-    ref: mergeRefs(externalElementRef, elementRef)
+    }
   })
 }
 

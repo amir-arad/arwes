@@ -8,8 +8,8 @@ import {
   Text,
   Dots,
   cx,
-  aa,
-  aaVisibility,
+  transition,
+  flicker,
   useFrameSVGAssemblingAnimation
 } from '@arwes/react'
 
@@ -47,9 +47,9 @@ const ModalLayout = (props: ModalLayoutProps): ReactElement => {
           />
         </Animator>
 
-        <Animated className={classes.container} animated={aa('y', 16, 0)}>
+        <Animated className={classes.container} animated={transition('y', 16, 0)}>
           <Animator>
-            <Animated className={classes.frames} animated={aa('scaleY', 0.5, 1, 1)}>
+            <Animated className={classes.frames} animated={transition('scaleY', 0.5, 1, 1)}>
               <FrameSVGKranox
                 elementRef={frame1Ref}
                 className={classes.frame1}
@@ -96,7 +96,7 @@ const ModalLayout = (props: ModalLayoutProps): ReactElement => {
                     role="button"
                     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                     className={cx(linkSecondary, classes.close)}
-                    animated={aaVisibility()}
+                    animated={flicker()}
                     onClick={onClose}
                   >
                     <Xmark />
@@ -105,7 +105,7 @@ const ModalLayout = (props: ModalLayoutProps): ReactElement => {
               </header>
 
               <Animator>
-                <Animated as="hr" animated={aa('scaleX', 0, 1)} />
+                <Animated as="hr" animated={transition('scaleX', 0, 1)} />
               </Animator>
 
               <main className={classes.body}>{children}</main>

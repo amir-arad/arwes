@@ -2,7 +2,7 @@
 import { type ReactElement, type ReactNode } from 'react'
 import Link from 'next/link'
 import { NavArrowLeft, NavArrowRight } from 'iconoir-react'
-import { type AnimatedSettings, cx, Animator, Animated, aaOpacity, useBleeps } from '@arwes/react'
+import { type AnimatedSettings, cx, Animator, Animated, fade, useBleeps } from '@arwes/react'
 
 import { linkPrimary, linkSecondary } from '@app/styles'
 import * as classes from './ModalNavigate.css'
@@ -24,7 +24,7 @@ const NavLink = (props: NavLinkProps): ReactElement => {
 
   return (
     <Animator>
-      <Animated className={classes.link} animated={[aaOpacity(), animated]}>
+      <Animated className={classes.link} animated={[fade(), animated]}>
         {!!onLeft && (
           <button
             className={cx(

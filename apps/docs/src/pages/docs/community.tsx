@@ -1,5 +1,5 @@
 import { type ReactElement } from 'react'
-import { Animator, Animated, Text, BleepsOnAnimator, aa, aaVisibility } from '@arwes/react'
+import { Animator, Animated, Text, BleepsOnAnimator, transition, flicker } from '@arwes/react'
 import { FastArrowRight } from 'iconoir-react'
 import communityApps from '@repository/static/assets/community/apps/apps.json'
 import type { BleepNames } from '@app/types'
@@ -47,7 +47,7 @@ const Page = (): ReactElement => {
         <Animator duration={{ enter: 0.4 }}>
           <BleepsOnAnimator<BleepNames> transitions={{ entering: 'assemble' }} />
         </Animator>
-        <PageContentLayout animated={aa('y', 12, 0)} frame={false} floating>
+        <PageContentLayout animated={transition('y', 12, 0)} frame={false} floating>
           <div className="sections">
             <header>
               <Animator>
@@ -56,7 +56,7 @@ const Page = (): ReactElement => {
                 </Text>
               </Animator>
               <Animator>
-                <Animated as="hr" animated={aa('scaleX', 0, 1)} />
+                <Animated as="hr" animated={transition('scaleX', 0, 1)} />
               </Animator>
             </header>
 
@@ -73,7 +73,7 @@ const Page = (): ReactElement => {
                   {communityApps.map((app, index) => (
                     <Animator key={index}>
                       <Card
-                        animated={[aaVisibility(), aa('y', 8, 0, 0)]}
+                        animated={[flicker(), transition('y', 8, 0, 0)]}
                         src={`/assets/community/apps/images/${app.image}`}
                         srcAlt={app.name}
                         title={

@@ -9,6 +9,7 @@ const AnimatedX: typeof Component = memo(
       ...props
     })
   )
+  // TODO: Compare the `animated` value for object or collection differences for performance.
 ) as any
 
 export * from './AnimatedX.js'
