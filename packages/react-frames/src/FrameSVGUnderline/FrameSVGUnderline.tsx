@@ -4,19 +4,23 @@ import type { FrameSVGPathGeneric } from '@arwes/frames'
 
 import { type FrameSVGProps, FrameSVG } from '../FrameSVG/index.js'
 
-// TODO: Add support for padding.
-
 interface FrameSVGUnderlineProps extends FrameSVGProps {
   squareSize?: number
   strokeWidth?: number
-  inverted?: boolean
+  padding?: number
   className?: string
 }
 
 const FrameSVGUnderline = (props: FrameSVGUnderlineProps): ReactElement => {
-  const { squareSize: ss = 16, strokeWidth: sw = 1, inverted, className, ...otherProps } = props
+  const {
+    squareSize: ss = 16,
+    strokeWidth: sw = 1,
+    padding: p = 0,
+    className,
+    ...otherProps
+  } = props
 
-  const paths = useMemo(() => {
+  const paths: FrameSVGPathGeneric[] = useMemo(() => {
     const so = sw / 2
 
     return [
@@ -27,11 +31,11 @@ const FrameSVGUnderline = (props: FrameSVGUnderlineProps): ReactElement => {
           fill: 'currentcolor'
         },
         path: [
-          ['M', 0, 0],
-          ['L', 0, '100%'],
-          ['L', `100% - ${ss}`, '100%'],
-          ['L', '100%', `100% - ${ss}`],
-          ['L', '100%', 0]
+          ['M', p, p],
+          ['L', p, `100% - ${p}`],
+          ['L', `100% - ${ss} - ${p}`, `100% - ${p}`],
+          ['L', `100% - ${p}`, `100% - ${ss} - ${p}`],
+          ['L', `100% - ${p}`, p]
         ]
       },
       {
@@ -44,13 +48,13 @@ const FrameSVGUnderline = (props: FrameSVGUnderlineProps): ReactElement => {
           fill: 'none'
         },
         path: [
-          ['M', so, `100% - ${so}`],
-          ['L', `100% - ${ss}`, `100% - ${so}`],
-          ['L', `100% - ${so}`, `100% - ${ss - so}`]
+          ['M', so + p, `100% - ${so} - ${p}`],
+          ['L', `100% - ${ss} - ${p}`, `100% - ${so} - ${p}`],
+          ['L', `100% - ${so} - ${p}`, `100% - ${ss - so} - ${p}`]
         ]
       }
-    ] as FrameSVGPathGeneric[]
-  }, [ss, sw, inverted])
+    ]
+  }, [ss, sw, p])
 
   return (
     <FrameSVG

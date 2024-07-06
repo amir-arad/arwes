@@ -7,7 +7,6 @@ const Sandbox = (): ReactElement => {
     <>
       <style>{`
         .frame {
-          position: relative;
           width: 300px;
           height: 300px;
         }
@@ -19,9 +18,7 @@ const Sandbox = (): ReactElement => {
         }
       `}</style>
 
-      <div className="frame">
-        <FrameSVGCorners positioned />
-      </div>
+      <FrameSVGCorners className="frame" />
     </>
   )
 }
