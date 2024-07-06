@@ -72,26 +72,26 @@ const bleepsManager = createBleepsManager<BleepsNames>({
 
 volumeElement.addEventListener('change', () => {
   const volume = volumeElement.valueAsNumber
-  bleepsManager?.update({
+  bleepsManager.update({
     master: { volume }
   })
 })
 
 disableElement.addEventListener('change', () => {
   const disabled = disableElement.checked
-  bleepsManager?.update({
+  bleepsManager.update({
     common: { disabled }
   })
 })
 
 clickElement.addEventListener('click', () => {
-  bleepsManager?.bleeps.click?.play()
+  bleepsManager.bleeps.click?.play()
 })
 
 errorElement.addEventListener('click', () => {
-  bleepsManager?.bleeps.error?.play()
+  bleepsManager.bleeps.error?.play()
 })
 
 assembleElement.addEventListener('click', () => {
-  bleepsManager?.bleeps.type?.play()
+  bleepsManager.bleeps.type?.play()
 })

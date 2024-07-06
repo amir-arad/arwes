@@ -30,9 +30,9 @@ const bleepsManager = createBleepsManager<BleepNames>({
 })
 
 clickElement.addEventListener('click', () => {
-  bleepsManager?.bleeps.click?.play()
+  bleepsManager.bleeps.click?.play()
 })
 
 errorElement.addEventListener('click', () => {
-  bleepsManager?.bleeps.error?.play()
+  bleepsManager.bleeps.error?.play()
 })
