@@ -43,7 +43,7 @@ const Animated = <
     className,
     style,
     elementRef: externalElementRef,
-    hideOnExited,
+    hideOnExited = true,
     hideOnEntered,
     onTransition,
     ...otherProps

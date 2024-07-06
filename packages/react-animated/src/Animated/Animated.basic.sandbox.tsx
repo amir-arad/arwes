@@ -9,7 +9,7 @@ const Item = (): ReactElement => {
       <Animated
         style={{ margin: 10, width: 40, height: 20, background: '#777' }}
         animated={{
-          initialStyle: { x: 0, background: '#0ff' },
+          initialStyle: { background: '#fff' },
           transitions: {
             // Every animation also accepts the settings:
             // - duration: number
@@ -30,7 +30,7 @@ const Sandbox = (): ReactElement => {
   const [active, setActive] = useState(true)
 
   useEffect(() => {
-    const tid = setInterval(() => setActive((active) => !active), 2000)
+    const tid = setInterval(() => setActive((active) => !active), 2_000)
     return () => clearInterval(tid)
   }, [])
 

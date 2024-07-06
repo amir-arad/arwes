@@ -17,7 +17,7 @@ const Item = (): ReactElement => {
             }
           },
           {
-            initialStyle: { background: '#0ff' },
+            initialStyle: { background: '#fff' },
             transitions: {
               entering: { background: '#ff0' },
               exiting: { background: '#0ff' }

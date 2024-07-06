@@ -164,7 +164,9 @@ const Animator = (props: AnimatorProps): ReactElement => {
   // Setup on mounted and in case animator is disabled and then re-enabled,
   // trigger the setup once is created again.
   useEffect(() => {
-    animatorInterface?.node.send(ACTIONS.setup)
+    queueMicrotask(() => {
+      animatorInterface?.node.send(ACTIONS.setup)
+    })
   }, [!!animatorInterface])
 
   // Trigger updates on animator only after first render, since in the first render
@@ -175,7 +177,9 @@ const Animator = (props: AnimatorProps): ReactElement => {
       return
     }
 
-    animatorInterface?.node.send(ACTIONS.update)
+    queueMicrotask(() => {
+      animatorInterface?.node.send(ACTIONS.update)
+    })
   }, [settings.active, settings.manager, settings.merge, settings.combine])
 
   useEffect(() => {

@@ -13,8 +13,7 @@ const Sandbox = (): ReactElement => {
 
   return (
     <Animator active={active} duration={{ enter: 1, exit: 1 }}>
-      <Animated<SVGSVGElement>
-        as="svg"
+      <svg
         width="200"
         height="100"
         viewBox="0 0 200 100"
@@ -23,11 +22,13 @@ const Sandbox = (): ReactElement => {
       >
         <Animated<SVGPathElement>
           as="path"
-          style={{ stroke: '#0ff', strokeWidth: 2, fill: 'none' }}
+          stroke="#0ff"
+          strokeWidth="2"
+          fill="none"
           d="M0,1 H100 V50 H200"
           animated={draw()}
         />
-      </Animated>
+      </svg>
     </Animator>
   )
 }
