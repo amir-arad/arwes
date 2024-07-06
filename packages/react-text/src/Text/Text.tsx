@@ -12,7 +12,6 @@ import {
 } from 'react'
 import { cx } from '@arwes/tools'
 import { mergeRefs } from '@arwes/react-tools'
-import { ANIMATOR_STATES as STATES } from '@arwes/animator'
 import { type Animation, type easing } from '@arwes/animated'
 import { useAnimator } from '@arwes/react-animator'
 import {
@@ -40,8 +39,6 @@ interface TextProps<E extends HTMLElement = HTMLSpanElement> extends HTMLProps<E
   children: ReactNode
 }
 
-const TEXT_CLASS = 'arwes-react-text-text'
-
 const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): ReactElement => {
   const {
     as: asProvided = 'p',
@@ -64,8 +61,8 @@ const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): Rea
   const contentElementRef = useRef<HTMLSpanElement>(null)
   const transitionControl = useRef<Animation | null>(null)
   const animator = useAnimator()
-  const [isExited, setIsExited] = useState(() => animator?.node.state === STATES.exited)
-  const [isEntered, setIsEntered] = useState(() => animator?.node.state === STATES.entered)
+  const [isExited, setIsExited] = useState(() => animator?.node.state === 'exited')
+  const [isEntered, setIsEntered] = useState(() => animator?.node.state === 'entered')
 
   const contentVisibility = useMemo(
     () =>
@@ -132,8 +129,8 @@ const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): Rea
     }
 
     const cancelSubscription = animator.node.subscribe((node) => {
-      setIsEntered(node.state === STATES.entered)
-      setIsExited(node.state === STATES.exited)
+      setIsEntered(node.state === 'entered')
+      setIsExited(node.state === 'exited')
 
       switch (node.state) {
         case 'entered': {
@@ -170,7 +167,7 @@ const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): Rea
     as,
     {
       ...otherProps,
-      className: cx(TEXT_CLASS, className),
+      className: cx('arwes-text-text', className),
       style: {
         position: 'relative',
         ...otherProps.style
@@ -181,7 +178,7 @@ const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): Rea
       'span',
       {
         ref: contentElementRef,
-        className: cx(`${TEXT_CLASS}__content`, contentClassName),
+        className: cx('arwes-text-text__content', contentClassName),
         style: {
           position: 'relative',
           zIndex: 1,
@@ -196,4 +193,4 @@ const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): Rea
 }
 
 export type { TextProps }
-export { TEXT_CLASS, Text }
+export { Text }
