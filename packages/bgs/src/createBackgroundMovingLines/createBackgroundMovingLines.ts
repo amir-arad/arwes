@@ -108,8 +108,7 @@ const createBackgroundMovingLines = (
   const draw = (intervalProgress: number): void => {
     const { lineWidth, lineColor, distance, sets: linesSetsLength } = getSettings()
 
-    const width = canvas.clientWidth
-    const height = canvas.clientHeight
+    const { width, height } = canvas
     const isResized = canvas.width !== width || canvas.height !== height
 
     const axis1Size = width
@@ -117,8 +116,6 @@ const createBackgroundMovingLines = (
     const positionsLength = 1 + Math.floor(axis1Size / distance)
     const margin = axis1Size % distance
 
-    canvas.width = width
-    canvas.height = height
     ctx.clearRect(0, 0, width, height)
 
     ctx.lineWidth = lineWidth

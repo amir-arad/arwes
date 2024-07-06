@@ -104,8 +104,7 @@ const createBackgroundDots = (props: CreateBackgroundDotsProps): CreateBackgroun
 
     const { color, type, distance, size, crossSize, origin, originInverted } = getSettings()
 
-    const width = canvas.clientWidth
-    const height = canvas.clientHeight
+    const { width, height } = canvas
 
     const xLength = 1 + Math.floor(width / distance)
     const yLength = 1 + Math.floor(height / distance)
@@ -113,8 +112,6 @@ const createBackgroundDots = (props: CreateBackgroundDotsProps): CreateBackgroun
     const xMargin = width % distance
     const yMargin = height % distance
 
-    canvas.width = width
-    canvas.height = height
     ctx.clearRect(0, 0, width, height)
 
     for (let xIndex = 0; xIndex < xLength; xIndex++) {
