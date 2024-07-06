@@ -33,16 +33,16 @@ const renderFrameSVGPaths = (
     if (!isCommands) {
       const { name, id, className, style } = pathCustom
 
-      if (pathElement.dataset.name !== name) {
+      if (pathElement.dataset.name !== name && name !== undefined) {
         pathElement.dataset.name = name
       }
 
-      if (pathElement.id !== id) {
-        pathElement.id = id || ''
+      if (pathElement.id !== id && id !== undefined) {
+        pathElement.id = id
       }
 
-      if (pathElement.classList.value !== className) {
-        pathElement.classList.value = className || ''
+      if (pathElement.classList.value !== className && className !== undefined) {
+        pathElement.classList.value = className
       }
 
       Object.assign(pathElement.style, style)
