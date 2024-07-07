@@ -3,10 +3,15 @@ import { formatFrameSVGPath } from '../formatFrameSVGPath/index.js'
 
 const renderFrameSVGPaths = (
   parentElement: SVGElement,
-  width: number,
-  height: number,
+  widthProvided: number,
+  heightProvided: number,
   pathsCustom: FrameSVGPathGeneric[]
 ): void => {
+  // In certain browsers, when the SVG viewBox has values with decimals above the 0.5,
+  // the browser clips the values to the edge. Round down the dimensions so it doesn't happen.
+  const width = Math.floor(widthProvided)
+  const height = Math.floor(heightProvided)
+
   if (width <= 0 || height <= 0) {
     return
   }
