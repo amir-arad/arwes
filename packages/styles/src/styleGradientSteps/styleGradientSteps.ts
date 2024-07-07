@@ -1,6 +1,6 @@
 const styleGradientSteps = (
   length: number,
-  color: string,
+  color: string = 'currentcolor',
   direction: string = 'to right'
 ): string => {
   if (length < 2) {
