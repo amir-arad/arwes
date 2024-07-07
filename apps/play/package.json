@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress",
-    "dev": "webpack serve",
+    "dev": "cross-env NODE_OPTIONS=--max-http-header-size=32000000 webpack serve",
     "start": "serve ./build -p 9000"
   }
 }

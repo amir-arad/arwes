@@ -633,10 +633,6 @@ export const sandboxes = [
               {
                 name: 'basic',
                 code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/MovingLines/MovingLines.basic.sandbox.tsx')
-              },
-              {
-                name: 'composition',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/MovingLines/MovingLines.composition.sandbox.tsx')
               }
             ]
           }
@@ -655,6 +651,19 @@ export const sandboxes = [
             ]
           }
         ]
+      }
+    ]
+  },
+  {
+    name: 'Demos',
+    children: [
+      {
+        name: 'backgrounds',
+        code: require('!raw-loader?esModule=false!../demos/backgrounds.sandbox.tsx')
+      },
+      {
+        name: 'alert',
+        code: require('!raw-loader?esModule=false!../demos/alert.sandbox.tsx')
       }
     ]
   }
