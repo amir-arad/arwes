@@ -1,4 +1,4 @@
-const styleGradientSteps = (
+const styleSteps = (
   length: number,
   color: string = 'currentcolor',
   direction: string = 'to right'
@@ -28,4 +28,4 @@ const styleGradientSteps = (
   return `linear-gradient(${direction}, ${steps})`
 }
 
-export { styleGradientSteps }
+export { styleSteps }

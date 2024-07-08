@@ -1,1 +1,1 @@
-export * from './styleGradientSteps/index.js'
+export * from './styleSteps/index.js'
