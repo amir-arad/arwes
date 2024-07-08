@@ -7,7 +7,6 @@ const Sandbox = (): ReactElement => {
   return (
     <Animator duration={{ enter: 0.5, exit: 0.5, interval: 3 }}>
       <Puffs
-        style={{ width: '90vw', height: '90vh' }}
         color="hsla(120, 100%, 75%, 0.5)"
         quantity={1000}
         padding={20}

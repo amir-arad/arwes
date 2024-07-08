@@ -14,13 +14,14 @@ import { positionedStyle } from '../internal/styles.js'
 
 interface MovingLinesProps extends CreateBackgroundMovingLinesSettings {
   elementRef?: ForwardedRef<HTMLCanvasElement>
+  id?: string
   className?: string
   style?: CSSProperties
   positioned?: boolean
 }
 
 const MovingLines = memo((props: MovingLinesProps): ReactElement => {
-  const { elementRef: elementRefExternal, className, style, positioned = true } = props
+  const { elementRef: elementRefExternal, id, className, style, positioned = true } = props
 
   const animator = useAnimator()
   const elementRef = useRef<HTMLCanvasElement>(null)
@@ -52,6 +53,7 @@ const MovingLines = memo((props: MovingLinesProps): ReactElement => {
     <canvas
       role="presentation"
       ref={mergeRefs(elementRef, elementRefExternal)}
+      id={id}
       className={cx('arwes-bgs-movinglines', className)}
       style={{ ...(positioned ? positionedStyle : null), ...style }}
     />

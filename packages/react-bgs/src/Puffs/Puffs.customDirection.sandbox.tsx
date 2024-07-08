@@ -15,7 +15,6 @@ const Sandbox = (): ReactElement => {
       }}
     >
       <Puffs
-        style={{ width: '90vw', height: '90vh' }}
         color="hsla(60, 100%, 75%, 0.5)"
         quantity={100}
         padding={0}

@@ -7,14 +7,13 @@ const Sandbox = (): ReactElement => {
   const [active, setActive] = useState(true)
 
   useEffect(() => {
-    const iid = setInterval(() => setActive((active) => !active), 1200)
+    const iid = setInterval(() => setActive((active) => !active), 1_200)
     return () => clearInterval(iid)
   }, [])
 
   return (
     <Animator active={active} duration={{ enter: 1, exit: 1 }}>
       <Dots
-        style={{ width: '90vw', height: '90vh' }}
         color="hsla(60, 100%, 75%, 0.25)"
         type="circle"
         distance={20}

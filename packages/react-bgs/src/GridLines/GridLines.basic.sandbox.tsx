@@ -7,13 +7,13 @@ const Sandbox = (): ReactElement => {
   const [active, setActive] = useState(true)
 
   useEffect(() => {
-    const iid = setInterval(() => setActive((active) => !active), 3000)
-    return () => clearInterval(iid)
-  }, [])
+    const tid = setInterval(() => setActive(!active), active ? 3_000 : 1_000)
+    return () => clearTimeout(tid)
+  }, [active])
 
   return (
     <Animator active={active} duration={{ enter: 0.5, exit: 0.5 }}>
-      <GridLines style={{ width: '90vw', height: '90vh' }} lineColor="hsla(180, 100%, 75%, 0.5)" />
+      <GridLines lineColor="hsla(180, 100%, 75%, 0.5)" />
     </Animator>
   )
 }
