@@ -4,22 +4,15 @@ import { FrameSVGNefrex } from '@arwes/react-frames'
 
 const Sandbox = (): ReactElement => {
   return (
-    <>
-      <style>{`
-        .frame {
-          width: 300px;
-          height: 300px;
-        }
-        .frame [data-name=bg] {
-          color: hsl(180, 75%, 10%);
-        }
-        .frame [data-name=line] {
-          color: hsl(180, 75%, 50%);
-        }
-      `}</style>
-
-      <FrameSVGNefrex className="frame" />
-    </>
+    <div style={{ position: 'relative', width: 300, height: 300 }}>
+      <FrameSVGNefrex
+        style={{
+          // @ts-expect-error css variables
+          '--arwes-frames-bg-color': 'hsl(180, 75%, 10%)',
+          '--arwes-frames-line-color': 'hsl(180, 75%, 50%)'
+        }}
+      />
+    </div>
   )
 }
 

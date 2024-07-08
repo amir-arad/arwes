@@ -1,5 +1,6 @@
 import React, { useMemo, type ReactElement } from 'react'
 import { cx } from '@arwes/tools'
+import { memo } from '@arwes/react-tools'
 import { type FrameSVGPath, type FrameSVGStyle, type FrameSVGPathGeneric } from '@arwes/frames'
 
 import { type FrameSVGProps, FrameSVG } from '../FrameSVG/index.js'
@@ -10,14 +11,13 @@ interface FrameSVGNefrexProps extends FrameSVGProps {
   strokeWidth?: number
   smallLineLength?: number
   largeLineLength?: number
-  className?: string
 }
 
 type Point = [number | string, number | string]
 
 const toPath = (points: Point[]): FrameSVGPath => points.map((p, i) => [i === 0 ? 'M' : 'L', ...p])
 
-const FrameSVGNefrex = (props: FrameSVGNefrexProps): ReactElement => {
+const FrameSVGNefrex = memo((props: FrameSVGNefrexProps): ReactElement => {
   const {
     squareSize: ss = 16,
     strokeWidth = 1,
@@ -32,7 +32,8 @@ const FrameSVGNefrex = (props: FrameSVGNefrexProps): ReactElement => {
     const so = strokeWidth / 2 // Stroke offset.
 
     const polylineStyle: FrameSVGStyle = {
-      stroke: 'currentcolor',
+      filter: 'var(--arwes-frames-line-filter)',
+      stroke: 'var(--arwes-frames-line-color, currentcolor)',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
       strokeWidth: String(strokeWidth),
@@ -58,7 +59,8 @@ const FrameSVGNefrex = (props: FrameSVGNefrexProps): ReactElement => {
         name: 'bg',
         style: {
           strokeWidth: 0,
-          fill: 'currentcolor'
+          fill: 'var(--arwes-frames-bg-color, currentcolor)',
+          filter: 'var(--arwes-frames-bg-filter)'
         },
         path: toPath(
           leftTopLine
@@ -89,7 +91,7 @@ const FrameSVGNefrex = (props: FrameSVGNefrexProps): ReactElement => {
       paths={paths}
     />
   )
-}
+})
 
 export type { FrameSVGNefrexProps }
 export { FrameSVGNefrex }

@@ -4,28 +4,20 @@ import { FrameSVGOctagon } from '@arwes/react-frames'
 
 const Sandbox = (): ReactElement => {
   return (
-    <>
-      <style>{`
-        .frame {
-          width: 200px;
-          height: 200px;
-        }
-        .frame [data-name=bg] {
-          color: hsl(120, 75%, 10%);
-        }
-        .frame [data-name=line] {
-          color: hsl(120, 75%, 50%);
-        }
-      `}</style>
-
+    <div style={{ position: 'relative', width: 200, height: 200 }}>
       <FrameSVGOctagon
-        className="frame"
+        style={{
+          // @ts-expect-error css variables
+          '--arwes-frames-bg-color': 'hsl(180, 75%, 10%)',
+          '--arwes-frames-line-color': 'hsl(180, 75%, 50%)'
+        }}
+        squareSize={30}
         leftTop={false}
         rightTop={true}
         rightBottom={true}
         leftBottom={false}
       />
-    </>
+    </div>
   )
 }
 

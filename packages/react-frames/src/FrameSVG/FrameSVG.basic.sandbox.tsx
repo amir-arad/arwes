@@ -21,7 +21,7 @@ const Sandbox = (): ReactElement => {
           ['L', '100% - 20', 20]
         ]
       },
-      // Top decoration.
+      // Top line.
       {
         name: 'line',
         style: {
@@ -36,7 +36,7 @@ const Sandbox = (): ReactElement => {
           ['L', '100% - 10', 40]
         ]
       },
-      // Bottom decoration.
+      // Bottom line.
       {
         name: 'line',
         style: {
@@ -56,17 +56,8 @@ const Sandbox = (): ReactElement => {
   )
 
   return (
-    <div style={{ position: 'absolute', inset: 20 }}>
-      <FrameSVG
-        style={{
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          width: '100%',
-          height: '100%'
-        }}
-        paths={paths}
-      />
+    <div style={{ position: 'relative', width: 300, height: 300 }}>
+      <FrameSVG paths={paths} />
     </div>
   )
 }

@@ -9,8 +9,8 @@ const Sandbox = (): ReactElement => {
   const svgRef = useRef<SVGSVGElement>(null)
 
   const onSVGRender = useCallback((svg: SVGSVGElement, width: number, height: number) => {
-    const clipPathElement = svg.querySelector(`#${clipPathId}`)!
-    const contentElement = svg.querySelector(`#${contentId}`)!
+    const clipPathElement = svg.querySelector<SVGElement>(`#${clipPathId}`)!
+    const contentElement = svg.querySelector<SVGElement>(`#${contentId}`)!
 
     // Render tetragon shape element to clip content.
     renderFrameSVGPaths(clipPathElement, width, height, [

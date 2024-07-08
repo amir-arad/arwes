@@ -1,5 +1,6 @@
 import React, { useMemo, type ReactElement } from 'react'
 import { cx } from '@arwes/tools'
+import { memo } from '@arwes/react-tools'
 import type { FrameSVGPathGeneric } from '@arwes/frames'
 
 import { type FrameSVGProps, FrameSVG } from '../FrameSVG/index.js'
@@ -8,10 +9,9 @@ interface FrameSVGUnderlineProps extends FrameSVGProps {
   squareSize?: number
   strokeWidth?: number
   padding?: number
-  className?: string
 }
 
-const FrameSVGUnderline = (props: FrameSVGUnderlineProps): ReactElement => {
+const FrameSVGUnderline = memo((props: FrameSVGUnderlineProps): ReactElement => {
   const {
     squareSize: ss = 16,
     strokeWidth: sw = 1,
@@ -28,7 +28,8 @@ const FrameSVGUnderline = (props: FrameSVGUnderlineProps): ReactElement => {
         name: 'bg',
         style: {
           strokeWidth: 0,
-          fill: 'currentcolor'
+          fill: 'var(--arwes-frames-bg-color, currentcolor)',
+          filter: 'var(--arwes-frames-bg-filter)'
         },
         path: [
           ['M', p, p],
@@ -41,7 +42,8 @@ const FrameSVGUnderline = (props: FrameSVGUnderlineProps): ReactElement => {
       {
         name: 'line',
         style: {
-          stroke: 'currentcolor',
+          filter: 'var(--arwes-frames-line-filter)',
+          stroke: 'var(--arwes-frames-line-color, currentcolor)',
           strokeLinecap: 'round',
           strokeLinejoin: 'round',
           strokeWidth: String(sw),
@@ -63,7 +65,7 @@ const FrameSVGUnderline = (props: FrameSVGUnderlineProps): ReactElement => {
       paths={paths}
     />
   )
-}
+})
 
 export type { FrameSVGUnderlineProps }
 export { FrameSVGUnderline }
