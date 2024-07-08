@@ -28,7 +28,7 @@ const FrameSVGKranox = (props: FrameSVGKranoxProps): ReactElement => {
     ...otherProps
   } = props
 
-  const paths = useMemo(() => {
+  const paths: FrameSVGPathGeneric[] = useMemo(() => {
     const so = strokeWidth / 2 // Stroke offset.
 
     const polylineStyle: FrameSVGStyle = {

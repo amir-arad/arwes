@@ -1,11 +1,12 @@
 import React, { type ReactElement, useRef, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Animator } from '@arwes/react-animator'
-import { FrameSVGKranox, useFrameSVGAssemblingAnimation } from '@arwes/react-frames'
+import { FrameSVGKranox, useFrameSVGAssembler } from '@arwes/react-frames'
 
 const Frame = (): ReactElement => {
-  const svgRef = useRef<SVGSVGElement | null>(null)
-  const { onRender } = useFrameSVGAssemblingAnimation(svgRef)
+  const svgRef = useRef<SVGSVGElement>(null)
+
+  useFrameSVGAssembler(svgRef)
 
   return (
     <>
@@ -32,7 +33,6 @@ const Frame = (): ReactElement => {
         squareSize={12}
         smallLineLength={12}
         largeLineLength={48}
-        onRender={onRender}
       />
     </>
   )

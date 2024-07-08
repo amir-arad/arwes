@@ -1,11 +1,11 @@
 import React, { type ReactElement, useRef, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Animator } from '@arwes/react-animator'
-import { FrameSVGLines, useFrameSVGAssemblingAnimation } from '@arwes/react-frames'
+import { FrameSVGLines, useFrameSVGAssembler } from '@arwes/react-frames'
 
 const Frame = (): ReactElement => {
   const svgRef = useRef<SVGSVGElement | null>(null)
-  const { onRender } = useFrameSVGAssemblingAnimation(svgRef)
+  useFrameSVGAssembler(svgRef)
 
   return (
     <>
@@ -22,7 +22,7 @@ const Frame = (): ReactElement => {
         }
       `}</style>
 
-      <FrameSVGLines className="frame" elementRef={svgRef} onRender={onRender} />
+      <FrameSVGLines className="frame" elementRef={svgRef} />
     </>
   )
 }

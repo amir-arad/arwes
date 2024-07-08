@@ -25,22 +25,19 @@ interface FrameSVGProps extends SVGProps<SVGSVGElement> {
 const positionedStyle: CSSProperties = {
   position: 'absolute',
   zIndex: -1,
-  left: 0,
-  right: 0,
-  top: 0,
-  bottom: 0,
+  inset: 0,
   display: 'block',
   border: 0,
   margin: 0,
   padding: 0,
-  width: '100%',
-  height: '100%'
+  width: 'round(down, 100%, 1px)',
+  height: 'round(down, 100%, 1px)'
 }
 
 const FrameSVG = (props: FrameSVGProps): ReactElement => {
   const {
     paths,
-    positioned,
+    positioned = true,
     onRender: onRenderExternal,
     className,
     style,

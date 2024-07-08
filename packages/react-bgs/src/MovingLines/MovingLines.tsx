@@ -10,14 +10,17 @@ import { memo, mergeRefs } from '@arwes/react-tools'
 import { useAnimator } from '@arwes/react-animator'
 import { type CreateBackgroundMovingLinesSettings, createBackgroundMovingLines } from '@arwes/bgs'
 
+import { positionedStyle } from '../internal/styles.js'
+
 interface MovingLinesProps extends CreateBackgroundMovingLinesSettings {
   elementRef?: ForwardedRef<HTMLCanvasElement>
   className?: string
   style?: CSSProperties
+  positioned?: boolean
 }
 
 const MovingLines = memo((props: MovingLinesProps): ReactElement => {
-  const { elementRef: elementRefExternal, className, style } = props
+  const { elementRef: elementRefExternal, className, style, positioned = true } = props
 
   const animator = useAnimator()
   const elementRef = useRef<HTMLCanvasElement>(null)
@@ -50,7 +53,7 @@ const MovingLines = memo((props: MovingLinesProps): ReactElement => {
       role="presentation"
       ref={mergeRefs(elementRef, elementRefExternal)}
       className={cx('arwes-bgs-movinglines', className)}
-      style={style}
+      style={{ ...(positioned ? positionedStyle : null), ...style }}
     />
   )
 })
