@@ -29,8 +29,8 @@ const flicker = (): AnimatedSettings => ({
 })
 
 const draw = (
-  durationCustom?: undefined | number,
-  easing?: (x: number) => number
+  durationCustom?: number | undefined,
+  easingCustom?: (x: number) => number
 ): AnimatedSettings => ({
   transitions: {
     entering: ({ element, duration }) => {
@@ -46,7 +46,7 @@ const draw = (
       return animate(
         element,
         { strokeDashoffset: [length, 0] },
-        { easing, duration: durationCustom ?? duration }
+        { duration: durationCustom ?? duration, easing: easingCustom ?? easing.outSine }
       )
     },
     exiting: ({ element, duration }) => {
@@ -62,7 +62,7 @@ const draw = (
       return animate(
         element,
         { strokeDashoffset: [0, length] },
-        { easing, duration: durationCustom ?? duration }
+        { duration: durationCustom ?? duration, easing: easingCustom ?? easing.outSine }
       )
     }
   }
