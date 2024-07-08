@@ -662,6 +662,10 @@ export const sandboxes = [
         code: require('!raw-loader?esModule=false!../demos/backgrounds.sandbox.tsx')
       },
       {
+        name: 'button',
+        code: require('!raw-loader?esModule=false!../demos/button.sandbox.tsx')
+      },
+      {
         name: 'alert',
         code: require('!raw-loader?esModule=false!../demos/alert.sandbox.tsx')
       }
