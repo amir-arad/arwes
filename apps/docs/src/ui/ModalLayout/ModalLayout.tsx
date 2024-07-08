@@ -10,7 +10,7 @@ import {
   cx,
   transition,
   flicker,
-  useFrameSVGAssemblingAnimation
+  useFrameSVGAssembler
 } from '@arwes/react'
 
 import { linkSecondary } from '@app/styles'
@@ -30,8 +30,8 @@ const ModalLayout = (props: ModalLayoutProps): ReactElement => {
   const frame1Ref = useRef<SVGSVGElement>(null)
   const frame2Ref = useRef<SVGSVGElement>(null)
 
-  const frame1Animation = useFrameSVGAssemblingAnimation(frame1Ref)
-  const frame2Animation = useFrameSVGAssemblingAnimation(frame2Ref)
+  useFrameSVGAssembler(frame1Ref)
+  useFrameSVGAssembler(frame2Ref)
 
   return (
     <Animator merge combine manager="sequence">
@@ -63,7 +63,6 @@ const ModalLayout = (props: ModalLayoutProps): ReactElement => {
                 smallLineLength={12}
                 largeLineLength={48}
                 positioned
-                onRender={frame1Animation.onRender}
               />
               <FrameSVGNefrex
                 elementRef={frame2Ref}
@@ -78,7 +77,6 @@ const ModalLayout = (props: ModalLayoutProps): ReactElement => {
                 smallLineLength={12}
                 largeLineLength={48}
                 positioned
-                onRender={frame2Animation.onRender}
               />
             </Animated>
           </Animator>

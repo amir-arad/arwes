@@ -7,7 +7,7 @@ import {
   Illuminator,
   Text,
   transition,
-  useFrameSVGAssemblingAnimation,
+  useFrameSVGAssembler,
   flicker,
   BleepsOnAnimator
 } from '@arwes/react'
@@ -15,17 +15,9 @@ import type { BleepNames } from '@app/types'
 
 const Frame = (): ReactElement => {
   const svgRef = useRef<SVGSVGElement | null>(null)
-  const { onRender } = useFrameSVGAssemblingAnimation(svgRef)
+  useFrameSVGAssembler(svgRef)
 
-  return (
-    <FrameSVGLines
-      className="frame"
-      elementRef={svgRef}
-      onRender={onRender}
-      smallLineWidth={3}
-      positioned
-    />
-  )
+  return <FrameSVGLines className="frame" elementRef={svgRef} smallLineWidth={3} positioned />
 }
 
 const Page = (): ReactElement => {
