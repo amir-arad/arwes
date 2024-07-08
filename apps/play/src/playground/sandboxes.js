@@ -78,11 +78,11 @@ export const sandboxes = [
         name: '@arwes/styles',
         children: [
           {
-            name: 'styleGradientSteps',
+            name: 'styleSteps',
             children: [
               {
                 name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/styles/src/styleGradientSteps/styleGradientSteps.basic.sandbox.tsx')
+                code: require('!raw-loader?esModule=false!@repository/packages/styles/src/styleSteps/styleSteps.basic.sandbox.tsx')
               }
             ]
           }
@@ -434,6 +434,10 @@ export const sandboxes = [
         name: '@arwes/react-frames',
         children: [
           {
+            name: 'basic',
+            code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/basic.sandbox.tsx')
+          },
+          {
             name: 'useFrameSVGRenderer',
             children: [
               {
@@ -577,6 +581,10 @@ export const sandboxes = [
         name: '@arwes/react-bgs',
         children: [
           {
+            name: 'basic',
+            code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/basic.sandbox.tsx')
+          },
+          {
             name: 'Dots',
             children: [
               {
@@ -655,19 +663,19 @@ export const sandboxes = [
     ]
   },
   {
-    name: 'Demos',
+    name: 'Examples',
     children: [
       {
         name: 'backgrounds',
-        code: require('!raw-loader?esModule=false!../demos/backgrounds.sandbox.tsx')
+        code: require('!raw-loader?esModule=false!../examples/backgrounds.sandbox.tsx')
       },
       {
         name: 'button',
-        code: require('!raw-loader?esModule=false!../demos/button.sandbox.tsx')
+        code: require('!raw-loader?esModule=false!../examples/button.sandbox.tsx')
       },
       {
         name: 'alert',
-        code: require('!raw-loader?esModule=false!../demos/alert.sandbox.tsx')
+        code: require('!raw-loader?esModule=false!../examples/alert.sandbox.tsx')
       }
     ]
   }

@@ -77,6 +77,37 @@ const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
   }
 }
 
+type ButtonProps = {
+  className?: string
+  color?: 'primary' | 'secondary'
+  variant?: 'fill' | 'outline'
+  animated?: AnimatedProp
+  children: ReactNode
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void
+}
+const Button = memo((props: ButtonProps): ReactElement => {
+  const { className, color = 'primary', variant = 'fill', animated, children, onClick } = props
+
+  const bleeps = useBleeps<BleepsNames>()
+  const frameRef = useRef<SVGSVGElement>(null)
+
+  useFrameSVGAssembler(frameRef)
+
+  return (
+    <Animated<HTMLButtonElement>
+      as="button"
+      className={cx('button', `button-${color}`, `button-${variant}`, className)}
+      animated={[fade(), ...(Array.isArray(animated) ? animated : [animated])]}
+      onClick={(event) => {
+        bleeps.click?.play()
+        onClick?.(event)
+      }}
+    >
+      <FrameSVGOctagon elementRef={frameRef} style={{ zIndex: 0 }} squareSize={theme.spacen(2)} />
+      <div className="button-content">{children}</div>
+    </Animated>
+  )
+})
 addStyles(`
   .button {
     position: relative;
@@ -100,7 +131,7 @@ addStyles(`
   }
 
   .button-content {
-    z-index: 1;
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -163,39 +194,6 @@ addStyles(`
   }
 `)
 
-type ButtonProps = {
-  className?: string
-  color?: 'primary' | 'secondary'
-  variant?: 'fill' | 'outline'
-  animated?: AnimatedProp
-  children: ReactNode
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void
-}
-
-const Button = memo((props: ButtonProps): ReactElement => {
-  const { className, color = 'primary', variant = 'fill', animated, children, onClick } = props
-
-  const bleeps = useBleeps<BleepsNames>()
-  const frameRef = useRef<SVGSVGElement>(null)
-
-  useFrameSVGAssembler(frameRef)
-
-  return (
-    <Animated<HTMLButtonElement>
-      as="button"
-      className={cx('button', `button-${color}`, `button-${variant}`, className)}
-      animated={[fade(), ...(Array.isArray(animated) ? animated : [animated])]}
-      onClick={(event) => {
-        bleeps.click?.play()
-        onClick?.(event)
-      }}
-    >
-      <FrameSVGOctagon elementRef={frameRef} style={{ zIndex: 0 }} squareSize={theme.spacen(2)} />
-      <div className="button-content">{children}</div>
-    </Animated>
-  )
-})
-
 const IconExample = memo(
   (props: { className?: string }): ReactElement => (
     <svg
@@ -211,21 +209,6 @@ const IconExample = memo(
     </svg>
   )
 )
-
-addStyles(`
-  .group {
-    display: flex;
-    flex-direction: column;
-    padding: ${theme.space(4)};
-    gap: ${theme.space(4)};
-  }
-  .group-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: ${theme.space(4)};
-  }
-`)
 
 const Sandbox = (): ReactElement => {
   const [active, setActive] = useState(true)
@@ -268,5 +251,19 @@ const Sandbox = (): ReactElement => {
     </BleepsProvider>
   )
 }
+addStyles(`
+  .group {
+    display: flex;
+    flex-direction: column;
+    padding: ${theme.space(4)};
+    gap: ${theme.space(4)};
+  }
+  .group-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: ${theme.space(4)};
+  }
+`)
 
 createRoot(document.querySelector('#root')!).render(<Sandbox />)

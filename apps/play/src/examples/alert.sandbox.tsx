@@ -4,7 +4,7 @@ import {
   createThemeUnit,
   createThemeMultiplier,
   createThemeColor,
-  styleGradientSteps,
+  styleSteps,
   Animator,
   Animated,
   AnimatedProp,
@@ -95,13 +95,6 @@ const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
   }
 }
 
-addStyles(`
-  .page-frame [data-name=line] {
-    stroke: ${theme.colors.primary(5)};
-    stroke-width: 1;
-    fill: none;
-  }
-`)
 const PageFrame = (): ReactElement => {
   const svgRef = useRef<SVGSVGElement>(null)
   useFrameSVGAssembler(svgRef)
@@ -148,26 +141,14 @@ const PageFrame = (): ReactElement => {
   )
   return <FrameSVG elementRef={svgRef} className="page-frame" paths={paths} />
 }
-
 addStyles(`
-  .main-frame {
-    z-index: -1;
-    position: absolute;
-    inset: 0;
-  }
-  .main-frame [data-name=bg] {
-    color: ${theme.colors.primary(3, { alpha: 0.05 })};
-  }
-  .main-frame [data-name=line] {
-    color: ${theme.colors.primary(5)};
-  }
-  .main-frame-bg {
-    z-index: -2;
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(-45deg, ${theme.colors.primary(3, { alpha: 0.01 })}, ${theme.colors.primary(3, { alpha: 0.01 })} 5px, transparent 5px, transparent 10px);
+  .page-frame [data-name=line] {
+    stroke: ${theme.colors.primary(5)};
+    stroke-width: 1;
+    fill: none;
   }
 `)
+
 const MainFrame = (): ReactElement => {
   const svgRef = useRef<SVGSVGElement>(null)
   useFrameSVGAssembler(svgRef)
@@ -187,7 +168,40 @@ const MainFrame = (): ReactElement => {
     </div>
   )
 }
+addStyles(`
+  .main-frame {
+    position: absolute;
+    inset: 0;
+  }
+  .main-frame [data-name=bg] {
+    color: ${theme.colors.primary(3, { alpha: 0.05 })};
+  }
+  .main-frame [data-name=line] {
+    color: ${theme.colors.primary(5)};
+  }
+  .main-frame-bg {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(-45deg, ${theme.colors.primary(3, { alpha: 0.01 })}, ${theme.colors.primary(3, { alpha: 0.01 })} 5px, transparent 5px, transparent 10px);
+  }
+`)
 
+const Button = (props: { animated?: AnimatedProp; children: ReactNode }): ReactElement => {
+  const bleeps = useBleeps<BleepsNames>()
+  const svgRef = useRef<SVGSVGElement>(null)
+  useFrameSVGAssembler(svgRef)
+  return (
+    <Animated
+      as="button"
+      className="button"
+      animated={props.animated}
+      onClick={() => bleeps.click?.play()}
+    >
+      <FrameSVGCorners elementRef={svgRef} cornerLength={theme.spacen(2)} />
+      <div className="button-content">{props.children}</div>
+    </Animated>
+  )
+}
 addStyles(`
   .button {
     position: relative;
@@ -206,6 +220,9 @@ addStyles(`
     transition-property: opacity, color;
     transition-duration: 0.2s;
     transition-timing-function: ease-out;
+  }
+  .button-content {
+    position: relative;
   }
   .button .arwes-frames-framesvg {
     transition-property: opacity, transform;
@@ -236,23 +253,101 @@ addStyles(`
     color: ${theme.colors.secondary(8)};
   }
 `)
-const Button = (props: { animated?: AnimatedProp; children: ReactNode }): ReactElement => {
-  const bleeps = useBleeps<BleepsNames>()
-  const svgRef = useRef<SVGSVGElement>(null)
-  useFrameSVGAssembler(svgRef)
+
+const Sandbox = (): ReactElement => {
+  const [active, setActive] = useState(true)
+
+  useEffect(() => {
+    const tid = setInterval(() => setActive(!active), active ? 5_000 : 1_000)
+    return () => clearTimeout(tid)
+  }, [active])
+
   return (
-    <Animated
-      as="button"
-      className="button"
-      animated={props.animated}
-      onClick={() => bleeps.click?.play()}
-    >
-      <FrameSVGCorners elementRef={svgRef} cornerLength={8} />
-      {props.children}
-    </Animated>
+    <BleepsProvider {...bleepsSettings}>
+      <Animator active={active}>
+        <div className="page">
+          <Dots
+            className="background"
+            color={theme.colors.primary(2, { alpha: 0.05 })}
+            distance={30}
+            type="cross"
+            crossSize={1}
+            size={6}
+            originInverted
+          />
+          <PageFrame />
+          <BleepsOnAnimator<BleepsNames> transitions={{ entering: 'assemble' }} />
+
+          <Animator combine manager="stagger">
+            <Animated as="main" className="page-main" animated={transition('scale', 0.8, 1)}>
+              <MainFrame />
+
+              <BleepsOnAnimator<BleepsNames> transitions={{ entering: 'intro' }} />
+              <Animator merge duration={{ delay: 0.6, enter: 0.5 }}>
+                <BleepsOnAnimator<BleepsNames> transitions={{ entering: 'type' }} />
+              </Animator>
+
+              <Animator>
+                <Animated<HTMLImageElement>
+                  as="img"
+                  src="/logotype.png"
+                  animated={[
+                    flicker(),
+                    {
+                      transitions: {
+                        entering: { y: [100, 0], delay: 0.6, duration: 0.2 }
+                      }
+                    }
+                  ]}
+                />
+              </Animator>
+
+              <Animator duration={{ offset: 0.8 }}>
+                <Animated as="h1" animated={[flicker(), transition('y', 20, 0)]}>
+                  Futuristic Sci-Fi UI Web Framework
+                </Animated>
+              </Animator>
+
+              <Animator>
+                <Animated
+                  className="page-separator"
+                  style={{ background: styleSteps(20, 'currentcolor', '-45deg') }}
+                  animated={[flicker(), transition('y', 20, 1, 0)]}
+                />
+              </Animator>
+
+              <Animator>
+                <Animated as="p" animated={[flicker(), transition('y', 20, 0, 0)]}>
+                  Arwes is a web framework to build user interfaces based on futuristic science
+                  fiction designs, animations, and sound effects.
+                </Animated>
+              </Animator>
+
+              <Animator>
+                <Animated className="page-buttons" animated={transition('y', 20, 0, 0)}>
+                  <Button animated={[flicker(), transition('x', 10, 0, 0)]}>Exit</Button>
+                  <Button animated={[flicker(), transition('x', -10, 0, 0)]}>Enter</Button>
+                </Animated>
+              </Animator>
+
+              <Animator>
+                <Animated
+                  className="page-header"
+                  animated={[flicker(), transition('x', -10, 0, 0)]}
+                >
+                  Arwes Demo Project |
+                </Animated>
+                <Animated className="page-footer" animated={[flicker(), transition('x', 10, 0, 0)]}>
+                  | Futuristic Sci-Fi UI Web Framework
+                </Animated>
+              </Animator>
+            </Animated>
+          </Animator>
+        </div>
+      </Animator>
+    </BleepsProvider>
   )
 }
-
 addStyles(`
   .page {
     position: fixed;
@@ -322,99 +417,5 @@ addStyles(`
     color: ${theme.colors.primary(7)};
   }
 `)
-const Sandbox = (): ReactElement => {
-  const [active, setActive] = useState(true)
-
-  useEffect(() => {
-    const tid = setInterval(() => setActive(!active), active ? 5_000 : 1_000)
-    return () => clearTimeout(tid)
-  }, [active])
-
-  return (
-    <BleepsProvider {...bleepsSettings}>
-      <Animator active={active}>
-        <div className="page">
-          <Dots
-            className="background"
-            color={theme.colors.primary(2, { alpha: 0.05 })}
-            distance={30}
-            type="cross"
-            crossSize={1}
-            size={6}
-            originInverted
-          />
-          <PageFrame />
-          <BleepsOnAnimator<BleepsNames> transitions={{ entering: 'assemble' }} />
-
-          <Animator combine manager="stagger">
-            <Animated as="main" className="page-main" animated={transition('scale', 0.8, 1)}>
-              <MainFrame />
-
-              <BleepsOnAnimator<BleepsNames> transitions={{ entering: 'intro' }} />
-              <Animator merge duration={{ delay: 0.6, enter: 0.5 }}>
-                <BleepsOnAnimator<BleepsNames> transitions={{ entering: 'type' }} />
-              </Animator>
-
-              <Animator>
-                <Animated<HTMLImageElement>
-                  as="img"
-                  src="/logotype.png"
-                  animated={[
-                    flicker(),
-                    {
-                      transitions: {
-                        entering: { y: [100, 0], delay: 0.6, duration: 0.2 }
-                      }
-                    }
-                  ]}
-                />
-              </Animator>
-
-              <Animator duration={{ offset: 0.8 }}>
-                <Animated as="h1" animated={[flicker(), transition('y', 20, 0)]}>
-                  Futuristic SciFi UI Web Framework
-                </Animated>
-              </Animator>
-
-              <Animator>
-                <Animated
-                  className="page-separator"
-                  style={{ background: styleGradientSteps(20, 'currentcolor', '-45deg') }}
-                  animated={[flicker(), transition('y', 20, 1, 0)]}
-                />
-              </Animator>
-
-              <Animator>
-                <Animated as="p" animated={[flicker(), transition('y', 20, 0, 0)]}>
-                  Arwes is a web framework to build user interfaces based on futuristic science
-                  fiction designs, animations, and sound effects.
-                </Animated>
-              </Animator>
-
-              <Animator>
-                <Animated className="page-buttons" animated={transition('y', 20, 0, 0)}>
-                  <Button animated={[flicker(), transition('x', 10, 0, 0)]}>Exit</Button>
-                  <Button animated={[flicker(), transition('x', -10, 0, 0)]}>Enter</Button>
-                </Animated>
-              </Animator>
-
-              <Animator>
-                <Animated
-                  className="page-header"
-                  animated={[flicker(), transition('x', -10, 0, 0)]}
-                >
-                  Arwes Demo Project |
-                </Animated>
-                <Animated className="page-footer" animated={[flicker(), transition('x', 10, 0, 0)]}>
-                  | Futuristic SciFi UI Web Framework
-                </Animated>
-              </Animator>
-            </Animated>
-          </Animator>
-        </div>
-      </Animator>
-    </BleepsProvider>
-  )
-}
 
 createRoot(document.querySelector('#root')!).render(<Sandbox />)
