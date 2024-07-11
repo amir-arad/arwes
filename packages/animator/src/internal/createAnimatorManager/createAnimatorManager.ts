@@ -19,7 +19,7 @@ const createAnimatorManagerParallel: AnimatorManagerCreator = (node) => {
   const getDurationEnter = (childrenProvided?: AnimatorNode[]): number => {
     const children = getChildren(childrenProvided)
     return children.reduce((total, child) => {
-      const delay = child.control.getSettings().duration.delay || 0
+      const delay = child.duration.delay || 0
       return Math.max(total, delay + child.duration.enter)
     }, 0)
   }
@@ -28,8 +28,7 @@ const createAnimatorManagerParallel: AnimatorManagerCreator = (node) => {
     const children = getChildren(childrenProvided)
 
     for (const child of children) {
-      const childSettings = child.control.getSettings()
-      const delay = childSettings.duration.delay || 0
+      const delay = child.duration.delay || 0
       child.scheduler.start(delay, () => child.send(ACTIONS.enter))
     }
   }
@@ -42,7 +41,7 @@ const createAnimatorManagerParallel: AnimatorManagerCreator = (node) => {
 }
 
 const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
-  let reservedUntilTime = 0
+  let reservedUntilTimeMS = 0
 
   const getChildren = (childrenProvided?: AnimatorNode[]): AnimatorNode[] => {
     const children = childrenProvided ?? Array.from(node.children)
@@ -63,15 +62,14 @@ const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
       children = children.reverse()
     }
 
-    const parentSettings = node.control.getSettings()
-    const stagger = parentSettings.duration.stagger || 0
+    const { stagger = 0 } = node.control.getSettings().duration
 
     let total = 0
     let totalOffset = 0
     let index = 0
 
     for (const child of children) {
-      const { enter, offset, delay } = child.duration
+      const { enter, offset = 0, delay = 0 } = child.duration
 
       totalOffset += offset
       total = Math.max(total, index * stagger + totalOffset + enter + delay)
@@ -89,22 +87,21 @@ const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
       children = children.reverse()
     }
 
-    const parentSettings = node.control.getSettings()
-    const stagger = (parentSettings.duration.stagger || 0) * 1_000 // seconds to ms
     const now = Date.now()
+    const parentSettings = node.control.getSettings()
+    const staggerMS = (parentSettings.duration.stagger || 0) * 1_000 // seconds to ms
 
-    reservedUntilTime = Math.max(reservedUntilTime, now)
+    reservedUntilTimeMS = Math.max(reservedUntilTimeMS, now)
 
     for (const child of children) {
-      const childSettings = child.control.getSettings()
-      const offsetMS = (childSettings.duration.offset || 0) * 1_000 // seconds to ms
+      const { offset = 0, delay = 0 } = child.duration
+      const offsetMS = offset * 1_000 // seconds to ms
 
-      reservedUntilTime = reservedUntilTime + offsetMS
+      reservedUntilTimeMS = reservedUntilTimeMS + offsetMS
 
-      const time = (reservedUntilTime - now) / 1_000 // ms to seconds
-      const delay = childSettings.duration.delay || 0
+      const time = (reservedUntilTimeMS - now) / 1_000 // ms to seconds
 
-      reservedUntilTime = reservedUntilTime + stagger
+      reservedUntilTimeMS = reservedUntilTimeMS + staggerMS
 
       child.scheduler.start(time + delay, () => child.send(ACTIONS.enter))
     }
@@ -118,7 +115,7 @@ const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
 }
 
 const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
-  let reservedUntilTime = 0
+  let reservedUntilTimeMS = 0
 
   const getChildren = (childrenProvided?: AnimatorNode[]): AnimatorNode[] => {
     const children = childrenProvided ?? Array.from(node.children)
@@ -128,34 +125,51 @@ const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
     })
   }
 
-  // TODO: Take into consideration the children offsets and delays durations.
   const getDurationEnter = (childrenProvided?: AnimatorNode[]): number => {
-    const children = getChildren(childrenProvided)
-    return children.reduce((total, child) => total + child.duration.enter, 0)
-  }
-
-  const enterChildren = (childrenProvided?: AnimatorNode[]): void => {
     let children = getChildren(childrenProvided)
 
-    const now = Date.now()
+    if (!children.length) {
+      return 0
+    }
 
     if (name === MANAGERS.sequenceReverse) {
       children = children.reverse()
     }
 
-    reservedUntilTime = Math.max(reservedUntilTime, now)
+    let total = 0
+    let endTime = 0
 
     for (const child of children) {
-      const childSettings = child.control.getSettings()
-      const offset = (childSettings.duration.offset || 0) * 1_000 // seconds to ms
-      const durationEnter = child.duration.enter * 1_000 // seconds to ms
+      const { enter, offset = 0, delay = 0 } = child.duration
+      endTime += offset + enter
+      total = Math.max(total, endTime + delay)
+    }
 
-      reservedUntilTime = reservedUntilTime + offset
+    return total
+  }
 
-      const time = (reservedUntilTime - now) / 1_000 // ms to seconds
-      const delay = childSettings.duration.delay || 0
+  const enterChildren = (childrenProvided?: AnimatorNode[]): void => {
+    let children = getChildren(childrenProvided)
 
-      reservedUntilTime += durationEnter
+    if (name === MANAGERS.sequenceReverse) {
+      children = children.reverse()
+    }
+
+    const now = Date.now()
+
+    reservedUntilTimeMS = Math.max(reservedUntilTimeMS, now)
+
+    for (const child of children) {
+      const duration = child.duration
+      const offsetMS = (duration.offset || 0) * 1_000 // seconds to ms
+      const enterMS = duration.enter * 1_000 // seconds to ms
+      const delay = duration.delay || 0
+
+      reservedUntilTimeMS = reservedUntilTimeMS + offsetMS
+
+      const time = (reservedUntilTimeMS - now) / 1_000 // ms to seconds
+
+      reservedUntilTimeMS += enterMS
 
       child.scheduler.start(time + delay, () => child.send(ACTIONS.enter))
     }

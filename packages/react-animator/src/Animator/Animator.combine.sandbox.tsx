@@ -6,11 +6,11 @@ import { Animated } from '@arwes/react-animated'
 const AnimatorUIListener = (): ReactElement => {
   return (
     <Animated
-      style={{ margin: 10, width: 40, height: 20, backgroundColor: '#777' }}
+      style={{ margin: 10, width: 40, height: 20, background: '#777' }}
       animated={{
         transitions: {
-          entering: { x: [0, 50], backgroundColor: ['#0ff', '#ff0'] },
-          exiting: { x: [50, 0], backgroundColor: ['#ff0', '#0ff'] }
+          entering: { x: [0, 50], background: ['#0ff', '#ff0'] },
+          exiting: { x: [50, 0], background: ['#ff0', '#0ff'] }
         }
       }}
       hideOnExited={false}
@@ -43,7 +43,6 @@ const Sandbox = (): ReactElement => {
   return (
     <Animator active={active}>
       <Item>
-        <AnimatorUIListener />
         <Item />
         <Item />
         <Item />
@@ -52,7 +51,6 @@ const Sandbox = (): ReactElement => {
       <div style={{ height: 50 }} />
 
       <Item animator={{ combine: true }}>
-        <AnimatorUIListener />
         <Item />
         <Item />
         <Item />

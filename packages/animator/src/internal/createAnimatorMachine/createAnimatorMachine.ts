@@ -4,7 +4,10 @@ import type { AnimatorNode, AnimatorState, AnimatorAction } from '../../types.js
 import { ANIMATOR_STATES as STATES, ANIMATOR_ACTIONS as ACTIONS } from '../../constants.js'
 import { createAnimatorManager } from '../../internal/createAnimatorManager/index.js'
 
-type ActionProcedure = (() => AnimatorState) | (() => void)
+type ActionProcedure =
+  | (() => AnimatorState)
+  | (() => { duration: number; state: AnimatorState })
+  | (() => void)
 
 type StatesMap = {
   [P in AnimatorState | '*']?: {
@@ -58,6 +61,13 @@ const createAnimatorMachine = (
             const isActive = settings.active === undefined || settings.active
 
             if (isActive) {
+              const duration = node.duration
+              if (duration.delay > 0) {
+                return {
+                  duration: duration.delay,
+                  state: STATES.entering
+                }
+              }
               return STATES.entering
             }
           }
@@ -174,6 +184,13 @@ const createAnimatorMachine = (
               (settings.active as boolean | undefined) === true || settings.active === undefined
 
             if ((state === STATES.exited || state === STATES.exiting) && isActive) {
+              const duration = node.duration
+              if (duration.delay > 0) {
+                return {
+                  duration: duration.delay,
+                  state: STATES.entering
+                }
+              }
               return STATES.entering
             } else if ((state === STATES.entered || state === STATES.entering) && !isActive) {
               return STATES.exiting
@@ -221,7 +238,9 @@ const createAnimatorMachine = (
       transition(procedure)
     } else {
       const newState = procedure()
-      if (newState) {
+      if (typeof newState === 'object' && newState !== null) {
+        node.scheduler.start(newState.duration, () => transition(newState.state))
+      } else if (newState) {
         transition(newState)
       }
     }

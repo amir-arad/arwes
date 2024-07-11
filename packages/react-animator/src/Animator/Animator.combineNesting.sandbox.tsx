@@ -33,30 +33,15 @@ const Sandbox = (): ReactElement => {
     <AnimatorGeneralProvider duration={{ enter: 0.6, stagger: 0.2 }}>
       <Item combine manager="sequence">
         <Item combine manager="parallel">
-          {Array(4)
+          {Array(5)
             .fill(0)
             .map((_, i) => (
               <Item key={i} />
             ))}
-        </Item>
-
-        <Item combine manager="stagger">
-          {Array(4)
-            .fill(0)
-            .map((_, i) => (
-              <Item key={i} />
-            ))}
-          <Item combine manager="staggerReverse">
-            {Array(5)
-              .fill(0)
-              .map((_, i) => (
-                <Item key={i} />
-              ))}
-          </Item>
         </Item>
 
         <Item combine manager="sequence">
-          {Array(4)
+          {Array(3)
             .fill(0)
             .map((_, i) => (
               <Item key={i} />
@@ -68,6 +53,31 @@ const Sandbox = (): ReactElement => {
                 <Item key={i} />
               ))}
           </Item>
+          {Array(3)
+            .fill(0)
+            .map((_, i) => (
+              <Item key={i} />
+            ))}
+        </Item>
+
+        <Item combine manager="stagger">
+          {Array(3)
+            .fill(0)
+            .map((_, i) => (
+              <Item key={i} />
+            ))}
+          <Item combine manager="staggerReverse">
+            {Array(5)
+              .fill(0)
+              .map((_, i) => (
+                <Item key={i} />
+              ))}
+          </Item>
+          {Array(3)
+            .fill(0)
+            .map((_, i) => (
+              <Item key={i} />
+            ))}
         </Item>
       </Item>
     </AnimatorGeneralProvider>

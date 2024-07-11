@@ -37,7 +37,10 @@ test('Should register new root node with predefined structure', () => {
     scheduler: expect.any(Object),
     duration: {
       enter: expect.any(Number),
-      exit: expect.any(Number)
+      exit: expect.any(Number),
+      stagger: expect.any(Number),
+      offset: expect.any(Number),
+      delay: expect.any(Number)
     },
     state: ANIMATOR_DEFAULT_SETTINGS.initialState,
     subscribe: expect.any(Function),

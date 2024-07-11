@@ -8,7 +8,7 @@ const createAnimatorInterface = (
   parentInterface?: AnimatorInterface,
   settings?: AnimatorSettingsPartial
 ): AnimatorInterface => {
-  let dynamic: AnimatorSettingsPartial | null = null
+  let dynamic: AnimatorSettingsPartial | null = {}
   let foreign: any = null
   const control: AnimatorControl = {
     getSettings: () => ({
@@ -24,7 +24,7 @@ const createAnimatorInterface = (
     }),
     getDynamicSettings: () => dynamic,
     setDynamicSettings: (value) => {
-      dynamic = value
+      dynamic = value === null ? null : { ...dynamic, ...value }
     },
     getForeignRef: () => foreign,
     setForeignRef: (value) => {
