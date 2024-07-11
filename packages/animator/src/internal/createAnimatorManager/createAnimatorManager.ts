@@ -53,43 +53,55 @@ const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
   }
 
   const getDurationEnter = (childrenProvided?: AnimatorNode[]): number => {
-    const children = getChildren(childrenProvided)
+    let children = getChildren(childrenProvided)
 
     if (!children.length) {
       return 0
     }
 
-    const { duration } = node.control.getSettings()
-    const lastChild = children[children.length - 1]
+    if (name === MANAGERS.staggerReverse) {
+      children = children.reverse()
+    }
 
-    // TODO: If any of the children has a longer enter duration which surpasses
-    // the accumulated + last child enter duration value, the total duration should
-    // be greater.
+    const parentSettings = node.control.getSettings()
+    const stagger = parentSettings.duration.stagger || 0
 
-    return duration.stagger * (children.length - 1) + lastChild.duration.enter
+    let total = 0
+    let totalOffset = 0
+    let index = 0
+
+    for (const child of children) {
+      const { enter, offset, delay } = child.duration
+
+      totalOffset += offset
+      total = Math.max(total, index * stagger + totalOffset + enter + delay)
+
+      index++
+    }
+
+    return total
   }
 
   const enterChildren = (childrenProvided?: AnimatorNode[]): void => {
     let children = getChildren(childrenProvided)
 
-    const parentSettings = node.control.getSettings()
-    const stagger = (parentSettings.duration.stagger || 0) * 1000 // seconds to ms
-
     if (name === MANAGERS.staggerReverse) {
       children = children.reverse()
     }
 
+    const parentSettings = node.control.getSettings()
+    const stagger = (parentSettings.duration.stagger || 0) * 1_000 // seconds to ms
     const now = Date.now()
 
     reservedUntilTime = Math.max(reservedUntilTime, now)
 
     for (const child of children) {
       const childSettings = child.control.getSettings()
-      const offset = (childSettings.duration.offset || 0) * 1000 // seconds to ms
+      const offsetMS = (childSettings.duration.offset || 0) * 1_000 // seconds to ms
 
-      reservedUntilTime = reservedUntilTime + offset
+      reservedUntilTime = reservedUntilTime + offsetMS
 
-      const time = (reservedUntilTime - now) / 1000 // ms to seconds
+      const time = (reservedUntilTime - now) / 1_000 // ms to seconds
       const delay = childSettings.duration.delay || 0
 
       reservedUntilTime = reservedUntilTime + stagger
@@ -135,12 +147,12 @@ const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
 
     for (const child of children) {
       const childSettings = child.control.getSettings()
-      const offset = (childSettings.duration.offset || 0) * 1000 // seconds to ms
-      const durationEnter = child.duration.enter * 1000 // seconds to ms
+      const offset = (childSettings.duration.offset || 0) * 1_000 // seconds to ms
+      const durationEnter = child.duration.enter * 1_000 // seconds to ms
 
       reservedUntilTime = reservedUntilTime + offset
 
-      const time = (reservedUntilTime - now) / 1000 // ms to seconds
+      const time = (reservedUntilTime - now) / 1_000 // ms to seconds
       const delay = childSettings.duration.delay || 0
 
       reservedUntilTime += durationEnter

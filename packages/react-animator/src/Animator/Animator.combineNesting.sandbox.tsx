@@ -11,18 +11,13 @@ const Item = ({ children, ...animator }: ItemProps): ReactElement => {
   return (
     <Animator {...animator}>
       <Animated
-        style={{ margin: 5, width: 40, height: 15, backgroundColor: '#777' }}
+        style={{ margin: 5, width: 40, height: 6, background: '#777' }}
         animated={{
           transitions: {
             entering: {
-              x: [0, 50],
-              backgroundColor: ['#0ff', '#ff0'],
-              options: { easing: 'linear' }
-            },
-            exiting: {
-              x: [50, 0],
-              backgroundColor: ['#ff0', '#0ff'],
-              options: { easing: 'linear' }
+              x: [0, 100],
+              background: ['#0ff', '#ff0'],
+              easing: 'linear'
             }
           }
         }}
@@ -35,30 +30,44 @@ const Item = ({ children, ...animator }: ItemProps): ReactElement => {
 
 const Sandbox = (): ReactElement => {
   return (
-    <AnimatorGeneralProvider duration={{ enter: 0.8, stagger: 0.2 }}>
-      <Item manager="sequence" combine>
-        <Item manager="parallel" combine>
-          {Array(5)
+    <AnimatorGeneralProvider duration={{ enter: 0.6, stagger: 0.2 }}>
+      <Item combine manager="sequence">
+        <Item combine manager="parallel">
+          {Array(4)
             .fill(0)
             .map((_, i) => (
               <Item key={i} />
             ))}
         </Item>
 
-        <Item manager="stagger" combine>
-          {Array(5)
+        <Item combine manager="stagger">
+          {Array(4)
             .fill(0)
             .map((_, i) => (
               <Item key={i} />
             ))}
+          <Item combine manager="staggerReverse">
+            {Array(5)
+              .fill(0)
+              .map((_, i) => (
+                <Item key={i} />
+              ))}
+          </Item>
         </Item>
 
-        <Item manager="sequence" combine>
-          {Array(5)
+        <Item combine manager="sequence">
+          {Array(4)
             .fill(0)
             .map((_, i) => (
               <Item key={i} />
             ))}
+          <Item combine manager="sequenceReverse">
+            {Array(5)
+              .fill(0)
+              .map((_, i) => (
+                <Item key={i} />
+              ))}
+          </Item>
         </Item>
       </Item>
     </AnimatorGeneralProvider>

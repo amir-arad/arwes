@@ -1,4 +1,4 @@
-import { IS_BROWSER } from '@arwes/tools'
+import { isBrowser } from '@arwes/tools'
 
 import type { AnimatorNode, AnimatorState, AnimatorAction } from '../../types.js'
 import { ANIMATOR_STATES as STATES, ANIMATOR_ACTIONS as ACTIONS } from '../../constants.js'
@@ -76,13 +76,10 @@ const createAnimatorMachine = (
           node.manager.enterChildren(children)
         },
 
-        schedule: () => {
-          const { duration } = node.control.getSettings()
-          return {
-            duration: duration.delay + duration.enter || 0,
-            action: ACTIONS.enterEnd
-          }
-        }
+        schedule: () => ({
+          duration: node.duration.enter || 0,
+          action: ACTIONS.enterEnd
+        })
       },
 
       onActions: {
@@ -151,7 +148,7 @@ const createAnimatorMachine = (
         },
 
         schedule: () => ({
-          duration: node.control.getSettings().duration.exit || 0,
+          duration: node.duration.exit || 0,
           action: ACTIONS.exitEnd
         })
       },
@@ -234,7 +231,7 @@ const createAnimatorMachine = (
 
   const send = (action: AnimatorAction): void => {
     // In non-browser environments, there are no transitions.
-    if (!IS_BROWSER) {
+    if (!isBrowser()) {
       return
     }
 

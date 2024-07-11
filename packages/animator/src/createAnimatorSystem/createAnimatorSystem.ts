@@ -1,6 +1,12 @@
 import { createTOScheduler } from '@arwes/tools'
 
-import type { AnimatorControl, AnimatorSubscriber, AnimatorNode, AnimatorSystem } from '../types.js'
+import type {
+  AnimatorControl,
+  AnimatorSubscriber,
+  AnimatorNode,
+  AnimatorSystem,
+  AnimatorDuration
+} from '../types.js'
 import { createAnimatorMachine } from '../internal/createAnimatorMachine/index.js'
 import { createAnimatorManager } from '../internal/createAnimatorManager/index.js'
 
@@ -51,13 +57,11 @@ const createAnimatorSystem = (): AnimatorSystem => {
         enumerable: true
       },
       duration: {
-        get: (): { enter: number; exit: number } => {
+        get: (): AnimatorDuration => {
           const { duration, combine } = node.control.getSettings()
-          const enter = combine
-            ? node.manager.getDurationEnter(Array.from(node.children))
-            : duration.enter || 0
+          const enter = combine ? node.manager.getDurationEnter() : duration.enter || 0
           const exit = duration.exit || 0
-          return { enter, exit }
+          return { ...duration, enter, exit }
         },
         enumerable: true
       },

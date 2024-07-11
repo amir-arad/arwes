@@ -43,7 +43,7 @@ export interface AnimatorNode {
   readonly children: Set<AnimatorNode>
   readonly subscribers: Set<AnimatorSubscriber>
   readonly scheduler: TOScheduler
-  readonly duration: { enter: number; exit: number }
+  readonly duration: AnimatorDuration
   readonly state: AnimatorState
   readonly subscribe: (subscriber: AnimatorSubscriber) => () => void
   readonly unsubscribe: (subscriber: AnimatorSubscriber) => void
