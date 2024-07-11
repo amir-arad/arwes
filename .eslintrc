@@ -20,7 +20,7 @@
     "apps/docs/next-env.d.ts",
     "apps/docs/src/dynamics.ts",
     "apps/play/scripts/generateTypes.js",
-    "apps/play/src/demos",
+    "apps/play/src/examples",
     "apps/play/src/playground/typeDefinitions.js",
     "apps/play/src/playground/sandboxes.js"
   ],
