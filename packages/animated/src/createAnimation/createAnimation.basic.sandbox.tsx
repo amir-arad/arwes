@@ -8,14 +8,14 @@ rootElement.innerHTML = `
       margin: 20px;
       width: 40px;
       height: 40px;
-      background-color: #0ff;
+      background: #0ff;
     }
   </style>
 
   <div class="item"></div>
 `
 
-const itemElement = rootElement.querySelector('.item')!
+const itemElement = rootElement.querySelector<HTMLDivElement>('.item')!
 
 createAnimation({
   duration: 1,
@@ -24,6 +24,6 @@ createAnimation({
     itemElement.style.transform = `translateX(${progress * 200}px)`
   },
   onComplete: () => {
-    itemElement.style.backgroundColor = '#ff0'
+    itemElement.style.background = '#ff0'
   }
 })

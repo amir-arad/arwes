@@ -11,7 +11,7 @@ rootElement.innerHTML = `
     .item {
       padding: 2px;
       width: 80px;
-      background-color: #077;
+      background: #077;
       color: #fff;
     }
   </style>

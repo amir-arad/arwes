@@ -47,7 +47,7 @@ const createAnimation = (props: AnimationProps): Animation => {
       slapsed = duration - slapsed
     }
 
-    const progress = Math.min(1, Math.max(0, ease(slapsed / duration)))
+    const progress = ease(Math.min(1, Math.max(0, slapsed / duration)))
     const continueAnimation = direction === 'normal' ? slapsed < duration : slapsed > 0
 
     onUpdate(progress)
