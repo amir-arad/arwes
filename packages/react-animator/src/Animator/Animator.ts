@@ -72,6 +72,7 @@ const Animator = (props: AnimatorProps): ReactElement => {
   const dynamicSettingsRef = useRef<AnimatorSettingsPartial | null>(null)
   const foreignRef = useRef<unknown>(null)
   const prevAnimatorRef = useRef<AnimatorInterface | undefined>(undefined)
+  const isMountedRef = useRef<boolean>(true)
 
   settingsRef.current = settings
 
@@ -110,6 +111,10 @@ const Animator = (props: AnimatorProps): ReactElement => {
           ...settingsRef.current.duration,
           ...dynamicSettingsRef.current?.duration
         } as AnimatorDuration,
+        condition: (node: AnimatorNode): boolean =>
+          [settingsRef.current.condition, dynamicSettingsRef.current?.condition]
+            .filter(Boolean)
+            .every((condition) => condition!(node)),
         onTransition: (node: AnimatorNode): void => {
           settingsRef.current?.onTransition?.(node)
           dynamicSettingsRef.current?.onTransition?.(node)
@@ -156,6 +161,8 @@ const Animator = (props: AnimatorProps): ReactElement => {
 
   useEffect(() => {
     return () => {
+      isMountedRef.current = false
+
       if (prevAnimatorRef.current) {
         prevAnimatorRef.current.system.unregister(prevAnimatorRef.current.node)
       }
@@ -170,6 +177,9 @@ const Animator = (props: AnimatorProps): ReactElement => {
     }
 
     queueMicrotask(() => {
+      if (!isMountedRef.current) {
+        return
+      }
       animatorInterface.node.send(ACTIONS.setup)
     })
   }, [!!animatorInterface])
@@ -188,6 +198,9 @@ const Animator = (props: AnimatorProps): ReactElement => {
     }
 
     queueMicrotask(() => {
+      if (!isMountedRef.current) {
+        return
+      }
       animatorInterface.node.send(ACTIONS.update)
     })
   }, [settings.active, settings.manager, settings.merge, settings.combine])
@@ -214,7 +227,12 @@ const Animator = (props: AnimatorProps): ReactElement => {
     }
 
     if (animatorInterface) {
-      animatorInterface.node.send(ACTIONS.refresh)
+      queueMicrotask(() => {
+        if (!isMountedRef.current) {
+          return
+        }
+        animatorInterface.node.send(ACTIONS.refresh)
+      })
     }
   }, refreshOn ?? [])
 

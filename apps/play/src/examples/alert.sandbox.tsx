@@ -52,7 +52,6 @@ addStyles(`
     margin: 0;
     padding: 0;
   }
-
   html,
   body {
     font-family: ${theme.fontFamily};
@@ -96,50 +95,50 @@ const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
 }
 
 const PageFrame = (): ReactElement => {
-  const svgRef = useRef<SVGSVGElement>(null)
-  useFrameSVGAssembler(svgRef)
+  const frameRef = useRef<SVGSVGElement>(null)
+  useFrameSVGAssembler(frameRef)
   const paths = useMemo<FrameSVGPathGeneric[]>(
     () => [
       {
         name: 'line',
         path: [
           ['M', 10, 10],
-          ['h', '10%'],
-          ['v', '20'],
-          ['h', '10%']
+          ['h', '7%'],
+          ['l', 10, 10],
+          ['h', '7%']
         ]
       },
       {
         name: 'line',
         path: [
           ['M', '100%-10', 10],
-          ['h', '-10%'],
-          ['v', '20'],
-          ['h', '-10%']
+          ['h', '-7%'],
+          ['l', -10, 10],
+          ['h', '-7%']
         ]
       },
       {
         name: 'line',
         path: [
           ['M', '100%-10', '100%-10'],
-          ['h', '-10%'],
-          ['v', '-20'],
-          ['h', '-10%']
+          ['h', '-7%'],
+          ['l', -10, -10],
+          ['h', '-7%']
         ]
       },
       {
         name: 'line',
         path: [
           ['M', '10', '100%-10'],
-          ['h', '10%'],
-          ['v', '-20'],
-          ['h', '10%']
+          ['h', '7%'],
+          ['l', 10, -10],
+          ['h', '7%']
         ]
       }
     ],
     []
   )
-  return <FrameSVG elementRef={svgRef} className="page-frame" paths={paths} />
+  return <FrameSVG elementRef={frameRef} className="page-frame" paths={paths} />
 }
 addStyles(`
   .page-frame [data-name=line] {
@@ -188,8 +187,8 @@ addStyles(`
 
 const Button = (props: { animated?: AnimatedProp; children: ReactNode }): ReactElement => {
   const bleeps = useBleeps<BleepsNames>()
-  const svgRef = useRef<SVGSVGElement>(null)
-  useFrameSVGAssembler(svgRef)
+  const frameRef = useRef<SVGSVGElement>(null)
+  useFrameSVGAssembler(frameRef)
   return (
     <Animated
       as="button"
@@ -197,7 +196,7 @@ const Button = (props: { animated?: AnimatedProp; children: ReactNode }): ReactE
       animated={props.animated}
       onClick={() => bleeps.click?.play()}
     >
-      <FrameSVGCorners elementRef={svgRef} cornerLength={theme.spacen(2)} />
+      <FrameSVGCorners elementRef={frameRef} cornerLength={theme.spacen(2)} />
       <div className="button-content">{props.children}</div>
     </Animated>
   )
