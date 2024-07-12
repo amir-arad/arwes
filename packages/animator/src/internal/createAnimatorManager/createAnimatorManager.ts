@@ -8,52 +8,29 @@ import {
 type AnimatorManagerCreator = (node: AnimatorNode, name: AnimatorManagerName) => AnimatorManager
 
 const createAnimatorManagerParallel: AnimatorManagerCreator = (node) => {
-  const getChildren = (childrenProvided?: AnimatorNode[]): AnimatorNode[] => {
-    const children = childrenProvided ?? Array.from(node._children)
-    return children.filter((child) => {
-      const childSettings = child._getUserSettings()
-      const condition = childSettings?.condition
-      return condition ? condition(child) : true
-    })
-  }
-
   const getDurationEnter = (childrenProvided?: AnimatorNode[]): number => {
-    const children = getChildren(childrenProvided)
+    const children = childrenProvided || Array.from(node._children)
     return children.reduce((total, child) => {
       const { duration } = child._getUserSettings()
       return Math.max(total, duration.delay + duration.enter)
     }, 0)
   }
 
-  const enterChildren = (childrenProvided?: AnimatorNode[]): void => {
-    const children = getChildren(childrenProvided)
-
+  const enterChildren = (children: AnimatorNode[]): void => {
     for (const child of children) {
       const { duration } = child._getUserSettings()
       child._scheduler.start(duration.delay, () => child.send(ACTIONS.enter))
     }
   }
 
-  return Object.freeze({
-    name: MANAGERS.parallel,
-    getDurationEnter,
-    enterChildren
-  })
+  return Object.freeze({ name: MANAGERS.parallel, getDurationEnter, enterChildren })
 }
 
 const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
   let reservedUntilTimeMS = 0
 
-  const getChildren = (childrenProvided?: AnimatorNode[]): AnimatorNode[] => {
-    const children = childrenProvided ?? Array.from(node._children)
-    return children.filter((child) => {
-      const { condition } = child._getUserSettings()
-      return condition ? condition(child) : true
-    })
-  }
-
   const getDurationEnter = (childrenProvided?: AnimatorNode[]): number => {
-    let children = getChildren(childrenProvided)
+    let children = childrenProvided || Array.from(node._children)
 
     if (!children.length) {
       return 0
@@ -83,8 +60,8 @@ const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
     return total
   }
 
-  const enterChildren = (childrenProvided?: AnimatorNode[]): void => {
-    let children = getChildren(childrenProvided)
+  const enterChildren = (childrenProvided: AnimatorNode[]): void => {
+    let children = childrenProvided || Array.from(node._children)
 
     if (name === MANAGERS.staggerReverse) {
       children = children.reverse()
@@ -110,33 +87,21 @@ const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
     }
   }
 
-  return Object.freeze({
-    name,
-    getDurationEnter,
-    enterChildren
-  })
+  return Object.freeze({ name, getDurationEnter, enterChildren })
 }
 
 const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
   let reservedUntilTimeMS = 0
 
-  const getChildren = (childrenProvided?: AnimatorNode[]): AnimatorNode[] => {
-    const children = childrenProvided ?? Array.from(node._children)
-    return children.filter((child) => {
-      const { condition } = child._getUserSettings()
-      return condition ? condition(child) : true
-    })
-  }
-
   const getDurationEnter = (childrenProvided?: AnimatorNode[]): number => {
-    let children = getChildren(childrenProvided)
+    let children = childrenProvided || Array.from(node._children)
 
     if (!children.length) {
       return 0
     }
 
     if (name === MANAGERS.sequenceReverse) {
-      children = children.reverse()
+      children = [...children].reverse()
     }
 
     let total = 0
@@ -151,11 +116,11 @@ const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
     return total
   }
 
-  const enterChildren = (childrenProvided?: AnimatorNode[]): void => {
-    let children = getChildren(childrenProvided)
+  const enterChildren = (childrenProvided: AnimatorNode[]): void => {
+    let children = childrenProvided || Array.from(node._children)
 
     if (name === MANAGERS.sequenceReverse) {
-      children = children.reverse()
+      children = [...children].reverse()
     }
 
     const now = Date.now()
@@ -178,11 +143,7 @@ const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
     }
   }
 
-  return Object.freeze({
-    name,
-    getDurationEnter,
-    enterChildren
-  })
+  return Object.freeze({ name, getDurationEnter, enterChildren })
 }
 
 const createAnimatorManagerSwitch: AnimatorManagerCreator = (node) => {
@@ -268,12 +229,7 @@ const createAnimatorManagerSwitch: AnimatorManagerCreator = (node) => {
     nodeSubscriberUnsubscribe = undefined
   }
 
-  return Object.freeze({
-    name: MANAGERS.switch,
-    getDurationEnter,
-    enterChildren,
-    destroy
-  })
+  return Object.freeze({ name: MANAGERS.switch, getDurationEnter, enterChildren, destroy })
 }
 
 const createAnimatorManager = (

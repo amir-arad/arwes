@@ -9,8 +9,11 @@ const AnimatorUIListener = (): ReactElement => {
   const animator = useAnimator()!
 
   useEffect(() => {
+    const element = elementRef.current
+
     // If the animator are disabled/dismissed, ignore animations.
-    if (!animator) {
+    // Also, if the element doesn't exist, ignore animations too.
+    if (!animator || !element) {
       return
     }
 
@@ -18,8 +21,6 @@ const AnimatorUIListener = (): ReactElement => {
 
     // A subscription function to be called every time the state changes.
     const unsubscribe = animator.node.subscribe((node: AnimatorNode) => {
-      const element = elementRef.current as HTMLElement
-
       switch (node.state) {
         case 'entering': {
           animation?.cancel() // Cancel current animation.
@@ -31,7 +32,7 @@ const AnimatorUIListener = (): ReactElement => {
           break
         }
         case 'exiting': {
-          animation?.cancel()
+          animation?.cancel() // Cancel current animation.
           animation = animate(
             element,
             { x: [100, 0], background: ['#ff0', '#0ff'] },

@@ -47,7 +47,7 @@ export type AnimatorSubscriber = (node: AnimatorNode) => void
 export interface AnimatorManager {
   readonly name: AnimatorManagerName
   readonly getDurationEnter: (childrenNodes?: AnimatorNode[]) => number
-  readonly enterChildren: (childrenNodes?: AnimatorNode[]) => void
+  readonly enterChildren: (childrenNodes: AnimatorNode[]) => void
   readonly destroy?: () => void
 }
 

@@ -164,12 +164,12 @@ export const sandboxes = [
                 code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.managerSwitch.sandbox.tsx')
               },
               {
-                name: 'unmountOn',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.unmountOn.sandbox.tsx')
-              },
-              {
                 name: 'condition',
                 code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.condition.sandbox.tsx')
+              },
+              {
+                name: 'unmountOn',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.unmountOn.sandbox.tsx')
               },
               {
                 name: 'initialState',

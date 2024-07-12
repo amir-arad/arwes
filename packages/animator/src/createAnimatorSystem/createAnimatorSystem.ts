@@ -100,7 +100,7 @@ const createAnimatorSystem = (): AnimatorSystem => {
       subscribe: {
         value: (subscriber: AnimatorSubscriber): (() => void) => {
           node._subscribers.add(subscriber)
-          queueMicrotask(() => subscriber(node))
+          subscriber(node)
           return () => node._subscribers.delete(subscriber)
         },
         enumerable: true

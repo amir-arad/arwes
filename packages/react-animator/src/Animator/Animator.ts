@@ -1,6 +1,8 @@
 import {
   type ReactElement,
+  type ReactNode,
   type ForwardedRef,
+  type DependencyList,
   createElement,
   useMemo,
   useContext,
@@ -22,7 +24,18 @@ import {
 } from '@arwes/animator'
 import { AnimatorContext } from '../internal/AnimatorContext/index.js'
 import { AnimatorGeneralContext } from '../internal/AnimatorGeneralContext/index.js'
-import type { AnimatorProps } from './Animator.types.js'
+
+interface AnimatorProps extends AnimatorSettingsPartial {
+  root?: boolean
+  disabled?: boolean
+  dismissed?: boolean
+  unmountOnExited?: boolean
+  unmountOnEntered?: boolean
+  unmountOnDisabled?: boolean
+  refreshOn?: DependencyList
+  nodeRef?: ForwardedRef<AnimatorNode>
+  children?: ReactNode
+}
 
 const setNodeRefValue = (
   nodeRef: ForwardedRef<AnimatorNode> | undefined,
@@ -46,8 +59,7 @@ const Animator = (props: AnimatorProps): ReactElement => {
     unmountOnExited,
     unmountOnEntered,
     unmountOnDisabled,
-    checkToSendAction,
-    checkToSend,
+    refreshOn,
     nodeRef,
     children,
     ...settings
@@ -60,8 +72,6 @@ const Animator = (props: AnimatorProps): ReactElement => {
   const dynamicSettingsRef = useRef<AnimatorSettingsPartial | null>(null)
   const foreignRef = useRef<unknown>(null)
   const prevAnimatorRef = useRef<AnimatorInterface | undefined>(undefined)
-  const isFirstRender1Ref = useRef<boolean | null>(true)
-  const isFirstRender2Ref = useRef<boolean | null>(true)
 
   settingsRef.current = settings
 
@@ -166,6 +176,7 @@ const Animator = (props: AnimatorProps): ReactElement => {
 
   // Trigger updates on animator only after first render, since in the first render
   // the setup event would take care of the initial data procedore.
+  const isFirstRender1Ref = useRef<boolean>(true)
   useEffect(() => {
     if (isFirstRender1Ref.current) {
       isFirstRender1Ref.current = false
@@ -195,6 +206,7 @@ const Animator = (props: AnimatorProps): ReactElement => {
     }
   }, [animatorInterface, unmountOnExited, unmountOnEntered, unmountOnDisabled])
 
+  const isFirstRender2Ref = useRef<boolean>(true)
   useEffect(() => {
     if (isFirstRender2Ref.current) {
       isFirstRender2Ref.current = false
@@ -202,9 +214,9 @@ const Animator = (props: AnimatorProps): ReactElement => {
     }
 
     if (animatorInterface) {
-      animatorInterface.node.send(checkToSendAction ?? ACTIONS.refresh)
+      animatorInterface.node.send(ACTIONS.refresh)
     }
-  }, checkToSend ?? [])
+  }, refreshOn ?? [])
 
   return createElement(
     AnimatorContext.Provider,
@@ -213,4 +225,5 @@ const Animator = (props: AnimatorProps): ReactElement => {
   )
 }
 
+export type { AnimatorProps }
 export { Animator }

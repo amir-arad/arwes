@@ -45,7 +45,10 @@ const createAnimatorMachine = (
 
             switch (node._parent.state) {
               case STATES.entering: {
-                if (parentSettings.combine || settings.merge) {
+                if (
+                  (parentSettings.combine || settings.merge) &&
+                  (settings.condition ? settings.condition(node) : true)
+                ) {
                   node._parent._manager.enterChildren([node])
                 }
                 break
@@ -53,7 +56,9 @@ const createAnimatorMachine = (
               // If the parent has already entered, enter the incoming children whether
               // they have "merge" setting or the parent is in "combine" setting.
               case STATES.entered: {
-                node._parent._manager.enterChildren([node])
+                if (settings.condition ? settings.condition(node) : true) {
+                  node._parent._manager.enterChildren([node])
+                }
                 break
               }
             }
@@ -78,9 +83,16 @@ const createAnimatorMachine = (
       onEntry: {
         execute: () => {
           const settings = node._getUserSettings()
-          const children = settings.combine
-            ? Array.from(node._children)
-            : Array.from(node._children).filter((child) => child._getUserSettings().merge)
+          const children = Array.from(node._children).filter((child) => {
+            const childSettings = child._getUserSettings()
+            if (childSettings.condition ? !childSettings.condition(child) : false) {
+              return false
+            }
+            if (settings.combine) {
+              return true
+            }
+            return childSettings.merge
+          })
 
           node._manager.enterChildren(children)
         },
@@ -93,53 +105,33 @@ const createAnimatorMachine = (
 
       onActions: {
         [ACTIONS.enterEnd]: STATES.entered,
-        [ACTIONS.exit]: STATES.exiting,
-
-        [ACTIONS.refresh]: () => {
-          const settings = node._getUserSettings()
-          const childrenExited = Array.from(node._children).filter(
-            (child) => child.state === STATES.exited
-          )
-
-          if (settings.combine) {
-            node._manager.enterChildren(childrenExited)
-          } else {
-            const childrenMerged = childrenExited.filter((child) => child._getUserSettings().merge)
-            node._manager.enterChildren(childrenMerged)
-          }
-        }
+        [ACTIONS.exit]: STATES.exiting
       }
     },
 
     [STATES.entered]: {
       onEntry: {
         execute: () => {
-          const settings = node.control.getSettings()
+          const settings = node._getUserSettings()
 
           if (settings.combine) {
             return
           }
 
-          const children = Array.from(node._children).filter(
-            (child) => !child._getUserSettings().merge
-          )
+          const children = Array.from(node._children).filter((child) => {
+            const childSettings = child._getUserSettings()
+            return (
+              !childSettings.merge &&
+              (childSettings.condition ? childSettings.condition(child) : true)
+            )
+          })
 
           node._manager.enterChildren(children)
         }
       },
 
       onActions: {
-        [ACTIONS.exit]: STATES.exiting,
-
-        [ACTIONS.refresh]: () => {
-          const childrenExited = Array.from(node._children).filter(
-            (child) => child.state === STATES.exited
-          )
-
-          if (childrenExited.length) {
-            node._manager.enterChildren(childrenExited)
-          }
-        }
+        [ACTIONS.exit]: STATES.exiting
       }
     },
 
@@ -195,6 +187,51 @@ const createAnimatorMachine = (
             else if ((state === STATES.entered || state === STATES.entering) && !isActive) {
               return STATES.exiting
             }
+          }
+        },
+
+        [ACTIONS.refresh]: () => {
+          const settings = node._getUserSettings()
+
+          // Get each child settings once in this scope for performance.
+          const childrenWithSettings = Array.from(node._children).map((child) => ({
+            node: child,
+            settings: child._getUserSettings()
+          }))
+
+          // Exit the applicable children inmediately by sending the exit action right away,
+          // and then enter the applicable children asynchronously with `node._manager.enterChildren()`.
+          if (node.state === STATES.entering || node.state === STATES.entered) {
+            const childrenInEnterToExit = childrenWithSettings
+              .filter(
+                (child) =>
+                  child.node.state === STATES.entering || child.node.state === STATES.entered
+              )
+              .filter((child) => {
+                if (node.state === STATES.entering) {
+                  return settings.combine || child.settings.merge
+                }
+                return true
+              })
+              .filter((child) => {
+                const { condition } = child.settings
+                return condition ? !condition(child.node) : false
+              })
+              .map((child) => child.node)
+
+            const childrenInExitToEnter = childrenWithSettings
+              .filter(
+                (child) => child.node.state === STATES.exiting || child.node.state === STATES.exited
+              )
+              .filter((child) => {
+                const { condition } = child.settings
+                return condition ? condition(child.node) : true
+              })
+              .map((child) => child.node)
+
+            childrenInEnterToExit.forEach((child) => child.send(ACTIONS.exit))
+
+            node._manager.enterChildren(childrenInExitToEnter)
           }
         }
       }

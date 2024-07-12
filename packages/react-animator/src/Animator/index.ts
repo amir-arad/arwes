@@ -4,5 +4,5 @@ import { Animator as Component } from './Animator.js'
 // TODO: Optimize props comparision.
 const Animator = memo(Component)
 
-export * from './Animator.types.js'
+export * from './Animator.js'
 export { Animator }
