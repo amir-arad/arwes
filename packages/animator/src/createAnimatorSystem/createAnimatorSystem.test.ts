@@ -21,41 +21,34 @@ test('Should create system id with format "s#"', () => {
 test('Should register new root node with predefined structure', () => {
   const system = createAnimatorSystem()
   const control: AnimatorControl = {
-    getSettings: () => ANIMATOR_DEFAULT_SETTINGS,
-    getDynamicSettings: () => ({}),
-    setDynamicSettings: () => {},
+    getSettings: () => ({}),
+    setSettings: () => {},
     getForeignRef: () => {},
     setForeignRef: () => {}
   }
   const node = system.register(undefined, control)
   expect(node).toEqual({
+    _parent: undefined,
+    _children: expect.any(Set),
+    _subscribers: expect.any(Set),
+    _scheduler: expect.any(Object),
+    _getUserSettings: expect.any(Function),
+    _manager: expect.any(Object),
     id: expect.any(String),
-    control,
-    parent: undefined,
-    children: expect.any(Set),
-    subscribers: expect.any(Set),
-    scheduler: expect.any(Object),
-    duration: {
-      enter: expect.any(Number),
-      exit: expect.any(Number),
-      stagger: expect.any(Number),
-      offset: expect.any(Number),
-      delay: expect.any(Number)
-    },
     state: ANIMATOR_DEFAULT_SETTINGS.initialState,
+    control,
+    settings: ANIMATOR_DEFAULT_SETTINGS,
     subscribe: expect.any(Function),
     unsubscribe: expect.any(Function),
-    send: expect.any(Function),
-    manager: expect.any(Object)
+    send: expect.any(Function)
   })
 })
 
 test('Should create node id with format "s#-n#" with parent system id', () => {
   const system = createAnimatorSystem()
   const control: AnimatorControl = {
-    getSettings: () => ANIMATOR_DEFAULT_SETTINGS,
-    getDynamicSettings: () => ({}),
-    setDynamicSettings: () => {},
+    getSettings: () => ({}),
+    setSettings: () => {},
     getForeignRef: () => {},
     setForeignRef: () => {}
   }

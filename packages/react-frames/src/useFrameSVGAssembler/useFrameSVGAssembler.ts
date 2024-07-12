@@ -52,7 +52,7 @@ const useFrameSVGAssembler = (svgRef: RefObject<SVGSVGElement>): void => {
                 line.style.strokeDashoffset = String((1 - progress) * length)
               }
             },
-            { duration: node.duration.enter }
+            { duration: node.settings.duration.enter }
           )
           break
         }
@@ -86,7 +86,7 @@ const useFrameSVGAssembler = (svgRef: RefObject<SVGSVGElement>): void => {
                 line.style.strokeDashoffset = String(progress * length)
               }
             },
-            { duration: node.duration.exit }
+            { duration: node.settings.duration.exit }
           )
           break
         }

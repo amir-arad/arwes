@@ -1,5 +1,6 @@
 import { type MutableRefObject, useRef, useEffect } from 'react'
 import { animate } from 'motion'
+import type { AnimationOptionsWithOverrides } from '@motionone/dom'
 import { filterProps } from '@arwes/tools'
 
 import type {
@@ -11,8 +12,8 @@ import type {
 import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js'
 
 interface UseAnimatedXOptions<States extends string> {
-  hideOnStates?: States[]
-  renderInitials?: boolean
+  hideOnStates?: States[] | undefined
+  renderInitials?: boolean | undefined
 }
 
 const defaultOptions: UseAnimatedXOptions<string> = {
@@ -78,6 +79,9 @@ const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement 
 
     element.style.visibility = options.hideOnStates.includes(state) ? 'hidden' : 'visible'
 
+    const $ = <T = HTMLElement | SVGElement>(query: string): T[] =>
+      Array.from(element.querySelectorAll(query)) as T[]
+
     animatedList
       // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
       .map((settingsItem) => settingsItem.transitions?.[state] as AnimatedTransition)
@@ -86,9 +90,6 @@ const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement 
       .flat(1)
       .forEach((transition) => {
         if (typeof transition === 'function') {
-          const $ = <T = HTMLElement | SVGElement>(query: string): T[] =>
-            Array.from(element.querySelectorAll(query)) as T[]
-
           const animation = transition({
             element,
             $,
@@ -117,7 +118,7 @@ const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement 
             repeat,
             direction,
             ...options
-          })
+          } as unknown as AnimationOptionsWithOverrides)
 
           animationsRef.current.add(animation)
 

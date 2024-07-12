@@ -38,22 +38,22 @@ const createAnimatorMachine = (
         [ACTIONS.enter]: STATES.entering,
 
         [ACTIONS.setup]: () => {
-          const settings = node.control.getSettings()
+          const settings = node._getUserSettings()
 
-          if (node.parent) {
-            const parentSettings = node.parent.control.getSettings()
+          if (node._parent) {
+            const parentSettings = node._parent._getUserSettings()
 
-            switch (node.parent.state) {
+            switch (node._parent.state) {
               case STATES.entering: {
                 if (parentSettings.combine || settings.merge) {
-                  node.parent.manager.enterChildren([node])
+                  node._parent._manager.enterChildren([node])
                 }
                 break
               }
               // If the parent has already entered, enter the incoming children whether
               // they have "merge" setting or the parent is in "combine" setting.
               case STATES.entered: {
-                node.parent.manager.enterChildren([node])
+                node._parent._manager.enterChildren([node])
                 break
               }
             }
@@ -61,10 +61,9 @@ const createAnimatorMachine = (
             const isActive = settings.active === undefined || settings.active
 
             if (isActive) {
-              const duration = node.duration
-              if (duration.delay > 0) {
+              if (settings.duration.delay > 0) {
                 return {
-                  duration: duration.delay,
+                  duration: settings.duration.delay,
                   state: STATES.entering
                 }
               }
@@ -78,16 +77,16 @@ const createAnimatorMachine = (
     [STATES.entering]: {
       onEntry: {
         execute: () => {
-          const { combine } = node.control.getSettings()
-          const children = combine
-            ? Array.from(node.children)
-            : Array.from(node.children).filter((child) => child.control.getSettings().merge)
+          const settings = node._getUserSettings()
+          const children = settings.combine
+            ? Array.from(node._children)
+            : Array.from(node._children).filter((child) => child._getUserSettings().merge)
 
-          node.manager.enterChildren(children)
+          node._manager.enterChildren(children)
         },
 
         schedule: () => ({
-          duration: node.duration.enter || 0,
+          duration: node.settings.duration.enter,
           action: ACTIONS.enterEnd
         })
       },
@@ -97,18 +96,16 @@ const createAnimatorMachine = (
         [ACTIONS.exit]: STATES.exiting,
 
         [ACTIONS.refresh]: () => {
-          const settings = node.control.getSettings()
-          const childrenExited = Array.from(node.children).filter(
+          const settings = node._getUserSettings()
+          const childrenExited = Array.from(node._children).filter(
             (child) => child.state === STATES.exited
           )
 
           if (settings.combine) {
-            node.manager.enterChildren(childrenExited)
+            node._manager.enterChildren(childrenExited)
           } else {
-            const childrenMerged = childrenExited.filter(
-              (child) => child.control.getSettings().merge
-            )
-            node.manager.enterChildren(childrenMerged)
+            const childrenMerged = childrenExited.filter((child) => child._getUserSettings().merge)
+            node._manager.enterChildren(childrenMerged)
           }
         }
       }
@@ -117,17 +114,17 @@ const createAnimatorMachine = (
     [STATES.entered]: {
       onEntry: {
         execute: () => {
-          const { combine } = node.control.getSettings()
+          const settings = node.control.getSettings()
 
-          if (combine) {
+          if (settings.combine) {
             return
           }
 
-          const children = Array.from(node.children).filter(
-            (child) => !child.control.getSettings().merge
+          const children = Array.from(node._children).filter(
+            (child) => !child._getUserSettings().merge
           )
 
-          node.manager.enterChildren(children)
+          node._manager.enterChildren(children)
         }
       },
 
@@ -135,11 +132,13 @@ const createAnimatorMachine = (
         [ACTIONS.exit]: STATES.exiting,
 
         [ACTIONS.refresh]: () => {
-          const childrenExited = Array.from(node.children).filter(
+          const childrenExited = Array.from(node._children).filter(
             (child) => child.state === STATES.exited
           )
 
-          node.manager.enterChildren(childrenExited)
+          if (childrenExited.length) {
+            node._manager.enterChildren(childrenExited)
+          }
         }
       }
     },
@@ -147,18 +146,18 @@ const createAnimatorMachine = (
     [STATES.exiting]: {
       onEntry: {
         execute: () => {
-          Array.from(node.children).forEach((child) => {
+          Array.from(node._children).forEach((child) => {
             if (child.state === STATES.entering || child.state === STATES.entered) {
               child.send(ACTIONS.exit)
             } else if (child.state === STATES.exited) {
-              child.scheduler.stopAll()
+              child._scheduler.stopAll()
             }
             // If the child is EXITING, it will go to EXITED soon.
           })
         },
 
         schedule: () => ({
-          duration: node.duration.exit || 0,
+          duration: node.settings.duration.exit,
           action: ACTIONS.exitEnd
         })
       },
@@ -172,27 +171,28 @@ const createAnimatorMachine = (
     '*': {
       onActions: {
         [ACTIONS.update]: () => {
-          const settings = node.control.getSettings()
+          const settings = node._getUserSettings()
 
-          if (settings.manager !== node.manager.name) {
-            node.manager.destroy?.()
-            node.manager = createAnimatorManager(node, settings.manager)
+          if (settings.manager !== node._manager.name) {
+            node._manager.destroy?.()
+            node._manager = createAnimatorManager(node, settings.manager)
           }
 
-          if (!node.parent) {
+          if (!node._parent) {
             const isActive =
               (settings.active as boolean | undefined) === true || settings.active === undefined
 
             if ((state === STATES.exited || state === STATES.exiting) && isActive) {
-              const duration = node.duration
-              if (duration.delay > 0) {
+              if (settings.duration.delay > 0) {
                 return {
-                  duration: duration.delay,
+                  duration: settings.duration.delay,
                   state: STATES.entering
                 }
               }
               return STATES.entering
-            } else if ((state === STATES.entered || state === STATES.entering) && !isActive) {
+            }
+            //
+            else if ((state === STATES.entered || state === STATES.entering) && !isActive) {
               return STATES.exiting
             }
           }
@@ -211,7 +211,7 @@ const createAnimatorMachine = (
     const { onEntry } = statesMap[state] || {}
     const { onTransition } = node.control.getSettings()
 
-    node.scheduler.stopAll()
+    node._scheduler.stopAll()
 
     if (onEntry?.execute) {
       onEntry.execute()
@@ -219,12 +219,12 @@ const createAnimatorMachine = (
 
     if (onEntry?.schedule) {
       const task = onEntry.schedule()
-      node.scheduler.start(task.duration, () => send(task.action))
+      node._scheduler.start(task.duration, () => send(task.action))
     }
 
     onTransition?.(node)
 
-    for (const subscriber of node.subscribers) {
+    for (const subscriber of node._subscribers) {
       subscriber(node)
     }
   }
@@ -239,7 +239,7 @@ const createAnimatorMachine = (
     } else {
       const newState = procedure()
       if (typeof newState === 'object' && newState !== null) {
-        node.scheduler.start(newState.duration, () => transition(newState.state))
+        node._scheduler.start(newState.duration, () => transition(newState.state))
       } else if (newState) {
         transition(newState)
       }

@@ -1,3 +1,5 @@
+// TODO: Review sandbox.
+
 import React, { type ReactElement, useState, type CSSProperties, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Animator } from '@arwes/react-animator'

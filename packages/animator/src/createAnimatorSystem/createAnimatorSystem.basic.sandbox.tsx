@@ -1,31 +1,88 @@
 // The "createAnimatorSystem" API is supposed to be used with abstractions APIs
 // such as packages "@arwes/react-animator" and "@arwes/react-animated".
-// This is just a brief example.
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
+// This is just a demostration example on how the API could be used.
 
 import { animate } from 'motion'
 import {
   type AnimatorControl,
   type AnimatorNode,
-  type AnimatorDuration,
   type AnimatorSettingsPartial,
-  ANIMATOR_DEFAULT_DURATION,
-  ANIMATOR_DEFAULT_SETTINGS,
+  type AnimatorInterface,
   createAnimatorSystem
 } from '@arwes/animator'
 
-const rootElement = document.querySelector('#root')!
+const createAnimator = (
+  parentInterface?: AnimatorInterface,
+  initialSettings?: AnimatorSettingsPartial
+): AnimatorInterface => {
+  let settings: AnimatorSettingsPartial = {
+    ...initialSettings,
+    duration: { ...initialSettings?.duration }
+  }
+  let foreign: any = null
 
+  // Animator node control.
+  // It is used as a link betweem the user components and the animator node.
+  const control: AnimatorControl = {
+    getSettings: () => settings,
+    setSettings: (value) => {
+      settings = { ...settings, ...value, duration: { ...settings?.duration, ...value?.duration } }
+    },
+    getForeignRef: () => foreign,
+    setForeignRef: (value) => {
+      foreign = value
+    }
+  }
+
+  if (parentInterface) {
+    const system = parentInterface.system
+    const node = system.register(parentInterface.node, control)
+    return { system, node }
+  }
+
+  const system = createAnimatorSystem()
+  const node = system.register(undefined, control)
+  return { system, node }
+}
+
+const createAnimated = (element: HTMLElement, node: AnimatorNode): void => {
+  node.subscribe(() => {
+    switch (node.state) {
+      case 'entering': {
+        animate(
+          element,
+          { x: [0, 100], background: ['#0ff', '#ff0'] },
+          { duration: node.settings.duration.enter }
+        )
+        break
+      }
+      case 'exiting': {
+        animate(
+          element,
+          { x: [100, 0], background: ['#ff0', '#0ff'] },
+          { duration: node.settings.duration.exit }
+        )
+        break
+      }
+    }
+  })
+}
+
+//
+// HTML.
+//
+
+const rootElement = document.querySelector('#root')!
 rootElement.innerHTML = `
   <style>
     .item {
-      margin: 10px;
-      width: 40px;
-      height: 20px;
-      background-color: #777;
+      margin: 1rem;
+      width: 3rem;
+      height: 1rem;
+      background: #777;
     }
     .margin-left {
-      margin-left: 20px;
+      margin-left: 2rem;
     }
   </style>
 
@@ -39,86 +96,54 @@ rootElement.innerHTML = `
   </div>
 `
 
-const system = createAnimatorSystem()
+//
+// State.
+//
 
-const createNode = (
-  parentNode: AnimatorNode | null,
-  element: HTMLElement,
-  getSettings?: () => AnimatorSettingsPartial
-): AnimatorNode => {
-  // Animator node control. It is used as an interface from UI components to
-  // the animator node.
-  const control: AnimatorControl = {
-    // If a node is a parent, it will expect an "active" value to change from
-    // transition between states. Otherwise, it will listen to its parent node.
-    getSettings: () => {
-      const providedSettings = getSettings?.()
-      return {
-        // Send the default animator settings.
-        ...ANIMATOR_DEFAULT_SETTINGS,
+let active = true
 
-        duration: {
-          ...ANIMATOR_DEFAULT_DURATION,
-          ...providedSettings?.duration
-        } as AnimatorDuration
-      }
-    },
-    getDynamicSettings: () => null,
-    setDynamicSettings: () => null,
-    getForeignRef: () => null,
-    setForeignRef: () => null
-  }
+//
+// Setup animators and animated.
+//
 
-  // Create a new node in the system with the parent node reference.
-  // If parent is not defined, it will be the root node.
-  const node = system.register(parentNode, control)
+const parentElement = rootElement.querySelector<HTMLDivElement>('#parent')!
+const parent = createAnimator(undefined, { active, combine: true, manager: 'sequence' })
+createAnimated(parentElement, parent.node)
 
-  // Subscribe to node state changes.
-  node.subscribe(() => {
-    const { duration } = node
+const child1Element = rootElement.querySelector<HTMLDivElement>('#child1')!
+const child1 = createAnimator(parent)
+createAnimated(child1Element, child1.node)
 
-    switch (node.state) {
-      case 'entering': {
-        animate(
-          element,
-          { x: [0, 50], backgroundColor: ['#0ff', '#ff0'] },
-          { duration: duration.enter }
-        )
-        break
-      }
-      case 'exiting': {
-        animate(
-          element,
-          { x: [50, 0], backgroundColor: ['#ff0', '#0ff'] },
-          { duration: duration.exit }
-        )
-        break
-      }
-    }
-  })
+const child2Element = rootElement.querySelector<HTMLDivElement>('#child2')!
+const child2 = createAnimator(parent)
+createAnimated(child2Element, child2.node)
 
-  // Setup initial node state based on "control.getSettings()" value.
-  node.send('setup')
+const child3Element = rootElement.querySelector<HTMLDivElement>('#child3')!
+const child3 = createAnimator(parent)
+createAnimated(child3Element, child3.node)
 
-  return node
-}
+//
+// Schedule animators setup.
+//
 
-// A variable to know when the parent node should be active or not.
-let isActive = true
+queueMicrotask(() => child3.node.send('setup'))
+queueMicrotask(() => child2.node.send('setup'))
+queueMicrotask(() => child1.node.send('setup'))
+queueMicrotask(() => parent.node.send('setup'))
 
-const parentNode = createNode(null, rootElement.querySelector('#parent')!, () => ({
-  active: isActive,
-  manager: 'stagger'
-}))
+//
+// Schedule animators update.
+//
 
-createNode(parentNode, rootElement.querySelector('#child1')!)
-createNode(parentNode, rootElement.querySelector('#child2')!)
-createNode(parentNode, rootElement.querySelector('#child3')!)
+const update = (): void => {
+  active = !active
+  parent.node.control.setSettings({ active })
 
-setInterval(() => {
-  isActive = !isActive
+  queueMicrotask(() => parent.node.send('update'))
 
   // When a node updates its settings, trigger an update event so it can
   // review the changes and act accordingly.
-  parentNode.send('update')
-}, 2000)
+  setTimeout(update, active ? 2_000 : 1_000)
+}
+
+update()

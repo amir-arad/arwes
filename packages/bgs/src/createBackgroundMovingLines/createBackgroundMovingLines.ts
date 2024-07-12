@@ -165,7 +165,7 @@ const createBackgroundMovingLines = (
 
     const {
       duration: { interval = 10 }
-    } = animator.node.control.getSettings()
+    } = animator.node.settings
 
     runningControl?.cancel()
     runningControl = animate(draw, {
@@ -218,7 +218,7 @@ const createBackgroundMovingLines = (
           transitionControl = animate(
             canvas,
             { opacity: [0, 1] },
-            { duration: node.duration.enter }
+            { duration: node.settings.duration.enter }
           )
           break
         }
@@ -233,7 +233,11 @@ const createBackgroundMovingLines = (
         }
 
         case 'exiting': {
-          transitionControl = animate(canvas, { opacity: [1, 0] }, { duration: node.duration.exit })
+          transitionControl = animate(
+            canvas,
+            { opacity: [1, 0] },
+            { duration: node.settings.duration.exit }
+          )
           break
         }
 

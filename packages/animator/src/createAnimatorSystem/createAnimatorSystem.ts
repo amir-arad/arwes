@@ -1,12 +1,13 @@
-import { createTOScheduler } from '@arwes/tools'
+import { createTOScheduler, filterProps } from '@arwes/tools'
 
 import type {
   AnimatorControl,
   AnimatorSubscriber,
   AnimatorNode,
   AnimatorSystem,
-  AnimatorDuration
+  AnimatorSettings
 } from '../types.js'
+import { ANIMATOR_DEFAULT_SETTINGS } from '../constants.js'
 import { createAnimatorMachine } from '../internal/createAnimatorMachine/index.js'
 import { createAnimatorManager } from '../internal/createAnimatorManager/index.js'
 
@@ -27,95 +28,117 @@ const createAnimatorSystem = (): AnimatorSystem => {
     // with specific readonly and writable properties.
     const node = { id: nodeId } as unknown as AnimatorNode
 
-    const settings = control.getSettings()
-    const machine = createAnimatorMachine(node, settings.initialState)
-    const manager = createAnimatorManager(node, settings.manager)
+    const initialSettings = control.getSettings()
+    const machine = createAnimatorMachine(
+      node,
+      initialSettings?.initialState ?? ANIMATOR_DEFAULT_SETTINGS.initialState
+    )
+    const manager = createAnimatorManager(
+      node,
+      initialSettings?.manager ?? ANIMATOR_DEFAULT_SETTINGS.manager
+    )
 
     const nodeProps: { [P in keyof AnimatorNode]: PropertyDescriptor } = {
-      id: {
-        value: nodeId,
-        enumerable: true
-      },
-      control: {
-        value: control,
-        enumerable: true
-      },
-      parent: {
+      _parent: {
         value: parent,
         enumerable: true
       },
-      children: {
+      _children: {
         value: new Set<AnimatorNode>(),
         enumerable: true
       },
-      subscribers: {
+      _subscribers: {
         value: new Set<AnimatorSubscriber>(),
         enumerable: true
       },
-      scheduler: {
+      _scheduler: {
         value: createTOScheduler(),
         enumerable: true
       },
-      duration: {
-        get: (): AnimatorDuration => {
-          const { duration, combine } = node.control.getSettings()
-          const enter = combine ? node.manager.getDurationEnter() : duration.enter || 0
-          const exit = duration.exit || 0
-          return { ...duration, enter, exit }
+      _getUserSettings: {
+        value: () => {
+          const settings = node.control.getSettings()
+          return {
+            ...ANIMATOR_DEFAULT_SETTINGS,
+            ...filterProps(settings),
+            duration: {
+              ...ANIMATOR_DEFAULT_SETTINGS.duration,
+              ...(settings.duration ? filterProps(settings.duration) : null)
+            }
+          }
         },
+        enumerable: true
+      },
+      _manager: {
+        value: manager,
+        enumerable: true,
+        writable: true
+      },
+
+      id: {
+        value: nodeId,
         enumerable: true
       },
       state: {
         get: () => machine.getState(),
         enumerable: true
       },
+      control: {
+        value: control,
+        enumerable: true
+      },
+      settings: {
+        get: (): AnimatorSettings => {
+          const settings = node._getUserSettings()
+          const enter = settings.combine
+            ? node._manager.getDurationEnter()
+            : settings.duration.enter
+          return { ...settings, duration: { ...settings.duration, enter } }
+        },
+        enumerable: true
+      },
       subscribe: {
         value: (subscriber: AnimatorSubscriber): (() => void) => {
-          node.subscribers.add(subscriber)
-          subscriber(node)
-          return () => node.subscribers.delete(subscriber)
+          node._subscribers.add(subscriber)
+          queueMicrotask(() => subscriber(node))
+          return () => node._subscribers.delete(subscriber)
         },
         enumerable: true
       },
       unsubscribe: {
         value: (subscriber: AnimatorSubscriber): void => {
-          node.subscribers.delete(subscriber)
+          node._subscribers.delete(subscriber)
         },
         enumerable: true
       },
       send: {
         value: machine.send,
         enumerable: true
-      },
-      manager: {
-        value: manager,
-        enumerable: true,
-        writable: true
       }
     }
 
     Object.defineProperties(node, nodeProps)
 
     if (parent) {
-      parent.children.add(node)
+      parent._children.add(node)
     }
 
     return node
   }
 
   const removeNode = (node: AnimatorNode): void => {
-    node.scheduler.stopAll()
+    node._scheduler.stopAll()
 
-    for (const child of node.children) {
+    for (const child of node._children) {
       removeNode(child)
     }
 
-    if (node.parent) {
-      node.parent.children.delete(node)
+    if (node._parent) {
+      node._parent._children.delete(node)
     }
 
-    node.children.clear()
-    node.subscribers.clear()
+    node._children.clear()
+    node._subscribers.clear()
   }
 
   const register = (
@@ -124,7 +147,9 @@ const createAnimatorSystem = (): AnimatorSystem => {
   ): AnimatorNode => {
     if (parentNode === undefined || parentNode === null) {
       if (root) {
-        throw new Error('The root node must be unregistered before registering another root node.')
+        throw new Error(
+          'The animator root node must be unregistered before registering another root node.'
+        )
       }
 
       root = createNode(undefined, control)
@@ -134,7 +159,7 @@ const createAnimatorSystem = (): AnimatorSystem => {
 
     if (!root) {
       throw new Error(
-        'A root node needs to be registered first in the system before registering children nodes.'
+        'An animator root node needs to be registered first in the system before registering children nodes.'
       )
     }
 

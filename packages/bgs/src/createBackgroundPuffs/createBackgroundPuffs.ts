@@ -187,7 +187,7 @@ const createBackgroundPuffs = (props: CreateBackgroundPuffsProps): CreateBackgro
 
     const {
       duration: { interval = 2, intervalPause = 0 }
-    } = animator.node.control.getSettings()
+    } = animator.node.settings
 
     runningControl?.cancel()
     runningControl = animate(
@@ -250,7 +250,7 @@ const createBackgroundPuffs = (props: CreateBackgroundPuffsProps): CreateBackgro
           transitionControl = animate(
             canvas,
             { opacity: [0, 1] },
-            { duration: node.duration.enter }
+            { duration: node.settings.duration.enter }
           )
           break
         }
@@ -266,7 +266,11 @@ const createBackgroundPuffs = (props: CreateBackgroundPuffsProps): CreateBackgro
 
         case 'exiting': {
           transitionControl?.cancel()
-          transitionControl = animate(canvas, { opacity: [1, 0] }, { duration: node.duration.exit })
+          transitionControl = animate(
+            canvas,
+            { opacity: [1, 0] },
+            { duration: node.settings.duration.exit }
+          )
           break
         }
 

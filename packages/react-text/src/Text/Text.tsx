@@ -98,7 +98,7 @@ const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): Rea
     }
 
     if (!fixed) {
-      const settings = animator.node.control.getSettings()
+      const { settings } = animator.node
       const durationEnter = getTransitionTextDuration({
         length: childrenText.length,
         maxDuration: settings.duration.enter
@@ -108,7 +108,7 @@ const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): Rea
         maxDuration: settings.duration.exit
       })
 
-      animator.node.control.setDynamicSettings({
+      animator.node.control.setSettings({
         duration: { enter: durationEnter, exit: durationExit }
       })
     }
@@ -128,30 +128,30 @@ const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): Rea
       })
     }
 
-    const cancelSubscription = animator.node.subscribe((node) => {
+    const unsubscribe = animator.node.subscribe((node) => {
       setIsEntered(node.state === 'entered')
       setIsExited(node.state === 'exited')
 
       switch (node.state) {
         case 'entered': {
           if (!transitionControl.current) {
-            transition(node.duration.enter, true)
+            transition(node.settings.duration.enter, true)
           }
           break
         }
         case 'entering': {
-          transition(node.duration.enter, true)
+          transition(node.settings.duration.enter, true)
           break
         }
         case 'exiting': {
-          transition(node.duration.exit, false)
+          transition(node.settings.duration.exit, false)
           break
         }
       }
     })
 
     return () => {
-      cancelSubscription()
+      unsubscribe()
       transitionControl.current?.cancel()
       transitionControl.current = null
     }

@@ -11,13 +11,11 @@ import {
 
 import {
   type AnimatorNode,
-  type AnimatorSettings,
   type AnimatorSettingsPartial,
   type AnimatorSystem,
   type AnimatorControl,
   type AnimatorInterface,
   type AnimatorDuration,
-  ANIMATOR_DEFAULT_SETTINGS,
   ANIMATOR_STATES as STATES,
   ANIMATOR_ACTIONS as ACTIONS,
   createAnimatorSystem
@@ -89,19 +87,17 @@ const Animator = (props: AnimatorProps): ReactElement => {
 
     const system: AnimatorSystem = isRoot ? createAnimatorSystem() : parentAnimatorInterface.system
 
-    const getSettings = (): AnimatorSettings => {
+    const getSettings = (): AnimatorSettingsPartial => {
       const animatorGeneralSettings = animatorGeneralInterface?.getSettings()
 
       return {
-        ...ANIMATOR_DEFAULT_SETTINGS,
         ...animatorGeneralSettings,
         ...settingsRef.current,
         ...dynamicSettingsRef.current,
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         duration: {
-          ...ANIMATOR_DEFAULT_SETTINGS.duration,
           ...animatorGeneralSettings?.duration,
-          ...settingsRef.current?.duration,
+          ...settingsRef.current.duration,
           ...dynamicSettingsRef.current?.duration
         } as AnimatorDuration,
         onTransition: (node: AnimatorNode): void => {
@@ -111,12 +107,8 @@ const Animator = (props: AnimatorProps): ReactElement => {
       }
     }
 
-    const setDynamicSettings = (newSettings: AnimatorSettingsPartial | null): void => {
+    const setSettings = (newSettings: AnimatorSettingsPartial): void => {
       dynamicSettingsRef.current = newSettings
-    }
-
-    const getDynamicSettings = (): AnimatorSettingsPartial | null => {
-      return dynamicSettingsRef.current
     }
 
     const getForeignRef = (): unknown => {
@@ -129,8 +121,7 @@ const Animator = (props: AnimatorProps): ReactElement => {
 
     const control: AnimatorControl = Object.freeze({
       getSettings,
-      setDynamicSettings,
-      getDynamicSettings,
+      setSettings,
       getForeignRef,
       setForeignRef
     })
@@ -164,8 +155,12 @@ const Animator = (props: AnimatorProps): ReactElement => {
   // Setup on mounted and in case animator is disabled and then re-enabled,
   // trigger the setup once is created again.
   useEffect(() => {
+    if (!animatorInterface) {
+      return
+    }
+
     queueMicrotask(() => {
-      animatorInterface?.node.send(ACTIONS.setup)
+      animatorInterface.node.send(ACTIONS.setup)
     })
   }, [!!animatorInterface])
 
@@ -177,8 +172,12 @@ const Animator = (props: AnimatorProps): ReactElement => {
       return
     }
 
+    if (!animatorInterface) {
+      return
+    }
+
     queueMicrotask(() => {
-      animatorInterface?.node.send(ACTIONS.update)
+      animatorInterface.node.send(ACTIONS.update)
     })
   }, [settings.active, settings.manager, settings.merge, settings.combine])
 

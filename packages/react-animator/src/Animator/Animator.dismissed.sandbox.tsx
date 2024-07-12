@@ -8,24 +8,23 @@ const AnimatorUIListener = (): ReactElement => {
   const animator = useAnimator()!
 
   useEffect(() => {
-    animator.node.subscribe((node) => {
-      const element = elementRef.current as HTMLElement
-      const { duration } = node
+    const element = elementRef.current as HTMLElement
 
+    animator.node.subscribe((node) => {
       switch (node.state) {
         case 'entering': {
           animate(
             element,
-            { x: [0, 50], backgroundColor: ['#0ff', '#ff0'] },
-            { duration: duration.enter }
+            { x: [0, 50], background: ['#0ff', '#ff0'] },
+            { duration: node.settings.duration.enter }
           )
           break
         }
         case 'exiting': {
           animate(
             element,
-            { x: [50, 0], backgroundColor: ['#ff0', '#0ff'] },
-            { duration: duration.exit }
+            { x: [50, 0], background: ['#ff0', '#0ff'] },
+            { duration: node.settings.duration.exit }
           )
           break
         }
@@ -33,9 +32,7 @@ const AnimatorUIListener = (): ReactElement => {
     })
   }, [])
 
-  return (
-    <div ref={elementRef} style={{ margin: 10, width: 40, height: 20, backgroundColor: '#777' }} />
-  )
+  return <div ref={elementRef} style={{ margin: 10, width: 40, height: 20, background: '#777' }} />
 }
 
 interface ItemProps {
@@ -56,7 +53,7 @@ const Sandbox = (): ReactElement => {
   const [active, setActive] = useState(true)
 
   useEffect(() => {
-    const tid = setInterval(() => setActive((active) => !active), 2000)
+    const tid = setInterval(() => setActive((active) => !active), 2_000)
     return () => clearInterval(tid)
   }, [])
 

@@ -9,9 +9,10 @@ type AnimatorManagerCreator = (node: AnimatorNode, name: AnimatorManagerName) =>
 
 const createAnimatorManagerParallel: AnimatorManagerCreator = (node) => {
   const getChildren = (childrenProvided?: AnimatorNode[]): AnimatorNode[] => {
-    const children = childrenProvided ?? Array.from(node.children)
+    const children = childrenProvided ?? Array.from(node._children)
     return children.filter((child) => {
-      const { condition } = child.control.getSettings()
+      const childSettings = child._getUserSettings()
+      const condition = childSettings?.condition
       return condition ? condition(child) : true
     })
   }
@@ -19,8 +20,8 @@ const createAnimatorManagerParallel: AnimatorManagerCreator = (node) => {
   const getDurationEnter = (childrenProvided?: AnimatorNode[]): number => {
     const children = getChildren(childrenProvided)
     return children.reduce((total, child) => {
-      const delay = child.duration.delay || 0
-      return Math.max(total, delay + child.duration.enter)
+      const { duration } = child._getUserSettings()
+      return Math.max(total, duration.delay + duration.enter)
     }, 0)
   }
 
@@ -28,8 +29,8 @@ const createAnimatorManagerParallel: AnimatorManagerCreator = (node) => {
     const children = getChildren(childrenProvided)
 
     for (const child of children) {
-      const delay = child.duration.delay || 0
-      child.scheduler.start(delay, () => child.send(ACTIONS.enter))
+      const { duration } = child._getUserSettings()
+      child._scheduler.start(duration.delay, () => child.send(ACTIONS.enter))
     }
   }
 
@@ -44,9 +45,9 @@ const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
   let reservedUntilTimeMS = 0
 
   const getChildren = (childrenProvided?: AnimatorNode[]): AnimatorNode[] => {
-    const children = childrenProvided ?? Array.from(node.children)
+    const children = childrenProvided ?? Array.from(node._children)
     return children.filter((child) => {
-      const { condition } = child.control.getSettings()
+      const { condition } = child._getUserSettings()
       return condition ? condition(child) : true
     })
   }
@@ -62,14 +63,16 @@ const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
       children = children.reverse()
     }
 
-    const { stagger = 0 } = node.control.getSettings().duration
+    const {
+      duration: { stagger }
+    } = node._getUserSettings()
 
     let total = 0
     let totalOffset = 0
     let index = 0
 
     for (const child of children) {
-      const { enter, offset = 0, delay = 0 } = child.duration
+      const { enter, offset = 0, delay = 0 } = child.settings.duration
 
       totalOffset += offset
       total = Math.max(total, index * stagger + totalOffset + enter + delay)
@@ -88,13 +91,13 @@ const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
     }
 
     const now = Date.now()
-    const parentSettings = node.control.getSettings()
+    const parentSettings = node._getUserSettings()
     const staggerMS = (parentSettings.duration.stagger || 0) * 1_000 // seconds to ms
 
     reservedUntilTimeMS = Math.max(reservedUntilTimeMS, now)
 
     for (const child of children) {
-      const { offset = 0, delay = 0 } = child.duration
+      const { offset = 0, delay = 0 } = child.settings.duration
       const offsetMS = offset * 1_000 // seconds to ms
 
       reservedUntilTimeMS = reservedUntilTimeMS + offsetMS
@@ -103,7 +106,7 @@ const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
 
       reservedUntilTimeMS = reservedUntilTimeMS + staggerMS
 
-      child.scheduler.start(time + delay, () => child.send(ACTIONS.enter))
+      child._scheduler.start(time + delay, () => child.send(ACTIONS.enter))
     }
   }
 
@@ -118,9 +121,9 @@ const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
   let reservedUntilTimeMS = 0
 
   const getChildren = (childrenProvided?: AnimatorNode[]): AnimatorNode[] => {
-    const children = childrenProvided ?? Array.from(node.children)
+    const children = childrenProvided ?? Array.from(node._children)
     return children.filter((child) => {
-      const { condition } = child.control.getSettings()
+      const { condition } = child._getUserSettings()
       return condition ? condition(child) : true
     })
   }
@@ -140,7 +143,7 @@ const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
     let endTime = 0
 
     for (const child of children) {
-      const { enter, offset = 0, delay = 0 } = child.duration
+      const { enter, offset = 0, delay = 0 } = child.settings.duration
       endTime += offset + enter
       total = Math.max(total, endTime + delay)
     }
@@ -160,7 +163,7 @@ const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
     reservedUntilTimeMS = Math.max(reservedUntilTimeMS, now)
 
     for (const child of children) {
-      const duration = child.duration
+      const duration = child.settings.duration
       const offsetMS = (duration.offset || 0) * 1_000 // seconds to ms
       const enterMS = duration.enter * 1_000 // seconds to ms
       const delay = duration.delay || 0
@@ -171,7 +174,7 @@ const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
 
       reservedUntilTimeMS += enterMS
 
-      child.scheduler.start(time + delay, () => child.send(ACTIONS.enter))
+      child._scheduler.start(time + delay, () => child.send(ACTIONS.enter))
     }
   }
 
@@ -189,16 +192,16 @@ const createAnimatorManagerSwitch: AnimatorManagerCreator = (node) => {
 
   const getDurationEnter = (): number => {
     if (nodeVisible) {
-      return nodeVisible.duration.enter
+      return nodeVisible.settings.duration.enter
     }
 
-    const nodeVisibleCurrent = Array.from(node.children).find((child) => {
-      const { condition } = child.control.getSettings()
+    const nodeVisibleCurrent = Array.from(node._children).find((child) => {
+      const { condition } = child._getUserSettings()
       return condition ? condition(child) : true
     })
 
     if (nodeVisibleCurrent) {
-      return nodeVisibleCurrent.duration.enter
+      return nodeVisibleCurrent.settings.duration.enter
     }
 
     return 0
@@ -208,9 +211,9 @@ const createAnimatorManagerSwitch: AnimatorManagerCreator = (node) => {
     nodeSubscriberUnsubscribe?.()
     nodeSubscriberUnsubscribe = undefined
 
-    const children = Array.from(node.children)
+    const children = Array.from(node._children)
     const nodeVisibleNew = children.find((child) => {
-      const { condition } = child.control.getSettings()
+      const { condition } = child._getUserSettings()
       return condition ? condition(child) : true
     })
 

@@ -43,7 +43,7 @@ const ScrollList = (): ReactElement => {
             items,
             { opacity: 1 },
             {
-              duration: animator.node.duration.enter,
+              duration: animator.node.settings.duration.enter,
               delay: stagger(staggerTime)
             }
           )
@@ -68,7 +68,11 @@ const ScrollList = (): ReactElement => {
               element.dataset.visible = ''
               observer.unobserve(element)
             })
-            animate(itemsElementsRef.current, { opacity: 0 }, { duration: node.duration.exit })
+            animate(
+              itemsElementsRef.current,
+              { opacity: 0 },
+              { duration: node.settings.duration.exit }
+            )
           }
           break
         }
@@ -108,7 +112,7 @@ const ScrollList = (): ReactElement => {
             style={{
               padding: '0.5rem',
               color: '#fff',
-              backgroundColor: '#555',
+              background: '#555',
               opacity: animator ? 0 : undefined
             }}
           >
@@ -123,7 +127,7 @@ const Sandbox = (): ReactElement => {
   const [active, setActive] = useState(true)
 
   useEffect(() => {
-    const tid = setInterval(() => setActive((active) => !active), 3000)
+    const tid = setInterval(() => setActive((active) => !active), 3_000)
     return () => clearInterval(tid)
   }, [])
 

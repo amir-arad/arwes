@@ -227,7 +227,7 @@ const createBackgroundDots = (props: CreateBackgroundDotsProps): CreateBackgroun
           setup()
           transitionControl?.cancel()
           transitionControl = animate((progress) => draw(true, progress), {
-            duration: node.duration.enter,
+            duration: node.settings.duration.enter,
             easing: settings.easing
           })
           break
@@ -244,7 +244,7 @@ const createBackgroundDots = (props: CreateBackgroundDotsProps): CreateBackgroun
           setup()
           transitionControl?.cancel()
           transitionControl = animate((progress) => draw(false, progress), {
-            duration: node.duration.exit,
+            duration: node.settings.duration.exit,
             easing: settings.easing
           })
           break

@@ -1,3 +1,5 @@
+// TODO: Review this sandbox.
+
 import React, { type ReactElement, useRef, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { type AnimatorNode } from '@arwes/animator'
@@ -52,7 +54,7 @@ const Sandbox = (): ReactElement => {
 
   useEffect(() => {
     const rootNode = rootNodeRef.current as unknown as AnimatorNode
-    const childrenNodes = Array.from(rootNode.children)
+    const childrenNodes = Array.from(rootNode._children)
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -64,7 +66,7 @@ const Sandbox = (): ReactElement => {
           // If the node element is visible, enter only that child node
           // in the parent node manager.
           if (entry.isIntersecting) {
-            rootNode.manager.enterChildren([childNode])
+            rootNode._manager.enterChildren([childNode])
           }
           // Otherwise, directly exit the child node.
           else {

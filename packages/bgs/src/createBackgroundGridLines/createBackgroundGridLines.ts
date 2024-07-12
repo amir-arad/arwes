@@ -144,7 +144,7 @@ const createBackgroundGridLines = (
           transitionControl = animate(
             canvas,
             { opacity: [0, 1] },
-            { duration: node.duration.enter }
+            { duration: node.settings.duration.enter }
           )
           break
         }
@@ -157,7 +157,11 @@ const createBackgroundGridLines = (
         }
 
         case 'exiting': {
-          transitionControl = animate(canvas, { opacity: [1, 0] }, { duration: node.duration.exit })
+          transitionControl = animate(
+            canvas,
+            { opacity: [1, 0] },
+            { duration: node.settings.duration.exit }
+          )
           break
         }
 
