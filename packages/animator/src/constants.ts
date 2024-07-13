@@ -40,7 +40,8 @@ export const ANIMATOR_DEFAULT_DURATION: AnimatorDuration = Object.freeze({
   exit: 0.4,
   delay: 0,
   offset: 0,
-  stagger: 0.04
+  stagger: 0.04,
+  limit: -1
 })
 
 export const ANIMATOR_DEFAULT_SETTINGS: AnimatorSettings = Object.freeze({

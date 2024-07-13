@@ -680,3 +680,5 @@ test('Should create combined parent and transition dynamically updated children 
   expect(child5.node.state).toBe('entered')
   expect(child6.node.state).toBe('entered')
 })
+
+test.todo('Should create combined parent and transition children with staggerLimit')

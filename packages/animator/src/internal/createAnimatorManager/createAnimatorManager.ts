@@ -89,6 +89,7 @@ const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
     const now = Date.now()
     const parentSettings = node._getUserSettings()
     const staggerInMS = parentSettings.duration.stagger * 1_000
+    const limit = parentSettings.duration.limit
 
     for (const child of children) {
       if (timelineCache.has(child)) {
@@ -125,6 +126,10 @@ const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
         }
 
         index++
+      }
+
+      if (limit >= 0) {
+        startTimeInMS = Math.min(startTimeInMS, limit * staggerInMS)
       }
 
       timelineCache.set(child, [now + startTimeInMS, offsetInMS, enterDurationInMS])
@@ -201,6 +206,8 @@ const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
     }
 
     const now = Date.now()
+    const parentSettings = node._getUserSettings()
+    const limit = parentSettings.duration.limit
 
     for (const child of children) {
       if (timelineCache.has(child)) {
@@ -235,6 +242,11 @@ const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
         }
 
         index++
+      }
+
+      if (limit > 0 && timeline.length >= limit) {
+        const [lastItemInTimelineStartTimeInMS] = timeline[limit - 1]
+        startTimeInMS = lastItemInTimelineStartTimeInMS - now
       }
 
       timelineCache.set(child, [now + startTimeInMS, enterDurationInMS])

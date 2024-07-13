@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import React, { type ReactElement, useState, useEffect, useRef, useCallback } from 'react'
+import React, { type ReactElement, useState, useEffect, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import { AnimatorGeneralProvider, Animator, useAnimator } from '@arwes/react-animator'
 import { Animated } from '@arwes/react-animated'
@@ -27,13 +27,15 @@ const List = (): ReactElement => {
       return
     }
 
+    let tid: number
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           const item = entry.target as HTMLDivElement
           item.dataset.visible = String(entry.isIntersecting)
         })
-        setTimeout(() => animator.node.send('refresh'))
+        tid = window.setTimeout(() => animator.node.send('refresh'))
       },
       { root: list, threshold: 0.5 }
     )
@@ -43,6 +45,7 @@ const List = (): ReactElement => {
     items.forEach((item) => observer.observe(item))
 
     return () => {
+      window.clearTimeout(tid)
       observer.disconnect()
     }
   }, [animator])
@@ -68,7 +71,7 @@ const List = (): ReactElement => {
       }}
       hideOnExited={false}
     >
-      {Array(100)
+      {Array(200)
         .fill(null)
         .map((_, index) => (
           <Animator key={index} condition={() => isItemVisible(index)}>
@@ -79,7 +82,9 @@ const List = (): ReactElement => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: '17vw',
-                color: '#fff',
+                fontFamily: 'sans-serif',
+                fontSize: '2rem',
+                color: '#ccc',
                 background: '#555'
               }}
               animated={{
@@ -111,7 +116,7 @@ const Sandbox = (): ReactElement => {
 
   return (
     <AnimatorGeneralProvider duration={{ enter: 1, exit: 1 }}>
-      <Animator active={active} manager="stagger" duration={{ stagger: 0.03 }}>
+      <Animator active={active} manager="stagger" duration={{ stagger: 0.03, limit: 30 }}>
         <List />
       </Animator>
     </AnimatorGeneralProvider>

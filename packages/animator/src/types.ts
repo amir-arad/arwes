@@ -87,6 +87,7 @@ export interface AnimatorDuration {
   delay: number
   offset: number
   stagger: number
+  limit: number
   [duration: string]: number
 }
 
