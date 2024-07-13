@@ -1,7 +1,7 @@
 import { test, expect, beforeEach } from 'vitest'
 
 import { type MoveTimeTo, setupTimers, createMoveTimeTo } from '../../__testUtils__/timers'
-import { createAnimatorInterface } from '../../__testUtils__/nodes'
+import { createAnimator } from '../../__testUtils__/nodes'
 
 setupTimers()
 
@@ -12,7 +12,7 @@ beforeEach(() => {
 })
 
 test('Should create node and transition', async () => {
-  const root = createAnimatorInterface()
+  const root = createAnimator()
   queueMicrotask(() => root.node.send('setup'))
 
   expect(root.node.state).toBe('exited')
@@ -27,7 +27,7 @@ test('Should create node and transition', async () => {
 })
 
 test('Should create node with delay and transition', async () => {
-  const root = createAnimatorInterface(undefined, { duration: { delay: 0.1 } })
+  const root = createAnimator(undefined, { duration: { delay: 0.1 } })
   queueMicrotask(() => root.node.send('setup'))
 
   expect(root.node.state).toBe('exited')

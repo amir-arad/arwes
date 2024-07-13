@@ -31,6 +31,7 @@ test('Should register new root node with predefined structure', () => {
     _parent: undefined,
     _children: expect.any(Set),
     _subscribers: expect.any(Set),
+    _watchers: expect.any(Set),
     _scheduler: expect.any(Object),
     _getUserSettings: expect.any(Function),
     _manager: expect.any(Object),

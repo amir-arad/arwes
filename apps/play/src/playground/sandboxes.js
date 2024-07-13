@@ -194,10 +194,6 @@ export const sandboxes = [
               {
                 name: 'subsystemsTransitions',
                 code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.subsystemsTransitions.sandbox.tsx')
-              },
-              {
-                name: 'scrollList',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.scrollList.sandbox.tsx')
               }
             ]
           },
@@ -676,6 +672,10 @@ export const sandboxes = [
       {
         name: 'alert',
         code: require('!raw-loader?esModule=false!../examples/alert.sandbox.tsx')
+      },
+      {
+        name: 'scrollList',
+        code: require('!raw-loader?esModule=false!../examples/scrollList.sandbox.tsx')
       }
     ]
   }

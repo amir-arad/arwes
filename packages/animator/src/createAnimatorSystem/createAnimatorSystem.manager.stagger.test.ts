@@ -1,7 +1,7 @@
 import { test, expect, beforeEach } from 'vitest'
 
 import { type MoveTimeTo, setupTimers, createMoveTimeTo } from '../../__testUtils__/timers'
-import { createAnimatorInterface } from '../../__testUtils__/nodes'
+import { createAnimator } from '../../__testUtils__/nodes'
 
 setupTimers()
 
@@ -12,10 +12,10 @@ beforeEach(() => {
 })
 
 test('Should create parent and transition children', async () => {
-  const parent = createAnimatorInterface(undefined, { manager: 'stagger' })
-  const child1 = createAnimatorInterface(parent)
-  const child2 = createAnimatorInterface(parent)
-  const child3 = createAnimatorInterface(parent)
+  const parent = createAnimator(undefined, { manager: 'stagger' })
+  const child1 = createAnimator(parent)
+  const child2 = createAnimator(parent)
+  const child3 = createAnimator(parent)
   queueMicrotask(() => child3.node.send('setup'))
   queueMicrotask(() => child2.node.send('setup'))
   queueMicrotask(() => child1.node.send('setup'))
@@ -98,10 +98,10 @@ test('Should create parent and transition children', async () => {
 })
 
 test('Should create parent with staggerReverse and transition children', async () => {
-  const parent = createAnimatorInterface(undefined, { manager: 'staggerReverse' })
-  const child1 = createAnimatorInterface(parent)
-  const child2 = createAnimatorInterface(parent)
-  const child3 = createAnimatorInterface(parent)
+  const parent = createAnimator(undefined, { manager: 'staggerReverse' })
+  const child1 = createAnimator(parent)
+  const child2 = createAnimator(parent)
+  const child3 = createAnimator(parent)
   queueMicrotask(() => child3.node.send('setup'))
   queueMicrotask(() => child2.node.send('setup'))
   queueMicrotask(() => child1.node.send('setup'))
@@ -184,10 +184,10 @@ test('Should create parent with staggerReverse and transition children', async (
 })
 
 test('Should create combined parent and transition children', async () => {
-  const parent = createAnimatorInterface(undefined, { combine: true, manager: 'stagger' })
-  const child1 = createAnimatorInterface(parent)
-  const child2 = createAnimatorInterface(parent)
-  const child3 = createAnimatorInterface(parent)
+  const parent = createAnimator(undefined, { combine: true, manager: 'stagger' })
+  const child1 = createAnimator(parent)
+  const child2 = createAnimator(parent)
+  const child3 = createAnimator(parent)
   queueMicrotask(() => child3.node.send('setup'))
   queueMicrotask(() => child2.node.send('setup'))
   queueMicrotask(() => child1.node.send('setup'))
@@ -265,15 +265,15 @@ test('Should create combined parent and transition children', async () => {
 })
 
 test('Should create combined node and transition children with custom durations', async () => {
-  const parent = createAnimatorInterface(undefined, {
+  const parent = createAnimator(undefined, {
     active: false,
     combine: true,
     manager: 'stagger'
   })
-  const child1 = createAnimatorInterface(parent, { duration: { enter: 0.2 } })
-  const child2 = createAnimatorInterface(parent, { duration: { offset: 0.1 } })
-  const child3 = createAnimatorInterface(parent, { duration: { enter: 0.1, delay: 0.05 } })
-  const child4 = createAnimatorInterface(parent, { duration: { enter: 0.05 } })
+  const child1 = createAnimator(parent, { duration: { enter: 0.2 } })
+  const child2 = createAnimator(parent, { duration: { offset: 0.1 } })
+  const child3 = createAnimator(parent, { duration: { enter: 0.1, delay: 0.05 } })
+  const child4 = createAnimator(parent, { duration: { enter: 0.05 } })
   queueMicrotask(() => child4.node.send('setup'))
   queueMicrotask(() => child3.node.send('setup'))
   queueMicrotask(() => child2.node.send('setup'))
@@ -292,7 +292,7 @@ test('Should create combined node and transition children with custom durations'
   expect(child3.node.state).toBe('exited')
   expect(child4.node.state).toBe('exited')
 
-  parent.node.control.setDynamicSettings({ active: true })
+  parent.node.control.setSettings({ active: true })
   parent.node.send('update')
 
   moveTimeTo(1)

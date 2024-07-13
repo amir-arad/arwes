@@ -43,6 +43,7 @@ export type AnimatorManagerName =
   | 'switch'
 
 export type AnimatorSubscriber = (node: AnimatorNode) => void
+export type AnimatorWatcher = (node: AnimatorNode) => void
 
 export interface AnimatorManager {
   readonly name: AnimatorManagerName
@@ -55,6 +56,7 @@ export interface AnimatorNode {
   readonly _parent?: AnimatorNode
   readonly _children: Set<AnimatorNode>
   readonly _subscribers: Set<AnimatorSubscriber>
+  readonly _watchers: Set<AnimatorWatcher>
   readonly _scheduler: TOScheduler
   readonly _getUserSettings: () => AnimatorSettings
   _manager: AnimatorManager

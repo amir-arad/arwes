@@ -91,7 +91,8 @@ const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
 }
 
 const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
-  let reservedUntilTimeMS = 0
+  // [startTimeInMilliseconds, enterDurationInMilliseconds]
+  const timelineCache = new Map<AnimatorNode, [number, number]>()
 
   const getDurationEnter = (childrenProvided?: AnimatorNode[]): number => {
     let children = childrenProvided || Array.from(node._children)
@@ -119,31 +120,80 @@ const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
   const enterChildren = (childrenProvided: AnimatorNode[]): void => {
     let children = childrenProvided || Array.from(node._children)
 
+    if (!children.length) {
+      return
+    }
+
     if (name === MANAGERS.sequenceReverse) {
       children = [...children].reverse()
     }
 
     const now = Date.now()
 
-    reservedUntilTimeMS = Math.max(reservedUntilTimeMS, now)
-
     for (const child of children) {
-      const duration = child.settings.duration
-      const offsetMS = (duration.offset || 0) * 1_000 // seconds to ms
-      const enterMS = duration.enter * 1_000 // seconds to ms
-      const delay = duration.delay || 0
+      const isChildAlreadyEntering = Array.from(timelineCache)
+        .map(([timelineChild]) => timelineChild)
+        .includes(child)
 
-      reservedUntilTimeMS = reservedUntilTimeMS + offsetMS
+      if (isChildAlreadyEntering) {
+        continue
+      }
 
-      const time = (reservedUntilTimeMS - now) / 1_000 // ms to seconds
+      const { duration } = child.settings
+      const enterDurationInMS = duration.enter * 1_000 + duration.offset * 1_000
 
-      reservedUntilTimeMS += enterMS
+      const timeline = Array.from(timelineCache)
+        .map(([, durations]) => durations)
+        .filter(([startTime, enterDuration]) => startTime + enterDuration >= now)
+        .sort((a, b) => a[0] - b[0]) // Order ascendingly.
 
-      child._scheduler.start(time + delay, () => child.send(ACTIONS.enter))
+      let startTimeInMS = 0
+      let index = 0
+
+      for (const timelineItem of timeline) {
+        const itemStartTime = timelineItem[0]
+        const itemEnterDuration = timelineItem[1]
+        const itemEndTime = itemStartTime + itemEnterDuration
+        if (index === timeline.length - 1) {
+          startTimeInMS = Math.max(0, itemEndTime - now)
+          break
+        }
+        const nextItem = timeline[index + 1]
+        const nextItemStartTime = nextItem[0]
+
+        if (nextItemStartTime - itemEndTime >= enterDurationInMS) {
+          startTimeInMS = Math.max(0, itemEndTime - now)
+          break
+        }
+        index++
+      }
+
+      timelineCache.set(child, [now + startTimeInMS, enterDurationInMS])
+
+      const onRemove = (): void => {
+        timelineCache.delete(child)
+      }
+      const onTransition = (): void => {
+        if (child.state !== STATES.entering) {
+          onRemove()
+          child._watchers.delete(onRemove)
+          child._subscribers.delete(onTransition)
+        }
+      }
+
+      child._watchers.add(onRemove)
+      child._subscribers.add(onTransition)
+
+      const scheduleTime = startTimeInMS / 1_000 + duration.offset + duration.delay
+      child._scheduler.start(scheduleTime, () => child.send(ACTIONS.enter))
     }
   }
 
-  return Object.freeze({ name, getDurationEnter, enterChildren })
+  const destroy = (): void => {
+    timelineCache.clear()
+  }
+
+  return Object.freeze({ name, getDurationEnter, enterChildren, destroy })
 }
 
 const createAnimatorManagerSwitch: AnimatorManagerCreator = (node) => {

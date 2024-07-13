@@ -1,11 +1,8 @@
-// This sandbox does not support dynamic list items rendering,
-// and does not provide component clean up for list items animations.
-
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { type ReactElement, useState, useRef, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { animate, stagger } from 'motion'
+import { type AnimationControls, animate, stagger } from 'motion'
 import { Animator, useAnimator } from '@arwes/react-animator'
-import { Animated, fade } from '@arwes/react-animated'
 
 const ScrollList = (): ReactElement => {
   const listElementRef = useRef<HTMLDivElement>(null)
@@ -19,6 +16,8 @@ const ScrollList = (): ReactElement => {
       return
     }
 
+    const animations = new Set<AnimationControls>()
+
     const observer = new window.IntersectionObserver(
       (entries) => {
         const items = [...entries]
@@ -27,27 +26,35 @@ const ScrollList = (): ReactElement => {
           .filter((target) => !target.dataset.visible)
           .sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index))
 
-        if (items.length) {
-          const staggerDelay = 0.025
-          const staggerMaxItems = 30
-          const staggerTime = Math.min(
-            staggerDelay,
-            staggerDelay * (1 / (items.length / staggerMaxItems))
-          )
-
-          items.forEach((item) => {
-            item.dataset.visible = 'true'
-          })
-
-          animate(
-            items,
-            { opacity: 1 },
-            {
-              duration: animator.node.settings.duration.enter,
-              delay: stagger(staggerTime)
-            }
-          )
+        if (!items.length) {
+          return
         }
+
+        const { duration } = animator.node.settings
+        const staggerDelay = duration.stagger
+        const staggerMaxItems = duration.staggerMaxItems ?? 30
+        const staggerTime = Math.min(
+          staggerDelay,
+          staggerDelay * (1 / (items.length / staggerMaxItems))
+        )
+
+        items.forEach((item) => {
+          item.dataset.visible = 'true'
+        })
+
+        const animation = animate(
+          items,
+          { opacity: 1 },
+          {
+            duration: duration.enter,
+            delay: stagger(staggerTime)
+          }
+        )
+
+        animations.add(animation)
+        animation.finished.then(() => {
+          animations.delete(animation)
+        })
       },
       {
         root: listElement,
@@ -68,11 +75,15 @@ const ScrollList = (): ReactElement => {
               element.dataset.visible = ''
               observer.unobserve(element)
             })
-            animate(
+            const animation = animate(
               itemsElementsRef.current,
-              { opacity: 0 },
+              { opacity: 0.2 },
               { duration: node.settings.duration.exit }
             )
+            animations.add(animation)
+            animation.finished.then(() => {
+              animations.delete(animation)
+            })
           }
           break
         }
@@ -80,13 +91,15 @@ const ScrollList = (): ReactElement => {
     })
 
     return () => {
+      animations.forEach((animation) => animation.cancel())
+      animations.clear()
       unsubscribe()
       observer.disconnect()
     }
   }, [animator])
 
   return (
-    <Animated
+    <div
       ref={listElementRef}
       style={{
         display: 'grid',
@@ -96,7 +109,6 @@ const ScrollList = (): ReactElement => {
         width: 300,
         height: 300
       }}
-      animated={fade()}
     >
       {Array(100)
         .fill(null)
@@ -109,17 +121,19 @@ const ScrollList = (): ReactElement => {
               }
             }}
             data-index={index}
+            data-visible=""
             style={{
               padding: '0.5rem',
+              textAlign: 'center',
               color: '#fff',
               background: '#555',
-              opacity: animator ? 0 : undefined
+              opacity: 0.2
             }}
           >
             {index}
           </div>
         ))}
-    </Animated>
+    </div>
   )
 }
 
@@ -132,7 +146,11 @@ const Sandbox = (): ReactElement => {
   }, [])
 
   return (
-    <Animator active={active}>
+    <Animator active={active} duration={{ enter: 1, exit: 1, stagger: 0.03, staggerMaxItems: 30 }}>
+      <div style={{ color: active ? '#0ff' : '#077', marginBottom: 20 }}>
+        {active ? 'Active' : 'Inactive'}
+      </div>
+
       <ScrollList />
     </Animator>
   )

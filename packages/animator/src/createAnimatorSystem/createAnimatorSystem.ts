@@ -3,6 +3,7 @@ import { createTOScheduler, filterProps } from '@arwes/tools'
 import type {
   AnimatorControl,
   AnimatorSubscriber,
+  AnimatorWatcher,
   AnimatorNode,
   AnimatorSystem,
   AnimatorSettings
@@ -51,6 +52,10 @@ const createAnimatorSystem = (): AnimatorSystem => {
         value: new Set<AnimatorSubscriber>(),
         enumerable: true
       },
+      _watchers: {
+        value: new Set<AnimatorWatcher>(),
+        enumerable: true
+      },
       _scheduler: {
         value: createTOScheduler(),
         enumerable: true
@@ -90,9 +95,14 @@ const createAnimatorSystem = (): AnimatorSystem => {
       settings: {
         get: (): AnimatorSettings => {
           const settings = node._getUserSettings()
-          const enter = settings.combine
-            ? node._manager.getDurationEnter()
-            : settings.duration.enter
+          let enter = settings.duration.enter
+          if (settings.combine) {
+            const children = Array.from(node._children).filter((child) => {
+              const { condition } = child._getUserSettings()
+              return condition ? condition(child) : true
+            })
+            enter = node._manager.getDurationEnter(children)
+          }
           return { ...settings, duration: { ...settings.duration, enter } }
         },
         enumerable: true
@@ -139,6 +149,7 @@ const createAnimatorSystem = (): AnimatorSystem => {
 
     node._children.clear()
     node._subscribers.clear()
+    node._watchers.clear()
   }
 
   const register = (
@@ -169,6 +180,10 @@ const createAnimatorSystem = (): AnimatorSystem => {
   const unregister = (node: AnimatorNode): void => {
     if (!root) {
       return
+    }
+
+    for (const watcher of node._watchers) {
+      watcher(node)
     }
 
     removeNode(node)

@@ -100,7 +100,7 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
       }
       onClose={close}
     >
-      <Animator manager="switch" checkToSend={[nav]}>
+      <Animator manager="switch" refreshOn={[nav]}>
         {/* TODO: Create configurable navigation items builder.
             Currently, it only works with a defined set of items. */}
         <div className={classes.links}>

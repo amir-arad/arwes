@@ -126,9 +126,11 @@ createAnimated(child3Element, child3.node)
 // Schedule animators setup.
 //
 
-queueMicrotask(() => child3.node.send('setup'))
-queueMicrotask(() => child2.node.send('setup'))
+// Level 1 elements.
 queueMicrotask(() => child1.node.send('setup'))
+queueMicrotask(() => child2.node.send('setup'))
+queueMicrotask(() => child3.node.send('setup'))
+// Level 0 elements.
 queueMicrotask(() => parent.node.send('setup'))
 
 //
