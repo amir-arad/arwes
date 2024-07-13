@@ -23,9 +23,21 @@ const createAnimatorManagerParallel: AnimatorManagerCreator = (node) => {
     }
   }
 
+  const exitChildren = (children: AnimatorNode[]): void => {
+    for (const child of children) {
+      child._scheduler.start(0, () => child.send(ACTIONS.exit))
+    }
+  }
+
   const destroy = (): void => {}
 
-  return Object.freeze({ name: MANAGERS.parallel, getDurationEnter, enterChildren, destroy })
+  return Object.freeze({
+    name: MANAGERS.parallel,
+    getDurationEnter,
+    enterChildren,
+    exitChildren,
+    destroy
+  })
 }
 
 const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
@@ -136,11 +148,18 @@ const createAnimatorManagerStagger: AnimatorManagerCreator = (node, name) => {
     }
   }
 
+  const exitChildren = (children: AnimatorNode[]): void => {
+    for (const child of children) {
+      timelineCache.delete(child)
+      child._scheduler.start(0, () => child.send(ACTIONS.exit))
+    }
+  }
+
   const destroy = (): void => {
     timelineCache.clear()
   }
 
-  return Object.freeze({ name, getDurationEnter, enterChildren, destroy })
+  return Object.freeze({ name, getDurationEnter, enterChildren, exitChildren, destroy })
 }
 
 const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
@@ -239,11 +258,18 @@ const createAnimatorManagerSequence: AnimatorManagerCreator = (node, name) => {
     }
   }
 
+  const exitChildren = (children: AnimatorNode[]): void => {
+    for (const child of children) {
+      timelineCache.delete(child)
+      child._scheduler.start(0, () => child.send(ACTIONS.exit))
+    }
+  }
+
   const destroy = (): void => {
     timelineCache.clear()
   }
 
-  return Object.freeze({ name, getDurationEnter, enterChildren, destroy })
+  return Object.freeze({ name, getDurationEnter, enterChildren, exitChildren, destroy })
 }
 
 const createAnimatorManagerSwitch: AnimatorManagerCreator = (node) => {
@@ -321,6 +347,12 @@ const createAnimatorManagerSwitch: AnimatorManagerCreator = (node) => {
       .forEach((child) => child.send(ACTIONS.exit))
   }
 
+  const exitChildren = (children: AnimatorNode[]): void => {
+    for (const child of children) {
+      child._scheduler.start(0, () => child.send(ACTIONS.exit))
+    }
+  }
+
   const destroy = (): void => {
     nodeHiding = undefined
     nodeVisible = undefined
@@ -329,7 +361,13 @@ const createAnimatorManagerSwitch: AnimatorManagerCreator = (node) => {
     nodeSubscriberUnsubscribe = undefined
   }
 
-  return Object.freeze({ name: MANAGERS.switch, getDurationEnter, enterChildren, destroy })
+  return Object.freeze({
+    name: MANAGERS.switch,
+    getDurationEnter,
+    enterChildren,
+    exitChildren,
+    destroy
+  })
 }
 
 const createAnimatorManager = (

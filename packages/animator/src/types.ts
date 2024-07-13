@@ -49,6 +49,7 @@ export interface AnimatorManager {
   readonly name: AnimatorManagerName
   readonly getDurationEnter: (childrenNodes?: AnimatorNode[]) => number
   readonly enterChildren: (childrenNodes: AnimatorNode[]) => void
+  readonly exitChildren: (childrenNodes: AnimatorNode[]) => void
   readonly destroy: () => void
 }
 

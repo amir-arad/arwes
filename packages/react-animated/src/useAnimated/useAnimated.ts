@@ -1,6 +1,5 @@
 import { type MutableRefObject, useRef, useEffect } from 'react'
 import { animate } from 'motion'
-import type { AnimationOptionsWithOverrides } from '@motionone/dom'
 import { filterProps } from '@arwes/tools'
 import type { AnimatorNode } from '@arwes/animator'
 import { useAnimator } from '@arwes/react-animator'
@@ -125,7 +124,7 @@ const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
               repeat,
               direction,
               ...options
-            } as unknown as AnimationOptionsWithOverrides)
+            })
 
             animationsRef.current.add(animation)
 

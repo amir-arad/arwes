@@ -138,14 +138,7 @@ const createAnimatorMachine = (
     [STATES.exiting]: {
       onEntry: {
         execute: () => {
-          Array.from(node._children).forEach((child) => {
-            if (child.state === STATES.entering || child.state === STATES.entered) {
-              child.send(ACTIONS.exit)
-            } else if (child.state === STATES.exited) {
-              child._scheduler.stopAll()
-            }
-            // If the child is EXITING, it will go to EXITED soon.
-          })
+          node._manager.exitChildren(Array.from(node._children))
         },
 
         schedule: () => ({
@@ -199,8 +192,6 @@ const createAnimatorMachine = (
             settings: child._getUserSettings()
           }))
 
-          // Exit the applicable children inmediately by sending the exit action right away,
-          // and then enter the applicable children asynchronously with `node._manager.enterChildren()`.
           if (node.state === STATES.entering || node.state === STATES.entered) {
             const childrenInEnterToExit = childrenWithSettings
               .filter(
@@ -229,8 +220,7 @@ const createAnimatorMachine = (
               })
               .map((child) => child.node)
 
-            childrenInEnterToExit.forEach((child) => child.send(ACTIONS.exit))
-
+            node._manager.exitChildren(childrenInEnterToExit)
             node._manager.enterChildren(childrenInExitToEnter)
           }
         }
