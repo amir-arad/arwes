@@ -308,7 +308,7 @@ test('Should create combined parent and transition children with custom duration
   expect(child4.node.state).toBe('entered')
 })
 
-test('Should create combined parent and transition dynamically updating children', async () => {
+test('Should create combined parent and transition dynamically updated children', async () => {
   const parent = createAnimator(undefined, { combine: true, manager: 'sequence' })
   const child1 = createAnimator(parent)
   const child2 = createAnimator(parent)
@@ -409,7 +409,7 @@ test('Should create combined parent and transition dynamically updating children
   expect(child6.node.state).toBe('entered')
 })
 
-test('Should create combined parent and transition dynamically updating children with refresh event', () => {
+test('Should create combined parent and transition dynamically updated children with refresh event', () => {
   const parent = createAnimator(undefined, { combine: true, manager: 'sequence' })
   const child1 = createAnimator(parent, { duration: { enter: 1 } })
   const child2 = createAnimator(parent, { duration: { enter: 1 } })
@@ -438,6 +438,7 @@ test('Should create combined parent and transition dynamically updating children
   expect(child3.node.state).toBe('exited')
   expect(child4.node.state).toBe('exited')
   expect(child5.node.state).toBe('exited')
+
   child4.node.control.setSettings({ condition: () => true })
   queueMicrotask(() => parent.node.send('refresh'))
 
