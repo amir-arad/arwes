@@ -3,6 +3,7 @@ import React, { type ReactElement, useState, useEffect, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import { AnimatorGeneralProvider, Animator, useAnimator } from '@arwes/react-animator'
 import { Animated } from '@arwes/react-animated'
+import { createFrameOctagonClip } from '@arwes/frames'
 
 const List = (): ReactElement => {
   const animator = useAnimator()
@@ -66,7 +67,7 @@ const List = (): ReactElement => {
       animated={{
         transitions: {
           entering: { background: 'hsl(180 50% 10%)', duration: 0.001 },
-          exiting: { background: 'hsl(180 50% 5%)', duration: 0.001 }
+          exiting: { background: 'hsl(180 50% 3%)', duration: 0.001 }
         }
       }}
       hideOnExited={false}
@@ -82,10 +83,11 @@ const List = (): ReactElement => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: '17vw',
-                fontFamily: 'sans-serif',
-                fontSize: '2rem',
-                color: '#ccc',
-                background: '#555'
+                fontFamily: 'Titillium Web',
+                fontSize: '1.25rem',
+                color: 'hsl(180 100% 40%)',
+                background: 'hsl(180 50% 20%)',
+                clipPath: createFrameOctagonClip({ squareSize: '0.5rem' })
               }}
               animated={{
                 initialStyle: { opacity: 0.2 },
