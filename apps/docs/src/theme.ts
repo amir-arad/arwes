@@ -322,7 +322,7 @@ const theme = createAppTheme({
       cta: '"Titillium Web","Segoe UI Web (West European)","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif',
       input:
         '"Titillium Web","Segoe UI Web (West European)","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif',
-      code: 'JetBrains Mono,Menlo,Monaco,Consolas,Courier New,monospace'
+      code: '"Source Code Pro",JetBrains Mono,Menlo,Monaco,Consolas,Courier New,monospace'
     }
   }
 })

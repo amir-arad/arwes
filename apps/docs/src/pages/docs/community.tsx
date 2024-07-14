@@ -1,6 +1,5 @@
 import { type ReactElement } from 'react'
 import { Animator, Animated, Text, BleepsOnAnimator, transition, flicker } from '@arwes/react'
-import { FastArrowRight } from 'iconoir-react'
 import communityApps from '@repository/static/assets/community/apps/apps.json'
 import type { BleepNames } from '@app/types'
 import { PageContentLayout, Card } from '@app/ui'
@@ -61,13 +60,6 @@ const Page = (): ReactElement => {
             </header>
 
             <section>
-              <Animator>
-                <Text as="h2" fixed>
-                  <FastArrowRight className="heading-icon" />
-                  <span> Applications</span>
-                </Text>
-              </Animator>
-
               <Animator combine manager="stagger">
                 <div className="grid">
                   {communityApps.map((app, index) => (
@@ -98,30 +90,6 @@ const Page = (): ReactElement => {
                     </Animator>
                   ))}
                 </div>
-              </Animator>
-            </section>
-
-            <section>
-              <Animator>
-                <Text as="h2" fixed>
-                  <FastArrowRight className="heading-icon" />
-                  <span> Contributors</span>
-                </Text>
-              </Animator>
-              <Animator>
-                <Text>To be done.</Text>
-              </Animator>
-            </section>
-
-            <section>
-              <Animator>
-                <Text as="h2" fixed>
-                  <FastArrowRight className="heading-icon" />
-                  <span> Similars</span>
-                </Text>
-              </Animator>
-              <Animator>
-                <Text>To be done.</Text>
               </Animator>
             </section>
           </div>

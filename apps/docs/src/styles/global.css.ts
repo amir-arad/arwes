@@ -47,7 +47,7 @@ const createAppStylesBaseline = (theme: Theme): Record<string, CSSProperties> =>
       fontSize: '100%',
       fontStyle: 'normal',
       fontWeight: 400,
-      lineHeight: '1.5',
+      lineHeight: '1.6',
       color: colors.primary.text(dark ? 2 : 7),
       ...typographyMainStyles,
 
@@ -116,6 +116,10 @@ const createAppStylesBaseline = (theme: Theme): Record<string, CSSProperties> =>
     h4: typography.title(3),
     h5: typography.title(4),
     h6: typography.title(5),
+
+    p: {
+      fontSize: '1rem'
+    },
 
     'b, strong': {
       fontWeight: 'bolder'

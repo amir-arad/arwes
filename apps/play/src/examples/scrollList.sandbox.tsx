@@ -83,7 +83,7 @@ const List = (): ReactElement => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: '17vw',
-                fontFamily: 'Titillium Web',
+                fontFamily: 'Tomorrow',
                 fontSize: '1.25rem',
                 color: 'hsl(180 100% 40%)',
                 background: 'hsl(180 50% 20%)',

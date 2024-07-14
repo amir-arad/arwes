@@ -150,12 +150,12 @@ const ModalContent = (props: ModalContentProps): ReactElement => {
               Docs
             </NavLink>
             <NavLink
-              href="/samples"
-              active={url.startsWith('/samples')}
+              href="/demos"
+              active={url.startsWith('/demos')}
               animated={transition('x', '-1rem', 0)}
               onClose={close}
             >
-              Samples
+              Demos
             </NavLink>
             <NavLink
               href="/play"

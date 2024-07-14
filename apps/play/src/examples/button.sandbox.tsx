@@ -43,7 +43,7 @@ const theme = {
     secondary: createThemeColor((i) => [60, 100, 100 - i * 10])
   },
 
-  fontFamily: 'Titillium Web'
+  fontFamily: 'Tomorrow'
 }
 
 addStyles(`

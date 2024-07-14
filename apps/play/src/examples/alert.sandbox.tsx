@@ -43,7 +43,7 @@ const theme = {
     secondary: createThemeColor((i) => [60, 100, 100 - i * 10])
   },
 
-  fontFamily: 'Titillium Web'
+  fontFamily: 'Tomorrow'
 }
 
 addStyles(`
@@ -302,7 +302,7 @@ const Sandbox = (): ReactElement => {
               </Animator>
 
               <Animator duration={{ offset: 0.8 }}>
-                <Animated as="h1" animated={[flicker(), transition('y', 20, 0)]}>
+                <Animated as="h1" animated={[flicker(), transition('y', 20, 0, 0)]}>
                   Futuristic Sci-Fi UI Web Framework
                 </Animated>
               </Animator>
@@ -406,13 +406,16 @@ addStyles(`
   .page h1 {
     line-height: 1;
     font-size: 1.5rem;
-    font-weight: normal;
+    font-weight: 300;
     font-family: inherit;
     color: ${theme.colors.primary(6)};
   }
 
   .page p {
+    line-height: 1.6;
+    text-wrap: pretty;
     font-size: 1rem;
+    font-weight: 400;
     color: ${theme.colors.primary(7)};
   }
 `)

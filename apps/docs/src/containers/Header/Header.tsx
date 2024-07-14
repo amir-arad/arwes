@@ -76,11 +76,11 @@ const Header = (props: HeaderProps): ReactElement => {
                   <Animator>
                     <MenuItem
                       className={cx(classes.menuItem, hiddenSMDown)}
-                      active={router.asPath.startsWith('/samples')}
+                      active={router.asPath.startsWith('/demos')}
                       animated={leftItemAnimation}
                     >
-                      <Link href="/samples" title="Go to Samples">
-                        <CollageFrame /> <span className={hiddenXLDown}>Samples</span>
+                      <Link href="/demos" title="Go to Demos">
+                        <CollageFrame /> <span className={hiddenXLDown}>Demos</span>
                       </Link>
                     </MenuItem>
                   </Animator>

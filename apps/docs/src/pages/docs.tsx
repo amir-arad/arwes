@@ -82,7 +82,7 @@ const Page = (): ReactElement => {
             </a>
             <a href="https://discord.gg/s5sbTkw" target="_blank">
               <img
-                src="https://img.shields.io/badge/Discord-Join_Us?style=flat-square&logo=discord&logoColor=%2356F&color=%23505050"
+                src="https://img.shields.io/discord/457381046497968128?color=5865F2&logo=discord&logoColor=white&style=flat-square"
                 alt="Discord"
               />
             </a>

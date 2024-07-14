@@ -5,6 +5,7 @@ import { Animator, Animated, flicker, transition, BleepsOnAnimator } from '@arwe
 import type { BleepNames } from '@app/types'
 import { Button } from '@app/ui'
 import { hiddenSMDown } from '@app/styles'
+import { theme } from '../theme'
 
 const PageIndex = (): ReactElement => {
   return (
@@ -94,6 +95,7 @@ const PageIndex = (): ReactElement => {
               <Animated
                 as="h2"
                 className="subtitle"
+                style={{ fontFamily: theme.fontFamilies.body }}
                 animated={[flicker(), transition('scaleX', 1, 1)]}
               >
                 Futuristic Sci-Fi UI Web Framework
@@ -111,10 +113,10 @@ const PageIndex = (): ReactElement => {
                   </Link>
                 </Animated>
                 <Animated className="nav-item" animated={[flicker(), transition('x', -12, 0)]}>
-                  <Link href="/samples">
-                    <Button size="small" tabIndex={-1} title="Go to Samples">
+                  <Link href="/demos">
+                    <Button size="small" tabIndex={-1} title="Go to Demos">
                       <CollageFrame className={hiddenSMDown} />
-                      <span>Samples</span>
+                      <span>Demos</span>
                     </Button>
                   </Link>
                 </Animated>

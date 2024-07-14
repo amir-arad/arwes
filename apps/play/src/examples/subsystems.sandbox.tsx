@@ -23,7 +23,7 @@ const Link = (props: LinkProps): ReactElement => {
         justifyContent: 'center',
         alignItems: 'center',
         background: active ? bgActive : bg,
-        fontFamily: 'Titillium Web',
+        fontFamily: 'Tomorrow',
         cursor: 'pointer',
         transition: 'background 200ms ease-out'
       }}

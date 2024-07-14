@@ -28,7 +28,7 @@
     <img src="https://img.shields.io/twitter/follow/arwesjs?style=social" alt="Follow on X" />
   </a>
   <a href="https://discord.gg/s5sbTkw">
-    <img src="https://img.shields.io/badge/Discord-Join_Us?style=flat-square&logo=discord&logoColor=%2356F&color=%23505050" alt="Discord" />
+    <img src="https://img.shields.io/discord/457381046497968128?color=5865F2&logo=discord&logoColor=white&style=flat-square" alt="Discord" />
   </a>
   <a href="https://github.com/arwes/arwes/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/arwes/arwes.svg?maxAge=2592000&style=flat-square" alt="License" />

@@ -1,5 +1,6 @@
 import { style, globalStyle } from '@vanilla-extract/css'
 import { createFrameOctagonClip } from '@arwes/react'
+import { theme } from '../../theme'
 
 export const root = style({
   position: 'relative',
@@ -12,7 +13,7 @@ export const root = style({
   height: '24px',
   lineHeight: '24px',
   fontSize: 12,
-  fontFamily: "'Titillium Web', sans-serif",
+  fontFamily: theme.fontFamilies.cta,
   fontWeight: '400',
   textTransform: 'uppercase',
   textDecoration: 'none',

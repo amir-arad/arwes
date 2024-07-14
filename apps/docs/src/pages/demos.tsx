@@ -16,7 +16,6 @@ import type { BleepNames } from '@app/types'
 const Frame = (): ReactElement => {
   const svgRef = useRef<SVGSVGElement | null>(null)
   useFrameSVGAssembler(svgRef)
-
   return <FrameSVGLines className="frame" elementRef={svgRef} smallLineWidth={3} positioned />
 }
 
@@ -94,12 +93,12 @@ const Page = (): ReactElement => {
                 ]}
               >
                 <DroneXmark role="presentation" className="icon" />
-                <h1 className="title">Samples</h1>
+                <h1 className="title">Demos</h1>
               </Animated>
             </Animator>
             <Animator duration={{ delay: 0.4 }}>
               <Text className="description" fixed>
-                The framework samples are under specification.
+                The framework demos are under development.
               </Text>
             </Animator>
           </Animated>
