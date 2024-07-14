@@ -45,7 +45,6 @@
   },
   "dependencies": {
     "@arwes/frames": "^1.0.0-next.24061301",
-    "@arwes/react-animator": "^1.0.0-next.24061301",
     "@arwes/react-tools": "^1.0.0-next.24061301",
     "@arwes/tools": "^1.0.0-next.24061301",
     "tslib": "2"

@@ -1,7 +1,8 @@
 import React, { type ReactElement, useRef, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Animator } from '@arwes/react-animator'
-import { FrameSVGKranox, useFrameSVGAssembler } from '@arwes/react-frames'
+import { FrameSVGKranox } from '@arwes/react-frames'
+import { useFrameSVGAssembler } from '@arwes/react-core'
 
 const Frame = (): ReactElement => {
   const frameRef = useRef<SVGSVGElement>(null)

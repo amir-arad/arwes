@@ -1,5 +1,4 @@
 export * from './useFrameSVGRenderer/index.js'
-export * from './useFrameSVGAssembler/index.js'
 export * from './FrameSVG/index.js'
 export * from './FrameSVGOctagon/index.js'
 export * from './FrameSVGUnderline/index.js'
