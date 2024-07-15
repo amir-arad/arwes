@@ -1,6 +1,6 @@
 {
   "name": "@arwes/react-bleeps",
-  "version": "1.0.0-next.24061301",
+  "version": "1.0.0-next.24071501",
   "publishConfig": {
     "access": "public"
   },
@@ -43,8 +43,8 @@
     "react": "18"
   },
   "dependencies": {
-    "@arwes/bleeps": "^1.0.0-next.24061301",
-    "@arwes/react-tools": "^1.0.0-next.24061301",
+    "@arwes/bleeps": "^1.0.0-next.24071501",
+    "@arwes/react-tools": "^1.0.0-next.24071501",
     "tslib": "2"
   },
   "scripts": {
