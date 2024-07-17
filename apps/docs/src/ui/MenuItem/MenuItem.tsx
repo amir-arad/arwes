@@ -1,32 +1,59 @@
-import { type ReactElement, type ReactNode } from 'react'
-import { type AnimatedProp, Animated, cx, useBleeps } from '@arwes/react'
+import React, { type HTMLAttributes, type ReactNode } from 'react'
+import { type AnimatedProp, Animated, cx, memo, useBleeps } from '@arwes/react'
 
-import type { BleepNames } from '@app/types'
-import * as classes from './MenuItem.css'
+import { type BleepNames } from '@/config'
+import styles from './MenuItem.module.css'
 
-interface MenuItemProps {
+interface MenuProps extends HTMLAttributes<HTMLDivElement> {
   className?: string
   animated?: AnimatedProp
   active?: boolean
-  children?: ReactNode
+  children: ReactNode
 }
 
-const MenuItem = (props: MenuItemProps): ReactElement => {
-  const { className, animated, active, children } = props
+const MenuItem = memo((props: MenuProps): JSX.Element => {
+  const { className, animated, children, active, ...otherProps } = props
 
   const bleeps = useBleeps<BleepNames>()
 
   return (
     <Animated
+      {...otherProps}
       as="li"
-      className={cx(classes.root, active && classes.active, className)}
+      className={cx(
+        'relative',
+        'flex flex-row justify-center items-center gap-2',
+        'h-full',
+        'text-size-8',
+        'transition-[color] duration-200 ease-out',
+        !!active && 'text-secondary-main-4 hover:text-secondary-high-2',
+        !active && 'text-primary-main-4 hover:text-primary-high-2',
+        // bottom line background
+        !!active &&
+          cx(
+            'before:absolute before:origin-center before:inset-x-0 before:bottom-0 before:border-t',
+            'before:transition-[transform,opacity] before:duration-200 before:ease-out',
+            'before:border-t-current before:opacity-80',
+            'hover:before:opacity-60'
+          ),
+        // bottom line
+        'after:absolute after:origin-center after:inset-x-0 after:bottom-0 after:scale-x-[0] after:border-t',
+        'after:transition-[transform,opacity] after:duration-200 after:ease-out',
+        'after:border-t-current',
+        'hover:after:scale-x-[1]',
+        //
+        styles.root,
+        className
+      )}
       animated={animated}
-      onClick={() => bleeps.click?.play()}
+      onClick={(event) => {
+        otherProps.onClick?.(event)
+        bleeps.click?.play()
+      }}
     >
       {children}
     </Animated>
   )
-}
+})
 
-export type { MenuItemProps }
 export { MenuItem }

@@ -74,6 +74,7 @@ It tries to inspire advanced science and technology.
 | ----------------- | --------- | ----------------------------------------------------------------- |
 | `@arwes/tools`    | Polishing | General React API tools                                           |
 | `@arwes/theme`    | Polishing | Color, units, and general purpose dynamic theming tools           |
+| `@arwes/styles`   | Polishing | Special styling utilities                                         |
 | `@arwes/animated` | Polishing | HTML element animation utilities                                  |
 | `@arwes/animator` | Polishing | Assemble and disassemble user interfaces using animation controls |
 | `@arwes/bleeps`   | Polishing | Define, manage, and control interactive short sound effects       |

@@ -1,0 +1,14 @@
+.root {
+}
+
+.root a,
+.root button {
+  @apply flex-1
+    flex flex-row justify-center items-center gap-2
+    px-1.5 h-full
+    text-current;
+}
+
+.root svg {
+  font-size: 1.25em;
+}

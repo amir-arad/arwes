@@ -2,18 +2,20 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "esnext",
-    "moduleResolution": "node",
+    "allowJs": true,
     "noEmit": true,
-    "declaration": false,
     "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "allowJs": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
     "paths": {
-      "@repository/*": ["./*"],
-      "@app/*": ["./apps/docs/src/*"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx"]
+  "include": ["next-env.d.ts", "build/types/**/*.ts", "**/*.ts", "**/*.tsx"]
 }
