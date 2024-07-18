@@ -79,10 +79,13 @@ const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
           ? 'hidden'
           : 'visible'
 
+      const nodeSettings = node.settings
+      const nodeDuration = nodeSettings.duration
+
       const animatorNodeDuration =
         node.state === 'entering' || node.state === 'entered'
-          ? node.settings.duration.enter
-          : node.settings.duration.exit
+          ? nodeDuration.enter
+          : nodeDuration.exit
 
       const $ = <T = HTMLElement | SVGElement>(query: string): T[] =>
         Array.from(element.querySelectorAll(query)) as T[]
@@ -98,7 +101,8 @@ const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
             const animation = transition({
               element,
               $,
-              duration: animatorNodeDuration
+              duration: animatorNodeDuration,
+              nodeDuration
             })
 
             if (animation) {

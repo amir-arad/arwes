@@ -1,6 +1,8 @@
 import type { CSSProperties, HTMLProps, SVGProps } from 'react'
 import type { MotionKeyframesDefinition, AnimationOptionsWithOverrides } from '@motionone/dom'
-import type { AnimatorState } from '@arwes/animator'
+import type { AnimatorState, AnimatorDuration } from '@arwes/animator'
+
+// Animated
 
 export interface AnimatedCSSPropsShorthands {
   x?: number | string
@@ -43,11 +45,18 @@ export interface AnimatedTransitionFunctionConfig {
    */
   $: <T = HTMLElement | SVGElement>(query: string) => T[]
   /**
-   * Corresponding animator animation duration.
+   * Corresponding animator current animation transition duration.
+   * For `'entering'` and `'entered'` states, it is `duration.enter`.
+   * For `'exiting'` and `'exited'` states, it is `duration.exit`.
    */
   duration: number
+  /**
+   * Associated node duration object.
+   */
+  nodeDuration: AnimatorDuration
 }
 
+// TODO: Make `.finished` required.
 export interface AnimatedTransitionFunctionReturn {
   /**
    * A promise which resolves when the animation is finished.
@@ -78,11 +87,25 @@ export interface AnimatedSettings {
 
 export type AnimatedProp = AnimatedSettings | Array<AnimatedSettings | undefined> | undefined
 
+// AnimatedX
+
+export type AnimatedXTransitionDefinition = AnimatedTransitionDefinition
+export type AnimatedXTransitionFunctionConfig = Omit<
+  AnimatedTransitionFunctionConfig,
+  'duration' | 'nodeDuration'
+>
+export type AnimatedXTransitionFunctionReturn = AnimatedTransitionFunctionReturn
+export type AnimatedXTransitionFunction =
+  | ((config: AnimatedXTransitionFunctionConfig) => AnimatedXTransitionFunctionReturn)
+  | ((config: AnimatedXTransitionFunctionConfig) => void)
+export type AnimatedXTransitionTypes = AnimatedXTransitionDefinition | AnimatedXTransitionFunction
+export type AnimatedXTransition = AnimatedXTransitionTypes | AnimatedXTransitionTypes[]
+
 export interface AnimatedXSettings<States extends string> {
   initialAttributes?: HTMLProps<HTMLDivElement> | SVGProps<SVGPathElement>
   initialStyle?: AnimatedCSSProps
   transitions?: {
-    [P in States]?: AnimatedTransition | undefined
+    [P in States]?: AnimatedXTransition | undefined
   }
 }
 

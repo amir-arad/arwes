@@ -1,13 +1,12 @@
 import { type MutableRefObject, useRef, useEffect } from 'react'
 import { animate } from 'motion'
-import type { AnimationOptionsWithOverrides } from '@motionone/dom'
 import { filterProps } from '@arwes/tools'
 
 import type {
   AnimatedXProp,
   AnimatedXSettings,
-  AnimatedTransition,
-  AnimatedTransitionFunctionReturn
+  AnimatedXTransition,
+  AnimatedXTransitionFunctionReturn
 } from '../types.js'
 import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js'
 
@@ -29,7 +28,7 @@ const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement 
 ): void => {
   const animatedRef = useRef<AnimatedXProp<States>>(animatedProp)
   const optionsRef = useRef<UseAnimatedXOptions<States> | undefined>(optionsProp)
-  const animationsRef = useRef<Set<AnimatedTransitionFunctionReturn>>(new Set())
+  const animationsRef = useRef<Set<AnimatedXTransitionFunctionReturn>>(new Set())
 
   animatedRef.current = animatedProp
   optionsRef.current = optionsProp
@@ -84,17 +83,13 @@ const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement 
 
     animatedList
       // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
-      .map((settingsItem) => settingsItem.transitions?.[state] as AnimatedTransition)
+      .map((settingsItem) => settingsItem.transitions?.[state] as AnimatedXTransition)
       .filter(Boolean)
       .map((transitions) => (Array.isArray(transitions) ? transitions : [transitions]))
       .flat(1)
       .forEach((transition) => {
         if (typeof transition === 'function') {
-          const animation = transition({
-            element,
-            $,
-            duration: -1
-          })
+          const animation = transition({ element, $ })
 
           if (animation) {
             animationsRef.current.add(animation)
@@ -118,7 +113,7 @@ const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement 
             repeat,
             direction,
             ...options
-          } as unknown as AnimationOptionsWithOverrides)
+          })
 
           animationsRef.current.add(animation)
 
