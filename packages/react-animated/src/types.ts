@@ -56,12 +56,11 @@ export interface AnimatedTransitionFunctionConfig {
   nodeDuration: AnimatorDuration
 }
 
-// TODO: Make `.finished` required.
 export interface AnimatedTransitionFunctionReturn {
   /**
    * A promise which resolves when the animation is finished.
    */
-  finished?: Promise<void>
+  finished: Promise<void>
   /**
    * Cancel the animation inmediately and remove its underlying animated properties
    * from the element.

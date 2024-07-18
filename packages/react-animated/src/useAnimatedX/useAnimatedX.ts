@@ -94,12 +94,9 @@ const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement 
           if (animation) {
             animationsRef.current.add(animation)
 
-            if (animation.finished) {
-              // eslint-disable-next-line @typescript-eslint/no-floating-promises
-              animation.finished.then(() => {
-                animationsRef.current.delete(animation)
-              })
-            }
+            void animation.finished.then(() => {
+              animationsRef.current.delete(animation)
+            })
           }
         }
         //
@@ -117,8 +114,7 @@ const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement 
 
           animationsRef.current.add(animation)
 
-          // eslint-disable-next-line @typescript-eslint/no-floating-promises
-          animation.finished.then(() => {
+          void animation.finished.then(() => {
             animationsRef.current.delete(animation)
           })
         }
