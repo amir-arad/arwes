@@ -42,13 +42,17 @@ const createAnimatorMachine = (
 
           if (node._parent) {
             const parentSettings = node._parent._getUserSettings()
+            const { condition } = settings
 
             switch (node._parent.state) {
               case STATES.entering: {
-                if (
-                  (parentSettings.combine || settings.merge) &&
-                  (settings.condition ? settings.condition(node) : true)
-                ) {
+                const allowed =
+                  typeof condition === 'function'
+                    ? condition(node)
+                    : typeof condition === 'boolean'
+                      ? condition
+                      : true
+                if ((parentSettings.combine || settings.merge) && allowed) {
                   node._parent._manager.enterChildren([node])
                 }
                 break
@@ -56,7 +60,13 @@ const createAnimatorMachine = (
               // If the parent has already entered, enter the incoming children whether
               // they have "merge" setting or the parent is in "combine" setting.
               case STATES.entered: {
-                if (settings.condition ? settings.condition(node) : true) {
+                const allowed =
+                  typeof condition === 'function'
+                    ? condition(node)
+                    : typeof condition === 'boolean'
+                      ? condition
+                      : true
+                if (allowed) {
                   node._parent._manager.enterChildren([node])
                 }
                 break
@@ -85,13 +95,19 @@ const createAnimatorMachine = (
           const settings = node._getUserSettings()
           const children = Array.from(node._children).filter((child) => {
             const childSettings = child._getUserSettings()
-            if (childSettings.condition ? !childSettings.condition(child) : false) {
-              return false
+
+            if (settings.combine || childSettings.merge) {
+              const { condition } = childSettings
+              const childAllowedToEnter =
+                typeof condition === 'function'
+                  ? condition(child)
+                  : typeof condition === 'boolean'
+                    ? condition
+                    : true
+              return childAllowedToEnter
             }
-            if (settings.combine) {
-              return true
-            }
-            return childSettings.merge
+
+            return false
           })
 
           node._manager.enterChildren(children)
@@ -120,10 +136,15 @@ const createAnimatorMachine = (
 
           const children = Array.from(node._children).filter((child) => {
             const childSettings = child._getUserSettings()
-            return (
-              !childSettings.merge &&
-              (childSettings.condition ? childSettings.condition(child) : true)
-            )
+            const { condition } = childSettings
+            const allowed =
+              typeof condition === 'function'
+                ? condition(child)
+                : typeof condition === 'boolean'
+                  ? condition
+                  : true
+
+            return !childSettings.merge && allowed
           })
 
           node._manager.enterChildren(children)
@@ -206,7 +227,13 @@ const createAnimatorMachine = (
               })
               .filter((child) => {
                 const { condition } = child.settings
-                return condition ? !condition(child.node) : false
+                const allowed =
+                  typeof condition === 'function'
+                    ? condition(child.node)
+                    : typeof condition === 'boolean'
+                      ? condition
+                      : true
+                return !allowed
               })
               .map((child) => child.node)
 
@@ -216,7 +243,13 @@ const createAnimatorMachine = (
               )
               .filter((child) => {
                 const { condition } = child.settings
-                return condition ? condition(child.node) : true
+                const allowed =
+                  typeof condition === 'function'
+                    ? condition(child.node)
+                    : typeof condition === 'boolean'
+                      ? condition
+                      : true
+                return allowed
               })
               .map((child) => child.node)
 

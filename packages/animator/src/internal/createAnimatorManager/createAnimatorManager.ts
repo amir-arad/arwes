@@ -296,7 +296,11 @@ const createAnimatorManagerSwitch: AnimatorManagerCreator = (node) => {
 
     const nodeVisibleCurrent = Array.from(node._children).find((child) => {
       const { condition } = child._getUserSettings()
-      return condition ? condition(child) : true
+      return typeof condition === 'function'
+        ? condition(child)
+        : typeof condition === 'boolean'
+          ? condition
+          : true
     })
 
     if (nodeVisibleCurrent) {
@@ -313,7 +317,11 @@ const createAnimatorManagerSwitch: AnimatorManagerCreator = (node) => {
     const children = Array.from(node._children)
     const nodeVisibleNew = children.find((child) => {
       const { condition } = child._getUserSettings()
-      return condition ? condition(child) : true
+      return typeof condition === 'function'
+        ? condition(child)
+        : typeof condition === 'boolean'
+          ? condition
+          : true
     })
 
     const onNextEnter = (): void => {

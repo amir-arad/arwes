@@ -98,7 +98,7 @@ export interface AnimatorSettings {
   merge: boolean
   combine: boolean
   initialState: 'exited' | 'entered'
-  condition?: (node: AnimatorNode) => boolean
+  condition?: boolean | ((node: AnimatorNode) => boolean)
   onTransition?: (node: AnimatorNode) => void
 }
 

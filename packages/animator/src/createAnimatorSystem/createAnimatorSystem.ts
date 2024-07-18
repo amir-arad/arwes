@@ -99,7 +99,11 @@ const createAnimatorSystem = (): AnimatorSystem => {
           if (settings.combine) {
             const children = Array.from(node._children).filter((child) => {
               const { condition } = child._getUserSettings()
-              return condition ? condition(child) : true
+              return typeof condition === 'function'
+                ? condition(child)
+                : typeof condition === 'boolean'
+                  ? condition
+                  : true
             })
             enter = node._manager.getDurationEnter(children)
           }
