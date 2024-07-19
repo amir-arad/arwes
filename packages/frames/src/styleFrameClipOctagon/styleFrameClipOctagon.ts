@@ -1,4 +1,4 @@
-interface CreateFrameOctagonClipProps {
+interface StyleFrameClipOctagonProps {
   squareSize?: number | string
   leftTop?: boolean
   leftBottom?: boolean
@@ -6,7 +6,7 @@ interface CreateFrameOctagonClipProps {
   rightBottom?: boolean
 }
 
-const createFrameOctagonClip = (props?: CreateFrameOctagonClipProps): string => {
+const styleFrameClipOctagon = (props?: StyleFrameClipOctagonProps): string => {
   const {
     squareSize = '16px',
     leftTop = true,
@@ -45,5 +45,5 @@ ${leftBottomPoints}
 )`
 }
 
-export type { CreateFrameOctagonClipProps }
-export { createFrameOctagonClip }
+export type { StyleFrameClipOctagonProps }
+export { styleFrameClipOctagon }

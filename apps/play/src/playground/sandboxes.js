@@ -391,28 +391,28 @@ export const sandboxes = [
         name: '@arwes/frames',
         children: [
           {
-            name: 'createFrameOctagonClip',
+            name: 'styleFrameClipOctagon',
             children: [
               {
                 name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameOctagonClip/createFrameOctagonClip.basic.sandbox.tsx')
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/styleFrameClipOctagon/styleFrameClipOctagon.basic.sandbox.tsx')
               },
               {
                 name: 'corners',
-                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameOctagonClip/createFrameOctagonClip.corners.sandbox.tsx')
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/styleFrameClipOctagon/styleFrameClipOctagon.corners.sandbox.tsx')
               }
             ]
           },
           {
-            name: 'createFrameKranoxClip',
+            name: 'styleFrameClipKranox',
             children: [
               {
                 name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameKranoxClip/createFrameKranoxClip.basic.sandbox.tsx')
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/styleFrameClipKranox/styleFrameClipKranox.basic.sandbox.tsx')
               },
               {
                 name: 'lengths',
-                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameKranoxClip/createFrameKranoxClip.lengths.sandbox.tsx')
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/styleFrameClipKranox/styleFrameClipKranox.lengths.sandbox.tsx')
               }
             ]
           }

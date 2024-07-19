@@ -1,4 +1,4 @@
-interface CreateFrameKranoxClipProps {
+interface StyleFrameClipKranoxProps {
   squareSize?: number | string
   padding?: number | string
   strokeWidth?: number | string
@@ -10,7 +10,7 @@ type Point = [number | string, number | string]
 
 const toCSSSize = (val: number | string): string => (typeof val === 'number' ? `${val}px` : val)
 
-const createFrameKranoxClip = (props?: CreateFrameKranoxClipProps): string => {
+const styleFrameClipKranox = (props?: StyleFrameClipKranoxProps): string => {
   const {
     squareSize = '16px',
     strokeWidth = '1px',
@@ -56,5 +56,5 @@ const createFrameKranoxClip = (props?: CreateFrameKranoxClipProps): string => {
   return `polygon(\n  ${lines.map(([x, y]) => `calc(${x}) calc(${y})`).join(',\n  ')}\n)`
 }
 
-export type { CreateFrameKranoxClipProps }
-export { createFrameKranoxClip }
+export type { StyleFrameClipKranoxProps }
+export { styleFrameClipKranox }
