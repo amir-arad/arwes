@@ -19,6 +19,7 @@ const Frame = (): ReactElement => {
       }}
       padding={4}
       strokeWidth={2}
+      bgStrokeWidth={0}
       squareSize={12}
       smallLineLength={12}
       largeLineLength={48}
