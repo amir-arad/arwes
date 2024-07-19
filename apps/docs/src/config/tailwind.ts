@@ -32,16 +32,16 @@ export const tailwind: Config = {
         .reduce((t, i) => ({ ...t, ...i }), {}),
       colors: {
         primary: {
-          low: createPalette(theme.colors.primary.low, 11),
-          main: createPalette(theme.colors.primary.main, 11),
-          high: createPalette(theme.colors.primary.high, 11)
+          low: createPalette(theme.colors.primary.low, 13),
+          main: createPalette(theme.colors.primary.main, 13),
+          high: createPalette(theme.colors.primary.high, 13)
         },
         secondary: {
-          low: createPalette(theme.colors.secondary.low, 11),
-          main: createPalette(theme.colors.secondary.main, 11),
-          high: createPalette(theme.colors.secondary.high, 11)
+          low: createPalette(theme.colors.secondary.low, 13),
+          main: createPalette(theme.colors.secondary.main, 13),
+          high: createPalette(theme.colors.secondary.high, 13)
         },
-        neutral: createPalette(theme.colors.neutral, 11)
+        neutral: createPalette(theme.colors.neutral, 13)
       },
       dropShadow: {
         'size-1': `0 0 0.0625rem var(--tw-shadow-color)`,
@@ -50,21 +50,6 @@ export const tailwind: Config = {
         'size-4': `0 0 0.5rem var(--tw-shadow-color)`,
         'size-5': `0 0 1rem var(--tw-shadow-color)`,
         'size-6': `0 0 1.5rem var(--tw-shadow-color)`
-      },
-      keyframes: {
-        'slide-up': { from: { transform: 'translateY(100%)' }, to: { transform: 'translateY(0)' } },
-        'slide-down': {
-          from: { transform: 'translateY(-100%)' },
-          to: { transform: 'translateY(0)' }
-        },
-        'scale-x': { from: { transform: 'scaleX(0)' }, to: { transform: 'scaleX(1)' } },
-        'scale-y': { from: { transform: 'scaleY(0)' }, to: { transform: 'scaleY(1)' } }
-      },
-      animation: {
-        'slide-up': 'slide-up 200ms ease-out',
-        'slide-down': 'slide-down 200ms ease-out',
-        'scale-x': 'scale-x 200ms ease-out',
-        'scale-y': 'scale-y 200ms ease-out'
       }
     }
   },

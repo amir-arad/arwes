@@ -1,13 +1,13 @@
 import { Animated, type AnimatedProp, cx, memo } from '@arwes/react'
 
-import styles from './ArwesLogoImage.module.css'
+import styles from './ArwesLogoIcon.module.css'
 
-interface ArwesLogoImageProps {
+interface ArwesLogoIconProps {
   className?: string
   animated?: AnimatedProp
 }
 
-const ArwesLogoImage = memo((props: ArwesLogoImageProps): JSX.Element => {
+const ArwesLogoIcon = memo((props: ArwesLogoIconProps): JSX.Element => {
   const { className, animated } = props
   return (
     <Animated<SVGSVGElement>
@@ -46,4 +46,4 @@ const ArwesLogoImage = memo((props: ArwesLogoImageProps): JSX.Element => {
   )
 })
 
-export { ArwesLogoImage }
+export { ArwesLogoIcon }

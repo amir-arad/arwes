@@ -3,4 +3,4 @@ export const iconProviderProps = {
     width: '1em',
     height: '1em'
   }
-} as const;
+} as const

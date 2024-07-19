@@ -1,5 +1,5 @@
 import React, { type HTMLProps, type ReactNode } from 'react'
-import { Animated, createFrameOctagonClip, cx, memo, useBleeps } from '@arwes/react'
+import { Animated, styleFrameClipOctagon, cx, memo, useBleeps } from '@arwes/react'
 import { type BleepNames, theme } from '@/config'
 
 interface ButtonSimpleProps extends HTMLProps<HTMLButtonElement> {
@@ -17,7 +17,7 @@ const ButtonSimple = memo((props: ButtonSimpleProps): JSX.Element => {
       className={cx(
         'relative overflow-hidden',
         'flex',
-        'uppercase font-cta font-normal text-size-10',
+        'uppercase font-cta font-light text-size-10',
         'select-none cursor-pointer transition-[color] duration-200',
         'drop-shadow-size-1 text-secondary-main-2 shadow-secondary-main-2/50',
         'md:text-size-9',
@@ -37,7 +37,7 @@ const ButtonSimple = memo((props: ButtonSimpleProps): JSX.Element => {
         className
       )}
       style={{
-        clipPath: createFrameOctagonClip({
+        clipPath: styleFrameClipOctagon({
           leftBottom: false,
           rightTop: false,
           rightBottom: false,

@@ -24,10 +24,10 @@ const MenuItem = memo((props: MenuProps): JSX.Element => {
         'relative',
         'flex flex-row justify-center items-center gap-2',
         'h-full',
-        'text-size-8',
+        'font-cta font-light text-size-8',
         'transition-[color] duration-200 ease-out',
-        !!active && 'text-secondary-main-4 hover:text-secondary-high-2',
-        !active && 'text-primary-main-4 hover:text-primary-high-2',
+        !!active && 'text-secondary-main-5 hover:text-secondary-high-2',
+        !active && 'text-primary-main-5 hover:text-primary-high-2',
         // bottom line background
         !!active &&
           cx(
