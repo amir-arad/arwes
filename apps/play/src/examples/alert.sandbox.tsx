@@ -289,7 +289,7 @@ const Sandbox = (): ReactElement => {
               <Animator>
                 <Animated<HTMLImageElement>
                   as="img"
-                  src="/logotype.png"
+                  src="/assets/images/logotype.svg"
                   animated={[
                     flicker(),
                     {
