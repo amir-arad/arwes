@@ -426,28 +426,19 @@ export const sandboxes = [
             code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/basic.sandbox.tsx')
           },
           {
-            name: 'useFrameSVGRenderer',
-            children: [
-              {
-                name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/useFrameSVGRenderer/useFrameSVGRenderer.basic.sandbox.tsx')
-              },
-              {
-                name: 'commands',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/useFrameSVGRenderer/useFrameSVGRenderer.commands.sandbox.tsx')
-              },
-              {
-                name: 'clipping',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/useFrameSVGRenderer/useFrameSVGRenderer.clipping.sandbox.tsx')
-              }
-            ]
-          },
-          {
             name: 'FrameSVG',
             children: [
               {
                 name: 'basic',
                 code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVG/FrameSVG.basic.sandbox.tsx')
+              },
+              {
+                name: 'commands',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVG/FrameSVG.commands.sandbox.tsx')
+              },
+              {
+                name: 'clipping',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVG/FrameSVG.clipping.sandbox.tsx')
               }
             ]
           },

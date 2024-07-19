@@ -3,7 +3,7 @@ import React, { type ReactElement, useState, useEffect, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import { AnimatorGeneralProvider, Animator, useAnimator } from '@arwes/react-animator'
 import { Animated } from '@arwes/react-animated'
-import { createFrameOctagonClip } from '@arwes/frames'
+import { styleFrameClipOctagon } from '@arwes/frames'
 
 const List = (): ReactElement => {
   const animator = useAnimator()
@@ -87,7 +87,7 @@ const List = (): ReactElement => {
                 fontSize: '1.25rem',
                 color: 'hsl(180 100% 40%)',
                 background: 'hsl(180 50% 20%)',
-                clipPath: createFrameOctagonClip({ squareSize: '0.5rem' })
+                clipPath: styleFrameClipOctagon({ squareSize: '0.5rem' })
               }}
               animated={{
                 initialStyle: { opacity: 0.2 },

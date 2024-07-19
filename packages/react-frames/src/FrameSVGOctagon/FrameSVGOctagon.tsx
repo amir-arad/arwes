@@ -1,113 +1,38 @@
 import React, { useMemo, type ReactElement } from 'react'
 import { cx } from '@arwes/tools'
 import { memo } from '@arwes/react-tools'
-import { type FrameSVGPath, type FrameSVGStyle, type FrameSVGPathGeneric } from '@arwes/frames'
+import { type CreateFrameSVGOctagonProps, createFrameSVGOctagon } from '@arwes/frames'
 
 import { type FrameSVGProps, FrameSVG } from '../FrameSVG/index.js'
 
-interface FrameSVGOctagonProps extends FrameSVGProps {
-  leftTop?: boolean
-  rightTop?: boolean
-  rightBottom?: boolean
-  leftBottom?: boolean
-  squareSize?: number
-  padding?: number
-  strokeWidth?: number
-}
-
-type Point = [number | string, number | string]
-
-const toPath = (points: Point[]): FrameSVGPath => points.map((p, i) => [i === 0 ? 'M' : 'L', ...p])
+interface FrameSVGOctagonProps
+  extends Omit<FrameSVGProps, keyof CreateFrameSVGOctagonProps>,
+    CreateFrameSVGOctagonProps {}
 
 const FrameSVGOctagon = memo((props: FrameSVGOctagonProps): ReactElement => {
   const {
-    leftTop = true,
-    rightTop = true,
-    rightBottom = true,
-    leftBottom = true,
-    squareSize: ss = 16,
-    strokeWidth = 1,
-    padding: p = 0,
+    styled,
+    leftTop,
+    rightTop,
+    rightBottom,
+    leftBottom,
+    squareSize,
+    strokeWidth,
+    padding,
     className,
     ...otherProps
   } = props
 
-  const paths = useMemo(() => {
-    const so = strokeWidth / 2
-
-    const polylineStyle: FrameSVGStyle = {
-      filter: 'var(--arwes-frames-line-filter)',
-      stroke: 'var(--arwes-frames-line-color, currentcolor)',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: String(strokeWidth),
-      fill: 'none'
-    }
-
-    const leftTopPoints: Point[] = leftTop
-      ? [
-          [ss + so + p, so + p],
-          [so + p, ss + so + p]
-        ]
-      : [[so + p, so + p]]
-
-    const leftBottomPoints: Point[] = leftBottom
-      ? [
-          [so + p, `100% - ${ss + p}`],
-          [ss + so + p, `100% - ${so + p}`]
-        ]
-      : [[so + p, `100% - ${so + p}`]]
-
-    const rightBottomPoints: Point[] = rightBottom
-      ? [
-          [`100% - ${ss + so + p}`, `100% - ${so + p}`],
-          [`100% - ${so + p}`, `100% - ${ss + so + p}`]
-        ]
-      : [[`100% - ${so + p}`, `100% - ${so + p}`]]
-
-    const rightTopPoints: Point[] = rightTop
-      ? [
-          [`100% - ${so + p}`, ss - so + p],
-          [`100% - ${ss - so + p}`, so + p]
-        ]
-      : [[`100% - ${so + p}`, so + p]]
-
-    // leftTop > leftBottom > rightBottom
-    const polyline1 = toPath([...leftTopPoints, ...leftBottomPoints, rightBottomPoints[0]])
-
-    // rightBottom > rightTop > leftTop
-    const polyline2 = toPath([...rightBottomPoints, ...rightTopPoints, leftTopPoints[0]])
-
-    const paths: FrameSVGPathGeneric[] = [
-      {
-        name: 'bg',
-        style: {
-          strokeWidth: 0,
-          fill: 'var(--arwes-frames-bg-color, currentcolor)',
-          filter: 'var(--arwes-frames-bg-filter)'
-        },
-        path: polyline1.concat(polyline2)
-      },
-      {
-        name: 'line',
-        style: polylineStyle,
-        path: polyline1
-      },
-      {
-        name: 'line',
-        style: polylineStyle,
-        path: polyline2
-      }
-    ]
-
-    return paths
-  }, [leftTop, rightTop, rightBottom, leftBottom, ss, strokeWidth, p])
+  const frameSVGSettings = useMemo(
+    () => createFrameSVGOctagon(props),
+    [styled, leftTop, rightTop, rightBottom, leftBottom, squareSize, strokeWidth, padding]
+  )
 
   return (
     <FrameSVG
       {...otherProps}
       className={cx('arwes-frames-framesvgoctagon', className)}
-      paths={paths}
+      {...frameSVGSettings}
     />
   )
 })

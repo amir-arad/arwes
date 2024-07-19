@@ -2,25 +2,18 @@ import React, {
   type SVGAttributes,
   type ForwardedRef,
   type ReactElement,
-  type ReactNode,
   type CSSProperties,
   useRef,
-  useCallback
+  useEffect
 } from 'react'
 import { cx } from '@arwes/tools'
-import { mergeRefs } from '@arwes/react-tools'
-import { type FrameSVGPathGeneric, renderFrameSVGPaths } from '@arwes/frames'
-import { useFrameSVGRenderer } from '../useFrameSVGRenderer/index.js'
+import { memo, mergeRefs } from '@arwes/react-tools'
+import { type FrameSVGSettings, renderFrameSVG } from '@arwes/frames'
 
-interface FrameSVGProps extends SVGAttributes<SVGSVGElement> {
-  paths?: FrameSVGPathGeneric[]
+interface FrameSVGProps extends SVGAttributes<SVGSVGElement>, Partial<FrameSVGSettings> {
+  elementRef?: ForwardedRef<SVGSVGElement>
   positioned?: boolean
   onRender?: (svg: SVGSVGElement, width: number, height: number) => void
-  id?: string
-  className?: string
-  style?: CSSProperties
-  elementRef?: ForwardedRef<SVGSVGElement>
-  children?: ReactNode
 }
 
 const positionedStyle: CSSProperties = {
@@ -36,51 +29,61 @@ const positionedStyle: CSSProperties = {
   height: 'round(down, 100%, 1px)'
 }
 
-const FrameSVG = (props: FrameSVGProps): ReactElement => {
+const FrameSVG = memo((props: FrameSVGProps): ReactElement => {
   const {
-    paths,
-    positioned = true,
-    onRender: onRenderExternal,
+    elementRef,
     className,
     style,
-    elementRef,
+    positioned = true,
     children,
+    elements,
+    onRender: onRenderExternal,
     ...otherProps
   } = props
 
   const svgRef = useRef<SVGSVGElement>(null)
 
-  const onRender = useCallback(
-    (svg: SVGSVGElement, width: number, height: number) => {
-      if (paths) {
-        renderFrameSVGPaths(svg, width, height, paths)
-      }
-      onRenderExternal?.(svg, width, height)
-    },
-    [paths]
-  )
+  useEffect(() => {
+    const svg = svgRef.current
 
-  useFrameSVGRenderer(svgRef, onRender)
+    if (!svg) {
+      return
+    }
+
+    const onRender = (): void => {
+      const { width, height } = renderFrameSVG(svg, { elements: elements || [] })
+      onRenderExternal?.(svg, width, height)
+    }
+
+    onRender()
+
+    const observer = new window.ResizeObserver(onRender)
+    observer.observe(svg)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [elements, onRenderExternal])
 
   return (
     <svg
       role="presentation"
       ref={mergeRefs(svgRef, elementRef)}
       className={cx('arwes-frames-framesvg', className)}
-      xmlns="http://www.w3.org/2000/svg"
-      // Even if it is still resized automatically, in case there is a delay
-      // or the ResizeObserver API is not available, the SVG should be resized.
-      preserveAspectRatio="none"
       style={{
         ...(positioned ? positionedStyle : null),
         ...style
       }}
+      xmlns="http://www.w3.org/2000/svg"
+      // Even if it is still resized automatically, in case there is a delay
+      // or the ResizeObserver API is not available, the SVG should be resized.
+      preserveAspectRatio="none"
       {...otherProps}
     >
       {children}
     </svg>
   )
-}
+})
 
 export type { FrameSVGProps }
 export { FrameSVG }

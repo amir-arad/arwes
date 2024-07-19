@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createFrameOctagonClip } from '@arwes/frames'
+import { styleFrameClipOctagon } from '@arwes/frames'
 import { Illuminator } from '@arwes/react-frames'
 
 const Sandbox = (): ReactElement => {
@@ -12,7 +12,7 @@ const Sandbox = (): ReactElement => {
           position: 'relative',
           width: 300,
           height: 300,
-          clipPath: createFrameOctagonClip({ squareSize: 50 })
+          clipPath: styleFrameClipOctagon({ squareSize: 50 })
         }}
       >
         <Illuminator color="hsl(180 50% 50% / 20%)" size={300} />

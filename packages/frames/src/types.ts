@@ -1,6 +1,10 @@
 import type * as CSS from 'csstype'
 
-type FrameSVGPathCommandName =
+export type FrameSVGSettingsStyle = CSS.Properties
+
+export type FrameSVGSettingsPathDimension = number | string
+
+type FrameSVGSettingsPathCommandName =
   | 'M'
   | 'm'
   | 'L'
@@ -20,20 +24,25 @@ type FrameSVGPathCommandName =
   | 'A'
   | 'a'
 
-export type FrameSVGPathDimension = number | string
+export type FrameSVGSettingsPathCommand =
+  | 'Z'
+  | 'z'
+  | [FrameSVGSettingsPathCommandName, ...FrameSVGSettingsPathDimension[]]
 
-export type FrameSVGPathCommand = 'Z' | 'z' | [FrameSVGPathCommandName, ...FrameSVGPathDimension[]]
+export type FrameSVGSettingsPathDefinition = FrameSVGSettingsPathCommand[]
 
-export type FrameSVGPath = FrameSVGPathCommand[]
-
-export type FrameSVGStyle = CSS.Properties
-
-export interface FrameSVGPathCustom {
+type FrameSVGSettingsElementCommon = {
   name?: string
   id?: string
   className?: string
-  style?: FrameSVGStyle
-  path: FrameSVGPath
+  style?: FrameSVGSettingsStyle
 }
 
-export type FrameSVGPathGeneric = FrameSVGPath | FrameSVGPathCustom
+export type FrameSVGSettingsElement = FrameSVGSettingsElementCommon & {
+  type?: 'path'
+  path: FrameSVGSettingsPathDefinition
+}
+
+export interface FrameSVGSettings {
+  elements: FrameSVGSettingsElement[]
+}

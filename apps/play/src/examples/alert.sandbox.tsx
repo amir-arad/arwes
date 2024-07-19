@@ -11,8 +11,7 @@ import {
   transition,
   flicker,
   Dots,
-  FrameSVGPathGeneric,
-  createFrameOctagonClip,
+  styleFrameClipOctagon,
   useFrameSVGAssembler,
   FrameSVG,
   FrameSVGCorners,
@@ -21,7 +20,8 @@ import {
   BleepsProviderSettings,
   BleepsProvider,
   useBleeps,
-  BleepsOnAnimator
+  BleepsOnAnimator,
+  FrameSVGSettings
 } from '@arwes/react'
 
 const addStyles = (css: string) => {
@@ -97,48 +97,50 @@ const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
 const PageFrame = (): ReactElement => {
   const frameRef = useRef<SVGSVGElement>(null)
   useFrameSVGAssembler(frameRef)
-  const paths = useMemo<FrameSVGPathGeneric[]>(
-    () => [
-      {
-        name: 'line',
-        path: [
-          ['M', 10, 10],
-          ['h', '7%'],
-          ['l', 10, 10],
-          ['h', '7%']
-        ]
-      },
-      {
-        name: 'line',
-        path: [
-          ['M', '100%-10', 10],
-          ['h', '-7%'],
-          ['l', -10, 10],
-          ['h', '-7%']
-        ]
-      },
-      {
-        name: 'line',
-        path: [
-          ['M', '100%-10', '100%-10'],
-          ['h', '-7%'],
-          ['l', -10, -10],
-          ['h', '-7%']
-        ]
-      },
-      {
-        name: 'line',
-        path: [
-          ['M', '10', '100%-10'],
-          ['h', '7%'],
-          ['l', 10, -10],
-          ['h', '7%']
-        ]
-      }
-    ],
+  const frameSettings = useMemo<FrameSVGSettings>(
+    () => ({
+      elements: [
+        {
+          name: 'line',
+          path: [
+            ['M', 10, 10],
+            ['h', '7%'],
+            ['l', 10, 10],
+            ['h', '7%']
+          ]
+        },
+        {
+          name: 'line',
+          path: [
+            ['M', '100%-10', 10],
+            ['h', '-7%'],
+            ['l', -10, 10],
+            ['h', '-7%']
+          ]
+        },
+        {
+          name: 'line',
+          path: [
+            ['M', '100%-10', '100%-10'],
+            ['h', '-7%'],
+            ['l', -10, -10],
+            ['h', '-7%']
+          ]
+        },
+        {
+          name: 'line',
+          path: [
+            ['M', '10', '100%-10'],
+            ['h', '7%'],
+            ['l', 10, -10],
+            ['h', '7%']
+          ]
+        }
+      ]
+    }),
     []
   )
-  return <FrameSVG elementRef={frameRef} className="page-frame" paths={paths} />
+  return <FrameSVG elementRef={frameRef} className="page-frame" {...frameSettings} />
 }
 addStyles(`
   .page-frame [data-name=line] {
@@ -155,10 +157,7 @@ const MainFrame = (): ReactElement => {
     <div
       className="main-frame"
       style={{
-        clipPath: createFrameOctagonClip({
-          leftBottom: false,
-          rightTop: false
-        })
+        clipPath: styleFrameClipOctagon({ leftBottom: false, rightTop: false })
       }}
     >
       <div className="main-frame-bg" />

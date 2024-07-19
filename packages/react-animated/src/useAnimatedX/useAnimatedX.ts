@@ -74,7 +74,10 @@ const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement 
     const animatedListReceived = Array.isArray(animated) ? animated : [animated]
     const animatedList = animatedListReceived.filter(Boolean) as Array<AnimatedXSettings<States>>
 
-    const options = { ...defaultOptions, ...filterProps(optionsRef.current ?? ({} as any)) }
+    const options = {
+      ...defaultOptions,
+      ...(filterProps(optionsRef.current ?? ({} as any)) as Required<UseAnimatedXOptions<States>>)
+    }
 
     element.style.visibility = options.hideOnStates.includes(state) ? 'hidden' : 'visible'
 

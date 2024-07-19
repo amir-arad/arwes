@@ -1,6 +1,10 @@
-import type { FrameSVGPath, FrameSVGPathCommand, FrameSVGPathDimension } from '../types.js'
+import type {
+  FrameSVGSettingsPathDefinition,
+  FrameSVGSettingsPathCommand,
+  FrameSVGSettingsPathDimension
+} from '../../types.js'
 
-const formatDimension = (size: number, dimension: FrameSVGPathDimension): string => {
+const formatDimension = (size: number, dimension: FrameSVGSettingsPathDimension): string => {
   if (typeof dimension === 'number') {
     return String(dimension)
   }
@@ -19,7 +23,11 @@ const formatDimension = (size: number, dimension: FrameSVGPathDimension): string
   return String(eval(formula))
 }
 
-const formatCommand = (width: number, height: number, command: FrameSVGPathCommand): string => {
+const formatCommand = (
+  width: number,
+  height: number,
+  command: FrameSVGSettingsPathCommand
+): string => {
   if (Array.isArray(command)) {
     const [name, ...dimensions] = command
 
@@ -65,7 +73,11 @@ const formatCommand = (width: number, height: number, command: FrameSVGPathComma
   return command
 }
 
-const formatFrameSVGPath = (width: number, height: number, path: FrameSVGPath): string => {
+const formatFrameSVGPath = (
+  width: number,
+  height: number,
+  path: FrameSVGSettingsPathDefinition
+): string => {
   return path.map((command) => formatCommand(width, height, command)).join(' ')
 }
 
