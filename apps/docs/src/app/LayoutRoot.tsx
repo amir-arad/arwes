@@ -11,7 +11,8 @@ import {
   animatorGeneralSettings,
   bleepsSettings,
   atomMotionEnabled,
-  atomAudioEnabled
+  atomAudioEnabled,
+  theme
 } from '@/config'
 import { Background, Header } from '@/ui'
 
@@ -33,11 +34,13 @@ const LayoutRoot = memo((props: { children: ReactNode }): JSX.Element => {
             className="absolute inset-0 overflow-hidden flex flex-col"
             style={{
               // @ts-expect-error link `next/font` font families to TailwindCSS
-              '--arwes-font-family-title': fontTitilliumWeb.style.fontFamily,
-              '--arwes-font-family-header': fontTitilliumWeb.style.fontFamily,
-              '--arwes-font-family-body': fontTitilliumWeb.style.fontFamily,
-              '--arwes-font-family-cta': fontTitilliumWeb.style.fontFamily,
-              '--arwes-font-family-code': ''
+              '--app-font-family-title': fontTitilliumWeb.style.fontFamily,
+              '--app-font-family-header': fontTitilliumWeb.style.fontFamily,
+              '--app-font-family-body': fontTitilliumWeb.style.fontFamily,
+              '--app-font-family-cta': fontTitilliumWeb.style.fontFamily,
+              '--app-font-family-code': '',
+              '--app-scrollbar-color': theme.colors.secondary.main(4),
+              '--app-scrollbar-color-hover': theme.colors.secondary.high(2)
             }}
           >
             <Animator combine>

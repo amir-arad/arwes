@@ -141,7 +141,7 @@ export const theme = Object.freeze({
 
   fontFamily: {
     title: [
-      'var(--arwes-font-family-title)',
+      'var(--app-font-family-title)',
       '"Segoe UI Web (West European)"',
       '"Segoe UI"',
       '-apple-system',
@@ -151,7 +151,7 @@ export const theme = Object.freeze({
       'sans-serif'
     ],
     header: [
-      'var(--arwes-font-family-header)',
+      'var(--app-font-family-header)',
       '"Segoe UI Web (West European)"',
       '"Segoe UI"',
       '-apple-system',
@@ -161,7 +161,7 @@ export const theme = Object.freeze({
       'sans-serif'
     ],
     body: [
-      'var(--arwes-font-family-body)',
+      'var(--app-font-family-body)',
       '"Segoe UI Web (West European)"',
       '"Segoe UI"',
       '-apple-system',
@@ -171,7 +171,7 @@ export const theme = Object.freeze({
       'sans-serif'
     ],
     cta: [
-      'var(--arwes-font-family-cta)',
+      'var(--app-font-family-cta)',
       '"Segoe UI Web (West European)"',
       '"Segoe UI"',
       '-apple-system',
@@ -181,7 +181,7 @@ export const theme = Object.freeze({
       'sans-serif'
     ],
     code: [
-      'var(--arwes-font-family-code)',
+      'var(--app-font-family-code)',
       'JetBrains Mono',
       'Menlo',
       'Monaco',

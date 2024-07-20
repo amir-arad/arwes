@@ -6,8 +6,7 @@
 
 .frame [data-name='bg'] {
   @apply fill-primary-main-12/10
-    stroke-1 stroke-primary-main-9/50
-    drop-shadow-size-1 shadow-primary-main-9;
+    stroke-1 stroke-primary-main-9/50;
 }
 
 .frame [data-name='line'] {

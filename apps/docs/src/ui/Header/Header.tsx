@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { useAtom } from 'jotai'
@@ -38,6 +38,8 @@ import { ArwesLogoType } from '../ArwesLogoType'
 import { Menu } from '../Menu'
 import { MenuItem } from '../MenuItem'
 import { Modal } from '../Modal'
+import { MobileNav } from './MobileNav'
+import { MobileLinks } from './MobileLinks'
 import styles from './Header.module.css'
 
 interface HeaderProps {
@@ -54,7 +56,16 @@ const Header = memo((props: HeaderProps): JSX.Element => {
   const isMD = useMedia(theme.breakpoints.up('md', { strip: true }), false)
   const isXL = useMedia(theme.breakpoints.up('xl', { strip: true }), false)
   const bleeps = useBleeps<BleepNames>()
+
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const openMenu = useCallback(() => {
+    setIsMenuOpen(true)
+    bleeps.click?.play()
+  }, [])
+  const closeMenu = useCallback(() => {
+    setIsMenuOpen(false)
+    bleeps.click?.play()
+  }, [])
 
   const isIndex = pathname === '/'
 
@@ -167,7 +178,7 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                   <Menu className="h-[3rem]">
                     <Animator>
                       <MenuItem animated={flicker()}>
-                        <button onClick={() => setIsMenuOpen(true)}>
+                        <button onClick={openMenu}>
                           <MenuIcon />
                         </button>
                       </MenuItem>
@@ -212,17 +223,6 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                     <Animator>
                       <MenuItem animated={flicker()}>
                         <a
-                          href={`https://github.com/arwes/arwes/releases/tag/v${settings.version}`}
-                          target="version"
-                          title={`v${settings.version} (${new Date(settings.deployTime).toString()})`}
-                        >
-                          <AtSign />
-                        </a>
-                      </MenuItem>
-                    </Animator>
-                    <Animator>
-                      <MenuItem animated={flicker()}>
-                        <a
                           href="https://github.com/arwes/arwes"
                           target="github"
                           title="Go to Github"
@@ -242,6 +242,17 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                       <MenuItem animated={flicker()}>
                         <a href="https://discord.gg/s5sbTkw" target="discord" title="Go to Discord">
                           <Discord />
+                        </a>
+                      </MenuItem>
+                    </Animator>
+                    <Animator>
+                      <MenuItem animated={flicker()}>
+                        <a
+                          href={`https://github.com/arwes/arwes/releases/tag/v${settings.version}`}
+                          target="version"
+                          title={`v${settings.version} (${new Date(settings.deployTime).toString()})`}
+                        >
+                          <AtSign />
                         </a>
                       </MenuItem>
                     </Animator>
@@ -276,12 +287,36 @@ const Header = memo((props: HeaderProps): JSX.Element => {
         </div>
       </div>
 
+      {/* MOBILE MENU */}
       <Animator root active={isMenuOpen} unmountOnExited unmountOnDisabled={!isMenuOpen}>
-        <Modal contentClassName="min-h-40" header="Index" onClose={() => setIsMenuOpen(false)}>
-          <Animator>
-            <Animated className="font-body text-size-4 text-primary-main-3" animated={flicker()}>
-              Arwes Settings
-            </Animated>
+        <Modal contentClassName="flex flex-col gap-6 min-h-40" header="Index" onClose={closeMenu}>
+          <Animator combine manager="stagger">
+            <MobileNav onLink={closeMenu} />
+
+            <div className="flex flex-col gap-2">
+              <MobileLinks />
+
+              <Animator>
+                <Animated<HTMLAnchorElement>
+                  as="a"
+                  className="flex justify-center font-cta font-light leading-none text-size-10 text-primary-main-9"
+                  animated={flicker()}
+                  href={`https://github.com/arwes/arwes/releases/tag/v${settings.version}`}
+                  target="version"
+                >
+                  v{settings.version}
+                </Animated>
+              </Animator>
+
+              <Animator>
+                <Animated
+                  className="flex justify-center font-cta font-light leading-none text-size-11 text-primary-main-9"
+                  animated={flicker()}
+                >
+                  {new Date(settings.deployTime).toISOString()}
+                </Animated>
+              </Animator>
+            </div>
           </Animator>
         </Modal>
       </Animator>

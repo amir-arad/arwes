@@ -46,13 +46,13 @@ const Modal = memo((props: ModalProps): JSX.Element => {
         role="presentation"
         className="absolute inset-0 bg-primary-main-12/80"
         style={{
-          backdropFilter: 'blur(0.5rem)'
+          backdropFilter: 'blur(0.25rem)'
         }}
         animated={fade()}
       />
 
       <Animated
-        className="relative flex-1 flex flex-col m-auto py-6 min-h-0 max-h-full"
+        className="relative flex-1 flex flex-col m-auto py-6 max-w-md min-h-0 max-h-full"
         animated={transition('y', theme.space(-8), 0, 0)}
       >
         <FrameSVGKranox
@@ -66,15 +66,11 @@ const Modal = memo((props: ModalProps): JSX.Element => {
 
         <Animator combine manager="stagger">
           <Animator>
-            <Animated
-              as="header"
-              className="relative flex flex-col gap-3 px-10"
-              animated={flicker()}
-            >
-              <div className="flex-1 flex flex-row gap-4 justify-between items-center">
+            <Animated as="header" className="relative flex px-10" animated={flicker()}>
+              <div className="flex-1 flex flex-row gap-4 justify-between items-center border-b pb-2 border-primary-main-9">
                 <h1
                   className={cx(
-                    'font-title font-light text-size-6 text-primary-main-1',
+                    'font-title font-light text-size-6 text-primary-main-3',
                     'sm:text-size-5'
                   )}
                 >
@@ -82,8 +78,13 @@ const Modal = memo((props: ModalProps): JSX.Element => {
                 </h1>
 
                 <button
-                  className="text-size-5 sm:text-size-4 text-secondary-main-3"
+                  className={cx(
+                    'text-size-5 sm:text-size-4',
+                    'transition-all ease-out duration-200',
+                    'text-secondary-main-4 hover:text-secondary-high-2'
+                  )}
                   autoFocus
+                  title="Close"
                   onClick={() => {
                     onClose?.()
                     bleeps.click?.play()
@@ -95,8 +96,8 @@ const Modal = memo((props: ModalProps): JSX.Element => {
             </Animated>
           </Animator>
 
-          <main className="relative overflow-y-auto flex-1 flex px-10 pt-3 min-h-0">
-            <div className={cx('flex-1 flex flex-col', contentClassName)}>{children}</div>
+          <main className="relative overflow-y-auto flex-1 flex px-10 py-3 min-h-0">
+            <div className={cx('flex-1', contentClassName)}>{children}</div>
           </main>
 
           {!!Children.count(footer) && <footer className="relative">{footer}</footer>}
