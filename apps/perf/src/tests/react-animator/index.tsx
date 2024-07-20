@@ -1,23 +1,14 @@
 import React, { type ReactElement, Profiler, Fragment, useState, useRef, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { type AnimatorNode } from '@arwes/animator'
 import { AnimatorGeneralProvider, Animator, useAnimator } from '@arwes/react-animator'
-
-const TEST_RENDER_NUMBER = 3000
-
-const TEST_ON_RENDER = (id: string, phase: string, duration: number): void => {
-  if (phase === 'mount') {
-    console.log(`mount: ${duration} ms`)
-  }
-}
 
 const Item = (): ReactElement => {
   const elementRef = useRef<HTMLDivElement>(null)
-  const animator = useAnimator()
+  const animator = useAnimator()!
 
   useEffect(() => {
-    animator?.node.subscribers.add((node: AnimatorNode) => {
+    animator.node.subscribe((node) => {
       const element = elementRef.current!
 
       switch (node.state) {
@@ -27,11 +18,11 @@ const Item = (): ReactElement => {
         case 'entering':
           element.style.opacity = '0.5'
           break
-        case 'exiting':
-          element.style.opacity = '0.5'
-          break
         case 'entered':
           element.style.opacity = '1'
+          break
+        case 'exiting':
+          element.style.opacity = '0.5'
           break
       }
     })
@@ -41,32 +32,66 @@ const Item = (): ReactElement => {
 }
 
 const Test = (): ReactElement => {
+  const [total, setTotal] = useState(1000)
   const [active, setActive] = useState(false)
+  const [state, setState] = useState('exited')
 
   useEffect(() => {
-    const tid = setInterval(() => setActive((v) => !v), 2000)
+    const tid = setInterval(() => {
+      setActive((v) => {
+        console.time('duration-to-notify-first-child')
+        console.time(v ? `duration-to-exit-all-children` : `duration-to-enter-all-children`)
+        return !v
+      })
+    }, 2_000)
     return () => clearInterval(tid)
   }, [])
 
   return (
     <Fragment>
-      <p>
-        Root animator state: <b>{active ? 'activated' : 'inactivated'}</b>
-      </p>
+      <div className="controls">
+        <label>
+          Number of children:{' '}
+          <select value={total} onChange={(event) => setTotal(+event.currentTarget.value)}>
+            <option value="100">100</option>
+            <option value="1000">1,000</option>
+            <option value="2000">2,000</option>
+            <option value="3000">3,000</option>
+            <option value="5000">5,000</option>
+            <option value="7000">7,000</option>
+            <option value="10000">10,000</option>
+          </select>
+        </label>{' '}
+        Active: <b>{String(active)}</b> - State: <b>{state}</b>
+      </div>
+
       <AnimatorGeneralProvider duration={{ enter: 0.5, exit: 0.5 }}>
-        <Animator active={active} combine>
+        <Animator active={active} combine onTransition={(node) => setState(node.state)}>
           <div className="items">
-            {Array(TEST_RENDER_NUMBER)
+            {Array(total)
               .fill(null)
               .map((_, index) => (
                 <Animator
                   key={index}
-                  onTransition={(node: AnimatorNode) => {
+                  onTransition={(node) => {
                     const state = node.state
                     if (index === 0) {
-                      console.time(state)
-                    } else if (index + 1 === TEST_RENDER_NUMBER) {
-                      console.timeEnd(state)
+                      console.time(`duration-to-walk-and-transition-to-${state}-all-children`)
+
+                      if (node.state === 'entering' || node.state === 'exiting') {
+                        console.timeEnd('duration-to-notify-first-child')
+                      }
+                    }
+                    //
+                    else if (index + 1 === total) {
+                      console.timeEnd(`duration-to-walk-and-transition-to-${state}-all-children`)
+
+                      if (node.state === 'entering') {
+                        console.timeEnd('duration-to-enter-all-children')
+                      }
+                      if (node.state === 'exiting') {
+                        console.timeEnd('duration-to-exit-all-children')
+                      }
                     }
                   }}
                 >
@@ -80,9 +105,13 @@ const Test = (): ReactElement => {
   )
 }
 
+const onProfileRender = (id: string, phase: string, duration: number): void => {
+  console.log(`[Profiler] ${phase} = ${duration} ms`)
+}
+
 const App = (): ReactElement => {
   return (
-    <Profiler id="test" onRender={TEST_ON_RENDER}>
+    <Profiler id="test" onRender={onProfileRender}>
       <Test />
     </Profiler>
   )

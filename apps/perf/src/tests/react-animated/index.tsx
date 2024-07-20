@@ -4,30 +4,41 @@ import { createRoot } from 'react-dom/client'
 import { Animator } from '@arwes/react-animator'
 import { Animated } from '@arwes/react-animated'
 
-const TEST_RENDER_NUMBER = 1000
-
-const TEST_ON_RENDER = (id: string, phase: string, duration: number): void => {
-  if (phase === 'mount') {
-    console.log(`mount: ${duration} ms`)
-  }
-}
-
 const Test = (): ReactElement => {
+  const [total, setTotal] = useState(1000)
   const [active, setActive] = useState(false)
+  const [state, setState] = useState('exited')
 
   useEffect(() => {
-    const tid = setInterval(() => setActive((v) => !v), 1000)
+    const tid = setInterval(() => setActive((v) => !v), 2_000)
     return () => clearInterval(tid)
   }, [])
 
   return (
     <Fragment>
-      <p>
-        Root animator state: <b>{active ? 'activated' : 'inactivated'}</b>
-      </p>
-      <Animator active={active} duration={{ enter: 0.5, exit: 0.5 }}>
+      <div className="controls">
+        <label>
+          Number of children:{' '}
+          <select value={total} onChange={(event) => setTotal(+event.currentTarget.value)}>
+            <option value="100">100</option>
+            <option value="1000">1,000</option>
+            <option value="2000">2,000</option>
+            <option value="3000">3,000</option>
+            <option value="5000">5,000</option>
+            <option value="7000">7,000</option>
+            <option value="10000">10,000</option>
+          </select>
+        </label>{' '}
+        Active: <b>{String(active)}</b> - State: <b>{state}</b>
+      </div>
+
+      <Animator
+        active={active}
+        duration={{ enter: 0.5, exit: 0.5 }}
+        onTransition={(node) => setState(node.state)}
+      >
         <div className="items">
-          {Array(TEST_RENDER_NUMBER)
+          {Array(total)
             .fill(null)
             .map((_, index) => (
               <Animated
@@ -51,9 +62,13 @@ const Test = (): ReactElement => {
   )
 }
 
+const onProfileRender = (id: string, phase: string, duration: number): void => {
+  console.log(`[Profiler] ${phase} = ${duration} ms`)
+}
+
 const App = (): ReactElement => {
   return (
-    <Profiler id="test" onRender={TEST_ON_RENDER}>
+    <Profiler id="test" onRender={onProfileRender}>
       <Test />
     </Profiler>
   )
