@@ -53,7 +53,7 @@ const Modal = memo((props: ModalProps): JSX.Element => {
 
       <Animated
         className="relative flex-1 flex flex-col m-auto py-6 max-w-md min-h-0 max-h-full"
-        animated={transition('y', theme.space(-8), 0, 0)}
+        animated={transition('y', theme.space(-8), 0)}
       >
         <FrameSVGKranox
           elementRef={frameRef}

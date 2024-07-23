@@ -27,7 +27,7 @@ const HomePage = memo((): JSX.Element => {
           <Animated
             className={cx(
               'font-body font-light leading-none text-size-7 select-none',
-              'text-primary-main-3 drop-shadow-size-1 shadow-primary-main-1/50',
+              'text-primary-main-3',
               'md:text-size-6',
               'xl:text-size-5'
             )}

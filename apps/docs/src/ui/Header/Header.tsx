@@ -19,6 +19,7 @@ import {
   X,
   Page,
   Codepen,
+  Settings,
   CollageFrame,
   DashboardSpeed,
   Github,
@@ -176,6 +177,13 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                   animated={transition('x', -theme.spacen(2), 0, 0)}
                 >
                   <Menu className="h-[3rem]">
+                    <Animator>
+                      <MenuItem animated={flicker()}>
+                        <button>
+                          <Settings />
+                        </button>
+                      </MenuItem>
+                    </Animator>
                     <Animator>
                       <MenuItem animated={flicker()}>
                         <button onClick={openMenu}>
