@@ -15,13 +15,13 @@ const defaultProps: Required<CreateFrameSVGUnderlineProps> = {
   padding: 0
 }
 
-const createFrameSVGUnderline = (props: CreateFrameSVGUnderlineProps): FrameSVGSettings => {
+const createFrameSVGUnderline = (props?: CreateFrameSVGUnderlineProps): FrameSVGSettings => {
   const {
     styled,
     squareSize: ss,
     strokeWidth: sw,
     padding: p
-  } = { ...defaultProps, ...filterProps(props) }
+  } = { ...defaultProps, ...(props ? filterProps(props) : null) }
 
   const so = sw / 2
 

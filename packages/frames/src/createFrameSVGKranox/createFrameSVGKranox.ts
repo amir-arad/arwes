@@ -31,7 +31,7 @@ type Point = [number | string, number | string]
 const toPath = (points: Point[]): FrameSVGSettingsPathDefinition =>
   points.map((p, i) => [i === 0 ? 'M' : 'L', ...p])
 
-const createFrameSVGKranox = (props: CreateFrameSVGKranoxProps): FrameSVGSettings => {
+const createFrameSVGKranox = (props?: CreateFrameSVGKranoxProps): FrameSVGSettings => {
   const {
     styled,
     padding: p,
@@ -40,7 +40,7 @@ const createFrameSVGKranox = (props: CreateFrameSVGKranoxProps): FrameSVGSetting
     squareSize: ss,
     smallLineLength: sll,
     largeLineLength: lll
-  } = { ...defaultProps, ...filterProps(props) }
+  } = { ...defaultProps, ...(props ? filterProps(props) : null) }
 
   const so = sw / 2 // Stroke offset.
   const bso = bsw / 2 // Background stroke offset.

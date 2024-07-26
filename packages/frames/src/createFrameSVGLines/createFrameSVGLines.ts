@@ -22,14 +22,14 @@ const defaultProps: Required<CreateFrameSVGLinesProps> = {
   smallLineLength: 16
 }
 
-const createFrameSVGLines = (props: CreateFrameSVGLinesProps): FrameSVGSettings => {
+const createFrameSVGLines = (props?: CreateFrameSVGLinesProps): FrameSVGSettings => {
   const {
     styled,
     padding: p,
     largeLineWidth: llw,
     smallLineWidth: slw,
     smallLineLength: sll
-  } = { ...defaultProps, ...filterProps(props) }
+  } = { ...defaultProps, ...(props ? filterProps(props) : null) }
 
   const polylineStyle: FrameSVGSettingsStyle = {
     strokeLinecap: 'square',

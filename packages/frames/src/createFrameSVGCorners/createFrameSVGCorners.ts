@@ -19,13 +19,13 @@ const defaultProps: Required<CreateFrameSVGCornersProps> = {
   padding: 0
 }
 
-const createFrameSVGCorners = (props: CreateFrameSVGCornersProps): FrameSVGSettings => {
+const createFrameSVGCorners = (props?: CreateFrameSVGCornersProps): FrameSVGSettings => {
   const {
     styled,
     strokeWidth: cw,
     cornerLength: cl,
     padding: p
-  } = { ...defaultProps, ...filterProps(props) }
+  } = { ...defaultProps, ...(props ? filterProps(props) : null) }
 
   const co = cw / 2
 

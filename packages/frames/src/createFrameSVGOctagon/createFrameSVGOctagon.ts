@@ -33,7 +33,7 @@ type Point = [number | string, number | string]
 const toPath = (points: Point[]): FrameSVGSettingsPathDefinition =>
   points.map((p, i) => [i === 0 ? 'M' : 'L', ...p])
 
-const createFrameSVGOctagon = (props: CreateFrameSVGOctagonProps): FrameSVGSettings => {
+const createFrameSVGOctagon = (props?: CreateFrameSVGOctagonProps): FrameSVGSettings => {
   const {
     styled,
     leftTop,
@@ -43,7 +43,7 @@ const createFrameSVGOctagon = (props: CreateFrameSVGOctagonProps): FrameSVGSetti
     squareSize: ss,
     strokeWidth,
     padding: p
-  } = { ...defaultProps, ...filterProps(props) }
+  } = { ...defaultProps, ...(props ? filterProps(props) : null) }
 
   const so = strokeWidth / 2
 

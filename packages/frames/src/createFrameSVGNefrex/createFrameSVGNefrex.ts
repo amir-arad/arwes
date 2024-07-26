@@ -29,7 +29,7 @@ type Point = [number | string, number | string]
 const toPath = (points: Point[]): FrameSVGSettingsPathDefinition =>
   points.map((p, i) => [i === 0 ? 'M' : 'L', ...p])
 
-const createFrameSVGNefrex = (props: CreateFrameSVGNefrexProps): FrameSVGSettings => {
+const createFrameSVGNefrex = (props?: CreateFrameSVGNefrexProps): FrameSVGSettings => {
   const {
     styled,
     squareSize: ss,
@@ -37,7 +37,7 @@ const createFrameSVGNefrex = (props: CreateFrameSVGNefrexProps): FrameSVGSetting
     smallLineLength: sll,
     largeLineLength: lll,
     padding: p
-  } = { ...defaultProps, ...filterProps(props) }
+  } = { ...defaultProps, ...(props ? filterProps(props) : null) }
 
   const so = strokeWidth / 2 // Stroke offset.
 
