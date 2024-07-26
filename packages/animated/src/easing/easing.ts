@@ -131,7 +131,8 @@ const easing = {
   }
 }
 
-type Easing = EasingFn | keyof typeof easing
+type EasingName = keyof typeof easing
+type Easing = EasingFn | EasingName
 
-export type { Easing, EasingFn }
+export type { Easing, EasingName, EasingFn }
 export { easing }

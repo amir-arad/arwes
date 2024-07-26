@@ -2,17 +2,14 @@ import { type MutableRefObject, useRef, useEffect } from 'react'
 import { animate } from 'motion'
 import { filterProps } from '@arwes/tools'
 import type { AnimatorNode } from '@arwes/animator'
+import { type EasingName, easing } from '@arwes/animated'
 import { useAnimator } from '@arwes/react-animator'
 
-import type {
-  AnimatedProp,
-  AnimatedSettings,
-  AnimatedTransition,
-  AnimatedTransitionFunctionReturn
-} from '../types.js'
+import type { AnimatedProp, AnimatedTransitionFunctionReturn } from '../types.js'
+import { transition, fade, flicker, draw } from '../transitions/index.js'
 import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js'
 
-interface UseAnimatedOptions<E = HTMLElement | SVGElement> {
+type UseAnimatedOptions<E = HTMLElement | SVGElement> = {
   hideOnExited?: boolean | undefined
   hideOnEntered?: boolean | undefined
   renderInitials?: boolean | undefined
@@ -23,6 +20,12 @@ const defaultOptions: UseAnimatedOptions = {
   renderInitials: true,
   hideOnExited: true
 }
+
+const animatedPresets = {
+  fade,
+  flicker,
+  draw
+} as const
 
 const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
   elementRef: MutableRefObject<E | null>,
@@ -49,7 +52,9 @@ const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
     if (optionsInitial.renderInitials) {
       const animated = animatedRef.current
       const animatedListReceived = Array.isArray(animated) ? animated : [animated]
-      const animatedList = animatedListReceived.filter(Boolean) as AnimatedSettings[]
+      const animatedList = animatedListReceived
+        .map((item) => (typeof item === 'string' || Array.isArray(item) ? undefined : item))
+        .filter(Boolean)
 
       const initialAttributes: Record<string, string> = animatedList
         .map((item) => item?.initialAttributes)
@@ -67,11 +72,10 @@ const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
     }
 
     const unsubscribe = animator.node.subscribe((node) => {
-      const animated = animatedRef.current
-      const animatedListReceived = Array.isArray(animated) ? animated : [animated]
-      const animatedList = animatedListReceived.filter(Boolean) as AnimatedSettings[]
-
-      const options = { ...defaultOptions, ...filterProps(optionsRef.current ?? ({} as any)) }
+      const options = {
+        ...defaultOptions,
+        ...(optionsRef.current ? filterProps(optionsRef.current) : null)
+      }
 
       element.style.visibility =
         (options.hideOnExited && node.state === 'exited') ||
@@ -89,12 +93,27 @@ const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
       const $ = <T = HTMLElement | SVGElement>(query: string): T[] =>
         Array.from(element.querySelectorAll(query)) as T[]
 
+      const animated = animatedRef.current
+      const animatedListReceived = Array.isArray(animated) ? animated : [animated]
+      const animatedList = animatedListReceived.filter(Boolean)
+
       animatedList
-        // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
-        .map((settingsItem) => settingsItem.transitions?.[node.state] as AnimatedTransition)
         .filter(Boolean)
-        .map((transitions) => (Array.isArray(transitions) ? transitions : [transitions]))
-        .flat(1)
+        .map((item) => {
+          if (typeof item === 'string') {
+            const preset = animatedPresets[item]
+            if (!preset) {
+              throw new Error(`Arwes useAnimated() unexpected animated preset "${item}".`)
+            }
+            return preset()
+          }
+          if (Array.isArray(item)) {
+            return transition(...item)
+          }
+          return item
+        })
+        .map((settingsItem) => settingsItem?.transitions?.[node.state])
+        .filter(Boolean)
         .forEach((transition) => {
           if (typeof transition === 'function') {
             const animation = transition({
@@ -113,28 +132,46 @@ const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
             }
           }
           //
-          else {
-            const { duration, delay, easing, repeat, direction, options, ...definition } =
-              transition
-
-            const animation = animate(element, definition, {
-              duration: duration || transitionDuration,
+          else if (transition) {
+            const {
+              duration: durationInitial,
               delay,
-              easing,
+              easing: ease,
               repeat,
               direction,
-              ...options
-            })
+              options,
+              ...definition
+            } = transition
 
-            animationsRef.current.add(animation)
+            const duration = durationInitial || transitionDuration
 
-            void animation.finished.then(() => {
-              animationsRef.current.delete(animation)
-            })
+            // TODO: Apply final animation state to element if duration is 0.
+            if (duration <= 0) {
+              throw new Error('Arwes useAnimated() animation duration must be greater than 0.')
+            }
+
+            try {
+              const animation = animate(element, definition, {
+                duration,
+                delay,
+                easing: typeof ease === 'string' ? (easing[ease as EasingName] ?? ease) : ease,
+                repeat,
+                direction,
+                ...options
+              })
+
+              animationsRef.current.add(animation)
+
+              void animation.finished.then(() => {
+                animationsRef.current.delete(animation)
+              })
+            } catch (err) {
+              throw new Error(`Arwes useAnimated() animation error:\n${String(err)}`)
+            }
           }
         })
 
-      options?.onTransition?.(element, node)
+      options.onTransition?.(element, node)
     })
 
     return () => {

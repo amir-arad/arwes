@@ -15,7 +15,7 @@ import { mergeRefs } from '@arwes/react-tools'
 import { type AnimatorNode } from '@arwes/animator'
 import { useAnimator } from '@arwes/react-animator'
 
-import type { AnimatedSettings, AnimatedProp } from '../types.js'
+import type { AnimatedProp } from '../types.js'
 import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js'
 import { useAnimated } from '../useAnimated/index.js'
 
@@ -64,7 +64,9 @@ const Animated = <
   })
 
   const animatedSettingsListReceived = Array.isArray(animated) ? animated : [animated]
-  const animatedSettingsList = animatedSettingsListReceived.filter(Boolean) as AnimatedSettings[]
+  const animatedSettingsList = animatedSettingsListReceived
+    .map((item) => (typeof item === 'string' || Array.isArray(item) ? undefined : item))
+    .filter(Boolean)
 
   let initialAttributes: object | undefined
   if (animator) {

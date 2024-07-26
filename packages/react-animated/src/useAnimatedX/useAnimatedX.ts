@@ -1,6 +1,7 @@
 import { type MutableRefObject, useRef, useEffect } from 'react'
 import { animate } from 'motion'
 import { filterProps } from '@arwes/tools'
+import { type EasingName, easing } from '@arwes/animated'
 
 import type {
   AnimatedXProp,
@@ -88,8 +89,6 @@ const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement 
       // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
       .map((settingsItem) => settingsItem.transitions?.[state] as AnimatedXTransition)
       .filter(Boolean)
-      .map((transitions) => (Array.isArray(transitions) ? transitions : [transitions]))
-      .flat(1)
       .forEach((transition) => {
         if (typeof transition === 'function') {
           const animation = transition({ element, $ })
@@ -104,22 +103,40 @@ const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement 
         }
         //
         else {
-          const { duration, delay, easing, repeat, direction, options, ...definition } = transition
-
-          const animation = animate(element, definition, {
+          const {
             duration,
             delay,
-            easing,
+            easing: ease,
             repeat,
             direction,
-            ...options
-          })
+            options,
+            ...definition
+          } = transition
 
-          animationsRef.current.add(animation)
+          // TODO: Apply final animation state to element if duration is 0.
+          // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
+          if (Number.isFinite(duration) && (duration as number) <= 0) {
+            throw new Error('Arwes useAnimated() animation duration must be greater than 0.')
+          }
 
-          void animation.finished.then(() => {
-            animationsRef.current.delete(animation)
-          })
+          try {
+            const animation = animate(element, definition, {
+              duration,
+              delay,
+              easing: typeof ease === 'string' ? easing[ease as EasingName] : ease,
+              repeat,
+              direction,
+              ...options
+            })
+
+            animationsRef.current.add(animation)
+
+            void animation.finished.then(() => {
+              animationsRef.current.delete(animation)
+            })
+          } catch (err) {
+            throw new Error(`Arwes useAnimatedX() animation error:\n${String(err)}`)
+          }
         }
       })
 

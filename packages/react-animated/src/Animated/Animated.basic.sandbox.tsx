@@ -15,7 +15,7 @@ const Item = (): ReactElement => {
             // - duration: number
             // - repeat: number
             // - delay: number | motion/stagger(value: number)
-            // - easing: 'linear' | (x: number) => number
+            // - easing: [name] | (x: number) => number
             // - direction: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'
             entering: { x: [0, 100], background: '#ff0' },
             exiting: { x: [100, 0], background: '#0ff' }

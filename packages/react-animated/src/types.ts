@@ -1,5 +1,6 @@
 import type { CSSProperties, HTMLProps, SVGProps } from 'react'
 import type { MotionKeyframesDefinition, AnimationOptionsWithOverrides } from '@motionone/dom'
+import type { Easing } from '@arwes/animated'
 import type { AnimatorState, AnimatorDuration } from '@arwes/animator'
 
 // Animated
@@ -27,7 +28,7 @@ export type AnimatedCSSProps = Omit<CSSProperties, keyof AnimatedCSSPropsShortha
 export type AnimatedTransitionDefinition = MotionKeyframesDefinition & {
   duration?: number
   delay?: AnimationOptionsWithOverrides['delay']
-  easing?: AnimationOptionsWithOverrides['easing']
+  easing?: AnimationOptionsWithOverrides['easing'] | Easing
   repeat?: AnimationOptionsWithOverrides['repeat']
   direction?: AnimationOptionsWithOverrides['direction']
   options?: AnimationOptionsWithOverrides
@@ -72,9 +73,7 @@ export type AnimatedTransitionFunction =
   | ((config: AnimatedTransitionFunctionConfig) => AnimatedTransitionFunctionReturn)
   | ((config: AnimatedTransitionFunctionConfig) => void)
 
-export type AnimatedTransitionTypes = AnimatedTransitionFunction | AnimatedTransitionDefinition
-
-export type AnimatedTransition = AnimatedTransitionTypes | AnimatedTransitionTypes[]
+export type AnimatedTransition = AnimatedTransitionFunction | AnimatedTransitionDefinition
 
 export interface AnimatedSettings {
   initialAttributes?: HTMLProps<HTMLDivElement> | SVGProps<SVGPathElement>
@@ -84,7 +83,20 @@ export interface AnimatedSettings {
   }
 }
 
-export type AnimatedProp = AnimatedSettings | Array<AnimatedSettings | undefined> | undefined
+type AnimatedPropPreset = 'fade' | 'flicker' | 'draw'
+
+type AnimatedPropTransition = [
+  string,
+  number | string,
+  number | string,
+  (number | string)?,
+  (AnimationOptionsWithOverrides['easing'] | Easing)?
+]
+
+export type AnimatedProp =
+  | AnimatedSettings
+  | Array<AnimatedPropPreset | AnimatedPropTransition | AnimatedSettings | undefined>
+  | undefined
 
 // AnimatedX
 
@@ -97,8 +109,7 @@ export type AnimatedXTransitionFunctionReturn = AnimatedTransitionFunctionReturn
 export type AnimatedXTransitionFunction =
   | ((config: AnimatedXTransitionFunctionConfig) => AnimatedXTransitionFunctionReturn)
   | ((config: AnimatedXTransitionFunctionConfig) => void)
-export type AnimatedXTransitionTypes = AnimatedXTransitionDefinition | AnimatedXTransitionFunction
-export type AnimatedXTransition = AnimatedXTransitionTypes | AnimatedXTransitionTypes[]
+export type AnimatedXTransition = AnimatedXTransitionDefinition | AnimatedXTransitionFunction
 
 export interface AnimatedXSettings<States extends string> {
   initialAttributes?: HTMLProps<HTMLDivElement> | SVGProps<SVGPathElement>

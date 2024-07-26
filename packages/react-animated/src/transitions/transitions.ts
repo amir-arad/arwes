@@ -1,32 +1,36 @@
 import { animate } from 'motion'
-import type { AnimatedSettings } from '../types.js'
-import { easing } from '@arwes/animated'
+import type { AnimationOptionsWithOverrides } from '@motionone/dom'
+import type { AnimatedSettings, AnimatedTransition } from '../types.js'
+import { type EasingName, easing } from '@arwes/animated'
 
 const transition = (
   prop: string,
   from: number | string,
   to: number | string,
-  back?: number | string
+  back?: number | string,
+  easing?: AnimationOptionsWithOverrides['easing'] | EasingName
 ): AnimatedSettings => ({
   transitions: {
-    entering: { [prop]: [from, to] },
-    exiting: { [prop]: [to, back ?? from] }
+    entering: { [prop]: [from, to], easing } as unknown as AnimatedTransition,
+    exiting: { [prop]: [to, back ?? from], easing } as unknown as AnimatedTransition
   }
 })
 
-const fade = (): AnimatedSettings => ({
+const fadeTransition = Object.freeze({
   transitions: {
     entering: { opacity: [0, 1] },
     exiting: { opacity: [1, 0] }
   }
 })
+const fade = (): AnimatedSettings => fadeTransition
 
-const flicker = (): AnimatedSettings => ({
+const flickerTransition = Object.freeze({
   transitions: {
     entering: { opacity: [0, 1, 0.5, 1], easing: easing.outSine },
     exiting: { opacity: [1, 0, 0.5, 0], easing: easing.outSine }
   }
 })
+const flicker = (): AnimatedSettings => flickerTransition
 
 const draw = (
   durationCustom?: number | undefined,
@@ -34,7 +38,7 @@ const draw = (
 ): AnimatedSettings => ({
   transitions: {
     entering: ({ element, duration }) => {
-      if (!(element instanceof SVGPathElement)) {
+      if (!(element instanceof SVGPathElement) || duration <= 0) {
         return
       }
 
@@ -50,7 +54,7 @@ const draw = (
       )
     },
     exiting: ({ element, duration }) => {
-      if (!(element instanceof SVGPathElement)) {
+      if (!(element instanceof SVGPathElement) || duration <= 0) {
         return
       }
 
