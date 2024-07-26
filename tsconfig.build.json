@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "removeComments": true,
     "resolveJsonModule": false
   },
   "exclude": [
