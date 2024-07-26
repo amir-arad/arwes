@@ -1,8 +1,18 @@
-import type { ThemeSettingsBreakpoints, ThemeBreakpoints } from '../types.js'
+import type {
+  ThemeSettingsBreakpointsKeyListItem,
+  ThemeSettingsBreakpoints,
+  ThemeBreakpoints
+} from '../types.js'
 
 const createThemeBreakpoints = <Keys extends string | number = string | number>(
   settings: ThemeSettingsBreakpoints<Keys> = []
 ): ThemeBreakpoints<Keys> => {
+  const breakpoints = (
+    settings.filter((item) => typeof item !== 'string') as unknown as Array<
+      ThemeSettingsBreakpointsKeyListItem<Keys>
+    >
+  ).map((item) => item.key)
+
   const getBreakpointValue = (key: string | number): string => {
     if (typeof key === 'string') {
       for (const item of settings) {
@@ -35,6 +45,7 @@ const createThemeBreakpoints = <Keys extends string | number = string | number>(
   }
 
   return Object.freeze({
+    breakpoints,
     settings,
     up,
     down,

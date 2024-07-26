@@ -41,6 +41,7 @@ export type ThemeStyleValue = CSSProperties
 export type ThemeStyle = (index: number) => ThemeStyleValue
 
 export interface ThemeBreakpoints<Keys extends string | number = string | number> {
+  breakpoints: Keys[]
   settings: ThemeSettingsBreakpoints<Keys>
   up: (key: Keys, opts?: { strip?: boolean }) => string
   down: (key: Keys, opts?: { strip?: boolean }) => string
