@@ -50,10 +50,11 @@ const Test = (): ReactElement => {
   return (
     <Fragment>
       <div className="controls">
-        <label>
-          Number of children:{' '}
+        <label className="control">
+          children:
           <select value={total} onChange={(event) => setTotal(+event.currentTarget.value)}>
             <option value="100">100</option>
+            <option value="500">500</option>
             <option value="1000">1,000</option>
             <option value="2000">2,000</option>
             <option value="3000">3,000</option>
@@ -61,8 +62,9 @@ const Test = (): ReactElement => {
             <option value="7000">7,000</option>
             <option value="10000">10,000</option>
           </select>
-        </label>{' '}
-        Active: <b>{String(active)}</b> - State: <b>{state}</b>
+        </label>
+        <div className="control">{active ? 'active' : 'inactive'}</div>
+        <div className="control">{state}</div>
       </div>
 
       <AnimatorGeneralProvider duration={{ enter: 0.5, exit: 0.5 }}>
