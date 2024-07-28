@@ -1,7 +1,7 @@
 'use client'
 
 import React, { type ReactNode } from 'react'
-import { memo, AnimatorGeneralProvider, BleepsProvider, Animator } from '@arwes/react'
+import { AnimatorGeneralProvider, BleepsProvider, Animator } from '@arwes/react'
 import { Titillium_Web } from 'next/font/google'
 import { IconoirProvider } from 'iconoir-react'
 import { useAtom } from 'jotai'
@@ -22,7 +22,7 @@ const fontTitilliumWeb = Titillium_Web({
   preload: false
 })
 
-const LayoutRoot = memo((props: { children: ReactNode }): JSX.Element => {
+const LayoutRoot = (props: { children: ReactNode }): JSX.Element => {
   const [isMotionEnabled] = useAtom(atomMotionEnabled)
   const [isAudioEnabled] = useAtom(atomAudioEnabled)
 
@@ -63,6 +63,6 @@ const LayoutRoot = memo((props: { children: ReactNode }): JSX.Element => {
       </AnimatorGeneralProvider>
     </IconoirProvider>
   )
-})
+}
 
 export { LayoutRoot }
