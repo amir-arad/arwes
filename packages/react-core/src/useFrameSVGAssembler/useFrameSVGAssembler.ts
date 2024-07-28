@@ -1,5 +1,6 @@
 import { type RefObject, useEffect } from 'react'
 import { type AnimationControls, animate } from 'motion'
+import { easeAmong } from '@arwes/animated'
 import { useAnimator } from '@arwes/react-animator'
 
 const useFrameSVGAssembler = (svgRef: RefObject<SVGSVGElement>): void => {
@@ -19,17 +20,18 @@ const useFrameSVGAssembler = (svgRef: RefObject<SVGSVGElement>): void => {
 
       const bgs = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=bg]'))
       const lines = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=line]'))
-      const elements = [...bgs, ...lines]
+      const decos = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=deco]'))
+      const elements = [...bgs, ...lines, ...decos]
 
       switch (node.state) {
         case 'exited': {
-          elements.forEach((element) => {
+          for (const element of elements) {
             element.style.opacity = '0'
-          })
-          lines.forEach((line) => {
+          }
+          for (const line of lines) {
             line.style.strokeDasharray = ''
             line.style.strokeDashoffset = ''
-          })
+          }
           break
         }
 
@@ -47,6 +49,10 @@ const useFrameSVGAssembler = (svgRef: RefObject<SVGSVGElement>): void => {
                 bg.style.opacity = String(progress)
               }
 
+              for (const deco of decos) {
+                deco.style.opacity = String(easeAmong(progress, [0, 1, 0.5, 1]))
+              }
+
               for (const line of lines) {
                 const length = Number(line.dataset.length)
                 line.style.strokeDashoffset = String((1 - progress) * length)
@@ -58,13 +64,13 @@ const useFrameSVGAssembler = (svgRef: RefObject<SVGSVGElement>): void => {
         }
 
         case 'entered': {
-          elements.forEach((element) => {
+          for (const element of elements) {
             element.style.opacity = '1'
-          })
-          lines.forEach((line) => {
+          }
+          for (const line of lines) {
             line.style.strokeDasharray = ''
             line.style.strokeDashoffset = ''
-          })
+          }
           break
         }
 
@@ -79,6 +85,10 @@ const useFrameSVGAssembler = (svgRef: RefObject<SVGSVGElement>): void => {
             (progress) => {
               for (const bg of bgs) {
                 bg.style.opacity = String(1 - progress)
+              }
+
+              for (const deco of decos) {
+                deco.style.opacity = String(easeAmong(progress, [1, 0, 0.5, 0]))
               }
 
               for (const line of lines) {
@@ -99,7 +109,8 @@ const useFrameSVGAssembler = (svgRef: RefObject<SVGSVGElement>): void => {
 
       const bgs = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=bg]'))
       const lines = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=line]'))
-      const elements = [...bgs, ...lines]
+      const decos = Array.from(svg.querySelectorAll<SVGPathElement>('[data-name=deco]'))
+      const elements = [...bgs, ...lines, ...decos]
 
       elements.forEach((element) => {
         element.style.opacity = '1'
