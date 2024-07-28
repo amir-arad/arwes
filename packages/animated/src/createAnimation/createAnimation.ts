@@ -7,6 +7,11 @@ interface AnimationProps {
   duration: number
   easing?: Easing
   direction?: 'normal' | 'reverse'
+  /**
+   * Number of times to repeat the animation.
+   * Set to `Infinity` to repeat undefinitely.
+   */
+  repeat?: number
   onUpdate: (progress: number) => void
   onFinish?: () => void
   onCancel?: () => void
@@ -27,6 +32,7 @@ const createAnimation = (props: AnimationProps): Animation => {
     duration: durationProvided,
     easing: easingName = 'outSine',
     direction = 'normal',
+    repeat = 0,
     onUpdate,
     onFinish,
     onCancel
@@ -39,6 +45,7 @@ const createAnimation = (props: AnimationProps): Animation => {
   let start: number
   let slapsed = 0
   let resolvePromise: () => void
+  let repetitions = 0
 
   const finished = new Promise<void>((resolve) => {
     resolvePromise = resolve
@@ -55,7 +62,13 @@ const createAnimation = (props: AnimationProps): Animation => {
 
     onUpdate(direction === 'normal' ? progress : 1 - progress)
 
-    const continueAnimation = duration > 0 && slapsed < duration
+    let continueAnimation = duration > 0 && slapsed < duration
+
+    if (!continueAnimation && repeat > 0 && repetitions < repeat) {
+      start = timestamp
+      continueAnimation = true
+      repetitions++
+    }
 
     if (continueAnimation) {
       currentAnimationFrame = window.requestAnimationFrame(nextAnimation)

@@ -63,13 +63,11 @@ test('Should run animation', async () => {
 })
 
 test('Should run animation with easing', async () => {
-  const update = vi.fn()
   const progresses: Array<[number, number]> = []
   createAnimation({
     duration: 0.1,
     easing: (x) => x * 2,
     onUpdate: (progress) => {
-      update(progress)
       progresses.push([performance.now(), progress])
     }
   })
@@ -173,6 +171,48 @@ test('Should throw on animation with duration < 0', () => {
       onUpdate: () => {}
     })
   }).toThrowError('Arwes createAnimation() does not support negative durations.')
+})
+
+test('Should run animation repeat', async () => {
+  const progresses: Array<[number, number]> = []
+  const animation = createAnimation({
+    duration: 0.1,
+    easing: 'linear',
+    repeat: 2,
+    onUpdate: (progress) => progresses.push([performance.now(), progress])
+  })
+  expect(animation.isPending()).toBe(true)
+  moveTimeTo(0.13)
+  expect(animation.isPending()).toBe(true)
+  moveTimeTo(0.36)
+  expect(animation.isPending()).toBe(false)
+  expect(progresses).toStrictEqual([
+    // Initial
+    [16, 0],
+    [32, 0.16],
+    [48, 0.32],
+    [64, 0.48],
+    [80, 0.64],
+    [96, 0.8],
+    [112, 0.96],
+    [128, 1],
+    // First repeat
+    [144, 0.16],
+    [160, 0.32],
+    [176, 0.48],
+    [192, 0.64],
+    [208, 0.8],
+    [224, 0.96],
+    [240, 1],
+    // Second repeat
+    [256, 0.16],
+    [272, 0.32],
+    [288, 0.48],
+    [304, 0.64],
+    [320, 0.8],
+    [336, 0.96],
+    [352, 1]
+  ])
 })
 
 test('Should cancel animation', () => {

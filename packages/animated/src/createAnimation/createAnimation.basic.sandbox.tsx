@@ -23,7 +23,7 @@ createAnimation({
   onUpdate: (progress) => {
     itemElement.style.transform = `translateX(${progress * 200}px)`
   },
-  onComplete: () => {
+  onFinish: () => {
     itemElement.style.background = '#ff0'
   }
 })
