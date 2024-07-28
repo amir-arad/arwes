@@ -97,6 +97,13 @@ It tries to inspire advanced science and technology.
 | `@arwes/react-core`     | Polishing | Core UI components                          |
 | `@arwes/react`          | Polishing | All vanilla and React packages bundle       |
 
+### Solid
+
+| Package                 | Status      | Description                           |
+| ----------------------- | ----------- | ------------------------------------- |
+| `@arwes/solid-animator` | Development | Animator interface tools              |
+| `@arwes/solid`          | Development | All vanilla and Solid packages bundle |
+
 ## Community
 
 ### Apps
