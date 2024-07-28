@@ -127,7 +127,7 @@ const Animator = (props: AnimatorProps): ReactElement => {
       }
     }
 
-    const setSettings = (newSettings: AnimatorSettingsPartial): void => {
+    const setSettings = (newSettings: AnimatorSettingsPartial | null): void => {
       dynamicSettingsRef.current = newSettings
     }
 

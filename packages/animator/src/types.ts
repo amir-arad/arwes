@@ -10,7 +10,7 @@ export interface AnimatorControl {
    * Set the animator settings.
    * @param settings - New dynamic settings.
    */
-  readonly setSettings: (settings: AnimatorSettingsPartial) => void
+  readonly setSettings: (settings: AnimatorSettingsPartial | null) => void
   /**
    * Get the foreign value stored for this animator.
    */
