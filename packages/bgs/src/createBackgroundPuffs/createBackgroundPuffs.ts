@@ -1,5 +1,4 @@
-import { type AnimationControls, animate } from 'motion'
-import { easing } from '@arwes/animated'
+import { type Animation, easing, createAnimation } from '@arwes/animated'
 import type { AnimatorInterface } from '@arwes/animator'
 
 interface CreateBackgroundPuffsSettings {
@@ -90,8 +89,8 @@ const createBackgroundPuffs = (props: CreateBackgroundPuffsProps): CreateBackgro
   }
 
   let resizeObserver: ResizeObserver | undefined
-  let transitionControl: AnimationControls | undefined
-  let runningControl: AnimationControls | undefined
+  let transitionControl: Animation | undefined
+  let runningControl: Animation | undefined
   let unsubscribe: (() => void) | undefined
   let runningControlTimeoutId: number | undefined
   let puffsSets: Puff[][] = []
@@ -190,17 +189,18 @@ const createBackgroundPuffs = (props: CreateBackgroundPuffsProps): CreateBackgro
     } = animator.node.settings
 
     runningControl?.cancel()
-    runningControl = animate(
-      (progress: number): void => {
+    runningControl = createAnimation({
+      duration: interval,
+      easing: 'linear',
+      onUpdate(progress) {
         draw(progress)
-        if (progress >= 1) {
-          const emptyDuration = intervalPause * 1_000
-          window.clearTimeout(runningControlTimeoutId)
-          runningControlTimeoutId = window.setTimeout(run, emptyDuration)
-        }
       },
-      { duration: interval, easing: 'linear' }
-    )
+      onFinish() {
+        const emptyDuration = intervalPause * 1_000
+        window.clearTimeout(runningControlTimeoutId)
+        runningControlTimeoutId = window.setTimeout(run, emptyDuration)
+      }
+    })
   }
 
   const setup = (): void => {
@@ -247,11 +247,12 @@ const createBackgroundPuffs = (props: CreateBackgroundPuffsProps): CreateBackgro
             run()
           }
           transitionControl?.cancel()
-          transitionControl = animate(
-            canvas,
-            { opacity: [0, 1] },
-            { duration: node.settings.duration.enter }
-          )
+          transitionControl = createAnimation({
+            duration: node.settings.duration.enter,
+            onUpdate(progress) {
+              canvas.style.opacity = String(progress)
+            }
+          })
           break
         }
 
@@ -266,11 +267,12 @@ const createBackgroundPuffs = (props: CreateBackgroundPuffsProps): CreateBackgro
 
         case 'exiting': {
           transitionControl?.cancel()
-          transitionControl = animate(
-            canvas,
-            { opacity: [1, 0] },
-            { duration: node.settings.duration.exit }
-          )
+          transitionControl = createAnimation({
+            duration: node.settings.duration.exit,
+            onUpdate(progress) {
+              canvas.style.opacity = String(1 - progress)
+            }
+          })
           break
         }
 

@@ -1,4 +1,4 @@
-import { animate } from 'motion'
+import { type Animation, createAnimation } from '@arwes/animated'
 import type { AnimatorInterface } from '@arwes/animator'
 
 interface CreateBackgroundGridLinesSettings {
@@ -42,7 +42,7 @@ const createBackgroundGridLines = (
   }
 
   let resizeObserver: ResizeObserver | undefined
-  let transitionControl: ReturnType<typeof animate> | undefined
+  let transitionControl: Animation | undefined
   let unsubscribe: (() => void) | undefined
 
   const getSettings = (): Required<CreateBackgroundGridLinesSettings> => ({
@@ -141,11 +141,12 @@ const createBackgroundGridLines = (
         case 'entering': {
           setup()
           draw()
-          transitionControl = animate(
-            canvas,
-            { opacity: [0, 1] },
-            { duration: node.settings.duration.enter }
-          )
+          transitionControl = createAnimation({
+            duration: node.settings.duration.enter,
+            onUpdate(progress) {
+              canvas.style.opacity = String(progress)
+            }
+          })
           break
         }
 
@@ -157,11 +158,12 @@ const createBackgroundGridLines = (
         }
 
         case 'exiting': {
-          transitionControl = animate(
-            canvas,
-            { opacity: [1, 0] },
-            { duration: node.settings.duration.exit }
-          )
+          transitionControl = createAnimation({
+            duration: node.settings.duration.exit,
+            onUpdate(progress) {
+              canvas.style.opacity = String(1 - progress)
+            }
+          })
           break
         }
 

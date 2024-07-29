@@ -1,5 +1,4 @@
-import { type AnimationControls, animate } from 'motion'
-import { easing } from '@arwes/animated'
+import { type Easing, type Animation, easing, createAnimation } from '@arwes/animated'
 import type { AnimatorInterface } from '@arwes/animator'
 
 import { getDistanceFromOriginToCornerProgress } from './getDistanceFromOriginToCornerProgress.js'
@@ -41,7 +40,7 @@ interface CreateBackgroundDotsSettings {
   /**
    * Animation easing.
    */
-  easing?: (x: number) => number
+  easing?: Easing
 }
 
 interface CreateBackgroundDotsProps {
@@ -76,7 +75,7 @@ const createBackgroundDots = (props: CreateBackgroundDotsProps): CreateBackgroun
 
   const dpr = Math.min(window.devicePixelRatio || 2, 2)
 
-  let transitionControl: AnimationControls | undefined
+  let transitionControl: Animation | undefined
   let resizeObserver: ResizeObserver | undefined
   let unsubscribe: (() => void) | undefined
 
@@ -226,9 +225,12 @@ const createBackgroundDots = (props: CreateBackgroundDotsProps): CreateBackgroun
         case 'entering': {
           setup()
           transitionControl?.cancel()
-          transitionControl = animate((progress) => draw(true, progress), {
+          transitionControl = createAnimation({
             duration: node.settings.duration.enter,
-            easing: settings.easing
+            easing: settings.easing,
+            onUpdate(progress) {
+              draw(true, progress)
+            }
           })
           break
         }
@@ -243,9 +245,12 @@ const createBackgroundDots = (props: CreateBackgroundDotsProps): CreateBackgroun
         case 'exiting': {
           setup()
           transitionControl?.cancel()
-          transitionControl = animate((progress) => draw(false, progress), {
+          transitionControl = createAnimation({
             duration: node.settings.duration.exit,
-            easing: settings.easing
+            easing: settings.easing,
+            onUpdate(progress) {
+              draw(false, progress)
+            }
           })
           break
         }

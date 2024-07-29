@@ -1,6 +1,5 @@
-import { type AnimationControls, animate } from 'motion'
 import { randomizeList } from '@arwes/tools'
-import { easing } from '@arwes/animated'
+import { type Animation, easing, createAnimation } from '@arwes/animated'
 import type { AnimatorInterface } from '@arwes/animator'
 
 interface CreateBackgroundMovingLinesSettings {
@@ -82,8 +81,8 @@ const createBackgroundMovingLines = (
   }
 
   let resizeObserver: ResizeObserver | undefined
-  let transitionControl: AnimationControls | undefined
-  let runningControl: AnimationControls | undefined
+  let transitionControl: Animation | undefined
+  let runningControl: Animation | undefined
   let unsubscribe: (() => void) | undefined
   let linesSets: MovingLinesLine[][] = []
 
@@ -168,10 +167,11 @@ const createBackgroundMovingLines = (
     } = animator.node.settings
 
     runningControl?.cancel()
-    runningControl = animate(draw, {
+    runningControl = createAnimation({
       duration: interval,
       easing: 'linear',
-      repeat: Infinity
+      repeat: Infinity,
+      onUpdate: draw
     })
   }
 
@@ -215,11 +215,12 @@ const createBackgroundMovingLines = (
           if (runningControl === undefined) {
             run()
           }
-          transitionControl = animate(
-            canvas,
-            { opacity: [0, 1] },
-            { duration: node.settings.duration.enter }
-          )
+          transitionControl = createAnimation({
+            duration: node.settings.duration.enter,
+            onUpdate(progress) {
+              canvas.style.opacity = String(progress)
+            }
+          })
           break
         }
 
@@ -233,11 +234,12 @@ const createBackgroundMovingLines = (
         }
 
         case 'exiting': {
-          transitionControl = animate(
-            canvas,
-            { opacity: [1, 0] },
-            { duration: node.settings.duration.exit }
-          )
+          transitionControl = createAnimation({
+            duration: node.settings.duration.exit,
+            onUpdate(progress) {
+              canvas.style.opacity = String(1 - progress)
+            }
+          })
           break
         }
 
