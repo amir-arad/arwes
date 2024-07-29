@@ -1,4 +1,4 @@
-import { type easing } from '@arwes/animated'
+import type { Easing } from '@arwes/animated'
 
 export type TextTransitionManager = 'sequence' | 'decipher'
 
@@ -9,7 +9,7 @@ export interface TextTransitionProps {
    * Transition duration in seconds.
    */
   duration: number
-  easing?: keyof typeof easing
+  easing?: Easing
   isEntering?: boolean
   hideOnExited?: boolean
   hideOnEntered?: boolean

@@ -1,5 +1,4 @@
-import { animate } from 'motion'
-import { type Animation, createAnimation } from '@arwes/animated'
+import { type Animation, createAnimation, easeAmong } from '@arwes/animated'
 
 import type { TextTransitionProps } from '../types.js'
 import { walkTextNodes } from '../internal/walkTextNodes/index.js'
@@ -66,11 +65,17 @@ const transitionTextSequence = (props: TextTransitionProps): Animation => {
   cloneElement.appendChild(blinkElement)
   contentElement.style.visibility = 'hidden'
 
-  const blinkAnimation = animate(
-    blinkElement,
-    { color: ['transparent', 'inherit', 'transparent'] },
-    { duration: 0.1, easing: 'steps(2, end)', repeat: Infinity }
-  )
+  const blinkAnimationEaseColor = easeAmong([0, 1, 2])
+  const blinkAnimationColors = ['transparent', 'inherit', 'transparent']
+  const blinkAnimation = createAnimation({
+    duration: 0.1,
+    easing: 'linear',
+    repeat: Infinity,
+    onUpdate(progress) {
+      const index = Math.round(blinkAnimationEaseColor(progress))
+      blinkElement.style.setProperty('color', blinkAnimationColors[index])
+    }
+  })
 
   return createAnimation({
     duration,
@@ -80,7 +85,7 @@ const transitionTextSequence = (props: TextTransitionProps): Animation => {
       const newLength = Math.round(progress * length)
       setTextNodesContent(textNodes, texts, newLength)
     },
-    onComplete: () => {
+    onFinish: () => {
       contentElement.style.visibility =
         (isEntering && hideOnEntered) || (!isEntering && hideOnExited) ? 'hidden' : 'visible'
       cloneElement.remove()
