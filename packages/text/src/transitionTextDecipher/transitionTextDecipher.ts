@@ -5,7 +5,8 @@ import type { TextTransitionProps } from '../types.js'
 import { walkTextNodes } from '../internal/walkTextNodes/index.js'
 import { setTextNodesContent } from '../internal/setTextNodesContent/index.js'
 
-const LETTERS = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ>!·$%&/()=?¿≤|@#'
+const LETTERS =
+  '                   abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ>!·$%&/()=?¿≤|@#'
 
 const transitionTextDecipher = (props: TextTransitionProps): Animation => {
   const {
@@ -89,7 +90,7 @@ const transitionTextDecipher = (props: TextTransitionProps): Animation => {
 
       setTextNodesContent(textNodes, textsCurrent, length)
     },
-    onComplete: () => {
+    onFinish: () => {
       contentElement.style.visibility =
         (isEntering && hideOnEntered) || (!isEntering && hideOnExited) ? 'hidden' : 'visible'
       cloneElement.remove()

@@ -43,6 +43,7 @@ const useFrameSVGAssembler = (svgRef: RefObject<SVGSVGElement>): void => {
             line.dataset.length = String(length)
           }
 
+          const easeFlicker = easeAmong([0, 1, 0.5, 1])
           animation = animate(
             (progress) => {
               for (const bg of bgs) {
@@ -50,7 +51,7 @@ const useFrameSVGAssembler = (svgRef: RefObject<SVGSVGElement>): void => {
               }
 
               for (const deco of decos) {
-                deco.style.opacity = String(easeAmong(progress, [0, 1, 0.5, 1]))
+                deco.style.opacity = String(easeFlicker(progress))
               }
 
               for (const line of lines) {
@@ -81,6 +82,7 @@ const useFrameSVGAssembler = (svgRef: RefObject<SVGSVGElement>): void => {
             line.dataset.length = String(length)
           }
 
+          const easeFlicker = easeAmong([1, 0, 0.5, 0])
           animation = animate(
             (progress) => {
               for (const bg of bgs) {
@@ -88,7 +90,7 @@ const useFrameSVGAssembler = (svgRef: RefObject<SVGSVGElement>): void => {
               }
 
               for (const deco of decos) {
-                deco.style.opacity = String(easeAmong(progress, [1, 0, 0.5, 0]))
+                deco.style.opacity = String(easeFlicker(progress))
               }
 
               for (const line of lines) {
