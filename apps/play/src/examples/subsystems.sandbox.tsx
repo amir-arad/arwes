@@ -58,13 +58,13 @@ const Header = (props: HeaderProps): ReactElement => {
         animated={[fade(), transition('y', 20, 0)]}
       >
         <Link path="a" active={path === 'a'} bg="#550" bgActive="#aa0" onLink={onLink}>
-          System A
+          SystemA
         </Link>
         <Link path="b" active={path === 'b'} bg="#707" bgActive="#c0c" onLink={onLink}>
-          System B
+          SystemB
         </Link>
         <Link path="c" active={path === 'c'} bg="#050" bgActive="#0a0" onLink={onLink}>
-          System C
+          SystemC
         </Link>
         <Link path="" active={path === ''} bg="#555" bgActive="#aaa" onLink={onLink}>
           Exit

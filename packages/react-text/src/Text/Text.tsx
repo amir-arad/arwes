@@ -11,8 +11,8 @@ import {
   useEffect
 } from 'react'
 import { cx } from '@arwes/tools'
-import { mergeRefs } from '@arwes/react-tools'
-import { type Animation, type easing } from '@arwes/animated'
+import { memo, mergeRefs } from '@arwes/react-tools'
+import type { Easing, Animation } from '@arwes/animated'
 import { useAnimator } from '@arwes/react-animator'
 import {
   type TextTransitionManager,
@@ -28,18 +28,24 @@ interface TextProps<E extends HTMLElement = HTMLSpanElement> extends HTMLProps<E
   contentStyle?: CSSProperties
   elementRef?: ForwardedRef<E>
   manager?: TextTransitionManager
-  easing?: keyof typeof easing
+  easing?: Easing
   /**
    * If the duration of the animation should be fixed by the parent Animator
    * or dynamic according to its children.
    */
   fixed?: boolean
+  /**
+   * In manager sequence, add a blinking element at the end of the currently
+   * displayed text.
+   */
+  blink?: boolean
+  blinkDuration?: number
   hideOnEntered?: boolean
   hideOnExited?: boolean
   children: ReactNode
 }
 
-const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): ReactElement => {
+const Text = memo(<E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): ReactElement => {
   const {
     as: asProvided = 'p',
     className,
@@ -49,6 +55,8 @@ const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): Rea
     manager,
     easing,
     fixed,
+    blink,
+    blinkDuration,
     hideOnEntered,
     hideOnExited = true,
     elementRef: elementRefProvided,
@@ -61,39 +69,16 @@ const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): Rea
   const contentElementRef = useRef<HTMLSpanElement>(null)
   const transitionControl = useRef<Animation | null>(null)
   const animator = useAnimator()
-  const [isExited, setIsExited] = useState(() => animator?.node.state === 'exited')
-  const [isEntered, setIsEntered] = useState(() => animator?.node.state === 'entered')
-
-  const contentVisibility = useMemo(
-    () =>
-      animator &&
-      ((!isEntered && !isExited) || (hideOnEntered && isEntered) || (hideOnExited && isExited))
-        ? 'hidden'
-        : 'visible',
-    [animator, hideOnEntered, isEntered, hideOnExited, isExited]
-  )
 
   useEffect(() => {
     setChildrenText(contentElementRef.current?.textContent ?? '')
   }, [children])
 
   useEffect(() => {
-    if (!animator) {
-      if (contentElementRef.current) {
-        contentElementRef.current.style.visibility = 'visible'
-      }
-      return
-    }
-
-    // If there is no text, there is nothing to animate.
-    if (!childrenText.length) {
-      return
-    }
-
     const rootElement = elementRef.current
     const contentElement = contentElementRef.current
 
-    if (!rootElement || !contentElement) {
+    if (!animator || !childrenText.length || !rootElement || !contentElement) {
       return
     }
 
@@ -114,10 +99,7 @@ const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): Rea
     }
 
     const transition = (duration: number, isEntering: boolean): void => {
-      const transitioner = manager === 'decipher' ? transitionTextDecipher : transitionTextSequence
-
-      transitionControl.current?.cancel()
-      transitionControl.current = transitioner({
+      const baseOptions = {
         rootElement,
         contentElement,
         duration,
@@ -125,22 +107,28 @@ const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): Rea
         easing,
         hideOnExited,
         hideOnEntered
-      })
+      }
+
+      transitionControl.current?.cancel()
+      if (manager === 'decipher') {
+        transitionControl.current = transitionTextDecipher(baseOptions)
+      } else {
+        transitionControl.current = transitionTextSequence({ ...baseOptions, blink, blinkDuration })
+      }
     }
 
     const unsubscribe = animator.node.subscribe((node) => {
-      setIsEntered(node.state === 'entered')
-      setIsExited(node.state === 'exited')
-
       switch (node.state) {
+        case 'entering': {
+          transition(node.settings.duration.enter, true)
+          break
+        }
         case 'entered': {
+          // If the node is subscribed when the state is entered right away with
+          // an initial animation of entering.
           if (!transitionControl.current) {
             transition(node.settings.duration.enter, true)
           }
-          break
-        }
-        case 'entering': {
-          transition(node.settings.duration.enter, true)
           break
         }
         case 'exiting': {
@@ -156,12 +144,6 @@ const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): Rea
       transitionControl.current = null
     }
   }, [animator, childrenText])
-
-  useEffect(() => {
-    if (contentElementRef.current) {
-      contentElementRef.current.style.visibility = contentVisibility
-    }
-  }, [contentVisibility])
 
   return createElement(
     as,
@@ -181,16 +163,19 @@ const Text = <E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>): Rea
         className: cx('arwes-text-text__content', contentClassName),
         style: {
           position: 'relative',
-          zIndex: 1,
-          display: 'inline-block',
-          ...contentStyle,
-          visibility: contentVisibility
+          visibility: animator
+            ? (animator.node.state === 'exited' && hideOnExited) ||
+              (animator.node.state === 'entered' && hideOnEntered)
+              ? 'hidden'
+              : 'visible'
+            : undefined,
+          ...contentStyle
         }
       },
       children
     )
   )
-}
+})
 
 export type { TextProps }
 export { Text }

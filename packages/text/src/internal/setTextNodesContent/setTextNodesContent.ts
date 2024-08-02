@@ -1,4 +1,9 @@
-const setTextNodesContent = (textNodes: Node[], texts: string[], contentLength: number): void => {
+const setTextNodesContent = (
+  textNodes: Node[],
+  texts: string[],
+  contentLength: number,
+  onCurrentNode?: (textNode: Node) => void
+): void => {
   let markerLength = 0
 
   for (let index = 0; index < textNodes.length; index++) {
@@ -10,16 +15,30 @@ const setTextNodesContent = (textNodes: Node[], texts: string[], contentLength: 
       if (textNode.textContent !== text) {
         textNode.textContent = text
       }
-    } else if (markerLength <= contentLength) {
+
+      if (newMarkerLength === contentLength) {
+        onCurrentNode?.(textNode)
+      }
+    }
+    //
+    else if (markerLength < contentLength) {
       const currentTextNodeLengthPortion = contentLength - markerLength
       const currentTextNodeText = text.substring(0, currentTextNodeLengthPortion)
 
       if (textNode.textContent !== currentTextNodeText) {
         textNode.textContent = currentTextNodeText
       }
-    } else {
+
+      onCurrentNode?.(textNode)
+    }
+    //
+    else {
       if (textNode.textContent !== '') {
         textNode.textContent = ''
+      }
+
+      if (contentLength === 0 && index === 0) {
+        onCurrentNode?.(textNode)
       }
     }
 

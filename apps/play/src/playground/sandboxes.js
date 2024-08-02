@@ -368,8 +368,16 @@ export const sandboxes = [
                 code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.basic.sandbox.tsx')
               },
               {
+                name: 'nested',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.nested.sandbox.tsx')
+              },
+              {
                 name: 'multiple',
                 code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.multiple.sandbox.tsx')
+              },
+              {
+                name: 'blink',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.blink.sandbox.tsx')
               },
               {
                 name: 'managerDecipher',
