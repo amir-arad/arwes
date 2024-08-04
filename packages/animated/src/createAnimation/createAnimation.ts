@@ -18,7 +18,7 @@ interface AnimationProps {
 }
 
 interface Animation {
-  finished: Promise<void>
+  then: (callback?: () => void) => Promise<void>
   isPending: () => boolean
   cancel: () => void
 }
@@ -44,12 +44,14 @@ const createAnimation = (props: AnimationProps): Animation => {
   let currentAnimationFrame: number | null = null
   let start: number
   let slapsed = 0
-  let resolvePromise: () => void
+  let done: () => void
   let repetitions = 0
 
-  const finished = new Promise<void>((resolve) => {
-    resolvePromise = resolve
+  const promise = new Promise<void>((resolve) => {
+    done = resolve
   })
+
+  const then = (callback?: () => void): Promise<void> => promise.then(callback)
 
   const nextAnimation = (timestamp: number): void => {
     if (!start) {
@@ -75,7 +77,7 @@ const createAnimation = (props: AnimationProps): Animation => {
     } else {
       currentAnimationFrame = null
       onFinish?.()
-      resolvePromise()
+      done()
     }
   }
 
@@ -87,13 +89,14 @@ const createAnimation = (props: AnimationProps): Animation => {
     if (currentAnimationFrame !== null) {
       window.cancelAnimationFrame(currentAnimationFrame)
       onCancel?.()
+      done()
       currentAnimationFrame = null
     }
   }
 
   currentAnimationFrame = window.requestAnimationFrame(nextAnimation)
 
-  return { finished, isPending, cancel }
+  return { then, isPending, cancel }
 }
 
 export type { AnimationProps, Animation }
