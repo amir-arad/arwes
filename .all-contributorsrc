@@ -56,6 +56,13 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/18525442?v=4",
       "profile": "https://github.com/TheNetAdmin",
       "contributions": ["bug", "code"]
+    },
+    {
+      "login": "Frityet",
+      "name": "Frityet",
+      "avatar_url": "https://avatars.githubusercontent.com/u/25426233?v=4",
+      "profile": "https://www.frityet.net/",
+      "contributions": ["financial"]
     }
   ],
   "contributorsPerLine": 5

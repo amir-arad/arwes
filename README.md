@@ -181,6 +181,7 @@ Check out the [ARWES Project Boards](https://github.com/orgs/arwes/projects).
     <tr>
       <td align="center" valign="top" width="20%"><a href="https://github.com/StephenCodesThings"><img src="https://avatars.githubusercontent.com/u/126058?v=4?s=140" width="140px;" alt="Stephen Bennett"/><br /><sub><b>Stephen Bennett</b></sub></a><br /><a href="https://github.com/arwes/arwes/issues?q=author%3AStephenCodesThings" title="Bug reports">🐛</a> <a href="https://github.com/arwes/arwes/commits?author=StephenCodesThings" title="Code">💻</a></td>
       <td align="center" valign="top" width="20%"><a href="https://github.com/TheNetAdmin"><img src="https://avatars.githubusercontent.com/u/18525442?v=4?s=140" width="140px;" alt="Zixuan Wang"/><br /><sub><b>Zixuan Wang</b></sub></a><br /><a href="https://github.com/arwes/arwes/issues?q=author%3ATheNetAdmin" title="Bug reports">🐛</a> <a href="https://github.com/arwes/arwes/commits?author=TheNetAdmin" title="Code">💻</a></td>
+      <td align="center" valign="top" width="20%"><a href="https://www.frityet.net/"><img src="https://avatars.githubusercontent.com/u/25426233?v=4?s=140" width="140px;" alt="Frityet"/><br /><sub><b>Frityet</b></sub></a><br /><a href="#financial-Frityet" title="Financial">💵</a></td>
     </tr>
   </tbody>
 </table>
@@ -190,11 +191,11 @@ Check out the [ARWES Project Boards](https://github.com/orgs/arwes/projects).
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors)
-specification.
+_This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors)
+specification._
 
 ## Want to contribute?
 
 The project is not fully open for sustancial contributions yet until the
 first beta version is released. Follow the development on
-[Discord](https://discord.gg/s5sbTkw) and [Twitter](https://twitter.com/arwesjs).
+[Discord](https://discord.gg/s5sbTkw) and [X (Twitter)](https://x.com/arwesjs).
