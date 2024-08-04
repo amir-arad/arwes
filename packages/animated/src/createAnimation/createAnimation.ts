@@ -21,6 +21,7 @@ interface Animation {
   then: (callback?: () => void) => Promise<void>
   isPending: () => boolean
   cancel: () => void
+  complete: () => void
 }
 
 const createAnimation = (props: AnimationProps): Animation => {
@@ -88,15 +89,25 @@ const createAnimation = (props: AnimationProps): Animation => {
   const cancel = (): void => {
     if (currentAnimationFrame !== null) {
       window.cancelAnimationFrame(currentAnimationFrame)
+      currentAnimationFrame = null
       onCancel?.()
       done()
+    }
+  }
+
+  const complete = (): void => {
+    if (currentAnimationFrame !== null) {
+      window.cancelAnimationFrame(currentAnimationFrame)
       currentAnimationFrame = null
+      onUpdate(ease(direction === 'reverse' ? 0 : 1))
+      onFinish?.()
+      done()
     }
   }
 
   currentAnimationFrame = window.requestAnimationFrame(nextAnimation)
 
-  return { then, isPending, cancel }
+  return { then, isPending, cancel, complete }
 }
 
 export type { AnimationProps, Animation }

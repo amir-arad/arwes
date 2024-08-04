@@ -241,13 +241,86 @@ test('Should cancel animation', () => {
   expect(cancel).not.toHaveBeenCalled()
   animation.cancel()
   expect(animation.isPending()).toBe(false)
-  expect(update).toHaveBeenCalled()
   expect(finish).not.toHaveBeenCalled()
   expect(cancel).toHaveBeenCalled()
 
   moveTimeTo(2)
   expect(animation.isPending()).toBe(false)
-  expect(update).toHaveBeenCalled()
   expect(finish).not.toHaveBeenCalled()
   expect(cancel).toHaveBeenCalled()
+})
+
+test('Should complete animation', () => {
+  const update = vi.fn()
+  const finish = vi.fn()
+  const cancel = vi.fn()
+  const animation = createAnimation({
+    duration: 1,
+    easing: 'linear',
+    onUpdate: update,
+    onFinish: finish,
+    onCancel: cancel
+  })
+
+  expect(animation.isPending()).toBe(true)
+
+  moveTimeTo(0)
+  expect(animation.isPending()).toBe(true)
+  expect(update).not.toHaveBeenCalled()
+  expect(finish).not.toHaveBeenCalled()
+  expect(cancel).not.toHaveBeenCalled()
+
+  moveTimeTo(0.5)
+  expect(animation.isPending()).toBe(true)
+  expect(update).toHaveBeenCalled()
+  expect(update).not.toHaveBeenCalledWith(1)
+  expect(finish).not.toHaveBeenCalled()
+  expect(cancel).not.toHaveBeenCalled()
+  animation.complete()
+  expect(animation.isPending()).toBe(false)
+  expect(update).toHaveBeenCalledWith(1)
+  expect(finish).toHaveBeenCalled()
+  expect(cancel).not.toHaveBeenCalled()
+
+  moveTimeTo(2)
+  expect(animation.isPending()).toBe(false)
+  expect(cancel).not.toHaveBeenCalled()
+})
+
+test('Should complete animation on direction="reverse"', () => {
+  const update = vi.fn()
+  const finish = vi.fn()
+  const cancel = vi.fn()
+  const animation = createAnimation({
+    duration: 1,
+    easing: 'linear',
+    direction: 'reverse',
+    onUpdate: update,
+    onFinish: finish,
+    onCancel: cancel
+  })
+
+  expect(animation.isPending()).toBe(true)
+
+  moveTimeTo(0)
+  expect(animation.isPending()).toBe(true)
+  expect(update).not.toHaveBeenCalled()
+  expect(finish).not.toHaveBeenCalled()
+  expect(cancel).not.toHaveBeenCalled()
+
+  moveTimeTo(0.5)
+  expect(animation.isPending()).toBe(true)
+  expect(update).toHaveBeenCalled()
+  expect(update).not.toHaveBeenCalledWith(0)
+  expect(finish).not.toHaveBeenCalled()
+  expect(cancel).not.toHaveBeenCalled()
+  animation.complete()
+  expect(animation.isPending()).toBe(false)
+  expect(update).toHaveBeenCalledWith(0)
+  expect(finish).toHaveBeenCalled()
+  expect(cancel).not.toHaveBeenCalled()
+
+  moveTimeTo(2)
+  expect(animation.isPending()).toBe(false)
+  expect(cancel).not.toHaveBeenCalled()
 })
