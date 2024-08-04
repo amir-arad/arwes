@@ -23,13 +23,8 @@ const transitionTextSequence = (props: TransitionTextSequenceProps): Animation =
     hideOnEntered
   } = filterProps(props)
 
-  // If no valid elements are provided, return an void animation for type safety.
   if (!rootElement || !contentElement) {
-    return {
-      finished: Promise.resolve(),
-      isPending: () => false,
-      cancel: () => {}
-    }
+    throw new Error('Arwes transitionTextSequence() requires valid DOM elements.')
   }
 
   let blinkElement: HTMLElement | undefined

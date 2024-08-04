@@ -126,9 +126,15 @@ const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
             if (animation) {
               animationsRef.current.add(animation)
 
-              void animation.finished.then(() => {
-                animationsRef.current.delete(animation)
-              })
+              if (animation.then) {
+                void animation.then(() => {
+                  animationsRef.current.delete(animation)
+                })
+              } else if (animation.finished) {
+                void animation.finished.then(() => {
+                  animationsRef.current.delete(animation)
+                })
+              }
             }
           }
           //

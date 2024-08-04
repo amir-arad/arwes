@@ -59,9 +59,13 @@ export interface AnimatedTransitionFunctionConfig {
 
 export interface AnimatedTransitionFunctionReturn {
   /**
-   * A promise which resolves when the animation is finished.
+   * A promise which resolves when the animation is finished/cancelled.
    */
-  finished: Promise<void>
+  then?: (callback?: () => void) => Promise<void>
+  /**
+   * A promise which resolves when the animation is finished/cancelled.
+   */
+  finished?: Promise<void>
   /**
    * Cancel the animation inmediately and remove its underlying animated properties
    * from the element.

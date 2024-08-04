@@ -19,13 +19,8 @@ const transitionTextDecipher = (props: TextTransitionProps): Animation => {
     hideOnEntered
   } = filterProps(props)
 
-  // If no valid elements are provided, return an void animation for type safety.
   if (!rootElement || !contentElement) {
-    return {
-      finished: Promise.resolve(),
-      isPending: () => false,
-      cancel: () => {}
-    }
+    throw new Error('Arwes transitionTextDecipher() requires valid DOM elements.')
   }
 
   const cloneElement = contentElement.cloneNode(true) as HTMLElement
