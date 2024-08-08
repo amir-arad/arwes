@@ -3,6 +3,7 @@
 export * from './Background'
 export * from './ArwesLogoIcon'
 export * from './ArwesLogoType'
+export * from './Button'
 export * from './ButtonSimple'
 export * from './Header'
 export * from './Menu'

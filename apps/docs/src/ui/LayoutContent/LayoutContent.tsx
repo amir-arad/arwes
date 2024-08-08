@@ -4,11 +4,13 @@ import {
   Illuminator,
   styleFrameClipOctagon,
   memo,
-  cx
+  cx,
+  Animator,
+  BleepsOnAnimator
 } from '@arwes/react'
-
-import { theme } from '@/config'
 import { useMedia } from 'react-use'
+
+import { type BleepNames, theme } from '@/config'
 
 type LayoutContentProps = {
   className?: string
@@ -23,57 +25,60 @@ const LayoutContent = memo((props: LayoutContentProps): JSX.Element => {
   const cornerSquareSize = isMD ? 4 : 2
 
   return (
-    <div
-      className={cx(
-        'relative flex-1 flex flex-col justify-start items-center w-full min-w-0 min-h-0',
-        className
-      )}
-    >
+    <Animator combine manager="stagger" duration={{ stagger: 0.05 }}>
       <div
-        role="presentation"
-        className="absolute inset-0 flex p-4"
-        style={{
-          clipPath: styleFrameClipOctagon({ squareSize: theme.space(cornerSquareSize) })
-        }}
+        className={cx(
+          'relative flex-1 flex flex-col justify-start items-center w-full min-w-0 min-h-0',
+          className
+        )}
       >
-        <Animated
-          className="relative overflow-hidden flex-1 mx-auto w-full max-w-[50rem]"
-          animated={['flicker']}
+        <div
+          role="presentation"
+          className="absolute inset-0 flex p-4"
+          style={{
+            clipPath: styleFrameClipOctagon({ squareSize: theme.space(cornerSquareSize) })
+          }}
         >
-          <FrameSVGOctagon
-            style={{
-              // @ts-expect-error css variables
-              '--arwes-frames-bg-color': theme.colors.primary.main(9, { alpha: 0.1 }),
-              '--arwes-frames-line-color': theme.colors.primary.main(9, { alpha: 0.5 })
-            }}
-            squareSize={theme.spacen(cornerSquareSize)}
-          />
-          {isMD && (
-            <Illuminator
-              color={theme.colors.primary.main(5, { alpha: 0.1 })}
-              size={theme.spacen(100)}
-            />
-          )}
-        </Animated>
-      </div>
+          <Animator>
+            <Animated
+              className="relative overflow-hidden flex-1 mx-auto w-full max-w-[50rem]"
+              animated={['flicker']}
+            >
+              <FrameSVGOctagon
+                style={{
+                  // @ts-expect-error css variables
+                  '--arwes-frames-bg-color': theme.colors.primary.main(9, { alpha: 0.1 }),
+                  '--arwes-frames-line-color': theme.colors.primary.main(9, { alpha: 0.5 })
+                }}
+                squareSize={theme.spacen(cornerSquareSize)}
+              />
+              {isMD && (
+                <Illuminator
+                  color={theme.colors.primary.main(5, { alpha: 0.1 })}
+                  size={theme.spacen(100)}
+                />
+              )}
+            </Animated>
+          </Animator>
+        </div>
 
-      <Animated
-        className="relative flex-1 flex justify-center p-4 w-full min-w-0 min-h-0"
-        animated={[['y', theme.space(4), 0]]}
-      >
-        <div className="flex-1 overflow-y-auto flex justify-center w-full min-w-0 min-h-0">
-          <div
-            className={cx(
-              'flex flex-col mb-auto p-4 w-full min-w-0 min-h-0 max-w-[50rem]',
-              'md:p-8',
-              'xl:p-12'
-            )}
-          >
-            {children}
+        <div className="relative flex-1 flex justify-center py-4 w-full min-w-0 min-h-0">
+          <div className="flex-1 overflow-y-auto flex justify-center px-4 w-full min-w-0 min-h-0">
+            <main
+              className={cx(
+                'flex flex-col mb-auto p-4 w-full min-w-0 min-h-0 max-w-[50rem]',
+                'md:p-8',
+                'xl:p-12'
+              )}
+            >
+              <BleepsOnAnimator<BleepNames> transitions={{ entering: 'type' }} />
+
+              {children}
+            </main>
           </div>
         </div>
-      </Animated>
-    </div>
+      </div>
+    </Animator>
   )
 })
 

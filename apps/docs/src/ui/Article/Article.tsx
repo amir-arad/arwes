@@ -11,7 +11,11 @@ type ArticleProps = {
 const Article = memo((props: ArticleProps): JSX.Element => {
   const { className, animated, children } = props
   return (
-    <Animated as="article" className={cx(styles.root, className)} animated={animated}>
+    <Animated
+      as="article"
+      className={cx(styles.root, className)}
+      animated={[...(Array.isArray(animated) ? animated : [animated])]}
+    >
       {children}
     </Animated>
   )

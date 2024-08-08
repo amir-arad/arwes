@@ -3,22 +3,22 @@ import {
   type AnimatedProp,
   memo,
   Animated,
-  FrameSVGCorners,
+  FrameSVGOctagon,
   Illuminator,
   useBleeps,
   cx
 } from '@arwes/react'
 
 import { type BleepNames, theme } from '@/config'
-import styles from './ButtonSimple.module.css'
+import styles from './Button.module.css'
 
-interface ButtonSimpleProps extends HTMLProps<HTMLButtonElement> {
+interface ButtonProps extends HTMLProps<HTMLButtonElement> {
   className?: string
   animated?: AnimatedProp
   children: ReactNode
 }
 
-const ButtonSimple = memo((props: ButtonSimpleProps): JSX.Element => {
+const Button = memo((props: ButtonProps): JSX.Element => {
   const { className, animated, children, ...otherProps } = props
 
   const bleeps = useBleeps<BleepNames>()
@@ -30,10 +30,9 @@ const ButtonSimple = memo((props: ButtonSimpleProps): JSX.Element => {
       className={cx(
         'relative',
         'group flex',
-        'uppercase font-cta text-size-11',
+        'uppercase font-cta text-size-10',
         'select-none cursor-pointer transition-[color] ease-out duration-200',
         'text-secondary-main-2',
-        'md:text-size-10',
         'xl:text-size-9',
         'hover:text-secondary-high-2',
         styles.root,
@@ -48,27 +47,30 @@ const ButtonSimple = memo((props: ButtonSimpleProps): JSX.Element => {
         bleeps.click?.play()
       }}
     >
-      <div role="presentation" className="absolute inset-0.5 overflow-hidden">
+      <div role="presentation" className="absolute overflow-hidden">
         <Illuminator
           size={theme.spacen(60)}
           color={theme.colors.secondary.main(3, { alpha: 0.2 })}
         />
       </div>
-      <FrameSVGCorners
-        className="opacity-30 transition-opacity ease-out duration-200 group-hover:opacity-70"
+      <FrameSVGOctagon
+        className="opacity-70 transition-opacity ease-out duration-200 group-hover:opacity-100"
         style={{
           filter: `drop-shadow(0 0 ${theme.space(2)} ${theme.colors.secondary.main(3)})`,
           // @ts-expect-error css variables
-          '--arwes-frames-bg-color': 'transparent'
+          '--arwes-frames-bg-color': theme.colors.secondary.main(2, { alpha: 0.1 }),
+          '--arwes-frames-line-color': theme.colors.secondary.main(2, { alpha: 0.5 })
         }}
-        cornerLength={theme.spacen(2)}
+        leftBottom={false}
+        rightTop={false}
+        squareSize={theme.spacen(2)}
       />
       <div
         className={cx(
           'relative',
-          'flex-1 flex flex-row justify-center items-center gap-1.5',
-          'px-3 py-0 leading-[1.75rem]',
-          'sm:px-4 sm:gap-2 sm:leading-[2rem]',
+          'flex-1 flex flex-row justify-center items-center',
+          'gap-2 px-6 leading-[2rem]',
+          'xl:px-8',
           styles.content
         )}
       >
@@ -78,4 +80,4 @@ const ButtonSimple = memo((props: ButtonSimpleProps): JSX.Element => {
   )
 })
 
-export { ButtonSimple }
+export { Button }

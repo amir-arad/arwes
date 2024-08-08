@@ -41,7 +41,8 @@ export const tailwind: Config = {
           main: createPalette(theme.colors.secondary.main, 13),
           high: createPalette(theme.colors.secondary.high, 13)
         },
-        neutral: createPalette(theme.colors.neutral, 13)
+        neutral: createPalette(theme.colors.neutral, 13),
+        error: createPalette(theme.colors.error, 13)
       },
       dropShadow: {
         'size-1': `0 0 0.0625rem var(--tw-shadow-color)`,

@@ -2,6 +2,7 @@ import React, { type ReactElement, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Animator } from '@arwes/react-animator'
 import { Animated } from '@arwes/react-animated'
+import { spring } from 'motion'
 
 const Sandbox = (): ReactElement => {
   const [active, setActive] = useState(true)
@@ -17,8 +18,8 @@ const Sandbox = (): ReactElement => {
         style={{ width: 50, height: 50, backgroundColor: '#777' }}
         animated={[
           ['opacity', 0, 1],
-          ['x', 0, 100],
-          ['background', '#ff0', '#0ff']
+          ['background', '#ff0', '#0ff', '#f0f', 'linear'],
+          ['x', 0, 100, 0, spring()]
         ]}
       />
     </Animator>

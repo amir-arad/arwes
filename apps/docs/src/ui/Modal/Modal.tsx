@@ -6,7 +6,8 @@ import {
   Animator,
   FrameSVGKranox,
   useBleeps,
-  useFrameSVGAssembler
+  useFrameSVGAssembler,
+  Text
 } from '@arwes/react'
 import { Xmark as IconClose } from 'iconoir-react'
 
@@ -62,9 +63,13 @@ const Modal = memo((props: ModalProps): JSX.Element => {
           <Animator>
             <Animated as="header" className="relative flex px-10" animated={['flicker']}>
               <div className="flex-1 flex flex-row gap-4 justify-between items-center border-b pb-2 border-primary-main-9">
-                <h1 className={cx('font-header text-size-6 text-primary-main-3', 'sm:text-size-5')}>
+                <Text
+                  as="h1"
+                  className={cx('font-header text-size-6 text-primary-main-3', 'sm:text-size-5')}
+                  fixed
+                >
                   {header}
-                </h1>
+                </Text>
 
                 <button
                   className={cx(
