@@ -14,12 +14,12 @@ const Sandbox = (): ReactElement => {
   return (
     <Animator active={active} initialState="entered">
       <Animated
-        style={{ margin: 10, width: 40, height: 20, backgroundColor: '#777' }}
+        style={{ margin: 10, width: 40, height: 20, background: '#777' }}
         animated={{
-          initialStyle: { x: 100, backgroundColor: '#ff0' },
+          initialStyle: { x: 100, background: '#ff0' },
           transitions: {
-            entering: { x: [0, 100], backgroundColor: ['#0ff', '#ff0'] },
-            exiting: { x: [100, 0], backgroundColor: ['#ff0', '#0ff'] }
+            entering: { x: [0, 100], background: ['#0ff', '#ff0'] },
+            exiting: { x: [100, 0], background: ['#ff0', '#0ff'] }
           }
         }}
         hideOnExited={false}

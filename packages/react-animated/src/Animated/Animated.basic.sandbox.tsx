@@ -1,3 +1,7 @@
+// The `<Animated/>` component simplifies the definition of animations
+// based on the closest parent `<Animator/>` state.
+// It uses [Motion](https://motion.dev) for the animation functionalities.
+
 import React, { type ReactElement, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Animator } from '@arwes/react-animator'
@@ -7,9 +11,14 @@ const Item = (): ReactElement => {
   return (
     <Animator>
       <Animated
+        as="div" // Default element.
         style={{ margin: 10, width: 40, height: 20, background: '#777' }}
+        // Animations definitions.
         animated={{
+          // If the animator is enabled, these will be the initial styles
+          // rendered in the HTML/SVG element.
           initialStyle: { background: '#fff' },
+          // THe animation for every animator transition.
           transitions: {
             // Every animation also accepts the settings:
             // - duration: number
@@ -17,8 +26,8 @@ const Item = (): ReactElement => {
             // - delay: number | motion/stagger(value: number)
             // - easing: [name] | (x: number) => number
             // - direction: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'
-            entering: { x: [0, 100], background: '#ff0' },
-            exiting: { x: [100, 0], background: '#0ff' }
+            entering: { x: 100, background: '#ff0' },
+            exiting: { x: 0, background: '#0ff' }
           }
         }}
       />

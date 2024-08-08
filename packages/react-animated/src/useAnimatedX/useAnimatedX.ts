@@ -122,7 +122,7 @@ const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement 
           // TODO: Apply final animation state to element if duration is 0.
           // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
           if (Number.isFinite(duration) && (duration as number) <= 0) {
-            throw new Error('Arwes useAnimated() animation duration must be greater than 0.')
+            throw new Error('ARWES useAnimated() animation duration must be greater than 0.')
           }
 
           try {
@@ -141,7 +141,7 @@ const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement 
               animationsRef.current.delete(animation)
             })
           } catch (err) {
-            throw new Error(`Arwes useAnimatedX() animation error:\n${String(err)}`)
+            throw new Error(`ARWES useAnimatedX() animation error:\n${String(err)}`)
           }
         }
       })

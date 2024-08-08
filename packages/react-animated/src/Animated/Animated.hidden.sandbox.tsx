@@ -15,6 +15,7 @@ const Item = (): ReactElement => {
             exiting: { x: [100, 0], background: '#0ff' }
           }
         }}
+        // By default the element is hidden on animator state exited.
         hideOnExited={false}
         hideOnEntered={false}
       />

@@ -11,13 +11,11 @@ const Item = (props: ItemProps): ReactElement => {
   return (
     <Animator>
       <Animated
-        style={{ margin: 10, width: 40, height: 20, backgroundColor: '#777' }}
-        animated={{
-          transitions: {
-            entering: { x: [0, 50], backgroundColor: ['#0ff', '#ff0'] },
-            exiting: { x: [50, 0], backgroundColor: ['#ff0', '#0ff'] }
-          }
-        }}
+        style={{ margin: 10, width: 40, height: 20, background: '#777' }}
+        animated={[
+          ['x', 0, 50],
+          ['background', '#0ff', '#ff0']
+        ]}
         hideOnExited={false}
       />
       <div style={{ marginLeft: 20 }}>{props.children}</div>

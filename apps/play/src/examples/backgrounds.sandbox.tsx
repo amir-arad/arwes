@@ -15,7 +15,6 @@ const Sandbox = (): ReactElement => {
     <Animator active={active} duration={{ enter: 1, interval: 10 }}>
       <div
         style={{
-          zIndex: 0,
           position: 'absolute',
           inset: 0,
           backgroundColor: '#000906',

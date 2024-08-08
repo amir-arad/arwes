@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react'
-import { Animator, Animated, cx, flicker, memo, styleFrameClipOctagon } from '@arwes/react'
+import { Animator, Animated, cx, memo, styleFrameClipOctagon } from '@arwes/react'
 import { Heart, Github, X, Discord } from 'iconoir-react'
 import Link from 'next/link'
 
@@ -26,7 +26,7 @@ const MobileLink = memo((props: MobileLinkProps): JSX.Element => {
         style={{
           clipPath: styleFrameClipOctagon({ squareSize: theme.space(2) })
         }}
-        animated={flicker()}
+        animated={['flicker']}
       >
         <Link
           className="flex-1 flex justify-center items-center p-2 text-size-5 text-primary-main-3"

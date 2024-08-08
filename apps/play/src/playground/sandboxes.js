@@ -204,15 +204,6 @@ export const sandboxes = [
         name: '@arwes/react-animated',
         children: [
           {
-            name: 'useAnimated',
-            children: [
-              {
-                name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/useAnimated/useAnimated.basic.sandbox.tsx')
-              }
-            ]
-          },
-          {
             name: 'Animated',
             children: [
               {
@@ -238,15 +229,11 @@ export const sandboxes = [
             ]
           },
           {
-            name: 'useAnimatedX',
+            name: 'useAnimated',
             children: [
               {
                 name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/useAnimatedX/useAnimatedX.basic.sandbox.tsx')
-              },
-              {
-                name: 'hideOnStates',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/useAnimatedX/useAnimatedX.hideOnStates.sandbox.tsx')
+                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/useAnimated/useAnimated.basic.sandbox.tsx')
               }
             ]
           },
@@ -260,6 +247,19 @@ export const sandboxes = [
               {
                 name: 'disabled',
                 code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/AnimatedX/AnimatedX.disabled.sandbox.tsx')
+              }
+            ]
+          },
+          {
+            name: 'useAnimatedX',
+            children: [
+              {
+                name: 'basic',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/useAnimatedX/useAnimatedX.basic.sandbox.tsx')
+              },
+              {
+                name: 'hideOnStates',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/useAnimatedX/useAnimatedX.hideOnStates.sandbox.tsx')
               }
             ]
           },
@@ -653,12 +653,12 @@ export const sandboxes = [
     name: 'Examples',
     children: [
       {
-        name: 'backgrounds',
-        code: require('!raw-loader?esModule=false!../examples/backgrounds.sandbox.tsx')
-      },
-      {
         name: 'button',
         code: require('!raw-loader?esModule=false!../examples/button.sandbox.tsx')
+      },
+      {
+        name: 'backgrounds',
+        code: require('!raw-loader?esModule=false!../examples/backgrounds.sandbox.tsx')
       },
       {
         name: 'alert',

@@ -1,11 +1,4 @@
-import React, {
-  type ReactElement,
-  type ReactNode,
-  type MouseEvent,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import React, { type ReactNode, type MouseEvent, useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
   createThemeUnit,
@@ -15,8 +8,8 @@ import {
   Animated,
   AnimatedProp,
   useFrameSVGAssembler,
-  fade,
   FrameSVGOctagon,
+  Illuminator,
   BleepsProviderSettings,
   BleepsProvider,
   useBleeps,
@@ -31,10 +24,10 @@ const addStyles = (css: string) => {
 }
 
 const theme = {
-  // REMs as HTML unit.
+  // HTML unit as REMs.
   space: createThemeUnit((index) => `${index * 0.25}rem`),
 
-  // Pixels as number unit.
+  // Number unit as pixels.
   spacen: createThemeMultiplier((index) => index * 4),
 
   colors: {
@@ -43,7 +36,7 @@ const theme = {
     secondary: createThemeColor((i) => [60, 100, 100 - i * 10])
   },
 
-  fontFamily: 'Tomorrow'
+  fontFamily: 'Tomorrow, sans-serif'
 }
 
 addStyles(`
@@ -60,7 +53,7 @@ addStyles(`
   }
 `)
 
-type BleepsNames = 'click'
+type BleepsNames = 'hover' | 'click'
 
 // WEBM for Chromium and Firefox browsers and MP3 for Safari and iOS.
 const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
@@ -68,6 +61,12 @@ const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
     volume: 0.9
   },
   bleeps: {
+    hover: {
+      sources: [
+        { src: '/assets/sounds/hover.webm', type: 'audio/webm' },
+        { src: '/assets/sounds/hover.mp3', type: 'audio/mpeg' }
+      ]
+    },
     click: {
       sources: [
         { src: '/assets/sounds/click.webm', type: 'audio/webm' },
@@ -85,7 +84,7 @@ type ButtonProps = {
   children: ReactNode
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
 }
-const Button = memo((props: ButtonProps): ReactElement => {
+const Button = memo((props: ButtonProps): JSX.Element => {
   const { className, color = 'primary', variant = 'fill', animated, children, onClick } = props
 
   const bleeps = useBleeps<BleepsNames>()
@@ -97,12 +96,18 @@ const Button = memo((props: ButtonProps): ReactElement => {
     <Animated<HTMLButtonElement>
       as="button"
       className={cx('button', `button-${color}`, `button-${variant}`, className)}
-      animated={[fade(), ...(Array.isArray(animated) ? animated : [animated])]}
+      animated={['fade', ...(Array.isArray(animated) ? animated : [animated])]}
+      onMouseEnter={() => {
+        bleeps.hover?.play()
+      }}
       onClick={(event) => {
         bleeps.click?.play()
         onClick?.(event)
       }}
     >
+      <div className="button-back">
+        <Illuminator size={theme.spacen(50)} color={theme.colors[color](3, { alpha: 0.2 })} />
+      </div>
       <FrameSVGOctagon elementRef={frameRef} style={{ zIndex: 0 }} squareSize={theme.spacen(2)} />
       <div className="button-content">{children}</div>
     </Animated>
@@ -128,6 +133,12 @@ addStyles(`
     transition-property: opacity, color;
     transition-duration: 0.2s;
     transition-timing-function: ease-out;
+  }
+
+  .button-back {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
   }
 
   .button-content {
@@ -195,9 +206,8 @@ addStyles(`
 `)
 
 const IconExample = memo(
-  (props: { className?: string }): ReactElement => (
+  (): JSX.Element => (
     <svg
-      className={props.className}
       width="1.25em"
       height="1.25em"
       viewBox="0 0 24 24"
@@ -210,60 +220,25 @@ const IconExample = memo(
   )
 )
 
-const Sandbox = (): ReactElement => {
+const Sandbox = (): JSX.Element => {
   const [active, setActive] = useState(true)
 
   useEffect(() => {
-    const tid = setInterval(() => setActive(!active), active ? 5_000 : 1_000)
+    const tid = setInterval(() => setActive(!active), active ? 3_000 : 1_000)
     return () => clearTimeout(tid)
   }, [active])
 
   return (
     <BleepsProvider {...bleepsSettings}>
-      <Animator active={active} combine manager="stagger" duration={{ stagger: 0.1 }}>
-        <div className="group">
-          <div className="group-row">
-            <Animator>
-              <Button>
-                Button <IconExample />
-              </Button>
-            </Animator>
-            <Animator>
-              <Button variant="outline">
-                Button <IconExample />
-              </Button>
-            </Animator>
-          </div>
-          <div className="group-row">
-            <Animator>
-              <Button color="secondary">
-                Button <IconExample />
-              </Button>
-            </Animator>
-            <Animator>
-              <Button color="secondary" variant="outline">
-                Button <IconExample />
-              </Button>
-            </Animator>
-          </div>
+      <Animator active={active}>
+        <div style={{ margin: '1rem' }}>
+          <Button color="secondary" variant="fill">
+            My Button <IconExample />
+          </Button>
         </div>
       </Animator>
     </BleepsProvider>
   )
 }
-addStyles(`
-  .group {
-    display: flex;
-    flex-direction: column;
-    padding: ${theme.space(4)};
-    gap: ${theme.space(4)};
-  }
-  .group-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: ${theme.space(4)};
-  }
-`)
 
 createRoot(document.querySelector('#root')!).render(<Sandbox />)

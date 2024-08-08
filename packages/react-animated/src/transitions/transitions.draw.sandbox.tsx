@@ -1,7 +1,7 @@
 import React, { type ReactElement, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Animator } from '@arwes/react-animator'
-import { Animated, draw } from '@arwes/react-animated'
+import { Animated } from '@arwes/react-animated'
 
 const Sandbox = (): ReactElement => {
   const [active, setActive] = useState(true)
@@ -26,7 +26,7 @@ const Sandbox = (): ReactElement => {
           strokeWidth="2"
           fill="none"
           d="M0,1 H100 V50 H200"
-          animated={draw()}
+          animated={['draw']}
         />
       </svg>
     </Animator>

@@ -5,8 +5,8 @@
 }
 
 .frame [data-name='bg'] {
-  @apply fill-primary-main-12/10
-    stroke-1 stroke-primary-main-9/50;
+  @apply fill-primary-main-12/80
+    stroke-[1] stroke-primary-main-9/50;
 }
 
 .frame [data-name='line'] {

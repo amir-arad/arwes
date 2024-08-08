@@ -1,0 +1,57 @@
+.root {
+}
+
+.root h1,
+.root h2,
+.root h3,
+.root h4,
+.root h5,
+.root h6 {
+  @apply font-header font-light text-pretty text-primary-main-3;
+}
+.root h1 {
+  @apply text-size-4;
+}
+.root h2 {
+  @apply text-size-5;
+}
+.root h3 {
+  @apply text-size-6;
+}
+.root h4 {
+  @apply text-size-7;
+}
+
+.root p {
+  @apply font-body font-light text-pretty text-size-8 text-primary-low-2;
+}
+
+.root a {
+  @apply text-secondary-low-2 transition-all ease-out duration-200;
+}
+
+.root a:hover {
+  @apply text-secondary-high-3;
+}
+
+.root hr {
+  @apply relative border-t border-primary-main-9/50 w-full h-0;
+}
+
+.root blockquote {
+  @apply border-l-2 border-primary-main-3 pl-4 pr-2 py-2 bg-primary-main-3/10;
+
+  clip-path: polygon(
+    0 0,
+    calc(100% - 0.5rem) 0,
+    100% 0.5rem,
+    100% calc(100% - 0.5rem),
+    calc(100% - 0.5rem) 100%,
+    0 100%
+  );
+}
+
+.root code,
+.root pre {
+  @apply font-code font-normal;
+}

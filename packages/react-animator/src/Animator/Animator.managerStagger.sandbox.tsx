@@ -1,14 +1,17 @@
 import React, { type ReactElement, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Animator } from '@arwes/react-animator'
-import { Animated, transition } from '@arwes/react-animated'
+import { Animated } from '@arwes/react-animated'
 
 const Item = (): ReactElement => {
   return (
     <Animator>
       <Animated
         style={{ margin: 10, width: 40, height: 20, background: '#777' }}
-        animated={[transition('x', 0, 100), transition('background', '#0ff', '#ff0')]}
+        animated={[
+          ['x', 0, 100],
+          ['background', '#0ff', '#ff0']
+        ]}
         hideOnExited={false}
       />
     </Animator>

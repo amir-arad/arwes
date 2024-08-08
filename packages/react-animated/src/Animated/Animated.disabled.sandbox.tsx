@@ -8,6 +8,7 @@ const Sandbox = (): ReactElement => {
     <Animator disabled>
       <Animated
         style={{ margin: 10, width: 40, height: 40, background: '#777' }}
+        // The animations are ignored if the animator is disabled/dismissed.
         animated={{
           initialStyle: { x: 0, background: '#fff' },
           transitions: {

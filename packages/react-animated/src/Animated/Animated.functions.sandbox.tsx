@@ -13,9 +13,9 @@ const Item = (): ReactElement => {
           initialStyle: { background: '#fff' },
           transitions: {
             entering: ({ element, duration }) =>
-              animate(element, { x: [0, 100], background: '#ff0' }, { duration }),
+              animate(element, { x: 100, background: '#ff0' }, { duration }),
             exiting: ({ element, duration }) =>
-              animate(element, { x: [100, 0], background: '#0ff' }, { duration })
+              animate(element, { x: 0, background: '#0ff' }, { duration })
           }
         }}
       />

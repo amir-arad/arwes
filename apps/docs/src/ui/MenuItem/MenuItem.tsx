@@ -24,7 +24,7 @@ const MenuItem = memo((props: MenuProps): JSX.Element => {
         'relative',
         'flex flex-row justify-center items-center gap-2',
         'h-full',
-        'font-cta font-light text-size-9 uppercase',
+        'font-cta text-size-10 uppercase',
         'transition-[color] duration-200 ease-out',
         !!active && 'text-secondary-main-5 hover:text-secondary-high-2',
         !active && 'text-primary-main-5 hover:text-primary-high-2',

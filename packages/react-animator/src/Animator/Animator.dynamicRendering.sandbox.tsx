@@ -8,7 +8,7 @@
 import React, { type ReactElement, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Animator, AnimatorGeneralProvider, useAnimator } from '@arwes/react-animator'
-import { Animated, transition } from '@arwes/react-animated'
+import { Animated } from '@arwes/react-animated'
 
 const Item = (props: { color: string }): ReactElement => {
   const animator = useAnimator()!
@@ -23,7 +23,7 @@ const Item = (props: { color: string }): ReactElement => {
         textAlign: 'center',
         background: props.color
       }}
-      animated={transition('x', 0, 100)}
+      animated={[['x', 0, 100]]}
       hideOnExited={false}
     >
       {animator.node.id}

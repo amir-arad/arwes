@@ -124,8 +124,8 @@ const Text = memo(<E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>)
           break
         }
         case 'entered': {
-          // If the node is subscribed when the state is entered right away with
-          // an initial animation of entering.
+          // If the node is subscribed when the state is entered right away,
+          // then there was not an initial animation of entering, so run animations.
           if (!transitionControl.current) {
             transition(node.settings.duration.enter, true)
           }

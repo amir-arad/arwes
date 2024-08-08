@@ -11,7 +11,7 @@ const formatDimension = (size: number, dimension: FrameSVGSettingsPathDimension)
 
   if (/[^\d.\-+*/%\s()]/.test(dimension)) {
     throw new Error(
-      'Arwes formatFrameSVGPath does not support formulas with text different from math expressions.'
+      'ARWES formatFrameSVGPath does not support formulas with text different from math expressions.'
     )
   }
 

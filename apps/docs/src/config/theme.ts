@@ -140,16 +140,6 @@ export const theme = Object.freeze({
   },
 
   fontFamily: {
-    title: [
-      'var(--app-font-family-title)',
-      '"Segoe UI Web (West European)"',
-      '"Segoe UI"',
-      '-apple-system',
-      'BlinkMacSystemFont',
-      'Roboto',
-      '"Helvetica Neue"',
-      'sans-serif'
-    ],
     header: [
       'var(--app-font-family-header)',
       '"Segoe UI Web (West European)"',

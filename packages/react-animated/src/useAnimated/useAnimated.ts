@@ -153,7 +153,7 @@ const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
 
             // TODO: Apply final animation state to element if duration is 0.
             if (duration <= 0) {
-              throw new Error('Arwes useAnimated() animation duration must be greater than 0.')
+              throw new Error('ARWES useAnimated() animation duration must be greater than 0.')
             }
 
             try {
@@ -172,7 +172,7 @@ const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
                 animationsRef.current.delete(animation)
               })
             } catch (err) {
-              throw new Error(`Arwes useAnimated() animation error:\n${String(err)}`)
+              throw new Error(`ARWES useAnimated() animation error:\n${String(err)}`)
             }
           }
         })

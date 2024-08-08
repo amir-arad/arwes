@@ -11,6 +11,8 @@ import {
   createAnimatorSystem
 } from '@arwes/animator'
 
+// An example utility to scaffold an animator interface.
+// An animator interface contains the current node and the system it belongs to.
 const createAnimator = (
   parentInterface?: AnimatorInterface,
   initialSettings?: AnimatorSettingsPartial
@@ -22,7 +24,7 @@ const createAnimator = (
   let foreign: any = null
 
   // Animator node control.
-  // It is used as a link betweem the user components and the animator node.
+  // It is used as a link between the external components and the animator node.
   const control: AnimatorControl = {
     getSettings: () => settings,
     setSettings: (value) => {
@@ -45,6 +47,7 @@ const createAnimator = (
   return { system, node }
 }
 
+// An example utility to bind and HTMLElement to an animator node.
 const createAnimated = (element: HTMLElement, node: AnimatorNode): void => {
   node.subscribe(() => {
     switch (node.state) {
@@ -126,11 +129,9 @@ createAnimated(child3Element, child3.node)
 // Schedule animators setup.
 //
 
-// Level 1 elements.
 queueMicrotask(() => child1.node.send('setup'))
 queueMicrotask(() => child2.node.send('setup'))
 queueMicrotask(() => child3.node.send('setup'))
-// Level 0 elements.
 queueMicrotask(() => parent.node.send('setup'))
 
 //

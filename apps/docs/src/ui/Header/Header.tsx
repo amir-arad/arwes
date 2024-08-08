@@ -9,10 +9,9 @@ import {
   Animator,
   styleFrameClipOctagon,
   cx,
-  flicker,
+  FrameSVGOctagon,
   Illuminator,
   memo,
-  transition,
   useBleeps
 } from '@arwes/react'
 import {
@@ -29,7 +28,6 @@ import {
   SoundHigh,
   SoundOff,
   Heart,
-  AtSign,
   Menu as MenuIcon
 } from 'iconoir-react'
 
@@ -76,37 +74,54 @@ const Header = memo((props: HeaderProps): JSX.Element => {
       className={cx('flex justify-center items-center select-none', styles.root, className)}
       animated={animated}
     >
-      <div className={cx('flex-1 flex px-2', 'md:px-4 md:py-2', 'xl:px-8')}>
+      <div
+        className={cx(
+          'flex mx-auto px-2 w-full max-w-screen-3xl',
+          'md:px-4 md:py-2',
+          'xl:px-8 xl:py-4'
+        )}
+      >
         <div className={cx('relative flex-1 flex px-4', 'xl:px-4')}>
           {/* BACKGROUND */}
           {!isIndex && isXL && (
-            <div
-              role="presentation"
-              className="absolute inset-0 overflow-hidden"
-              style={{
-                clipPath: styleFrameClipOctagon({ squareSize: theme.space(2) })
-              }}
-            >
-              <Illuminator color={theme.colors.primary.main(3, { alpha: 0.1 })} size={400} />
-            </div>
+            <Animator merge>
+              <Animated
+                role="presentation"
+                className="absolute inset-0 overflow-hidden"
+                style={{
+                  clipPath: styleFrameClipOctagon({ squareSize: theme.space(2) })
+                }}
+                animated={['flicker']}
+              >
+                <FrameSVGOctagon
+                  style={{
+                    // @ts-expect-error css variables
+                    '--arwes-frames-bg-color': theme.colors.primary.main(9, { alpha: 0.1 }),
+                    '--arwes-frames-line-color': theme.colors.primary.main(9, { alpha: 0.5 })
+                  }}
+                  squareSize={theme.spacen(2)}
+                />
+                <Illuminator
+                  color={theme.colors.primary.main(5, { alpha: 0.1 })}
+                  size={theme.spacen(100)}
+                />
+              </Animated>
+            </Animator>
           )}
 
-          {/* LEFT PANEL */}
           <div className="relative flex-1 flex flex-row justify-between items-center">
+            {/* LEFT PANEL */}
             <Animator combine manager="stagger" refreshOn={[isIndex, isMD]}>
-              <Animated
-                className="flex flex-row gap-4"
-                animated={transition('x', theme.spacen(4), 0, 0)}
-              >
+              <Animated className="flex flex-row gap-4" animated={[['x', theme.spacen(4), 0, 0]]}>
                 <Link className={styles.logo} href="/" onClick={() => bleeps.click?.play()}>
                   <h1
-                    className="flex flex-row justify-center items-center gap-2 h-[3rem]"
+                    className="flex flex-row justify-center items-center gap-2 h-12"
                     title={settings.title}
                   >
                     <Animator>
                       <ArwesLogoIcon
                         className={cx('w-6 h-6', styles.logoImage)}
-                        animated={flicker()}
+                        animated={['flicker']}
                       />
                     </Animator>
 
@@ -116,7 +131,7 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                       unmountOnExited
                       unmountOnDisabled={isIndex || !isMD}
                     >
-                      <ArwesLogoType className="h-4" animated={flicker()} />
+                      <ArwesLogoType className="h-4" animated={['flicker']} />
                     </Animator>
                   </h1>
                 </Link>
@@ -128,30 +143,30 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                   unmountOnExited
                   unmountOnDisabled={isIndex}
                 >
-                  <Menu className="h-[3rem]">
+                  <Menu className="h-12">
                     <Animator>
-                      <MenuItem active={pathname.startsWith('/docs')} animated={flicker()}>
+                      <MenuItem active={pathname.startsWith('/docs')} animated={['flicker']}>
                         <Link href="/docs" title="Go to Documentation">
                           <Page /> <span className="hidden lg:block">Docs</span>
                         </Link>
                       </MenuItem>
                     </Animator>
                     <Animator>
-                      <MenuItem active={pathname.startsWith('/demos')} animated={flicker()}>
+                      <MenuItem active={pathname.startsWith('/demos')} animated={['flicker']}>
                         <Link href="/demos" title="Go to Demos">
                           <CollageFrame /> <span className="hidden lg:block">Demos</span>
                         </Link>
                       </MenuItem>
                     </Animator>
                     <Animator>
-                      <MenuItem active={pathname.startsWith('/play')} animated={flicker()}>
+                      <MenuItem active={pathname.startsWith('/play')} animated={['flicker']}>
                         <a href="/play" title="Go to Playground">
                           <Codepen /> <span className="hidden lg:block">Play</span>
                         </a>
                       </MenuItem>
                     </Animator>
                     <Animator>
-                      <MenuItem active={pathname.startsWith('/perf')} animated={flicker()}>
+                      <MenuItem active={pathname.startsWith('/perf')} animated={['flicker']}>
                         <a href="/perf" title="Go to Performance">
                           <DashboardSpeed /> <span className="hidden lg:block">Perf</span>
                         </a>
@@ -174,18 +189,18 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                 <Animated
                   as="nav"
                   className="flex flex-row gap-4"
-                  animated={transition('x', -theme.spacen(2), 0, 0)}
+                  animated={[['x', -theme.spacen(2), 0, 0]]}
                 >
-                  <Menu className="h-[3rem]">
+                  <Menu className="h-12">
                     <Animator>
-                      <MenuItem animated={flicker()}>
+                      <MenuItem animated={['flicker']}>
                         <button>
                           <Settings />
                         </button>
                       </MenuItem>
                     </Animator>
                     <Animator>
-                      <MenuItem animated={flicker()}>
+                      <MenuItem animated={['flicker']}>
                         <button onClick={openMenu}>
                           <MenuIcon />
                         </button>
@@ -205,11 +220,25 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                 <Animated
                   as="nav"
                   className="flex flex-row gap-4"
-                  animated={transition('x', -theme.spacen(4), 0, 0)}
+                  animated={[['x', -theme.spacen(4), 0, 0]]}
                 >
-                  <Menu className="h-[3rem]">
+                  <Menu className="h-12">
                     <Animator>
-                      <MenuItem className="group hover:!text-fuchsia-300" animated={flicker()}>
+                      <MenuItem animated={['flicker']}>
+                        <a
+                          className="normal-case"
+                          href={`https://github.com/arwes/arwes/releases/tag/v${settings.version}`}
+                          target="version"
+                          title={new Date(settings.deployTime).toString()}
+                        >
+                          v{settings.version}
+                        </a>
+                      </MenuItem>
+                    </Animator>
+                  </Menu>
+                  <Menu className="h-12">
+                    <Animator>
+                      <MenuItem className="group hover:!text-fuchsia-300" animated={['flicker']}>
                         <a
                           className="!gap-0 group-hover:text-fuchsia-300"
                           href="https://github.com/sponsors/romelperez"
@@ -229,7 +258,7 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                       </MenuItem>
                     </Animator>
                     <Animator>
-                      <MenuItem animated={flicker()}>
+                      <MenuItem animated={['flicker']}>
                         <a
                           href="https://github.com/arwes/arwes"
                           target="github"
@@ -240,35 +269,24 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                       </MenuItem>
                     </Animator>
                     <Animator>
-                      <MenuItem animated={flicker()}>
+                      <MenuItem animated={['flicker']}>
                         <a href="https://x.com/arwesjs" target="twitter" title="Go to X (Twitter)">
                           <X />
                         </a>
                       </MenuItem>
                     </Animator>
                     <Animator>
-                      <MenuItem animated={flicker()}>
+                      <MenuItem animated={['flicker']}>
                         <a href="https://discord.gg/s5sbTkw" target="discord" title="Go to Discord">
                           <Discord />
                         </a>
                       </MenuItem>
                     </Animator>
-                    <Animator>
-                      <MenuItem animated={flicker()}>
-                        <a
-                          href={`https://github.com/arwes/arwes/releases/tag/v${settings.version}`}
-                          target="version"
-                          title={`v${settings.version} (${new Date(settings.deployTime).toString()})`}
-                        >
-                          <AtSign />
-                        </a>
-                      </MenuItem>
-                    </Animator>
                   </Menu>
 
-                  <Menu className="h-[3rem]">
+                  <Menu className="h-12">
                     <Animator>
-                      <MenuItem animated={flicker()}>
+                      <MenuItem animated={['flicker']}>
                         <button
                           title={isMotionEnabled ? 'Disable motion' : 'Enable motion'}
                           onClick={() => setIsMotionEnabled(!isMotionEnabled)}
@@ -278,7 +296,7 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                       </MenuItem>
                     </Animator>
                     <Animator>
-                      <MenuItem animated={flicker()}>
+                      <MenuItem animated={['flicker']}>
                         <button
                           title={isAudioEnabled ? 'Disable audio' : 'Enable audio'}
                           onClick={() => setIsAudioEnabled(!isAudioEnabled)}
@@ -307,8 +325,8 @@ const Header = memo((props: HeaderProps): JSX.Element => {
               <Animator>
                 <Animated<HTMLAnchorElement>
                   as="a"
-                  className="flex justify-center font-cta font-light leading-none text-size-10 text-primary-main-9"
-                  animated={flicker()}
+                  className="flex justify-center font-cta leading-none text-size-10 text-primary-main-9"
+                  animated={['flicker']}
                   href={`https://github.com/arwes/arwes/releases/tag/v${settings.version}`}
                   target="version"
                 >
@@ -318,8 +336,8 @@ const Header = memo((props: HeaderProps): JSX.Element => {
 
               <Animator>
                 <Animated
-                  className="flex justify-center font-cta font-light leading-none text-size-11 text-primary-main-9"
-                  animated={flicker()}
+                  className="flex justify-center font-cta leading-none text-size-11 text-primary-main-9"
+                  animated={['flicker']}
                 >
                   {new Date(settings.deployTime).toISOString()}
                 </Animated>

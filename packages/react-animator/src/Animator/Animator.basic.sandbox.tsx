@@ -11,16 +11,25 @@ const AnimatorUIListener = (): ReactElement => {
   useEffect(() => {
     const element = elementRef.current
 
-    // If the animator are disabled/dismissed, ignore animations.
+    // If the animator is disabled or dismissed, ignore animations.
     // Also, if the element doesn't exist, ignore animations too.
     if (!animator || !element) {
       return
     }
 
+    // Any animation tool such as:
+    // - https://motion.dev
+    // - https://www.framer.com/motion
+    // - https://gsap.com
+    // - https://animejs.com
+    // can be used to animate.
+    // The animation should have a way to be cancelled for cleanup purposes.
     let animation: { cancel: () => void } | undefined
 
     // A subscription function to be called every time the state changes.
+    // It is called when subscribed initially.
     const unsubscribe = animator.node.subscribe((node: AnimatorNode) => {
+      // For most cases, the animations are to be executed on enter and exit transitions.
       switch (node.state) {
         case 'entering': {
           animation?.cancel() // Cancel current animation.

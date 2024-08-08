@@ -1,10 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 ::-webkit-scrollbar {
-  width: 0.625rem;
-  height: 0.625rem;
+  width: 0.25rem;
+  height: 0.25rem;
 }
 
 ::-webkit-scrollbar-track,
@@ -36,4 +32,10 @@ body {
 a[href]:focus,
 button:not(:disabled):focus {
   @apply outline-dotted outline-secondary-main-3/50;
+}
+
+.font-header,
+.font-body,
+.font-cta {
+  font-weight: 300;
 }

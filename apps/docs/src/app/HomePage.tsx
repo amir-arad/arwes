@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Animator, Animated, BleepsOnAnimator, flicker, transition, cx } from '@arwes/react'
+import { Animator, Animated, BleepsOnAnimator, cx } from '@arwes/react'
 import Link from 'next/link'
 import { Page, Codepen, CollageFrame, DashboardSpeed } from 'iconoir-react'
 
@@ -14,8 +14,9 @@ const HomePage = (): JSX.Element => {
       <BleepsOnAnimator<BleepNames> transitions={{ entering: 'intro' }} continuous />
 
       <Animated
+        as="main"
         className={cx('flex flex-col justify-center items-center gap-4 m-auto p-6', 'md:gap-8')}
-        animated={transition('y', theme.space(6), 0)}
+        animated={[['y', theme.space(6), 0]]}
       >
         <Animator>
           <Animated as="h1" className="pb-2" title={settings.title}>
@@ -25,13 +26,14 @@ const HomePage = (): JSX.Element => {
 
         <Animator>
           <Animated
+            as="p"
             className={cx(
-              'font-body font-light leading-none text-size-7 select-none',
+              'font-body leading-none text-size-7 select-none',
               'text-primary-main-3',
               'md:text-size-6',
               'xl:text-size-5'
             )}
-            animated={flicker()}
+            animated={['flicker']}
           >
             Futuristic Sci-Fi UI Web Framework
           </Animated>
@@ -40,41 +42,52 @@ const HomePage = (): JSX.Element => {
         <Animator>
           <Animated
             as="nav"
-            className="flex flex-row justify-center items-center 2sm:gap-2 md:gap-4"
-            animated={flicker()}
+            className="flex flex-row justify-center items-center gap-2 md:gap-4"
+            animated={['flicker']}
           >
-            <Animated animated={transition('x', -theme.spacen(6), 0)}>
-              <Link href="/docs">
-                <ButtonSimple tabIndex={-1} title="Go to Documentation">
-                  <Page className="text-size-[1.5em] xhidden x2sm:block" />
-                  <span>Docs</span>
-                </ButtonSimple>
-              </Link>
-            </Animated>
-            <Animated animated={transition('x', -theme.spacen(3), 0)}>
-              <Link href="/demos">
-                <ButtonSimple tabIndex={-1} title="Go to Demos">
-                  <CollageFrame className="text-size-[1.5em] xhidden x2sm:block" />
-                  <span>Demos</span>
-                </ButtonSimple>
-              </Link>
-            </Animated>
-            <Animated animated={transition('x', theme.spacen(3), 0)}>
-              <a href="/play">
-                <ButtonSimple tabIndex={-1} title="Go to Playground">
-                  <Codepen className="text-size-[1.5em] xhidden x2sm:block" />
-                  <span>Play</span>
-                </ButtonSimple>
-              </a>
-            </Animated>
-            <Animated animated={transition('x', theme.spacen(6), 0)}>
-              <a href="/perf">
-                <ButtonSimple tabIndex={-1} title="Go to Performance">
-                  <DashboardSpeed className="text-size-[1.5em] xhidden x2sm:block" />
-                  <span>Perf</span>
-                </ButtonSimple>
-              </a>
-            </Animated>
+            <Link href="/docs">
+              <ButtonSimple
+                tabIndex={-1}
+                title="Go to Documentation"
+                animated={[['x', theme.spacen(-6), 0]]}
+              >
+                <Page className="text-size-[1.5em] xhidden x2sm:block" />
+                <span>Docs</span>
+              </ButtonSimple>
+            </Link>
+
+            <Link href="/demos">
+              <ButtonSimple
+                tabIndex={-1}
+                title="Go to Demos"
+                animated={[['x', theme.spacen(-3), 0]]}
+              >
+                <CollageFrame className="text-size-[1.5em] xhidden x2sm:block" />
+                <span>Demos</span>
+              </ButtonSimple>
+            </Link>
+
+            <a href="/play">
+              <ButtonSimple
+                tabIndex={-1}
+                title="Go to Playground"
+                animated={[['x', theme.spacen(3), 0]]}
+              >
+                <Codepen className="text-size-[1.5em] xhidden x2sm:block" />
+                <span>Play</span>
+              </ButtonSimple>
+            </a>
+
+            <a href="/perf">
+              <ButtonSimple
+                tabIndex={-1}
+                title="Go to Performance"
+                animated={[['x', theme.spacen(6), 0]]}
+              >
+                <DashboardSpeed className="text-size-[1.5em] xhidden x2sm:block" />
+                <span>Perf</span>
+              </ButtonSimple>
+            </a>
           </Animated>
         </Animator>
       </Animated>

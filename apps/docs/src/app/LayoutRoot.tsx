@@ -2,7 +2,7 @@
 
 import React, { type ReactNode } from 'react'
 import { AnimatorGeneralProvider, BleepsProvider, Animator } from '@arwes/react'
-import { Titillium_Web } from 'next/font/google'
+import { Titillium_Web, Source_Code_Pro } from 'next/font/google'
 import { IconoirProvider } from 'iconoir-react'
 import { useAtom } from 'jotai'
 
@@ -22,6 +22,12 @@ const fontTitilliumWeb = Titillium_Web({
   preload: false
 })
 
+const fontSourceCodePro = Source_Code_Pro({
+  subsets: ['latin'],
+  weight: ['400'],
+  preload: false
+})
+
 const LayoutRoot = (props: { children: ReactNode }): JSX.Element => {
   const [isMotionEnabled] = useAtom(atomMotionEnabled)
   const [isAudioEnabled] = useAtom(atomAudioEnabled)
@@ -34,13 +40,12 @@ const LayoutRoot = (props: { children: ReactNode }): JSX.Element => {
             className="absolute inset-0 overflow-hidden flex flex-col"
             style={{
               // @ts-expect-error link `next/font` font families to TailwindCSS
-              '--app-font-family-title': fontTitilliumWeb.style.fontFamily,
               '--app-font-family-header': fontTitilliumWeb.style.fontFamily,
               '--app-font-family-body': fontTitilliumWeb.style.fontFamily,
               '--app-font-family-cta': fontTitilliumWeb.style.fontFamily,
-              '--app-font-family-code': '',
-              '--app-scrollbar-color': theme.colors.secondary.main(4),
-              '--app-scrollbar-color-hover': theme.colors.secondary.high(2)
+              '--app-font-family-code': fontSourceCodePro.style.fontFamily,
+              '--app-scrollbar-color': theme.colors.secondary.main(7),
+              '--app-scrollbar-color-hover': theme.colors.secondary.high(3)
             }}
           >
             <Animator combine>

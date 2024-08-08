@@ -44,7 +44,7 @@ const Item = (props: ItemProps): JSX.Element => {
           <Animated animated={flicker()}>
             <Link
               className={cx(
-                'flex flex-row items-center gap-2 px-4 py-2 font-cta font-light text-size-9',
+                'flex flex-row items-center gap-2 px-4 py-2 font-cta text-size-9',
                 'transition-all ease-out duration-200',
                 !matches && 'text-primary-main-4 hover:text-primary-high-2',
                 matches && 'text-secondary-main-4 hover:text-secondary-high-2',
@@ -86,7 +86,11 @@ const MobileNav = memo((props: MobileNavProps): JSX.Element => {
     <List>
       <Item href="/" icon={<IconRoot />} text="Root" onLink={onLink}>
         <Item href="/docs" icon={<IconDocs />} text="Docs" onLink={onLink}>
-          <Item href="/docs/develop" icon={<IconDocsDevelop />} text="Develop" onLink={onLink} />
+          <Item href="/docs/develop" icon={<IconDocsDevelop />} text="Develop" onLink={onLink}>
+            <Item href="/docs/develop/vanilla" text="Vanilla" onLink={onLink} />
+            <Item href="/docs/develop/react" text="React" onLink={onLink} />
+            <Item href="/docs/develop/solid" text="Solid" onLink={onLink} />
+          </Item>
           <Item href="/docs/design" icon={<IconDocsDesign />} text="Design" onLink={onLink} />
           <Item
             href="/docs/community"
