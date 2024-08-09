@@ -35,7 +35,7 @@
 }
 
 .root hr {
-  @apply relative border-t border-primary-main-9/50 w-full h-0;
+  @apply relative border-t border-primary-main-9 w-full h-0;
 }
 
 .root blockquote {

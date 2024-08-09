@@ -8,7 +8,7 @@ import { Page, Codepen, CollageFrame, DashboardSpeed } from 'iconoir-react'
 import { type BleepNames, settings, theme } from '@/config'
 import { ArwesLogoType, ButtonSimple } from '@/ui'
 
-const HomePage = (): JSX.Element => {
+const PageHome = (): JSX.Element => {
   return (
     <Animator combine manager="sequenceReverse">
       <BleepsOnAnimator<BleepNames> transitions={{ entering: 'intro' }} continuous />
@@ -95,4 +95,4 @@ const HomePage = (): JSX.Element => {
   )
 }
 
-export { HomePage }
+export { PageHome }

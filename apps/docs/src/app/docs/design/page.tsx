@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 
 import { settings } from '@/config/settings'
-import { PageDocs } from './PageDocs'
+import { PageDesign } from './PageDesign'
 
 export const metadata: Metadata = {
-  title: `Documentation | ${settings.title}`,
+  title: `Design | ${settings.title}`,
   description: settings.description
 }
 
-export default (): JSX.Element => <PageDocs />
+export default (): JSX.Element => <PageDesign />

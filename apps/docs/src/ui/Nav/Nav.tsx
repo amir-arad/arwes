@@ -2,7 +2,6 @@ import { Children, type ReactNode } from 'react'
 import { memo, Animator, Animated, flicker, cx, styleFrameClipOctagon } from '@arwes/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { theme } from '@/config'
 import {
   Dashboard as IconRoot,
   Page as IconDocs,
@@ -14,6 +13,8 @@ import {
   DashboardSpeed as IconPerf
 } from 'iconoir-react'
 
+import { theme } from '@/config'
+
 type ListProps = {
   className?: string
   children: ReactNode
@@ -21,7 +22,7 @@ type ListProps = {
 
 const List = (props: ListProps): JSX.Element => {
   const { className, children } = props
-  return <ul className={cx('flex flex-col', className)}>{children}</ul>
+  return <ul className={cx('flex flex-col w-full', className)}>{children}</ul>
 }
 
 type ItemProps = {
@@ -29,7 +30,7 @@ type ItemProps = {
   icon?: ReactNode
   text: ReactNode
   children?: ReactNode
-  onLink: () => void
+  onLink?: () => void
 }
 
 const Item = (props: ItemProps): JSX.Element => {
@@ -39,7 +40,7 @@ const Item = (props: ItemProps): JSX.Element => {
   const active = pathname === href
   return (
     <Animator combine manager="stagger">
-      <Animated as="li">
+      <Animated as="li" className="flex flex-col">
         <Animator>
           <Animated animated={flicker()}>
             <Link
@@ -67,8 +68,8 @@ const Item = (props: ItemProps): JSX.Element => {
         </Animator>
 
         {!!Children.count(children) && (
-          <div className="pl-4">
-            <List className="border-l border-dashed border-primary-main-9/50">{children}</List>
+          <div className="flex pl-4">
+            <List className="flex border-l border-dashed border-primary-main-9/50">{children}</List>
           </div>
         )}
       </Animated>
@@ -76,28 +77,38 @@ const Item = (props: ItemProps): JSX.Element => {
   )
 }
 
-type MobileNavProps = {
-  onLink: () => void
+const NavDocs = (props: { onLink?: () => void }): JSX.Element => {
+  const { onLink } = props
+  return (
+    <List>
+      <Item href="/docs/develop" icon={<IconDocsDevelop />} text="Develop" onLink={onLink}>
+        <Item href="/docs/develop/vanilla" text="Vanilla" onLink={onLink} />
+        <Item href="/docs/develop/react" text="React" onLink={onLink} />
+        <Item href="/docs/develop/solid" text="Solid" onLink={onLink} />
+      </Item>
+      <Item href="/docs/design" icon={<IconDocsDesign />} text="Design" onLink={onLink} />
+      <Item href="/docs/community" icon={<IconDocsCommunity />} text="Community" onLink={onLink} />
+    </List>
+  )
 }
 
-const MobileNav = memo((props: MobileNavProps): JSX.Element => {
-  const { onLink } = props
+type NavProps = {
+  path?: 'docs'
+  onLink?: () => void
+}
+
+const Nav = memo((props: NavProps): JSX.Element => {
+  const { path, onLink } = props
+
+  if (path === 'docs') {
+    return <NavDocs onLink={onLink} />
+  }
+
   return (
     <List>
       <Item href="/" icon={<IconRoot />} text="Root" onLink={onLink}>
         <Item href="/docs" icon={<IconDocs />} text="Docs" onLink={onLink}>
-          <Item href="/docs/develop" icon={<IconDocsDevelop />} text="Develop" onLink={onLink}>
-            <Item href="/docs/develop/vanilla" text="Vanilla" onLink={onLink} />
-            <Item href="/docs/develop/react" text="React" onLink={onLink} />
-            <Item href="/docs/develop/solid" text="Solid" onLink={onLink} />
-          </Item>
-          <Item href="/docs/design" icon={<IconDocsDesign />} text="Design" onLink={onLink} />
-          <Item
-            href="/docs/community"
-            icon={<IconDocsCommunity />}
-            text="Community"
-            onLink={onLink}
-          />
+          <NavDocs onLink={onLink} />
         </Item>
         <Item href="/demos" icon={<IconDemos />} text="Demos" onLink={onLink} />
         <Item href="/play" icon={<IconPlay />} text="Play" onLink={onLink} />
@@ -107,4 +118,4 @@ const MobileNav = memo((props: MobileNavProps): JSX.Element => {
   )
 })
 
-export { MobileNav }
+export { Nav }

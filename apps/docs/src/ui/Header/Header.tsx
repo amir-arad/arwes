@@ -37,7 +37,7 @@ import { ArwesLogoType } from '../ArwesLogoType'
 import { Menu } from '../Menu'
 import { MenuItem } from '../MenuItem'
 import { Modal } from '../Modal'
-import { MobileNav } from './MobileNav'
+import { Nav } from '../Nav'
 import { MobileLinks } from './MobileLinks'
 import styles from './Header.module.css'
 
@@ -46,6 +46,8 @@ interface HeaderProps {
   animated?: AnimatedProp
 }
 
+const HEIGHT_CLASS = 'h-10 md:h-12'
+
 const Header = memo((props: HeaderProps): JSX.Element => {
   const { className, animated } = props
 
@@ -53,6 +55,7 @@ const Header = memo((props: HeaderProps): JSX.Element => {
   const [isMotionEnabled, setIsMotionEnabled] = useAtom(atomMotionEnabled)
   const [isAudioEnabled, setIsAudioEnabled] = useAtom(atomAudioEnabled)
   const isMD = useMedia(theme.breakpoints.up('md', { strip: true }), false)
+  const isLG = useMedia(theme.breakpoints.up('lg', { strip: true }), false)
   const isXL = useMedia(theme.breakpoints.up('xl', { strip: true }), false)
   const bleeps = useBleeps<BleepNames>()
 
@@ -74,16 +77,10 @@ const Header = memo((props: HeaderProps): JSX.Element => {
       className={cx('flex justify-center items-center select-none', styles.root, className)}
       animated={animated}
     >
-      <div
-        className={cx(
-          'flex mx-auto px-2 w-full max-w-screen-3xl',
-          'md:px-4 md:py-2',
-          'xl:px-8 xl:py-4'
-        )}
-      >
-        <div className={cx('relative flex-1 flex px-4', 'xl:px-4')}>
+      <div className={cx('flex mx-auto p-2 w-full max-w-screen-3xl', 'md:px-4', 'xl:py-4')}>
+        <div className={cx('relative flex-1 flex px-4')}>
           {/* BACKGROUND */}
-          {!isIndex && isXL && (
+          {!isIndex && (
             <Animator merge>
               <Animated
                 role="presentation"
@@ -101,26 +98,29 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                   }}
                   squareSize={theme.spacen(2)}
                 />
-                <Illuminator
-                  color={theme.colors.primary.main(5, { alpha: 0.1 })}
-                  size={theme.spacen(100)}
-                />
+                {isXL && (
+                  <Illuminator
+                    color={theme.colors.primary.main(7, { alpha: 0.1 })}
+                    size={theme.spacen(100)}
+                  />
+                )}
               </Animated>
             </Animator>
           )}
 
+          {/* CONTENT */}
           <div className="relative flex-1 flex flex-row justify-between items-center">
             {/* LEFT PANEL */}
             <Animator combine manager="stagger" refreshOn={[isIndex, isMD]}>
               <Animated className="flex flex-row gap-4" animated={[['x', theme.spacen(4), 0, 0]]}>
                 <Link className={styles.logo} href="/" onClick={() => bleeps.click?.play()}>
                   <h1
-                    className="flex flex-row justify-center items-center gap-2 h-12"
+                    className={cx('flex flex-row justify-center items-center gap-2', HEIGHT_CLASS)}
                     title={settings.title}
                   >
                     <Animator>
                       <ArwesLogoIcon
-                        className={cx('w-6 h-6', styles.logoImage)}
+                        className={cx('w-5 h-5 md:w-6 md:h-6', styles.logoImage)}
                         animated={['flicker']}
                       />
                     </Animator>
@@ -131,7 +131,7 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                       unmountOnExited
                       unmountOnDisabled={isIndex || !isMD}
                     >
-                      <ArwesLogoType className="h-4" animated={['flicker']} />
+                      <ArwesLogoType className="h-3 md:h-4" animated={['flicker']} />
                     </Animator>
                   </h1>
                 </Link>
@@ -143,32 +143,32 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                   unmountOnExited
                   unmountOnDisabled={isIndex}
                 >
-                  <Menu className="h-12">
+                  <Menu className={HEIGHT_CLASS}>
                     <Animator>
                       <MenuItem active={pathname.startsWith('/docs')} animated={['flicker']}>
                         <Link href="/docs" title="Go to Documentation">
-                          <Page /> <span className="hidden lg:block">Docs</span>
+                          <Page /> <span className="hidden md:block">Docs</span>
                         </Link>
                       </MenuItem>
                     </Animator>
                     <Animator>
                       <MenuItem active={pathname.startsWith('/demos')} animated={['flicker']}>
                         <Link href="/demos" title="Go to Demos">
-                          <CollageFrame /> <span className="hidden lg:block">Demos</span>
+                          <CollageFrame /> <span className="hidden md:block">Demos</span>
                         </Link>
                       </MenuItem>
                     </Animator>
                     <Animator>
                       <MenuItem active={pathname.startsWith('/play')} animated={['flicker']}>
                         <a href="/play" title="Go to Playground">
-                          <Codepen /> <span className="hidden lg:block">Play</span>
+                          <Codepen /> <span className="hidden md:block">Play</span>
                         </a>
                       </MenuItem>
                     </Animator>
                     <Animator>
                       <MenuItem active={pathname.startsWith('/perf')} animated={['flicker']}>
                         <a href="/perf" title="Go to Performance">
-                          <DashboardSpeed /> <span className="hidden lg:block">Perf</span>
+                          <DashboardSpeed /> <span className="hidden md:block">Perf</span>
                         </a>
                       </MenuItem>
                     </Animator>
@@ -178,20 +178,20 @@ const Header = memo((props: HeaderProps): JSX.Element => {
             </Animator>
 
             {/* RIGHT PANEL */}
-            <Animator combine manager="switch" refreshOn={[isMD]}>
+            <Animator combine manager="switch" refreshOn={[isLG]}>
               <Animator
                 combine
                 manager="staggerReverse"
-                condition={!isMD}
+                condition={!isLG}
                 unmountOnExited
-                unmountOnDisabled={isMD}
+                unmountOnDisabled={isLG}
               >
                 <Animated
                   as="nav"
                   className="flex flex-row gap-4"
-                  animated={[['x', -theme.spacen(2), 0, 0]]}
+                  animated={[['x', theme.spacen(-2), 0, 0]]}
                 >
-                  <Menu className="h-12">
+                  <Menu className={HEIGHT_CLASS}>
                     <Animator>
                       <MenuItem animated={['flicker']}>
                         <button>
@@ -213,16 +213,16 @@ const Header = memo((props: HeaderProps): JSX.Element => {
               <Animator
                 combine
                 manager="staggerReverse"
-                condition={isMD}
+                condition={isLG}
                 unmountOnExited
-                unmountOnDisabled={!isMD}
+                unmountOnDisabled={!isLG}
               >
                 <Animated
                   as="nav"
                   className="flex flex-row gap-4"
-                  animated={[['x', -theme.spacen(4), 0, 0]]}
+                  animated={[['x', theme.spacen(-4), 0, 0]]}
                 >
-                  <Menu className="h-12">
+                  <Menu className={HEIGHT_CLASS}>
                     <Animator>
                       <MenuItem animated={['flicker']}>
                         <a
@@ -236,7 +236,7 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                       </MenuItem>
                     </Animator>
                   </Menu>
-                  <Menu className="h-12">
+                  <Menu className={HEIGHT_CLASS}>
                     <Animator>
                       <MenuItem className="group hover:!text-fuchsia-300" animated={['flicker']}>
                         <a
@@ -284,7 +284,7 @@ const Header = memo((props: HeaderProps): JSX.Element => {
                     </Animator>
                   </Menu>
 
-                  <Menu className="h-12">
+                  <Menu className={HEIGHT_CLASS}>
                     <Animator>
                       <MenuItem animated={['flicker']}>
                         <button
@@ -317,7 +317,7 @@ const Header = memo((props: HeaderProps): JSX.Element => {
       <Animator root active={isMenuOpen} unmountOnExited unmountOnDisabled={!isMenuOpen}>
         <Modal contentClassName="flex flex-col gap-6 min-h-40" header="Index" onClose={closeMenu}>
           <Animator combine manager="stagger">
-            <MobileNav onLink={closeMenu} />
+            <Nav onLink={closeMenu} />
 
             <div className="flex flex-col gap-2">
               <MobileLinks />

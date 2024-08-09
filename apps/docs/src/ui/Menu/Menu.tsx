@@ -13,7 +13,7 @@ const Menu = memo((props: MenuProps): JSX.Element => {
   return (
     <Animated
       as="ul"
-      className={cx('flex flex-row justify-center items-center gap-2', 'sm:gap-1', className)}
+      className={cx('flex flex-row justify-center items-center gap-2', 'xl:gap-1', className)}
       animated={animated}
     >
       {children}

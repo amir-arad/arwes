@@ -18,7 +18,7 @@ import { Background, Header } from '@/ui'
 
 const fontTitilliumWeb = Titillium_Web({
   subsets: ['latin'],
-  weight: ['300', '400', '600', '700'],
+  weight: ['300', '600'],
   preload: false
 })
 

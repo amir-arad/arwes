@@ -81,7 +81,7 @@ const createFrameSVGNefrex = (props?: CreateFrameSVGNefrexProps): FrameSVGSettin
           .concat([[`100% - ${so + p}`, so + p]])
           .concat(rightBottomLine)
           .concat([[so + p, `100% - ${so + p}`]])
-      )
+      ).concat('Z')
     },
     {
       name: 'line',
