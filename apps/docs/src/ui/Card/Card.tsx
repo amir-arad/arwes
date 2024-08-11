@@ -33,9 +33,6 @@ const Card = (props: CardProps): JSX.Element => {
       <FrameSVGNefrex
         elementRef={frameRef}
         className="opacity-70 transition-all ease-out duration-200 group-hover:opacity-100"
-        style={{
-          filter: `drop-shadow(0 0 ${theme.space(1)} ${theme.colors.primary.main(3, { alpha: 0.25 })})`
-        }}
         strokeWidth={4}
         styled={false}
       />

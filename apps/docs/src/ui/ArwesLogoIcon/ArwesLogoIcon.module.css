@@ -1,4 +1,5 @@
-.root {
+.rotation {
+  transform-origin: center;
   animation: imageRotate 30s infinite linear;
 }
 

@@ -8,7 +8,7 @@ const createPalette = (colorFn: (i: number) => string, length: number): Record<s
     .reduce((t, i) => ({ ...t, ...i }), {})
 
 export const tailwind: Config = {
-  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       fontFamily: theme.fontFamily,

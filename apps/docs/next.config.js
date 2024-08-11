@@ -4,7 +4,6 @@
 const nextConfig = {
   output: 'export',
   distDir: 'build',
-  transpilePackages: ['next-mdx-remote'],
   reactStrictMode: false,
   poweredByHeader: false,
   eslint: {

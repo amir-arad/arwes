@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 
 import { settings } from '@/config/settings'
-import NotFound from './NotFound'
+import Content from './Content'
 
 export const metadata: Metadata = {
-  title: `Not Found | ${settings.title}`,
+  title: `UX Fundamentals | ${settings.title}`,
   description: settings.description
 }
 
-export default (): JSX.Element => <NotFound />
+export default (): JSX.Element => <Content />

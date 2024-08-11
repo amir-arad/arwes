@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@arwes/react": "^1.0.0-next.24080101",
-    "@babel/core": "^7.24.9",
+    "@babel/core": "^7.25.2",
     "@babel/preset-react": "^7.24.7",
     "arwes": "^1.0.0-next.24080101",
     "babel-loader": "^9.1.3",

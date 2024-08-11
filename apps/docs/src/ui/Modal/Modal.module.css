@@ -11,6 +11,5 @@
 
 .frame [data-name='line'] {
   @apply fill-none
-    stroke-[2] stroke-primary-main-7
-    drop-shadow-size-1 shadow-primary-main-3;
+    stroke-[2] stroke-primary-main-7;
 }

@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 
 import { settings } from '@/config/settings'
-import { PageDovelop } from './PageDovelop'
+import Content from './Content'
 
 export const metadata: Metadata = {
   title: `Develop | ${settings.title}`,
   description: settings.description
 }
 
-export default (): JSX.Element => <PageDovelop />
+export default (): JSX.Element => <Content />
