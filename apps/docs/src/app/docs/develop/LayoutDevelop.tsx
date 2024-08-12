@@ -1,6 +1,6 @@
 'use client'
 
-import { LayoutContent, Article, Nav } from '@/ui'
+import { LayoutContent, Nav } from '@/ui'
 
 type LayoutDocsProps = {
   children?: React.ReactNode
@@ -10,7 +10,9 @@ const LayoutDevelop = (props: LayoutDocsProps): JSX.Element => {
   const { children } = props
   return (
     <LayoutContent left={<Nav path="docs" />}>
-      <Article className="flex flex-col gap-6">{children}</Article>
+      <article className="flex flex-col min-w-0 min-h-0 prose prose-sm lg:prose-base">
+        {children}
+      </article>
     </LayoutContent>
   )
 }

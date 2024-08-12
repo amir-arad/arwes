@@ -122,7 +122,7 @@ test('Should throw error if characters different for math are found in the dimen
     expect(() => {
       formatFrameSVGPath(10, 10, [['H', formula]])
     }).toThrow(
-      'Arwes formatFrameSVGPath does not support formulas with text different from math expressions.'
+      'ARWES formatFrameSVGPath does not support formulas with text different from math expressions.'
     )
   })
 })

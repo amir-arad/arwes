@@ -9,7 +9,7 @@ import {
 } from 'iconoir-react'
 import { animate, stagger } from 'motion'
 
-import { Article, Card, ArwesLogoIcon } from '@/ui'
+import { Hr, Card, ArwesLogoIcon } from '@/ui'
 
 const PageDocs = (): JSX.Element => {
   return (
@@ -17,7 +17,7 @@ const PageDocs = (): JSX.Element => {
       <div
         className={cx('relative', 'flex-1 overflow-y-auto', 'flex p-4 min-w-0 min-h-0', 'md:p-8')}
       >
-        <Animator duration={{ enter: 1.5 }}>
+        <Animator duration={{ enter: 1 }}>
           <div className="absolute inset-0 flex">
             <ArwesLogoIcon
               className="m-auto size-24 md:size-32 opacity-0"
@@ -25,21 +25,11 @@ const PageDocs = (): JSX.Element => {
                 {
                   initialStyle: { opacity: 1 },
                   transitions: {
-                    entering: { scale: [1.5, 1], rotate: [-90, 0], duration: 0.75 },
+                    entering: { scale: [1.25, 1], rotate: [-90, 0], duration: 0.75 },
                     exiting: { opacity: [1, 0, 0.5, 0] }
                   }
                 },
-                { transitions: { entering: { opacity: 0, delay: 1.25, duration: 0.25 } } },
-                {
-                  transitions: {
-                    entering: ({ $ }) =>
-                      animate(
-                        $('[data-name="out-bg"], [data-name="middle"]'),
-                        { opacity: [0, 1] },
-                        { delay: 0.2 }
-                      )
-                  }
-                },
+                { transitions: { entering: { opacity: 0, delay: 0.75, duration: 0.25 } } },
                 {
                   transitions: {
                     entering: ({ $ }) =>
@@ -47,6 +37,16 @@ const PageDocs = (): JSX.Element => {
                         [...$('[data-name="out"]'), ...$('[data-name="center"]')],
                         { opacity: [0, 1, 0.5, 1] },
                         { delay: stagger(0.1), duration: 0.5 }
+                      )
+                  }
+                },
+                {
+                  transitions: {
+                    entering: ({ $ }) =>
+                      animate(
+                        $('[data-name="out-bg"], [data-name="middle"]'),
+                        { opacity: [0, 1] },
+                        { delay: 0.2, duration: 0.5 }
                       )
                   }
                 }
@@ -65,19 +65,19 @@ const PageDocs = (): JSX.Element => {
             )}
           >
             <Animator combine manager="stagger">
-              <Article className="flex flex-col gap-6">
+              <article className="flex flex-col gap-6 prose prose-sm lg:prose-base lg:gap-8">
                 <Animator>
-                  <Text as="h1" fixed>
+                  <Text as="h1" className="!m-0" fixed>
                     Futuristic Sci-Fi UI Web Framework
                   </Text>
                 </Animator>
 
                 <Animator>
-                  <Animated as="hr" animated={['flicker']} />
+                  <Hr className="!m-0 origin-left" animated={[['scaleX', 0, 1]]} direction="both" />
                 </Animator>
 
                 <Animator>
-                  <Text>
+                  <Text className="!m-0">
                     ARWES is a web framework to build user interfaces based on futuristic science
                     fiction designs, animations, and sound effects. The concepts behind are
                     opinionated with influences from{' '}
@@ -110,7 +110,7 @@ const PageDocs = (): JSX.Element => {
                 <Animator>
                   <Animated
                     as="nav"
-                    className="flex flex-row flex-wrap gap-1 lg:flex-nowrap"
+                    className="flex flex-row flex-wrap !m-0 gap-1 lg:flex-nowrap"
                     animated={{
                       transitions: {
                         entering: ({ $, duration }) =>
@@ -129,6 +129,7 @@ const PageDocs = (): JSX.Element => {
                       target="_blank"
                     >
                       <img
+                        className="!m-0"
                         src="https://github.com/arwes/arwes/workflows/ci/badge.svg?style=flat-square"
                         alt="CI"
                       />
@@ -139,6 +140,7 @@ const PageDocs = (): JSX.Element => {
                       target="_blank"
                     >
                       <img
+                        className="!m-0"
                         src="https://www.codefactor.io/repository/github/arwes/arwes/badge"
                         alt="CodeFactor"
                       />
@@ -149,6 +151,7 @@ const PageDocs = (): JSX.Element => {
                       target="_blank"
                     >
                       <img
+                        className="!m-0"
                         src="https://img.shields.io/github/stars/arwes/arwes.svg?style=flat-square&label=stars"
                         alt="Github Stars"
                       />
@@ -159,6 +162,7 @@ const PageDocs = (): JSX.Element => {
                       target="_blank"
                     >
                       <img
+                        className="!m-0"
                         alt="npm"
                         src="https://img.shields.io/npm/dm/arwes?label=installs&style=flat-square"
                       />
@@ -169,6 +173,7 @@ const PageDocs = (): JSX.Element => {
                       target="_blank"
                     >
                       <img
+                        className="!m-0"
                         src="https://img.shields.io/twitter/follow/arwesjs?style=social"
                         alt="Follow on X"
                       />
@@ -179,6 +184,7 @@ const PageDocs = (): JSX.Element => {
                       target="_blank"
                     >
                       <img
+                        className="!m-0"
                         src="https://img.shields.io/discord/457381046497968128?color=5865F2&logo=discord&logoColor=white&style=flat-square"
                         alt="Discord"
                       />
@@ -189,17 +195,18 @@ const PageDocs = (): JSX.Element => {
                       target="_blank"
                     >
                       <img
+                        className="!m-0"
                         src="https://img.shields.io/github/license/arwes/arwes.svg?maxAge=2592000&style=flat-square"
                         alt="License"
                       />
                     </a>
                   </Animated>
                 </Animator>
-              </Article>
+              </article>
             </Animator>
 
-            <Animator combine manager="stagger" duration={{ delay: 0.2, stagger: 0.1 }}>
-              <div className="flex flex-col gap-4 lg:gap-8">
+            <Animator combine manager="stagger" duration={{ stagger: 0.1 }}>
+              <div className="flex flex-col gap-6 lg:gap-8">
                 <Animator>
                   <Link href="/docs/develop">
                     <Card

@@ -84,6 +84,11 @@ export default (): JSX.Element => (
 
     <AR.HR />
 
-    <AR.Navigation nextHref="/docs/develop/fundamentals" next="Fundamentals" />
+    <AR.Navigation
+      prevHref="/docs"
+      prev="Index"
+      nextHref="/docs/develop/fundamentals"
+      next="Fundamentals"
+    />
   </>
 )

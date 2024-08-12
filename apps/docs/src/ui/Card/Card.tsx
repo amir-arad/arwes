@@ -29,7 +29,7 @@ const Card = (props: CardProps): JSX.Element => {
   useFrameSVGAssembler(frameRef)
 
   return (
-    <article className={cx('relative group flex', styles.root)}>
+    <Animated as="article" className={cx('relative group flex', styles.root)}>
       <FrameSVGNefrex
         elementRef={frameRef}
         className="opacity-70 transition-all ease-out duration-200 group-hover:opacity-100"
@@ -103,7 +103,7 @@ const Card = (props: CardProps): JSX.Element => {
           </Animated>
         </Animator>
       </div>
-    </article>
+    </Animated>
   )
 }
 
