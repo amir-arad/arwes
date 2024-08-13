@@ -83,7 +83,6 @@ export const tailwind: Config = {
               fontStyle: 'normal',
               fontWeight: 300,
               color: 'inherit',
-              transition: 'all ease-out 200ms',
               borderInlineStartColor: theme.colors.primary.main(3),
               backgroundColor: theme.colors.primary.main(3, { alpha: 0.1 }),
               clipPath: `polygon(
@@ -95,13 +94,13 @@ export const tailwind: Config = {
                 0 100%
               )`
             },
-            'blockquote:hover': {
-              backgroundColor: theme.colors.primary.main(3, { alpha: 0.2 })
+            ul: {
+              listStyleType: '"➣"'
             },
             code: {
               fontFamily: theme.fontFamily.code.join(),
               fontWeight: 400,
-              color: theme.colors.primary.low(3)
+              color: 'inherit'
             }
           }
         },
@@ -111,7 +110,7 @@ export const tailwind: Config = {
               marginTop: '1rem',
               marginBottom: '2rem'
             },
-            '[role="table"]': {
+            '[data-name="example"], [role="table"]': {
               marginTop: `${24 / 14}rem`,
               marginBottom: `${24 / 14}rem`
             }
@@ -123,7 +122,7 @@ export const tailwind: Config = {
               marginTop: '1.25rem',
               marginBottom: '2.5rem'
             },
-            '[role="table"]': {
+            '[data-name="example"], [role="table"]': {
               marginTop: `${32 / 16}rem`,
               marginBottom: `${32 / 16}rem`
             }

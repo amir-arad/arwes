@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import { AR } from '@/ui'
+import Link from 'next/link'
 
 export default (): JSX.Element => (
   <>
@@ -10,15 +10,30 @@ export default (): JSX.Element => (
     <AR.HR />
 
     <AR.P>
-      ARWES packages are categorized by <b>vanilla</b> and <b>implementation</b> packages. ARWES
-      vanilla packages do not have major external dependencies, while the implementation packages
-      depend on specific frameworks to simplify their use and add custom UI components.
+      ARWES is a low-to-medium level API web framework to build design systems with special effects.
+      It does not provide an out-of-the-box UI toolkit (such as{' '}
+      <a href="https://mui.com" target="_blank">
+        MUI
+      </a>
+      ,{' '}
+      <a href="https://www.radix-ui.com" target="_blank">
+        Radix
+      </a>
+      , or{' '}
+      <a href="https://getbootstrap.com" target="_blank">
+        Bootstrap
+      </a>
+      ) but rather primitives, utilities, and base UI components to build one along with other
+      libraries or frameworks. This is mostly because futuristic sci-fi apps normally have very
+      particular/different aesthetics/ux.
     </AR.P>
 
     <AR.P>
-      Their functionalities can be for visual design, motion design, audio design, or UI
-      implementation. The <Link href="/play">ARWES Playground</Link> can be used to experiment with
-      various API use cases in real-time in browser.
+      Its packages are categorized by <b>vanilla</b> and <b>implementation</b> packages.{' '}
+      <Link href="/docs/develop/vanilla">ARWES vanilla packages</Link> do not have major external
+      dependencies, while the implementation packages, depend on specific frameworks to simplify
+      their use and add custom UI components, such as{' '}
+      <Link href="/docs/develop/react">ARWES React packages</Link> depend on React.js.
     </AR.P>
 
     <AR.Blockquote>
@@ -53,6 +68,8 @@ export default (): JSX.Element => (
       </p>
     </AR.Blockquote>
 
+    <AR.H2>Deliverables</AR.H2>
+
     <AR.P>
       The framework is delivered for the web platform as{' '}
       <a href="https://www.npmjs.com" target="_blank">
@@ -66,20 +83,11 @@ export default (): JSX.Element => (
       v5+ type definitions.
     </AR.P>
 
-    <AR.P>
-      Latest version of Chrome, Firefox, and Safari, for Android, iOS and desktop are supported.
-      Server-side rendering with Node.js is supported. There are custom APIs for{' '}
-      <a href="https://react.dev" target="_blank">
-        React.js
-      </a>{' '}
-      v18+ which can be used with tools like <a href="https://nextjs.org">Next.js</a>.
-    </AR.P>
+    <AR.H2>Compatibility</AR.H2>
 
     <AR.P>
-      Since sci-fi UIs normally have very particular aesthetics with custom visual workflows and
-      user experiences, the tools offered are currently "low/medium level APIs", which means that
-      the framework does not provide an entire set of UI components for a common web app but rather
-      a set of primitives, utilities, and base components to build a design system.
+      Latest versions of Chrome, Firefox, and Safari, for Android, iOS and desktop are supported.
+      Server-side rendering with Node.js is supported.
     </AR.P>
 
     <AR.HR />

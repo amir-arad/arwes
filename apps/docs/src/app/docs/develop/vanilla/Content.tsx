@@ -28,10 +28,10 @@ export default (): JSX.Element => (
 
     <AR.P>
       Vanilla packages are the core of the framework. They do not have major external dependencies
-      but most tools are low-to-medium level APIs and sometimes require elaborated
-      setups/configurations. Many of these APIs are simplified using the other implementation
-      packages such as <Link href="/docs/develop/react">React</Link> or{' '}
-      <Link href="/docs/develop/solid">Solid</Link>.
+      but most tools are low level APIs and sometimes require elaborated setups/configurations. Many
+      of these APIs are simplified using the other implementation packages such as{' '}
+      <Link href="/docs/develop/react">React</Link> or <Link href="/docs/develop/solid">Solid</Link>
+      .
     </AR.P>
 
     <AR.H2>Packages</AR.H2>
@@ -110,10 +110,6 @@ export default (): JSX.Element => (
         <AR.Cell>All vanilla packages bundle</AR.Cell>
       </AR.Row>
     </AR.Table>
-
-    <AR.H2>Get Started</AR.H2>
-
-    <AR.P>TODO.</AR.P>
 
     <AR.HR />
 

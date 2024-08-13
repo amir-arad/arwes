@@ -111,10 +111,6 @@ export default (): JSX.Element => (
       </AR.Row>
     </AR.Table>
 
-    <AR.H2>Get Started</AR.H2>
-
-    <AR.P>TODO.</AR.P>
-
     <AR.HR />
 
     <AR.Navigation

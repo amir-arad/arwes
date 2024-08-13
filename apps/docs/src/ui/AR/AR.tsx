@@ -63,6 +63,22 @@ const AR = {
     </Animator>
   ),
 
+  UL: ({ children, ...props }: HTMLAttributes<HTMLUListElement>): JSX.Element => (
+    <Animator>
+      <Animated<HTMLUListElement> {...props} as="ul" animated={['flicker']}>
+        {children}
+      </Animated>
+    </Animator>
+  ),
+
+  OL: ({ children, ...props }: HTMLAttributes<HTMLOListElement>): JSX.Element => (
+    <Animator>
+      <Animated<HTMLOListElement> {...props} as="ol" animated={['flicker']}>
+        {children}
+      </Animated>
+    </Animator>
+  ),
+
   Table: ({ children, ...props }: TableProps): JSX.Element => (
     <Animator>
       <Table
