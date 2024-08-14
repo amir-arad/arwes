@@ -239,33 +239,6 @@ export default (): JSX.Element => (
       styles back to the original styles, in this case, the exiting animations.
     </AR.P>
 
-    <AR.H2>When to Use</AR.H2>
-
-    <AR.P>
-      The animator system is intended to be used for main structural UI elements but can be used
-      anywhere for anything. For many use cases in HTML and SVG, simple CSS transitions are enough.
-      But when the structure or interaction is more complex, an animator node can be the solution.
-    </AR.P>
-
-    <AR.P>
-      In any app, regardless of ARWES, there might be performance implications if there are too many
-      animations running at the same time, specially for mobile devices, so choosing carefully the
-      most important UI elements to animate and the kind of animations is recommended.
-    </AR.P>
-
-    <AR.P>
-      For HTML and SVG, make sure to prioritize CSS <code>opacity</code>, <code>transform</code>,
-      and{' '}
-      <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter" target="_blank">
-        <code>filter</code>
-      </a>{' '}
-      properties for animations for performance and compatibility reasons. See more on{' '}
-      <a href="https://web.dev/articles/animations-guide" target="_blank">
-        How to create high-performance CSS animations
-      </a>
-      .
-    </AR.P>
-
     <AR.H2>Animation Tools</AR.H2>
 
     <AR.P>
@@ -299,6 +272,33 @@ export default (): JSX.Element => (
         file size
       </a>
       . But it is limited due to its simplicity. So using other tools is encouraged.
+    </AR.P>
+
+    <AR.H2>When to Use</AR.H2>
+
+    <AR.P>
+      The animator system is intended to be used for main structural UI elements but can be used
+      anywhere for anything. For many use cases in HTML and SVG, simple CSS transitions are enough.
+      But when the structure or interaction is more complex, an animator node can be the solution.
+    </AR.P>
+
+    <AR.P>
+      In any app, regardless of ARWES, there might be performance implications if there are too many
+      animations running at the same time, specially for mobile devices, so choosing carefully the
+      most important UI elements to animate and the kind of animations is recommended.
+    </AR.P>
+
+    <AR.P>
+      For HTML and SVG, make sure to prioritize CSS <code>opacity</code>, <code>transform</code>,
+      and{' '}
+      <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter" target="_blank">
+        <code>filter</code>
+      </a>{' '}
+      properties for animations for performance and compatibility reasons. See more on{' '}
+      <a href="https://web.dev/articles/animations-guide" target="_blank">
+        How to create high-performance CSS animations
+      </a>
+      .
     </AR.P>
 
     <AR.HR />
