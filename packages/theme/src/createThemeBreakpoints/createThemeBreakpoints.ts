@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/ban-types */
+
 import type {
   ThemeSettingsBreakpointsKeyListItem,
   ThemeSettingsBreakpoints,
   ThemeBreakpoints
 } from '../types.js'
 
-const createThemeBreakpoints = <Keys extends string | number = string | number>(
+const createThemeBreakpoints = <Keys extends string = string>(
   settings: ThemeSettingsBreakpoints<Keys> = []
 ): ThemeBreakpoints<Keys> => {
   const breakpoints = (
@@ -26,17 +28,21 @@ const createThemeBreakpoints = <Keys extends string | number = string | number>(
     return typeof item === 'string' ? item : item.value
   }
 
-  const up = (key: Keys, opts?: { strip?: boolean }): string => {
+  const up = (key: Keys | (string & {}), opts?: { strip?: boolean }): string => {
     const media = opts?.strip ? '' : '@media '
     return `${media}(min-width: ${getBreakpointValue(key)})`
   }
 
-  const down = (key: Keys, opts?: { strip?: boolean }): string => {
+  const down = (key: Keys | (string & {}), opts?: { strip?: boolean }): string => {
     const media = opts?.strip ? '' : '@media '
     return `${media}(max-width: calc(${getBreakpointValue(key)} - 1px))`
   }
 
-  const between = (startKey: Keys, endKey: Keys, opts?: { strip?: boolean }): string => {
+  const between = (
+    startKey: Keys | (string & {}),
+    endKey: Keys | (string & {}),
+    opts?: { strip?: boolean }
+  ): string => {
     const media = opts?.strip ? '' : '@media '
     const min = getBreakpointValue(startKey)
     const max = getBreakpointValue(endKey)

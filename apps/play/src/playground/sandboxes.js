@@ -48,14 +48,6 @@ export const sandboxes = [
               {
                 name: 'basic',
                 code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeBreakpoints/createThemeBreakpoints.basic.sandbox.tsx')
-              },
-              {
-                name: 'series',
-                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeBreakpoints/createThemeBreakpoints.series.sandbox.tsx')
-              },
-              {
-                name: 'labels',
-                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeBreakpoints/createThemeBreakpoints.labels.sandbox.tsx')
               }
             ]
           },

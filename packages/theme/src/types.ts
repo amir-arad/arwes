@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-types */
+
 import type { Properties as CSSProperties } from 'csstype'
 import type { PartialDeep } from '@arwes/tools'
 
@@ -15,16 +17,14 @@ export type ThemeSettingsColor =
 
 export type ThemeSettingsStyle = ThemeStyleValue[]
 
-export interface ThemeSettingsBreakpointsKeyListItem<
-  Keys extends string | number = string | number
-> {
+export interface ThemeSettingsBreakpointsKeyListItem<Keys extends string = string> {
   key: Keys
   value: string
 }
 
-export type ThemeSettingsBreakpoints<Keys extends string | number = string | number> =
-  | string[]
-  | Array<ThemeSettingsBreakpointsKeyListItem<Keys>>
+export type ThemeSettingsBreakpoints<Keys extends string = string> = Array<
+  ThemeSettingsBreakpointsKeyListItem<Keys>
+>
 
 // Theme Consumer
 
@@ -40,12 +40,16 @@ export type ThemeColor = (index: number, options?: ThemeColorOptions) => string
 export type ThemeStyleValue = CSSProperties
 export type ThemeStyle = (index: number) => ThemeStyleValue
 
-export interface ThemeBreakpoints<Keys extends string | number = string | number> {
+export interface ThemeBreakpoints<Keys extends string = string> {
   breakpoints: Keys[]
   settings: ThemeSettingsBreakpoints<Keys>
-  up: (key: Keys, opts?: { strip?: boolean }) => string
-  down: (key: Keys, opts?: { strip?: boolean }) => string
-  between: (startKey: Keys, endKey: Keys, opts?: { strip?: boolean }) => string
+  up: (key: Keys | (string & {}), opts?: { strip?: boolean }) => string
+  down: (key: Keys | (string & {}), opts?: { strip?: boolean }) => string
+  between: (
+    startKey: Keys | (string & {}),
+    endKey: Keys | (string & {}),
+    opts?: { strip?: boolean }
+  ) => string
 }
 
 // Theme Creators

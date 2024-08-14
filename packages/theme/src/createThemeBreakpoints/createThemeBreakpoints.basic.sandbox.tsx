@@ -1,11 +1,13 @@
-// Change the browser viewport width to test.
-
 import React, { type ReactElement, Fragment } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Global } from '@emotion/react'
 import { createThemeBreakpoints } from '@arwes/theme'
 
-const bps = createThemeBreakpoints()
+const bps = createThemeBreakpoints([
+  { key: 'small', value: '400px' },
+  { key: 'medium', value: '800px' },
+  { key: 'large', value: '1200px' }
+])
 
 const Sandbox = (): ReactElement => {
   return (
@@ -18,21 +20,22 @@ const Sandbox = (): ReactElement => {
             height: 150,
             backgroundColor: 'cyan',
 
-            [bps.up('400px')]: {
+            // Also possible: `bps.up('400px')`.
+            [bps.up('small')]: {
               backgroundColor: 'magenta'
             },
-            [bps.up('800px')]: {
+            [bps.up('medium')]: {
               backgroundColor: 'yellow'
             },
-            [bps.up('1200px')]: {
+            [bps.up('large')]: {
               backgroundColor: 'green'
             },
 
-            [bps.down('800px')]: {
+            [bps.down('medium')]: {
               borderRadius: '30%'
             },
 
-            [bps.between('800px', '1200px')]: {
+            [bps.between('medium', 'large')]: {
               transform: 'skew(-10deg)'
             }
           }
