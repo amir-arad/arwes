@@ -226,7 +226,7 @@ export default (): JSX.Element => (
       <Animated
         as="iframe"
         data-name="playground"
-        className="block w-full h-[40rem]"
+        className="block w-full h-[30rem] md:h-[35rem] lg:h-[40rem]"
         src={`${settings.apps.play.url}?code=&type=predefined&sandbox=Examples%7Csubsystems&explorer=false&editor=false&preview=true`}
         animated={['flicker']}
       />
@@ -274,13 +274,23 @@ export default (): JSX.Element => (
       . But it is limited due to its simplicity. So using other tools is encouraged.
     </AR.P>
 
-    <AR.H2>When to Use</AR.H2>
+    <AR.H2>Accessibility</AR.H2>
 
     <AR.P>
-      The animator system is intended to be used for main structural UI elements but can be used
-      anywhere for anything. For many use cases in HTML and SVG, simple CSS transitions are enough.
-      But when the structure or interaction is more complex, an animator node can be the solution.
+      It mostly depends on the target audience to determine what kind and the intensity of
+      animations to add to an app. For a gaming community it may be wonderful to have a game-like
+      user experience by default, but for others, checking on user preferences before even rendering
+      the interfaces may be a recommended option.{' '}
+      <a
+        href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion"
+        target="_blank"
+      >
+        prefers-reduced-motion
+      </a>{' '}
+      is a useful API to use.
     </AR.P>
+
+    <AR.H2>Performance</AR.H2>
 
     <AR.P>
       In any app, regardless of ARWES, there might be performance implications if there are too many
@@ -299,6 +309,14 @@ export default (): JSX.Element => (
         How to create high-performance CSS animations
       </a>
       .
+    </AR.P>
+
+    <AR.H2>When to Use</AR.H2>
+
+    <AR.P>
+      The animator system is intended to be used for main structural UI elements but can be used
+      anywhere for anything. For many use cases in HTML and SVG, simple CSS transitions are enough.
+      But when the structure or interaction is more complex, an animator node can be the solution.
     </AR.P>
 
     <AR.HR />

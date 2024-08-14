@@ -4,7 +4,7 @@ import { AR } from '@/ui'
 
 export default (): JSX.Element => (
   <>
-    <AR.H1>UX Fundamentals</AR.H1>
+    <AR.H1>Tailwind</AR.H1>
 
     <AR.HR />
 
@@ -13,10 +13,10 @@ export default (): JSX.Element => (
     <AR.HR />
 
     <AR.Navigation
-      prevHref="/docs/develop/fundamentals/audio"
-      prev="Audio"
-      nextHref="/docs/develop/vanilla"
-      next="Vanilla"
+      prevHref="/docs/develop/vanilla"
+      prev="Vanilla"
+      nextHref="/docs/develop/react"
+      next="React"
     />
   </>
 )

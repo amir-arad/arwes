@@ -81,12 +81,13 @@ const NavDocs = (props: { onLink?: () => void }): JSX.Element => {
   const { onLink } = props
   return (
     <List>
+      <Item href="/docs/design" icon={<IconDocsDesign />} text="Design" onLink={onLink} />
       <Item href="/docs/develop" icon={<IconDocsDevelop />} text="Develop" onLink={onLink}>
         <Item href="/docs/develop/fundamentals" text="Fundamentals" onLink={onLink}>
           <Item href="/docs/develop/fundamentals/visual" text="Visual" onLink={onLink} />
           <Item href="/docs/develop/fundamentals/motion" text="Motion" onLink={onLink} />
           <Item href="/docs/develop/fundamentals/audio" text="Audio" onLink={onLink} />
-          <Item href="/docs/develop/fundamentals/ux" text="UX" onLink={onLink} />
+          <Item href="/docs/develop/fundamentals/ui" text="UI" onLink={onLink} />
         </Item>
         <Item href="/docs/develop/vanilla" text="Vanilla" onLink={onLink} />
         <Item href="/docs/develop/tailwind" text="Tailwind" onLink={onLink} />
@@ -94,7 +95,6 @@ const NavDocs = (props: { onLink?: () => void }): JSX.Element => {
         <Item href="/docs/develop/solid" text="Solid" onLink={onLink} />
         <Item href="/docs/develop/svelte" text="Svelte" onLink={onLink} />
       </Item>
-      <Item href="/docs/design" icon={<IconDocsDesign />} text="Design" onLink={onLink} />
       <Item href="/docs/community" icon={<IconDocsCommunity />} text="Community" onLink={onLink}>
         <Item href="/docs/community/apps" text="Apps" onLink={onLink} />
         <Item href="/docs/community/similars" text="Similars" onLink={onLink} />

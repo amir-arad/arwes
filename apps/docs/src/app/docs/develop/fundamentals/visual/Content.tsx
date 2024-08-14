@@ -110,6 +110,24 @@ export default (): JSX.Element => (
       <li>JavaScript animations using the ARWES motion tools.</li>
     </AR.UL>
 
+    <AR.H2>Style Effects</AR.H2>
+
+    <AR.P>
+      ARWES provides a few styling effects such as background patterns and{' '}
+      <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path" target="_blank">
+        <code>clip-path</code>
+      </a>{' '}
+      tricks.
+    </AR.P>
+
+    <AR.H2>Compatibility</AR.H2>
+
+    <AR.P>
+      Because the tools are provided in JavaScript, if an app requires to work without JavaScript,
+      which is very unlikely, an option for the theming and styling is to occur in a Server-Side
+      Rendering (SSR) way.
+    </AR.P>
+
     <AR.HR />
 
     <AR.Navigation

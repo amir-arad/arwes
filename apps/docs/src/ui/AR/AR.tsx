@@ -49,7 +49,12 @@ const AR = {
 
   P: ({ children, ...props }: HTMLAttributes<HTMLParagraphElement>): JSX.Element => (
     <Animator>
-      <Animated {...props} as="p" animated={['flicker']}>
+      <Animated
+        {...props}
+        as="p"
+        className={cx('text-pretty', props.className)}
+        animated={['flicker']}
+      >
         {children}
       </Animated>
     </Animator>

@@ -1,10 +1,18 @@
 import type { Config } from 'tailwindcss'
 import { theme } from './theme'
 
-const createPalette = (colorFn: (i: number) => string, length: number): Record<string, string> =>
+const createTWScreens = (): Record<string, string> =>
+  theme.breakpoints.settings
+    .map(({ key, value }) => ({ [key]: value }))
+    .reduce((t, i) => ({ ...t, ...i }), {})
+
+const createTWPalette = (
+  createColor: (i: number) => string,
+  length: number
+): Record<string, string> =>
   Array(length)
     .fill(null)
-    .map((_, i) => ({ [i]: colorFn(i) }))
+    .map((_, i) => ({ [i]: createColor(i) }))
     .reduce((t, i) => ({ ...t, ...i }), {})
 
 export const tailwind: Config = {
@@ -12,22 +20,20 @@ export const tailwind: Config = {
   plugins: [require('@tailwindcss/typography')],
   theme: {
     extend: {
-      screens: (theme.breakpoints.settings as Array<{ key: string; value: string }>)
-        .map(({ key, value }) => ({ [key]: value }))
-        .reduce((t, i) => ({ ...t, ...i }), {}),
+      screens: createTWScreens(),
       colors: {
         primary: {
-          low: createPalette(theme.colors.primary.low, 13),
-          main: createPalette(theme.colors.primary.main, 13),
-          high: createPalette(theme.colors.primary.high, 13)
+          low: createTWPalette(theme.colors.primary.low, 13),
+          main: createTWPalette(theme.colors.primary.main, 13),
+          high: createTWPalette(theme.colors.primary.high, 13)
         },
         secondary: {
-          low: createPalette(theme.colors.secondary.low, 13),
-          main: createPalette(theme.colors.secondary.main, 13),
-          high: createPalette(theme.colors.secondary.high, 13)
+          low: createTWPalette(theme.colors.secondary.low, 13),
+          main: createTWPalette(theme.colors.secondary.main, 13),
+          high: createTWPalette(theme.colors.secondary.high, 13)
         },
-        neutral: createPalette(theme.colors.neutral, 13),
-        error: createPalette(theme.colors.error, 13)
+        neutral: createTWPalette(theme.colors.neutral, 13),
+        error: createTWPalette(theme.colors.error, 13)
       },
       fontFamily: theme.fontFamily,
       fontSize: {

@@ -42,18 +42,12 @@ export default (): JSX.Element => (
 
     <AR.H2>Packages</AR.H2>
 
-    <AR.P>These are the available vanilla packages:</AR.P>
+    <AR.P>These are the available React packages:</AR.P>
 
     <AR.Table>
       <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
         <AR.Cell isHeader>Package</AR.Cell>
         <AR.Cell isHeader>Description</AR.Cell>
-      </AR.Row>
-      <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
-        <AR.Cell>
-          <code>@arwes/tools</code>
-        </AR.Cell>
-        <AR.Cell>General browser utilities</AR.Cell>
       </AR.Row>
       <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
         <AR.Cell>
@@ -114,8 +108,8 @@ export default (): JSX.Element => (
     <AR.HR />
 
     <AR.Navigation
-      prevHref="/docs/develop/vanilla"
-      prev="Vanilla"
+      prevHref="/docs/develop/tailwind"
+      prev="Tailwind"
       nextHref="/docs/develop/solid"
       next="Solid"
     />

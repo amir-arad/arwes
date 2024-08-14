@@ -13,11 +13,11 @@ export type BleepNames =
   | 'assemble'
 
 export const bleepsSettings: BleepsProviderSettings<BleepNames> = {
-  master: { volume: 1 },
+  master: { volume: 0.5 },
   categories: {
-    background: { volume: 0.4 },
-    transition: { volume: 0.4 },
-    interaction: { volume: 0.7 },
+    background: { volume: 0.25 },
+    transition: { volume: 0.5 },
+    interaction: { volume: 0.75 },
     notification: { volume: 1 }
   },
   bleeps: {

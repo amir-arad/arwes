@@ -44,8 +44,9 @@ const LayoutRoot = (props: { children: ReactNode }): JSX.Element => {
               '--app-font-family-body': fontTitilliumWeb.style.fontFamily,
               '--app-font-family-cta': fontTitilliumWeb.style.fontFamily,
               '--app-font-family-code': fontSourceCodePro.style.fontFamily,
-              '--app-scrollbar-color': theme.colors.secondary.main(7),
-              '--app-scrollbar-color-hover': theme.colors.secondary.high(3)
+
+              scrollbarWidth: 'thin',
+              scrollbarColor: `${theme.colors.secondary.main(7)} transparent`
             }}
           >
             <Animator combine>

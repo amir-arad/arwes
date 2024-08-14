@@ -91,10 +91,10 @@ const Modal = memo((props: ModalProps): JSX.Element => {
           </Animator>
 
           <main className="relative flex-1 flex px-10 py-3 min-w-0 min-h-0">
-            <Animated className="flex-1 overflow-y-auto flex min-w-0 min-h-0">
-              <div className={cx('flex-1 flex flex-col gap-4 min-w-0 min-h-0', contentClassName)}>
-                {children}
-              </div>
+            <Animated
+              className={cx('flex-1 flex flex-col gap-4 min-w-0 min-h-0', contentClassName)}
+            >
+              {children}
             </Animated>
           </main>
 

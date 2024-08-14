@@ -207,20 +207,20 @@ const PageDocs = (): JSX.Element => {
             <Animator combine manager="stagger" duration={{ stagger: 0.1 }}>
               <div className="flex flex-col gap-6 lg:gap-8">
                 <Animator>
-                  <Link href="/docs/develop">
-                    <Card
-                      title="Develop"
-                      description="Learn to create web apps with the framework."
-                      icon={<IconDocsDevelop />}
-                    />
-                  </Link>
-                </Animator>
-                <Animator>
                   <Link href="/docs/design">
                     <Card
                       title="Design"
                       description="Some insights and recommendations on design."
                       icon={<IconDocsDesign />}
+                    />
+                  </Link>
+                </Animator>
+                <Animator>
+                  <Link href="/docs/develop">
+                    <Card
+                      title="Develop"
+                      description="Learn to create web apps with the framework."
+                      icon={<IconDocsDevelop />}
                     />
                   </Link>
                 </Animator>

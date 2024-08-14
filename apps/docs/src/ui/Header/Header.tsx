@@ -314,10 +314,18 @@ const Header = memo((props: HeaderProps): JSX.Element => {
       </div>
 
       {/* MOBILE MENU */}
-      <Animator root active={isMenuOpen} unmountOnExited unmountOnDisabled={!isMenuOpen}>
-        <Modal contentClassName="flex flex-col gap-6 min-h-40" header="Index" onClose={closeMenu}>
+      <Animator
+        root
+        active={isMenuOpen}
+        unmountOnExited
+        unmountOnDisabled={!isMenuOpen}
+        duration={{ exit: 0.4 }}
+      >
+        <Modal contentClassName="flex flex-col gap-6" header="Index" onClose={closeMenu}>
           <Animator combine manager="stagger">
-            <Nav onLink={closeMenu} />
+            <div className="overflow-y-auto flex-1 flex min-w-0 min-h-0 max-h-[20rem]">
+              <Nav onLink={closeMenu} />
+            </div>
 
             <div className="flex flex-col gap-2">
               <MobileLinks />
