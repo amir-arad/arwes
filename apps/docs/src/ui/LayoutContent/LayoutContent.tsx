@@ -125,7 +125,11 @@ const LayoutContent = memo((props: LayoutContentProps): JSX.Element => {
               </aside>
             )}
 
-            <Animator combine manager="stagger" duration={{ delay: isLG ? 0.2 : 0, stagger: 0.05 }}>
+            <Animator
+              combine
+              manager="stagger"
+              duration={{ delay: isLG ? 0.2 : 0, stagger: 0.05, limit: 25 }}
+            >
               <main className="flex justify-center w-full min-w-0 min-h-0">
                 <div
                   className={cx(

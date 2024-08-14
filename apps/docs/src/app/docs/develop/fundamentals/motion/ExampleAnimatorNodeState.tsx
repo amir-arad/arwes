@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Animated, Animator, useAnimator } from '@arwes/react'
+import { Animated, Animator, cx, useAnimator } from '@arwes/react'
 
 import { theme } from '@/config'
 
@@ -31,10 +31,14 @@ const Example = (): JSX.Element => {
       duration={{ enter: 1, exit: 1 }}
     >
       <Animated
-        className="flex justify-center items-center w-[6rem] h-[3rem] min-w-0 text-center text-neutral-1 bg-neutral-7"
+        className={cx(
+          'flex justify-center items-center border w-[6rem] h-[3rem] min-w-0 text-center',
+          'border-primary-main-8 text-neutral-1 bg-primary-main-10'
+        )}
         animated={[
           ['x', 0, 100],
-          ['background', theme.colors.neutral(7), theme.colors.secondary.main(7)]
+          ['borderColor', theme.colors.primary.main(8), theme.colors.secondary.main(6)],
+          ['background', theme.colors.primary.main(10), theme.colors.secondary.main(8)]
         ]}
         hideOnExited={false}
       >

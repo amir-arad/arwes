@@ -35,19 +35,37 @@ const ExampleNodeBg = (props: { x: string; y: string }): JSX.Element => {
   return (
     <Animated<SVGRectElement>
       as="rect"
-      className="fill-neutral-7"
+      className="fill-primary-main-10 stroke-primary-main-8"
       x={x}
       y={y}
       width="100"
       height="50"
-      animated={[['fill', theme.colors.neutral(7), theme.colors.secondary.main(7)]]}
+      stroke="1"
+      animated={[
+        [
+          'fill',
+          theme.colors.primary.main(10),
+          theme.colors.secondary.main(8),
+          undefined,
+          'linear'
+        ],
+        [
+          'stroke',
+          theme.colors.primary.main(8),
+          theme.colors.secondary.main(6),
+          undefined,
+          'linear'
+        ]
+      ]}
       hideOnExited={false}
     />
   )
 }
 
-const Example = (props: { manager?: 'parallel' | 'sequence' }): JSX.Element => {
-  const { manager } = props
+type ExampleProps = { inSequence?: boolean; hasCombinations?: boolean }
+
+const Example = (props: ExampleProps): JSX.Element => {
+  const { inSequence, hasCombinations } = props
 
   const [active, setActive] = useState(false)
 
@@ -65,42 +83,51 @@ const Example = (props: { manager?: 'parallel' | 'sequence' }): JSX.Element => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path className="stroke-neutral-5" d="M249.5 45L111.5 103.5" stroke-width="2" />
-          <path className="stroke-neutral-5" d="M251 47L390 104.5" stroke-width="2" />
-          <path className="stroke-neutral-5" d="M112.5 143.5L36.5 206" stroke-width="2" />
-          <path className="stroke-neutral-5" d="M113.5 145.5L183.5 206.5" stroke-width="2" />
-          <path className="stroke-neutral-5" d="M382.5 143.5L306.5 206" stroke-width="2" />
-          <path className="stroke-neutral-5" d="M383.5 145.5L455 205" stroke-width="2" />
+          <path className="stroke-neutral-3" d="M249.5 45L111.5 103.5" strokeWidth="2" />
+          <path className="stroke-neutral-3" d="M251 47L390 104.5" strokeWidth="2" />
+          <path className="stroke-neutral-3" d="M112.5 143.5L36.5 206" strokeWidth="2" />
+          <path className="stroke-neutral-3" d="M113.5 145.5L183.5 206.5" strokeWidth="2" />
+          <path className="stroke-neutral-3" d="M382.5 143.5L306.5 206" strokeWidth="2" />
+          <path className="stroke-neutral-3" d="M383.5 145.5L455 205" strokeWidth="2" />
 
-          <Animator manager={manager}>
+          <Animator
+            combine={hasCombinations}
+            manager={inSequence || hasCombinations ? 'sequence' : 'parallel'}
+          >
             <ExampleNodeBg x="200" y="0" />
             <ExampleNodeText x="220" y="30" />
 
-            <Animator manager={manager}>
+            <Animator
+              combine={hasCombinations}
+              manager={inSequence || hasCombinations ? 'sequence' : 'parallel'}
+            >
               <ExampleNodeBg x="65" y="100" />
               <ExampleNodeText x="85" y="130" />
 
-              <Animator manager={manager}>
+              <Animator manager={inSequence ? 'sequence' : 'parallel'}>
                 <ExampleNodeBg x="0" y="200" />
                 <ExampleNodeText x="20" y="230" />
               </Animator>
 
-              <Animator manager={manager}>
+              <Animator manager={inSequence ? 'sequence' : 'parallel'}>
                 <ExampleNodeBg x="130" y="200" />
                 <ExampleNodeText x="150" y="230" />
               </Animator>
             </Animator>
 
-            <Animator manager={manager}>
+            <Animator
+              combine={hasCombinations}
+              manager={inSequence || hasCombinations ? 'sequence' : 'parallel'}
+            >
               <ExampleNodeBg x="335" y="100" />
               <ExampleNodeText x="355" y="130" />
 
-              <Animator manager={manager}>
+              <Animator manager={inSequence ? 'sequence' : 'parallel'}>
                 <ExampleNodeBg x="270" y="200" />
                 <ExampleNodeText x="290" y="230" />
               </Animator>
 
-              <Animator manager={manager}>
+              <Animator manager={inSequence ? 'sequence' : 'parallel'}>
                 <ExampleNodeBg x="400" y="200" />
                 <ExampleNodeText x="420" y="230" />
               </Animator>
@@ -112,10 +139,10 @@ const Example = (props: { manager?: 'parallel' | 'sequence' }): JSX.Element => {
   )
 }
 
-const ExampleAnimatorTree = (props: { manager?: 'parallel' | 'sequence' }): JSX.Element => (
+const ExampleAnimatorTree = (props: ExampleProps): JSX.Element => (
   <Animator unmountOnExited>
     <Animated data-name="example">
-      <Example manager={props.manager} />
+      <Example {...props} />
     </Animated>
   </Animator>
 )

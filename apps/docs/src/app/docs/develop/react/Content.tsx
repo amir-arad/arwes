@@ -1,9 +1,9 @@
 'use client'
 
+import Link from 'next/link'
 import { Animated, Animator } from '@arwes/react'
 
 import { AR } from '@/ui'
-import Link from 'next/link'
 
 export default (): JSX.Element => (
   <>

@@ -16,7 +16,7 @@ const PageHome = (): JSX.Element => {
       <Animated
         as="main"
         className={cx('flex flex-col justify-center items-center gap-4 m-auto p-6', 'md:gap-8')}
-        animated={[['y', theme.space(6), 0]]}
+        animated={[['y', theme.space(6), 0, 0]]}
       >
         <Animator>
           <Animated as="h1" className="pb-2" title={settings.title}>
@@ -49,7 +49,7 @@ const PageHome = (): JSX.Element => {
               <ButtonSimple
                 tabIndex={-1}
                 title="Go to Documentation"
-                animated={[['x', theme.spacen(-6), 0]]}
+                animated={[['x', theme.spacen(-6), 0, 0]]}
               >
                 <Page className="text-size-[1.5em] xhidden x2sm:block" />
                 <span>Docs</span>
@@ -60,29 +60,29 @@ const PageHome = (): JSX.Element => {
               <ButtonSimple
                 tabIndex={-1}
                 title="Go to Demos"
-                animated={[['x', theme.spacen(-3), 0]]}
+                animated={[['x', theme.spacen(-3), 0, 0]]}
               >
                 <CollageFrame className="text-size-[1.5em] xhidden x2sm:block" />
                 <span>Demos</span>
               </ButtonSimple>
             </Link>
 
-            <a href="/play">
+            <a href={settings.apps.play.url}>
               <ButtonSimple
                 tabIndex={-1}
                 title="Go to Playground"
-                animated={[['x', theme.spacen(3), 0]]}
+                animated={[['x', theme.spacen(3), 0, 0]]}
               >
                 <Codepen className="text-size-[1.5em] xhidden x2sm:block" />
                 <span>Play</span>
               </ButtonSimple>
             </a>
 
-            <a href="/perf">
+            <a href={settings.apps.perf.url}>
               <ButtonSimple
                 tabIndex={-1}
                 title="Go to Performance"
-                animated={[['x', theme.spacen(6), 0]]}
+                animated={[['x', theme.spacen(6), 0, 0]]}
               >
                 <DashboardSpeed className="text-size-[1.5em] xhidden x2sm:block" />
                 <span>Perf</span>

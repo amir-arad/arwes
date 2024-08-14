@@ -10,6 +10,21 @@ export default (): JSX.Element => (
 
     <AR.P>TODO.</AR.P>
 
+    <AR.UL>
+      <li>Advanced science and technology.</li>
+      <li>Energetic and vibrant.</li>
+      <li>Clean and sleek.</li>
+      <li>Functional.</li>
+    </AR.UL>
+
+    <AR.H2>Theming</AR.H2>
+
+    <AR.P>TODO.</AR.P>
+
+    <AR.H2>Theming</AR.H2>
+
+    <AR.P>TODO.</AR.P>
+
     <AR.HR />
 
     <AR.Navigation

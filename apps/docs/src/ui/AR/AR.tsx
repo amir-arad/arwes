@@ -4,10 +4,10 @@ import Link from 'next/link'
 import { ArrowLeft, ArrowRight } from 'iconoir-react'
 import { animate, stagger } from 'motion'
 
+import { theme } from '@/config'
 import { type HrProps, Hr } from '../Hr'
 import { Button } from '../Button'
 import { type TableProps, type RowProps, type CellProps, Table, Row, Cell } from '../Table'
-import { theme } from '@/config'
 
 const AR = {
   H1: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement>): JSX.Element => (

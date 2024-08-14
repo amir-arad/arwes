@@ -1,7 +1,7 @@
 'use client'
 
-import { AR } from '@/ui'
 import Link from 'next/link'
+import { AR } from '@/ui'
 
 export default (): JSX.Element => (
   <>

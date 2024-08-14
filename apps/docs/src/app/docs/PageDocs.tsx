@@ -25,8 +25,7 @@ const PageDocs = (): JSX.Element => {
                 {
                   initialStyle: { opacity: 1 },
                   transitions: {
-                    entering: { scale: [1.25, 1], rotate: [-90, 0], duration: 0.75 },
-                    exiting: { opacity: [1, 0, 0.5, 0] }
+                    entering: { scale: [1.25, 1], rotate: [-90, 0], duration: 0.75 }
                   }
                 },
                 { transitions: { entering: { opacity: 0, delay: 0.75, duration: 0.25 } } },
