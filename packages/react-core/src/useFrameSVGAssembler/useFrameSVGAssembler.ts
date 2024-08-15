@@ -3,7 +3,7 @@ import { type AnimationControls, animate } from 'motion'
 import { easeAmong } from '@arwes/animated'
 import { useAnimator } from '@arwes/react-animator'
 
-const useFrameSVGAssembler = (svgRef: RefObject<SVGSVGElement>): void => {
+const useFrameSVGAssembler = (svgRef: RefObject<SVGElement | HTMLElement>): void => {
   const animator = useAnimator()
 
   useEffect(() => {
