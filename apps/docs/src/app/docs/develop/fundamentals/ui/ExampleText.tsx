@@ -13,23 +13,19 @@ const Example = (): JSX.Element => {
 
   return (
     <AnimatorGeneralProvider disabled={false} dismissed={false} duration={{ enter: 1, exit: 1 }}>
-      <Animator root active={active} combine manager="sequence">
+      <Animator root active={active}>
         <Animated
           className="flex flex-col gap-2 px-8 py-2 bg-primary-main-7/10"
           hideOnExited={false}
         >
-          <Animator>
-            <Text className="!m-0">
-              <b>Sequence</b> rendering animation which consists in rendering a predefined number of
-              characters per second with a ending blinking character.
-            </Text>
-          </Animator>
-          <Animator>
-            <Text className="!m-0" manager="decipher">
-              <b>Decipher</b> rendering animation which consists in rendering a all characters at
-              the same time from a ciphered set of characters to the actual set of characters.
-            </Text>
-          </Animator>
+          <Text className="!m-0" fixed>
+            <b>Sequence</b> rendering animation which consists in rendering a predefined number of
+            characters per second with a ending blinking character.
+          </Text>
+          <Text className="!m-0" manager="decipher" fixed>
+            <b>Decipher</b> rendering animation which consists in rendering a all characters at the
+            same time from a ciphered set of characters to the actual set of characters.
+          </Text>
         </Animated>
       </Animator>
     </AnimatorGeneralProvider>

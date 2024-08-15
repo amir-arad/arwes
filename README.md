@@ -74,20 +74,6 @@ their use and add custom UI components.
 Vanilla packages do not have major external dependencies but most tools are low level APIs
 and sometimes require elaborated setups/configurations.
 
-| Package           | Description                         |
-| ----------------- | ----------------------------------- |
-| `@arwes/tools`    | General browser utilities           |
-| `@arwes/theme`    | Visual themes scaffolding           |
-| `@arwes/styles`   | Special visual styles               |
-| `@arwes/animator` | Interfaces assembling               |
-| `@arwes/animated` | Animation sequences effects         |
-| `@arwes/bleeps`   | Short sounds management             |
-| `@arwes/text`     | Text rendering effects              |
-| `@arwes/frames`   | Responsive scalable vector graphics |
-| `@arwes/bgs`      | Passive background ambiences        |
-| `@arwes/core`     | Integration functionalities         |
-| `arwes`           | All vanilla packages bundle         |
-
 ### React
 
 [![bundle size](https://img.shields.io/bundlephobia/minzip/@arwes/react.svg)](https://bundlephobia.com/package/@arwes/react)
@@ -96,26 +82,13 @@ and sometimes require elaborated setups/configurations.
 ARWES offers [React](https://react.dev) v18 specific packages with SSR support.
 ARWES does not work with React strict mode nor React Server Components.
 
-| Package                 | Description                               |
-| ----------------------- | ----------------------------------------- |
-| `@arwes/react-tools`    | React general utilities                   |
-| `@arwes/react-animator` | React interfaces assembling               |
-| `@arwes/react-animated` | React elements animations                 |
-| `@arwes/react-bleeps`   | React short sounds management             |
-| `@arwes/react-text`     | React text rendering effects              |
-| `@arwes/react-frames`   | React responsive scalable vector graphics |
-| `@arwes/react-bgs`      | React passive background ambiences        |
-| `@arwes/react-core`     | React integration functionalities         |
-| `@arwes/react`          | All vanilla and React packages bundle     |
-
 ### Solid
 
 ARWES offers [Solid](https://solidjs.com) v1 specific packages with SSR support.
 
-| Package                 | Description                           |
-| ----------------------- | ------------------------------------- |
-| `@arwes/solid-animator` | Animator interface tools              |
-| `@arwes/solid`          | All vanilla and Solid packages bundle |
+### Svelte
+
+ARWES offers [Svelte](https://svelte.dev) v4 specific packages with SSR support.
 
 ## Community
 

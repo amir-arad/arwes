@@ -104,6 +104,7 @@ export const tailwind: Config = {
               listStyleType: '"➣"'
             },
             code: {
+              whiteSpace: 'nowrap',
               fontFamily: theme.fontFamily.code.join(),
               fontWeight: 400,
               color: 'inherit'
@@ -116,10 +117,11 @@ export const tailwind: Config = {
               marginTop: '1rem',
               marginBottom: '2rem'
             },
-            '[role="table"], [data-name="example"], [data-name="playground"]': {
-              marginTop: `${24 / 14}rem`,
-              marginBottom: `${24 / 14}rem`
-            }
+            '[role="table"], [data-name="codeblock"], [data-name="example"], [data-name="playground"]':
+              {
+                marginTop: `${24 / 14}rem`,
+                marginBottom: `${24 / 14}rem`
+              }
           }
         },
         base: {
@@ -128,10 +130,11 @@ export const tailwind: Config = {
               marginTop: '1.25rem',
               marginBottom: '2.5rem'
             },
-            '[role="table"], [data-name="example"], [data-name="playground"]': {
-              marginTop: `${32 / 16}rem`,
-              marginBottom: `${32 / 16}rem`
-            }
+            '[role="table"], [data-name="codeblock"], [data-name="example"], [data-name="playground"]':
+              {
+                marginTop: `${32 / 16}rem`,
+                marginBottom: `${32 / 16}rem`
+              }
           }
         }
       }

@@ -227,7 +227,7 @@ export default (): JSX.Element => (
         as="iframe"
         data-name="playground"
         className="block w-full h-[30rem] md:h-[35rem] lg:h-[40rem]"
-        src={`${settings.apps.play.url}?code=&type=predefined&sandbox=Examples%7Csubsystems&explorer=false&editor=false&preview=true`}
+        src={`${settings.apps.play.url}?code=&type=predefined&sandbox=Examples%7CReact%7Csubsystems&explorer=false&editor=false&preview=true`}
         animated={['flicker']}
       />
     </Animator>

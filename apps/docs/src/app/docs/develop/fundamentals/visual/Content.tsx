@@ -120,14 +120,6 @@ export default (): JSX.Element => (
       tricks.
     </AR.P>
 
-    <AR.H2>Compatibility</AR.H2>
-
-    <AR.P>
-      Because the tools are provided in JavaScript, if an app requires to work without JavaScript,
-      which is very unlikely, an option for the theming and styling is to occur in a Server-Side
-      Rendering (SSR) way.
-    </AR.P>
-
     <AR.HR />
 
     <AR.Navigation

@@ -91,7 +91,13 @@ const NavDocs = (props: { onLink?: () => void }): JSX.Element => {
         </Item>
         <Item href="/docs/develop/vanilla" text="Vanilla" onLink={onLink} />
         <Item href="/docs/develop/tailwind" text="Tailwind" onLink={onLink} />
-        <Item href="/docs/develop/react" text="React" onLink={onLink} />
+        <Item href="/docs/develop/react" text="React" onLink={onLink}>
+          <Item href="/docs/develop/react/animators" text="Animators" onLink={onLink} />
+          <Item href="/docs/develop/react/bleeps" text="Bleeps" onLink={onLink} />
+          <Item href="/docs/develop/react/text" text="Text" onLink={onLink} />
+          <Item href="/docs/develop/react/frames" text="Frames" onLink={onLink} />
+          <Item href="/docs/develop/react/bgs" text="Backgrounds" onLink={onLink} />
+        </Item>
         <Item href="/docs/develop/solid" text="Solid" onLink={onLink} />
         <Item href="/docs/develop/svelte" text="Svelte" onLink={onLink} />
       </Item>

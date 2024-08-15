@@ -34,6 +34,10 @@ export default (): JSX.Element => (
       .
     </AR.P>
 
+    <AR.P>
+      Check out the <a href="/play">Playground</a> for examples on how to use the vanilla packages.
+    </AR.P>
+
     <AR.H2>Packages</AR.H2>
 
     <AR.P>These are the available vanilla packages:</AR.P>
@@ -113,11 +117,6 @@ export default (): JSX.Element => (
 
     <AR.HR />
 
-    <AR.Navigation
-      prevHref="/docs/develop/fundamentals"
-      prev="Fundamentals"
-      nextHref="/docs/develop/react"
-      next="React"
-    />
+    <AR.Navigation prevHref="/docs/develop" prev="Develop" />
   </>
 )

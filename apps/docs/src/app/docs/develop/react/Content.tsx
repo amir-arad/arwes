@@ -40,6 +40,89 @@ export default (): JSX.Element => (
       <p>ARWES does not work with React strict mode nor React Server Components (RSC).</p>
     </AR.Blockquote>
 
+    <AR.H2>Get Started</AR.H2>
+
+    <AR.P>
+      In any project with React already configured, such as with{' '}
+      <a href="https://nextjs.org" target="_blank">
+        Next.js
+      </a>{' '}
+      or{' '}
+      <a href="https://remix.run" target="_blank">
+        Remix
+      </a>
+      , install the package:
+    </AR.P>
+
+    <AR.CodeBlock lang="bash" code="npm install @arwes/react" />
+
+    <AR.P>Make sure to disable React strict mode and use Client-Side Rendering (CSR).</AR.P>
+
+    <AR.P>Check out the following guides:</AR.P>
+
+    <AR.UL>
+      <li>
+        <Link href="/docs/develop/react/animators">React Animators</Link>
+      </li>
+      <li>
+        <Link href="/docs/develop/react/bleeps">React Bleeps</Link>
+      </li>
+      <li>
+        <Link href="/docs/develop/react/text">React Text</Link>
+      </li>
+      <li>
+        <Link href="/docs/develop/react/frames">React Frames</Link>
+      </li>
+      <li>
+        <Link href="/docs/develop/react/bgs">React Backgrounds</Link>
+      </li>
+    </AR.UL>
+
+    <AR.P>Check out the following playground examples:</AR.P>
+
+    <AR.UL>
+      <li>
+        <a
+          href="/play?code=&type=predefined&sandbox=Examples%7CReact%7Cbutton&explorer=true&editor=true&preview=true"
+          target="_blank"
+        >
+          Button
+        </a>
+      </li>
+      <li>
+        <a
+          href="/play?code=&type=predefined&sandbox=Examples%7CReact%7Cbackgrounds&explorer=true&editor=true&preview=true"
+          target="_blank"
+        >
+          Backgrounds
+        </a>
+      </li>
+      <li>
+        <a
+          href="/play?code=&type=predefined&sandbox=Examples%7CReact%7Calert&explorer=true&editor=true&preview=true"
+          target="_blank"
+        >
+          Alert
+        </a>
+      </li>
+      <li>
+        <a
+          href="/play?code=&type=predefined&sandbox=Examples%7CReact%7CscrollList&explorer=true&editor=true&preview=true"
+          target="_blank"
+        >
+          Scroll List
+        </a>
+      </li>
+      <li>
+        <a
+          href="/play?code=&type=predefined&sandbox=Examples%7CReact%7Csubsystems&explorer=true&editor=true&preview=true"
+          target="_blank"
+        >
+          Subsystems
+        </a>
+      </li>
+    </AR.UL>
+
     <AR.H2>Packages</AR.H2>
 
     <AR.P>These are the available React packages:</AR.P>
@@ -108,10 +191,10 @@ export default (): JSX.Element => (
     <AR.HR />
 
     <AR.Navigation
-      prevHref="/docs/develop/tailwind"
-      prev="Tailwind"
-      nextHref="/docs/develop/solid"
-      next="Solid"
+      prevHref="/docs/develop"
+      prev="Develop"
+      nextHref="/docs/develop/react/animators"
+      next="Animators"
     />
   </>
 )

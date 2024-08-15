@@ -5,17 +5,23 @@ import {
   Animated,
   Animator,
   AnimatorGeneralProvider,
+  FrameSVGCorners,
+  FrameSVGKranox,
+  FrameSVGLines,
   FrameSVGNefrex,
+  FrameSVGOctagon,
+  FrameSVGUnderline,
   useFrameSVGAssembler
 } from '@arwes/react'
 import { theme } from '@/config'
 
-const Frame = (): JSX.Element => {
-  const frameRef = useRef<SVGSVGElement>(null)
+const Frames = (): JSX.Element => {
+  const frameRef = useRef<HTMLDivElement>(null)
   useFrameSVGAssembler(frameRef)
   return (
-    <FrameSVGNefrex
-      elementRef={frameRef}
+    <div
+      ref={frameRef}
+      className="flex flex-row flex-wrap gap-4"
       style={{
         // @ts-expect-error css variables
         '--arwes-frames-bg-color': theme.colors.secondary.main(10),
@@ -23,12 +29,49 @@ const Frame = (): JSX.Element => {
         '--arwes-frames-line-color': theme.colors.secondary.main(3),
         '--arwes-frames-line-filter': `drop-shadow(0 0 2px ${theme.colors.secondary.main(3)})`
       }}
-      padding={4}
-      strokeWidth={2}
-      squareSize={20}
-      smallLineLength={20}
-      largeLineLength={40}
-    />
+    >
+      <FrameSVGOctagon
+        className="!relative !inset-auto !w-48 !h-32"
+        padding={4}
+        strokeWidth={2}
+        squareSize={20}
+      />
+      <FrameSVGUnderline
+        className="!relative !inset-auto !w-48 !h-32"
+        padding={4}
+        strokeWidth={2}
+        squareSize={20}
+      />
+      <FrameSVGCorners
+        className="!relative !inset-auto !w-48 !h-32"
+        padding={4}
+        cornerLength={20}
+        strokeWidth={2}
+      />
+      <FrameSVGLines
+        className="!relative !inset-auto !w-48 !h-32"
+        padding={4}
+        largeLineWidth={2}
+        smallLineWidth={2}
+        smallLineLength={20}
+      />
+      <FrameSVGNefrex
+        className="!relative !inset-auto !w-48 !h-32"
+        padding={4}
+        strokeWidth={2}
+        squareSize={20}
+        smallLineLength={20}
+        largeLineLength={40}
+      />
+      <FrameSVGKranox
+        className="!relative !inset-auto !w-48 !h-32"
+        padding={4}
+        strokeWidth={2}
+        squareSize={10}
+        smallLineLength={10}
+        largeLineLength={20}
+      />
+    </div>
   )
 }
 
@@ -43,9 +86,7 @@ const Example = (): JSX.Element => {
   return (
     <AnimatorGeneralProvider disabled={false} dismissed={false} duration={{ enter: 1, exit: 1 }}>
       <Animator root active={active}>
-        <Animated className="relative w-48 h-24" hideOnExited={false}>
-          <Frame />
-        </Animated>
+        <Frames />
       </Animator>
     </AnimatorGeneralProvider>
   )

@@ -13,6 +13,10 @@ button:not(:disabled):focus {
   font-weight: 300;
 }
 
+.font-code {
+  font-weight: 400;
+}
+
 b,
 strong {
   font-weight: 600;

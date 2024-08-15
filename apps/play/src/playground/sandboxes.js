@@ -645,24 +645,29 @@ export const sandboxes = [
     name: 'Examples',
     children: [
       {
-        name: 'button',
-        code: require('!raw-loader?esModule=false!../examples/button.sandbox.tsx')
-      },
-      {
-        name: 'backgrounds',
-        code: require('!raw-loader?esModule=false!../examples/backgrounds.sandbox.tsx')
-      },
-      {
-        name: 'alert',
-        code: require('!raw-loader?esModule=false!../examples/alert.sandbox.tsx')
-      },
-      {
-        name: 'scrollList',
-        code: require('!raw-loader?esModule=false!../examples/scrollList.sandbox.tsx')
-      },
-      {
-        name: 'subsystems',
-        code: require('!raw-loader?esModule=false!../examples/subsystems.sandbox.tsx')
+        name: 'React',
+        children: [
+          {
+            name: 'button',
+            code: require('!raw-loader?esModule=false!../examples/react/button.sandbox.tsx')
+          },
+          {
+            name: 'backgrounds',
+            code: require('!raw-loader?esModule=false!../examples/react/backgrounds.sandbox.tsx')
+          },
+          {
+            name: 'alert',
+            code: require('!raw-loader?esModule=false!../examples/react/alert.sandbox.tsx')
+          },
+          {
+            name: 'scrollList',
+            code: require('!raw-loader?esModule=false!../examples/react/scrollList.sandbox.tsx')
+          },
+          {
+            name: 'subsystems',
+            code: require('!raw-loader?esModule=false!../examples/react/subsystems.sandbox.tsx')
+          }
+        ]
       }
     ]
   }

@@ -73,7 +73,7 @@ export default (): JSX.Element => (
         as="iframe"
         data-name="playground"
         className="block w-full h-[30rem]"
-        src={`${settings.apps.play.url}?code=&type=predefined&sandbox=Examples%7Cbackgrounds&explorer=false&editor=false&preview=true`}
+        src={`${settings.apps.play.url}?code=&type=predefined&sandbox=Examples%7CReact%7Cbackgrounds&explorer=false&editor=false&preview=true`}
         animated={['flicker']}
       />
     </Animator>
@@ -91,8 +91,8 @@ export default (): JSX.Element => (
     <AR.Navigation
       prevHref="/docs/develop/fundamentals/audio"
       prev="Audio"
-      nextHref="/docs/develop/vanilla"
-      next="Vanilla"
+      nextHref="/docs/develop/fundamentals"
+      next="Fundamentals"
     />
   </>
 )

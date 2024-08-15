@@ -8,6 +8,7 @@ import { theme } from '@/config'
 import { type HrProps, Hr } from '../Hr'
 import { Button } from '../Button'
 import { type TableProps, type RowProps, type CellProps, Table, Row, Cell } from '../Table'
+import { type CodeBlockProps, CodeBlock } from '../CodeBlock'
 
 const AR = {
   H1: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement>): JSX.Element => (
@@ -102,6 +103,12 @@ const AR = {
   ),
   Row: (props: RowProps) => <Row {...props} />,
   Cell: (props: CellProps) => <Cell {...props} />,
+
+  CodeBlock: (props: CodeBlockProps) => (
+    <Animator combine manager="stagger">
+      <CodeBlock {...props} />
+    </Animator>
+  ),
 
   Navigation: (props: {
     prevHref?: string

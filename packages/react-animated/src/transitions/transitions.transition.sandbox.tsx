@@ -17,10 +17,11 @@ const Sandbox = (): ReactElement => {
       <Animated
         style={{ width: 50, height: 50, backgroundColor: '#777' }}
         animated={[
-          ['opacity', 0, 1],
+          ['opacity', 0.25, 1],
           ['background', '#ff0', '#0ff', '#f0f', 'linear'],
-          ['x', 0, 100, 0, spring()]
+          ['x', 0, 100, undefined, spring()]
         ]}
+        hideOnExited={false}
       />
     </Animator>
   )
