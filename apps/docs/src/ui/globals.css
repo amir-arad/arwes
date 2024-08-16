@@ -6,9 +6,13 @@
   @apply bg-primary-main-4/[0.25];
 }
 
+a {
+  @apply transition-all ease-out duration-200;
+}
+
 a[href]:focus,
 button:not(:disabled):focus {
-  @apply outline-dotted outline-secondary-main-3/50;
+  @apply outline-1 outline-dotted outline-secondary-main-3/50;
 }
 
 .font-header,

@@ -9,9 +9,7 @@ import { ExampleFrames } from './ExampleFrames'
 
 export default (): JSX.Element => (
   <>
-    <AR.H1>UI Fundamentals</AR.H1>
-
-    <AR.HR />
+    <AR.Header>UI Fundamentals</AR.Header>
 
     <AR.P>
       To create certain common futuristic science fiction experiences, ARWES provides a few base web
@@ -85,8 +83,6 @@ export default (): JSX.Element => (
       complement an existing one. If a new design system needs to be created, pro ui/ux design
       skills are required, or existing design guidelines should be followed.
     </AR.P>
-
-    <AR.HR />
 
     <AR.Navigation
       prevHref="/docs/develop/fundamentals/audio"

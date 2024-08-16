@@ -4,6 +4,7 @@ import {
   memo,
   Animated,
   FrameSVGOctagon,
+  styleFrameClipOctagon,
   Illuminator,
   useBleeps,
   cx
@@ -47,12 +48,6 @@ const Button = memo((props: ButtonProps): JSX.Element => {
         bleeps.click?.play()
       }}
     >
-      <div role="presentation" className="absolute overflow-hidden">
-        <Illuminator
-          size={theme.spacen(60)}
-          color={theme.colors.secondary.main(3, { alpha: 0.2 })}
-        />
-      </div>
       <FrameSVGOctagon
         className="opacity-70 transition-opacity ease-out duration-200 group-hover:opacity-100"
         style={{
@@ -65,6 +60,22 @@ const Button = memo((props: ButtonProps): JSX.Element => {
         rightTop={false}
         squareSize={theme.spacen(2)}
       />
+      <div
+        role="presentation"
+        className="absolute inset-0 overflow-hidden"
+        style={{
+          clipPath: styleFrameClipOctagon({
+            leftBottom: false,
+            rightTop: false,
+            squareSize: theme.spacen(2)
+          })
+        }}
+      >
+        <Illuminator
+          size={theme.spacen(60)}
+          color={theme.colors.secondary.main(3, { alpha: 0.15 })}
+        />
+      </div>
       <div
         className={cx(
           'relative',

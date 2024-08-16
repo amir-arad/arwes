@@ -113,11 +113,7 @@ export const tailwind: Config = {
         },
         sm: {
           css: {
-            hr: {
-              marginTop: '1rem',
-              marginBottom: '2rem'
-            },
-            '[role="table"], [data-name="codeblock"], [data-name="example"], [data-name="playground"]':
+            '[role="table"], [data-name="codeblock"], [data-name="links"], [data-name="example"], [data-name="playground"]':
               {
                 marginTop: `${24 / 14}rem`,
                 marginBottom: `${24 / 14}rem`
@@ -126,11 +122,7 @@ export const tailwind: Config = {
         },
         base: {
           css: {
-            hr: {
-              marginTop: '1.25rem',
-              marginBottom: '2.5rem'
-            },
-            '[role="table"], [data-name="codeblock"], [data-name="example"], [data-name="playground"]':
+            '[role="table"], [data-name="codeblock"], [data-name="links"], [data-name="example"], [data-name="playground"]':
               {
                 marginTop: `${32 / 16}rem`,
                 marginBottom: `${32 / 16}rem`

@@ -46,60 +46,62 @@ const Item = (props: ItemProps): JSX.Element => {
   const active = pathname === href
 
   return (
-    <Animator combine manager="stagger">
-      <Animated as="li" className="flex flex-col">
-        <Animator>
-          <Animated
-            animated={flicker()}
-            onTransition={(element, node) => {
-              if (active && node.state === 'entered') {
-                requestAnimationFrame(() => {
-                  element.scrollIntoView({
-                    block: 'center',
-                    behavior: 'smooth'
-                  })
+    <li className="flex flex-col">
+      <Animator>
+        <Animated
+          animated={flicker()}
+          onTransition={(element, node) => {
+            if (active && node.state === 'entered') {
+              requestAnimationFrame(() => {
+                element.scrollIntoView({
+                  block: 'center',
+                  behavior: 'smooth'
                 })
-              }
+              })
+            }
+          }}
+        >
+          <Link
+            className={cx(
+              'flex flex-row items-center gap-2 px-4 py-2 font-cta text-size-9',
+              'transition-all ease-out duration-200',
+              !matches && 'text-primary-main-4 hover:text-primary-high-2',
+              matches && 'text-secondary-main-4 hover:text-secondary-high-2',
+              active && 'bg-secondary-main-3/[0.05]'
+            )}
+            style={{
+              clipPath: styleFrameClipOctagon({
+                leftTop: false,
+                leftBottom: false,
+                squareSize: theme.space(2)
+              })
             }}
+            href={href}
+            onClick={onLink}
           >
-            <Link
-              className={cx(
-                'flex flex-row items-center gap-2 px-4 py-2 font-cta text-size-9',
-                'transition-all ease-out duration-200',
-                !matches && 'text-primary-main-4 hover:text-primary-high-2',
-                matches && 'text-secondary-main-4 hover:text-secondary-high-2',
-                active && 'bg-secondary-main-3/[0.05]'
-              )}
-              style={{
-                clipPath: styleFrameClipOctagon({
-                  leftTop: false,
-                  leftBottom: false,
-                  squareSize: theme.space(2)
-                })
-              }}
-              href={href}
-              onClick={onLink}
-            >
-              {icon}
-              {text}
-            </Link>
-          </Animated>
-        </Animator>
+            {icon}
+            {text}
+          </Link>
+        </Animated>
+      </Animator>
 
-        {!!Children.count(children) && (
-          <div className="flex pl-4">
-            <List className="flex border-l border-dashed border-primary-main-9/50">{children}</List>
-          </div>
-        )}
-      </Animated>
-    </Animator>
+      {!!Children.count(children) && (
+        <div className="flex pl-4">
+          <List className="flex border-l border-dashed border-primary-main-9/50">{children}</List>
+        </div>
+      )}
+    </li>
   )
 }
 
-const NavDocs = (props: { className?: string; onLink?: () => void }): JSX.Element => {
-  const { className, onLink } = props
+type NavSectionProps = {
+  onLink?: () => void
+}
+
+const NavDocs = (props: NavSectionProps): JSX.Element => {
+  const { onLink } = props
   return (
-    <List className={className}>
+    <>
       <Item href="/docs/design" icon={<IconDocsDesign />} text="Design" onLink={onLink} />
       <Item href="/docs/develop" icon={<IconDocsDevelop />} text="Develop" onLink={onLink}>
         <Item
@@ -139,7 +141,21 @@ const NavDocs = (props: { className?: string; onLink?: () => void }): JSX.Elemen
           onLink={onLink}
         />
       </Item>
-    </List>
+    </>
+  )
+}
+
+const NavRoot = (props: NavSectionProps): JSX.Element => {
+  const { onLink } = props
+  return (
+    <Item href="/" icon={<IconRoot />} text="Root" onLink={onLink}>
+      <Item href="/docs" icon={<IconDocs />} text="Docs" onLink={onLink}>
+        <NavDocs onLink={onLink} />
+      </Item>
+      <Item href="/demos" icon={<IconDemos />} text="Demos" onLink={onLink} />
+      <Item href="/play" icon={<IconPlay />} text="Play" onLink={onLink} />
+      <Item href="/perf" icon={<IconPerf />} text="Perf" onLink={onLink} />
+    </Item>
   )
 }
 
@@ -152,21 +168,12 @@ type NavProps = {
 const Nav = memo((props: NavProps): JSX.Element => {
   const { className, path, onLink } = props
 
-  if (path === 'docs') {
-    return <NavDocs className={className} onLink={onLink} />
-  }
-
   return (
-    <List className={className}>
-      <Item href="/" icon={<IconRoot />} text="Root" onLink={onLink}>
-        <Item href="/docs" icon={<IconDocs />} text="Docs" onLink={onLink}>
-          <NavDocs onLink={onLink} />
-        </Item>
-        <Item href="/demos" icon={<IconDemos />} text="Demos" onLink={onLink} />
-        <Item href="/play" icon={<IconPlay />} text="Play" onLink={onLink} />
-        <Item href="/perf" icon={<IconPerf />} text="Perf" onLink={onLink} />
-      </Item>
-    </List>
+    <Animator combine manager="stagger" duration={{ stagger: 0.015 }}>
+      <List className={className}>
+        {path === 'docs' ? <NavDocs onLink={onLink} /> : <NavRoot onLink={onLink} />}
+      </List>
+    </Animator>
   )
 })
 

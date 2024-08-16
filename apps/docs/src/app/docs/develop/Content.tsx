@@ -1,13 +1,14 @@
 'use client'
 
-import Link from 'next/link'
+import { Axes as IconFundamentals, Cube as IconVanilla } from 'iconoir-react'
+
+import { IconReact, IconTailwind, IconSolid, IconSvelte } from '@/icons'
+
 import { AR } from '@/ui'
 
 export default (): JSX.Element => (
   <>
-    <AR.H1>Develop</AR.H1>
-
-    <AR.HR />
+    <AR.Header>Develop</AR.Header>
 
     <AR.P>
       ARWES is a low-to-medium level API web framework to build design systems with special effects.
@@ -30,26 +31,16 @@ export default (): JSX.Element => (
 
     <AR.P>Check out the framework development guides:</AR.P>
 
-    <AR.UL>
-      <li>
-        <Link href="/docs/develop/fundamentals">Fundamentals</Link>
-      </li>
-      <li>
-        <Link href="/docs/develop/vanilla">Vanilla</Link>
-      </li>
-      <li>
-        <Link href="/docs/develop/tailwind">Tailwind</Link>
-      </li>
-      <li>
-        <Link href="/docs/develop/react">React</Link>
-      </li>
-      <li>
-        <Link href="/docs/develop/solid">Solid</Link>
-      </li>
-      <li>
-        <Link href="/docs/develop/svelte">Svelte</Link>
-      </li>
-    </AR.UL>
+    <AR.Links
+      links={[
+        { href: '/docs/develop/fundamentals', text: 'Fundamentals', icon: <IconFundamentals /> },
+        { href: '/docs/develop/vanilla', text: 'Vanilla', icon: <IconVanilla /> },
+        { href: '/docs/develop/tailwind', text: 'Tailwind', icon: <IconTailwind /> },
+        { href: '/docs/develop/react', text: 'React', icon: <IconReact /> },
+        { href: '/docs/develop/solid', text: 'Solid', icon: <IconSolid /> },
+        { href: '/docs/develop/svelte', text: 'Svelte', icon: <IconSvelte /> }
+      ]}
+    />
 
     <AR.H2>Deliverables</AR.H2>
 
@@ -72,8 +63,6 @@ export default (): JSX.Element => (
       Latest versions of Chrome, Firefox, and Safari, for Android, iOS and desktop are supported.
       Server-side rendering with Node.js is supported.
     </AR.P>
-
-    <AR.HR />
 
     <AR.Navigation
       prevHref="/docs"

@@ -4,13 +4,9 @@ import { AR } from '@/ui'
 
 export default (): JSX.Element => (
   <>
-    <AR.H1>React Backgrounds</AR.H1>
-
-    <AR.HR />
+    <AR.Header>React Backgrounds</AR.Header>
 
     <AR.P>TODO.</AR.P>
-
-    <AR.HR />
 
     <AR.Navigation
       prevHref="/docs/develop/react/frames"

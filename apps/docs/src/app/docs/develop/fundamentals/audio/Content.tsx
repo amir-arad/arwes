@@ -4,9 +4,7 @@ import { AR } from '@/ui'
 
 export default (): JSX.Element => (
   <>
-    <AR.H1>Audio Fundamentals</AR.H1>
-
-    <AR.HR />
+    <AR.Header>Audio Fundamentals</AR.Header>
 
     <AR.P>
       To feel an energetic and vibrant user experience, an app might want to include sound effects
@@ -136,8 +134,6 @@ export default (): JSX.Element => (
       </a>{' '}
       bundle of sounds for your own use as a starting point if you need.
     </AR.P>
-
-    <AR.HR />
 
     <AR.Navigation
       prevHref="/docs/develop/fundamentals/motion"

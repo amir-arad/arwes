@@ -37,7 +37,7 @@
 
 ---
 
-[ARWES](https://arwes.dev) is a web framework to build user interfaces based on futuristic science fiction designs, animations, and sound effects. The concepts behind are opinionated with influences from [Cyberprep](https://aesthetics.fandom.com/wiki/Cyberprep) and productions like [Star Citizen](http://robertsspaceindustries.com), [Halo](https://www.halowaypoint.com/en-us/games), [Deus Ex](https://www.eidosmontreal.com/games/deus-ex-mankind-divided), and [NIKKE](https://nikke-en.com). It tries to inspire advanced science and technology.
+[ARWES](https://arwes.dev) is a web framework to build user interfaces based on futuristic science fiction designs, animations, and sound effects. The concepts behind are opinionated with influences from [Cyberprep](https://aesthetics.fandom.com/wiki/Cyberprep) and productions like [Star Citizen](http://robertsspaceindustries.com), [Halo](https://www.halowaypoint.com/en-us/games), [Mecha Break](https://www.mechabreak.com), and [NIKKE](https://nikke-en.com). It tries to inspire advanced science and technology.
 
 > The project is under development and not ready for production yet. It is still in
 > [alpha release](https://stackoverflow.com/questions/40067469), so the components
@@ -71,8 +71,9 @@ their use and add custom UI components.
 [![bundle size](https://img.shields.io/bundlephobia/minzip/arwes.svg)](https://bundlephobia.com/package/arwes)
 [![installs](https://img.shields.io/npm/dm/arwes?label=installs&style=flat-square)](https://bundlephobia.com/package/arwes)
 
-Vanilla packages do not have major external dependencies but most tools are low level APIs
-and sometimes require elaborated setups/configurations.
+Core of the framework. Vanilla packages do not have major external dependencies but most tools are
+low level APIs and sometimes require elaborated setups/configurations. Other implementation packages
+simplify its use.
 
 ### React
 

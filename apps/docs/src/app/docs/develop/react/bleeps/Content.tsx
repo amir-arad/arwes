@@ -7,9 +7,7 @@ import { ExampleOnAnimator } from './ExampleOnAnimator'
 
 export default (): JSX.Element => (
   <>
-    <AR.H1>React Bleeps</AR.H1>
-
-    <AR.HR />
+    <AR.Header>React Bleeps</AR.Header>
 
     <AR.P>
       ARWES provides the Bleeps API to manage short sound effects in an app. Make sure to read the{' '}
@@ -38,6 +36,8 @@ export type BleepsNames = 'hover' | 'type' | 'click' | 'error'`}
       filename="App.tsx"
       lang="tsx"
       code={`import { type BleepsProviderSettings, BleepsProvider } from '@arwes/react'
+
+// Import the previous bleeps names type.
 import type { BleepsNames } from './types.ts'
 
 const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
@@ -147,8 +147,6 @@ const Content = (): JSX.Element => (
     />
 
     <ExampleOnAnimator />
-
-    <AR.HR />
 
     <AR.Navigation
       prevHref="/docs/develop/react/animators"

@@ -7,9 +7,7 @@ import { AR } from '@/ui'
 
 export default (): JSX.Element => (
   <>
-    <AR.H1>Vanilla</AR.H1>
-
-    <AR.HR />
+    <AR.Header>Vanilla</AR.Header>
 
     <Animator>
       <Animated className="flex flex-row gap-2" animated={['flicker']}>
@@ -121,8 +119,6 @@ export default (): JSX.Element => (
         <AR.Cell>All vanilla packages bundle</AR.Cell>
       </AR.Row>
     </AR.Table>
-
-    <AR.HR />
 
     <AR.Navigation prevHref="/docs/develop" prev="Develop" />
   </>

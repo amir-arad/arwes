@@ -4,9 +4,7 @@ import { AR } from '@/ui'
 
 export default (): JSX.Element => (
   <>
-    <AR.H1>Fundamentals</AR.H1>
-
-    <AR.HR />
+    <AR.Header>Fundamentals</AR.Header>
 
     <AR.P>
       Futuristic science fiction user experiences are very varied and particular, drawing
@@ -37,7 +35,16 @@ export default (): JSX.Element => (
       can be integrated with ARWES motion tools. And so on.
     </AR.P>
 
-    <AR.HR />
+    <AR.P>Check out the guides on the framework fundamentals:</AR.P>
+
+    <AR.Links
+      links={[
+        { href: '/docs/develop/fundamentals/visuals', text: 'Visual Fundamentals' },
+        { href: '/docs/develop/fundamentals/motion', text: 'Motion Fundamentals' },
+        { href: '/docs/develop/fundamentals/audio', text: 'Audio Fundamentals' },
+        { href: '/docs/develop/fundamentals/ui', text: 'UI Fundamentals' }
+      ]}
+    />
 
     <AR.Navigation
       prevHref="/docs/develop"

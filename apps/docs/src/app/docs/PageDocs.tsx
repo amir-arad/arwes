@@ -92,11 +92,8 @@ const PageDocs = (): JSX.Element => {
                       Halo
                     </a>
                     ,{' '}
-                    <a
-                      href="https://www.eidosmontreal.com/games/deus-ex-mankind-divided"
-                      target="_blank"
-                    >
-                      Deus Ex
+                    <a href="https://www.mechabreak.com" target="_blank">
+                      Mecha Break
                     </a>
                     , and{' '}
                     <a href="https://nikke-en.com" target="_blank">

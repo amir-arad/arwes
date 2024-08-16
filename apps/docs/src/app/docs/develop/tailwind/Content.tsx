@@ -4,9 +4,7 @@ import { AR } from '@/ui'
 
 export default (): JSX.Element => (
   <>
-    <AR.H1>Tailwind</AR.H1>
-
-    <AR.HR />
+    <AR.Header>Tailwind</AR.Header>
 
     <AR.P>
       ARWES theming tools can be easily integrated with{' '}
@@ -125,8 +123,6 @@ export const tailwind: Config = {
   </p>
 </article>`}
     />
-
-    <AR.HR />
 
     <AR.Navigation prevHref="/docs/develop" prev="Develop" />
   </>

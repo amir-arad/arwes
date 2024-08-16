@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Animated, Animator, AnimatorGeneralProvider, cx } from '@arwes/react'
+import { theme } from '@/config'
 
 type Props = {
   isDisabled?: boolean
@@ -27,9 +28,12 @@ const Content = (props: Props): JSX.Element => {
         as="article"
         className={cx(
           'inline-flex flex-row items-center gap-4 p-4 not-prose',
-          'border border-primary-main-7 bg-primary-main-7/10',
+          'border border-primary-main-7',
           'md:px-6 md:py-4'
         )}
+        style={{
+          background: `linear-gradient(0deg, ${theme.colors.primary.main(7, { alpha: 0.25 })}, ${theme.colors.primary.main(7, { alpha: 0.1 })})`
+        }}
         animated={['fade']}
       >
         <Animator duration={{ enter: props.isPolished ? 0.8 : undefined }}>
@@ -48,7 +52,7 @@ const Content = (props: Props): JSX.Element => {
               className="font-header text-size-5 leading-none text-primary-main-3"
               animated={['fade', ['x', 20, 0]]}
             >
-              ARWES
+              <b>ARWES</b>
             </Animated>
           </Animator>
 

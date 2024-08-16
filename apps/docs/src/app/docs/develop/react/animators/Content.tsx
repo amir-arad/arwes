@@ -6,9 +6,7 @@ import { Example } from './Example'
 
 export default (): JSX.Element => (
   <>
-    <AR.H1>React Animators</AR.H1>
-
-    <AR.HR />
+    <AR.Header>React Animators</AR.Header>
 
     <AR.P>
       ARWES provides a few components and functionalities to orchestrate animations with the
@@ -56,6 +54,7 @@ export default (): JSX.Element => (
     <AR.CodeBlock
       filename="Card.tsx"
       lang="tsx"
+      highlightLines={[4, 6, 9, 12]}
       code={`import { Animator } from '@arwes/react'
 
 const Card = (): JSX.Element => (
@@ -392,8 +391,6 @@ const Card = (): JSX.Element => (
       There are many more more use cases to explore about the animator system in the{' '}
       <a href="/play">Playground</a>.
     </AR.P>
-
-    <AR.HR />
 
     <AR.Navigation
       prevHref="/docs/develop/react"

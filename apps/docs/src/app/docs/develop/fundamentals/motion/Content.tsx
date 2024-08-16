@@ -11,9 +11,7 @@ import { ExampleText } from './ExampleText'
 
 export default (): JSX.Element => (
   <>
-    <AR.H1>Motion Fundamentals</AR.H1>
-
-    <AR.HR />
+    <AR.Header>Motion Fundamentals</AR.Header>
 
     <AR.P>
       To create special motion effects, ARWES provides an animator system to{' '}
@@ -318,8 +316,6 @@ export default (): JSX.Element => (
       anywhere for anything. For many use cases in HTML and SVG, simple CSS transitions are enough.
       But when the structure or interaction is more complex, an animator node can be the solution.
     </AR.P>
-
-    <AR.HR />
 
     <AR.Navigation
       prevHref="/docs/develop/fundamentals/visual"

@@ -12,9 +12,5 @@
 }
 
 .root:hover .content svg {
-  @apply -translate-x-1;
-}
-
-.root:hover .content * + svg {
   @apply translate-x-1;
 }

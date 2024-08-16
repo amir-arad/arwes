@@ -2,17 +2,16 @@
 
 import Link from 'next/link'
 import { Animated, Animator } from '@arwes/react'
+import { Codepen as IconPlay } from 'iconoir-react'
 
 import { AR } from '@/ui'
 
 export default (): JSX.Element => (
   <>
-    <AR.H1>React</AR.H1>
-
-    <AR.HR />
+    <AR.Header>React</AR.Header>
 
     <Animator>
-      <Animated className="flex flex-row gap-2" animated={['flicker']}>
+      <Animated data-name="links" className="flex flex-row gap-2" animated={['flicker']}>
         <img
           className="!m-0"
           alt="bundle size"
@@ -60,68 +59,47 @@ export default (): JSX.Element => (
 
     <AR.P>Check out the following guides:</AR.P>
 
-    <AR.UL>
-      <li>
-        <Link href="/docs/develop/react/animators">React Animators</Link>
-      </li>
-      <li>
-        <Link href="/docs/develop/react/bleeps">React Bleeps</Link>
-      </li>
-      <li>
-        <Link href="/docs/develop/react/text">React Text</Link>
-      </li>
-      <li>
-        <Link href="/docs/develop/react/frames">React Frames</Link>
-      </li>
-      <li>
-        <Link href="/docs/develop/react/bgs">React Backgrounds</Link>
-      </li>
-    </AR.UL>
+    <AR.Links
+      links={[
+        { href: '/docs/develop/react/animators', text: 'React Animators' },
+        { href: '/docs/develop/react/bleeps', text: 'React Bleeps' },
+        { href: '/docs/develop/react/text', text: 'React Text' },
+        { href: '/docs/develop/react/frames', text: 'React Frames' },
+        { href: '/docs/develop/react/bgs', text: 'React Backgrounds' }
+      ]}
+    />
 
     <AR.P>Check out the following playground examples:</AR.P>
 
-    <AR.UL>
-      <li>
-        <a
-          href="/play?code=&type=predefined&sandbox=Examples%7CReact%7Cbutton&explorer=true&editor=true&preview=true"
-          target="_blank"
-        >
-          Button
-        </a>
-      </li>
-      <li>
-        <a
-          href="/play?code=&type=predefined&sandbox=Examples%7CReact%7Cbackgrounds&explorer=true&editor=true&preview=true"
-          target="_blank"
-        >
-          Backgrounds
-        </a>
-      </li>
-      <li>
-        <a
-          href="/play?code=&type=predefined&sandbox=Examples%7CReact%7Calert&explorer=true&editor=true&preview=true"
-          target="_blank"
-        >
-          Alert
-        </a>
-      </li>
-      <li>
-        <a
-          href="/play?code=&type=predefined&sandbox=Examples%7CReact%7CscrollList&explorer=true&editor=true&preview=true"
-          target="_blank"
-        >
-          Scroll List
-        </a>
-      </li>
-      <li>
-        <a
-          href="/play?code=&type=predefined&sandbox=Examples%7CReact%7Csubsystems&explorer=true&editor=true&preview=true"
-          target="_blank"
-        >
-          Subsystems
-        </a>
-      </li>
-    </AR.UL>
+    <AR.Links
+      links={[
+        {
+          href: '/play?code=&type=predefined&sandbox=Examples%7CReact%7Cbutton&explorer=true&editor=true&preview=true',
+          text: 'Button',
+          icon: <IconPlay />
+        },
+        {
+          href: '/play?code=&type=predefined&sandbox=Examples%7CReact%7Cbackgrounds&explorer=true&editor=true&preview=true',
+          text: 'Backgrounds',
+          icon: <IconPlay />
+        },
+        {
+          href: '/play?code=&type=predefined&sandbox=Examples%7CReact%7Calert&explorer=true&editor=true&preview=true',
+          text: 'Alert',
+          icon: <IconPlay />
+        },
+        {
+          href: '/play?code=&type=predefined&sandbox=Examples%7CReact%7CscrollList&explorer=true&editor=true&preview=true',
+          text: 'Scroll List',
+          icon: <IconPlay />
+        },
+        {
+          href: '/play?code=&type=predefined&sandbox=Examples%7CReact%7Csubsystems&explorer=true&editor=true&preview=true',
+          text: 'Subsystems',
+          icon: <IconPlay />
+        }
+      ]}
+    />
 
     <AR.H2>Packages</AR.H2>
 
@@ -187,8 +165,6 @@ export default (): JSX.Element => (
         <AR.Cell>All vanilla and React packages bundle</AR.Cell>
       </AR.Row>
     </AR.Table>
-
-    <AR.HR />
 
     <AR.Navigation
       prevHref="/docs/develop"

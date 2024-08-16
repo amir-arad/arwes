@@ -4,9 +4,7 @@ import { AR } from '@/ui'
 
 export default (): JSX.Element => (
   <>
-    <AR.H1>Visual Fundamentals</AR.H1>
-
-    <AR.HR />
+    <AR.Header>Visual Fundamentals</AR.Header>
 
     <AR.P>
       For certain user experiences, visual design effects can be dynamically generated in different
@@ -119,8 +117,6 @@ export default (): JSX.Element => (
       </a>{' '}
       tricks.
     </AR.P>
-
-    <AR.HR />
 
     <AR.Navigation
       prevHref="/docs/develop/fundamentals"
