@@ -28,45 +28,28 @@ export default (): JSX.Element => (
       particular/different aesthetics/ux.
     </AR.P>
 
-    <AR.P>
-      Its packages are categorized by <b>vanilla</b> and <b>implementation</b> packages.{' '}
-      <Link href="/docs/develop/vanilla">ARWES vanilla packages</Link> do not have major external
-      dependencies, while the implementation packages, depend on specific frameworks to simplify
-      their use and add custom UI components, such as{' '}
-      <Link href="/docs/develop/react">ARWES React packages</Link> depend on React.js.
-    </AR.P>
+    <AR.P>Check out the framework development guides:</AR.P>
 
-    <AR.Blockquote>
-      <p>
-        The project is under development and not ready for production yet. It is still in{' '}
-        <a href="https://stackoverflow.com/questions/40067469" target="_blank">
-          alpha release
-        </a>
-        , so the components are being tested and their API may change as it gets completed.
-      </p>
-    </AR.Blockquote>
-
-    <AR.Blockquote>
-      <p>
-        <a href="https://github.com/arwes/arwes/tree/main" target="_blank">
-          Branch main
-        </a>{' '}
-        is for <code>@alpha</code> version releases and public content deployed at{' '}
-        <a href="https://arwes.dev" target="_blank">
-          arwes.dev
-        </a>
-        .
-        <br />
-        <a href="https://github.com/arwes/arwes/tree/next" target="_blank">
-          Branch next
-        </a>{' '}
-        is for <code>@next</code> version releases and active development deployed at{' '}
-        <a href="https://next.arwes.dev" target="_blank">
-          next.arwes.dev
-        </a>
-        .
-      </p>
-    </AR.Blockquote>
+    <AR.UL>
+      <li>
+        <Link href="/docs/develop/fundamentals">Fundamentals</Link>
+      </li>
+      <li>
+        <Link href="/docs/develop/vanilla">Vanilla</Link>
+      </li>
+      <li>
+        <Link href="/docs/develop/tailwind">Tailwind</Link>
+      </li>
+      <li>
+        <Link href="/docs/develop/react">React</Link>
+      </li>
+      <li>
+        <Link href="/docs/develop/solid">Solid</Link>
+      </li>
+      <li>
+        <Link href="/docs/develop/svelte">Svelte</Link>
+      </li>
+    </AR.UL>
 
     <AR.H2>Deliverables</AR.H2>
 

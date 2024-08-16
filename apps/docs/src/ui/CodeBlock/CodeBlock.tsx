@@ -39,6 +39,8 @@ const CodeBlock = memo((props: CodeBlockProps): JSX.Element => {
                 className={className}
                 style={{
                   ...style,
+                  display: 'flex',
+                  flexDirection: 'column',
                   margin: 0,
                   fontFamily: theme.fontFamily.code.join(),
                   fontWeight: 400,
@@ -53,7 +55,11 @@ const CodeBlock = memo((props: CodeBlockProps): JSX.Element => {
                     <div
                       key={i}
                       {...lineProps}
-                      className={cx(lineProps.className, isHighlighted && 'bg-secondary-main-9/50')}
+                      className={cx(
+                        lineProps.className,
+                        'mr-auto',
+                        isHighlighted && 'bg-secondary-main-9/50'
+                      )}
                     >
                       {line.map((token, key) => (
                         <span key={key} {...getTokenProps({ token })} />

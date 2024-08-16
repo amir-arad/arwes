@@ -12,6 +12,7 @@ import {
 import { Xmark as IconClose } from 'iconoir-react'
 
 import { type BleepNames } from '@/config'
+import { Hr } from '../Hr'
 import styles from './Modal.module.css'
 
 interface ModalProps {
@@ -61,8 +62,12 @@ const Modal = memo((props: ModalProps): JSX.Element => {
 
         <Animator combine manager="stagger">
           <Animator>
-            <Animated as="header" className="relative flex px-10" animated={['flicker']}>
-              <div className="flex-1 flex flex-row gap-4 justify-between items-center border-b pb-2 border-primary-main-9">
+            <Animated
+              as="header"
+              className="relative flex flex-col gap-2 px-10"
+              animated={['flicker']}
+            >
+              <div className="flex-1 flex flex-row gap-4 justify-between items-center">
                 <Text
                   as="h1"
                   className={cx('font-header text-size-6 text-primary-main-3', 'sm:text-size-5')}
@@ -87,6 +92,8 @@ const Modal = memo((props: ModalProps): JSX.Element => {
                   <IconClose />
                 </button>
               </div>
+
+              <Hr direction="both" />
             </Animated>
           </Animator>
 

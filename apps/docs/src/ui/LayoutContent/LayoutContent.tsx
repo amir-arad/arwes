@@ -101,7 +101,7 @@ const LayoutContent = memo((props: LayoutContentProps): JSX.Element => {
               <aside className={cx('sticky top-0 flex', ASIDE_WIDTH_CLASS)}>
                 {Children.count(left) > 0 && (
                   <Animator>
-                    <Animated className="relative flex w-full mb-auto" animated={['flicker']}>
+                    <Animated className="relative flex w-full" animated={['flicker']}>
                       <FrameSVGOctagon
                         style={{
                           // @ts-expect-error css variables
@@ -118,7 +118,7 @@ const LayoutContent = memo((props: LayoutContentProps): JSX.Element => {
                           />
                         </div>
                       )}
-                      <div className="relative flex p-4 w-full">{left}</div>
+                      <div className="relative overflow-y-auto flex p-4 w-full">{left}</div>
                     </Animated>
                   </Animator>
                 )}

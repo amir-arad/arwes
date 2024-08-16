@@ -13,14 +13,14 @@ export const settings = Object.freeze({
         typeof window !== 'undefined' &&
         ['arwes.dev', 'next.arwes.dev'].includes(window.location.host)
           ? '/play'
-          : 'http://127.0.0.1:9000/play'
+          : 'http://localhost:9000/play'
     },
     perf: {
       url:
         typeof window !== 'undefined' &&
         ['arwes.dev', 'next.arwes.dev'].includes(window.location.host)
           ? '/perf'
-          : 'http://127.0.0.1:9001/perf'
+          : 'http://localhost:9001/perf'
     }
   }
 } as const)

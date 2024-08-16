@@ -37,9 +37,7 @@ export default (): JSX.Element => (
     <h1 className='card-title'>ARWES</h1>
     <p className='card-description'>Futuristic Sci-Fi UI Web Framework.</p>
   </article>
-)
-
-export { Card }`}
+)`}
     />
 
     <AR.P>Which could hypothetically render something like this:</AR.P>
@@ -74,9 +72,7 @@ const Card = (): JSX.Element => (
       </Animator>
     </article>
   </Animator>
-)
-
-export { Card }`}
+)`}
     />
 
     <AR.H2>&lt;Animated&gt;</AR.H2>
@@ -110,9 +106,7 @@ const Card = (): JSX.Element => (
       </Animator>
     </Animated>
   </Animator>
-)
-
-export { Card }`}
+)`}
     />
 
     <AR.P>The card can have the following transition animations:</AR.P>
@@ -238,12 +232,20 @@ import { animate } from 'motion'
       lang="tsx"
       code={`import { spring } from 'motion'
 
-<Animated animated={{
-  transitions: {
-    entering: { opacity: 1, duration: 1.5, delay: 0.5, easing: spring() },
-    exiting: { opacity: 0, duration: 1, easing: 'outElastic' }
-  }
-}} />`}
+{/* Defining durations and timings in <Animator>. */}
+<Animator duration={{ enter: 0.7, exit: 0.3, delay: 0.25 }}>
+  <Animated animated={[['opacity', 0, 1, undefined, spring()]]} />
+</Animator>
+
+{/* Defining durations and timings in <Animated>. */}
+<Animator>
+  <Animated animated={{
+    transitions: {
+      entering: { opacity: [0, 1], duration: 0.7, delay: 0.25, easing: spring() },
+      exiting: { opacity: [1, 0], duration: 0.3, easing: spring() }
+    }
+  }} />
+</Animator>`}
     />
 
     <AR.P>In the card component, the make the animations smoother and sleeker:</AR.P>

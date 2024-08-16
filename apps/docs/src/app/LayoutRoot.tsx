@@ -35,7 +35,10 @@ const LayoutRoot = (props: { children: ReactNode }): JSX.Element => {
   return (
     <IconoirProvider {...iconProviderProps}>
       <AnimatorGeneralProvider {...animatorGeneralSettings} disabled={!isMotionEnabled}>
-        <BleepsProvider {...bleepsSettings} common={{ disabled: !isAudioEnabled }}>
+        <BleepsProvider
+          {...bleepsSettings}
+          common={{ ...bleepsSettings.common, disabled: !isAudioEnabled }}
+        >
           <div
             className="absolute inset-0 overflow-hidden flex flex-col"
             style={{

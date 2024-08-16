@@ -70,6 +70,8 @@ export { theme }`}
       filename="/tailwind.config.ts"
       lang="tsx"
       code={`import type { Config } from 'tailwindcss'
+
+// Import the theme definition.
 import { theme } from './src/theme'
 
 // Convert an ARWES theme breakpoints to a Tailwind screens settings.
@@ -97,7 +99,7 @@ export const tailwind: Config = {
         primary: createTWPalette(theme.colors.primary, 10),
         secondary: createTWPalette(theme.colors.primary, 10)
       },
-      // \`fontFamily\` can be passed just like that.
+      // \`fontFamily\` can be passed just like this.
       fontFamily: theme.fontFamily
 
       // Tailwind \`spacing\` is the same as the theme \`space\` setting.

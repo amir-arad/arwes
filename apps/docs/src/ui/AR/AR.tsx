@@ -71,7 +71,17 @@ const AR = {
 
   UL: ({ children, ...props }: HTMLAttributes<HTMLUListElement>): JSX.Element => (
     <Animator>
-      <Animated<HTMLUListElement> {...props} as="ul" animated={['flicker']}>
+      <Animated<HTMLUListElement>
+        {...props}
+        as="ul"
+        animated={{
+          transitions: {
+            entering: ({ $, duration }) =>
+              animate($('li'), { opacity: [0, 1, 0.5, 1] }, { duration, delay: stagger(0.02) }),
+            exiting: { opacity: [1, 0, 0.5, 0] }
+          }
+        }}
+      >
         {children}
       </Animated>
     </Animator>
@@ -79,7 +89,17 @@ const AR = {
 
   OL: ({ children, ...props }: HTMLAttributes<HTMLOListElement>): JSX.Element => (
     <Animator>
-      <Animated<HTMLOListElement> {...props} as="ol" animated={['flicker']}>
+      <Animated<HTMLOListElement>
+        {...props}
+        as="ol"
+        animated={{
+          transitions: {
+            entering: ({ $, duration }) =>
+              animate($('li'), { opacity: [0, 1, 0.5, 1] }, { duration, delay: stagger(0.02) }),
+            exiting: { opacity: [1, 0, 0.5, 0] }
+          }
+        }}
+      >
         {children}
       </Animated>
     </Animator>

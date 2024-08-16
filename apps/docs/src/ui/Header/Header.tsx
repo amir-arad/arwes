@@ -36,9 +36,7 @@ import { ArwesLogoIcon } from '../ArwesLogoIcon'
 import { ArwesLogoType } from '../ArwesLogoType'
 import { Menu } from '../Menu'
 import { MenuItem } from '../MenuItem'
-import { Modal } from '../Modal'
-import { Nav } from '../Nav'
-import { MobileLinks } from './MobileLinks'
+import { MobileMenu } from './MobileMenu'
 import styles from './Header.module.css'
 
 interface HeaderProps {
@@ -314,46 +312,7 @@ const Header = memo((props: HeaderProps): JSX.Element => {
       </div>
 
       {/* MOBILE MENU */}
-      <Animator
-        root
-        active={isMenuOpen}
-        unmountOnExited
-        unmountOnDisabled={!isMenuOpen}
-        duration={{ exit: 0.4 }}
-      >
-        <Modal contentClassName="flex flex-col gap-6" header="Index" onClose={closeMenu}>
-          <Animator combine manager="stagger">
-            <div className="overflow-y-auto flex-1 flex min-w-0 min-h-0 max-h-[20rem]">
-              <Nav onLink={closeMenu} />
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <MobileLinks />
-
-              <Animator>
-                <Animated<HTMLAnchorElement>
-                  as="a"
-                  className="flex justify-center font-cta leading-none text-size-10 text-primary-main-9"
-                  animated={['flicker']}
-                  href={`https://github.com/arwes/arwes/releases/tag/v${settings.version}`}
-                  target="version"
-                >
-                  v{settings.version}
-                </Animated>
-              </Animator>
-
-              <Animator>
-                <Animated
-                  className="flex justify-center font-cta leading-none text-size-11 text-primary-main-9"
-                  animated={['flicker']}
-                >
-                  {new Date(settings.deployTime).toISOString()}
-                </Animated>
-              </Animator>
-            </div>
-          </Animator>
-        </Modal>
-      </Animator>
+      <MobileMenu isMenuOpen={isMenuOpen} closeMenu={closeMenu} />
     </Animated>
   )
 })

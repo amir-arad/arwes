@@ -34,8 +34,15 @@ export default (): JSX.Element => (
       .
     </AR.P>
 
+    <AR.H2>Get Started</AR.H2>
+
+    <AR.P>Install the package:</AR.P>
+
+    <AR.CodeBlock lang="bash" code="npm install arwes" />
+
     <AR.P>
-      Check out the <a href="/play">Playground</a> for examples on how to use the vanilla packages.
+      Check out the <a href="/play">Playground</a> for examples on how to use the vanilla
+      functionalities.
     </AR.P>
 
     <AR.H2>Packages</AR.H2>

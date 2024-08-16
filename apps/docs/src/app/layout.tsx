@@ -1,7 +1,6 @@
 import { settings } from '@/config/settings'
 import { LayoutRoot } from './LayoutRoot'
 
-import '@/ui/tailwind.css'
 import '@/ui/globals.css'
 
 const RootLayout = ({ children }: { children: React.ReactNode }): JSX.Element => {

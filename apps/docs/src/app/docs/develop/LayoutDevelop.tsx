@@ -9,7 +9,7 @@ type LayoutDocsProps = {
 const LayoutDevelop = (props: LayoutDocsProps): JSX.Element => {
   const { children } = props
   return (
-    <LayoutContent left={<Nav path="docs" />}>
+    <LayoutContent left={<Nav className="mb-auto" path="docs" />}>
       <article className="flex flex-col min-w-0 min-h-0 prose prose-sm lg:prose-base">
         {children}
       </article>
