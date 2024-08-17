@@ -64,7 +64,7 @@ const Example = (): JSX.Element => {
   )
 }
 
-const ExampleFrame = (): JSX.Element => {
+const ExampleFrameCustom = (): JSX.Element => {
   return (
     <Animator unmountOnExited>
       <Animated data-name="example" className="inline-block size-[15rem]">
@@ -74,4 +74,4 @@ const ExampleFrame = (): JSX.Element => {
   )
 }
 
-export { ExampleFrame }
+export { ExampleFrameCustom }

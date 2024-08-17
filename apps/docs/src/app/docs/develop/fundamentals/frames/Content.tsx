@@ -35,6 +35,47 @@ export default (): JSX.Element => (
 
     <ExampleFrames />
 
+    <AR.P>
+      They all create SVG elements dynamically with different names and CSS variables for easy
+      customization.
+    </AR.P>
+
+    <AR.UL>
+      <li>
+        <code>[data-name="line"]</code> for SVG <code>path</code> elements as lines or polylines.
+        <ul>
+          <li>
+            <code>--arwes-frames-line-color</code> for stroke color.
+          </li>
+          <li>
+            <code>--arwes-frames-line-filter</code> for filter effect.
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>[data-name="bg"]</code> for background shapes.
+        <ul>
+          <li>
+            <code>--arwes-frames-bg-color</code> for fill color.
+          </li>
+          <li>
+            <code>--arwes-frames-bg-filter</code> for filter effect.
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>[data-name="deco"]</code> for decorative elements.
+        <ul>
+          <li>
+            <code>--arwes-frames-deco-color</code> for fill or stroke color.
+          </li>
+          <li>
+            <code>--arwes-frames-deco-filter</code> for filter effect.
+          </li>
+        </ul>
+      </li>
+    </AR.UL>
+
     <AR.H2>Simple SVG</AR.H2>
 
     <AR.P>
@@ -363,7 +404,7 @@ export default (): JSX.Element => (
       </p>
     </AR.Blockquote>
 
-    <AR.P>The final frame can be now resized as desired:</AR.P>
+    <AR.P>The final frame can be now resized as desired with any other HTML/SVG element:</AR.P>
 
     <ExampleFrame />
 
