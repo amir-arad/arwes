@@ -27,7 +27,11 @@ type ListProps = {
 
 const List = (props: ListProps): JSX.Element => {
   const { className, children } = props
-  return <ul className={cx('flex flex-col w-full', className)}>{children}</ul>
+  return (
+    <Animated as="ul" className={cx('flex flex-col w-full', className)}>
+      {children}
+    </Animated>
+  )
 }
 
 type ItemProps = {
@@ -63,24 +67,30 @@ const Item = (props: ItemProps): JSX.Element => {
         >
           <Link
             className={cx(
-              'flex flex-row items-center gap-2 px-4 py-2 font-cta text-size-9',
+              'flex font-cta text-size-9',
               'transition-all ease-out duration-200',
               !matches && 'text-primary-main-4 hover:text-primary-high-2',
-              matches && 'text-secondary-main-4 hover:text-secondary-high-2',
-              active && 'bg-secondary-main-3/[0.05]'
+              matches && 'text-secondary-main-4 hover:text-secondary-high-2'
             )}
-            style={{
-              clipPath: styleFrameClipOctagon({
-                leftTop: false,
-                leftBottom: false,
-                squareSize: theme.space(2)
-              })
-            }}
             href={href}
             onClick={onLink}
           >
-            {icon}
-            {text}
+            <div
+              className={cx(
+                'flex-1 flex flex-row items-center gap-2 px-4 py-2',
+                active && 'bg-secondary-main-3/[0.05]'
+              )}
+              style={{
+                clipPath: styleFrameClipOctagon({
+                  leftTop: false,
+                  leftBottom: false,
+                  squareSize: theme.space(2)
+                })
+              }}
+            >
+              {icon}
+              {text}
+            </div>
           </Link>
         </Animated>
       </Animator>
@@ -113,7 +123,9 @@ const NavDocs = (props: NavSectionProps): JSX.Element => {
           <Item href="/docs/develop/fundamentals/visual" text="Visual" onLink={onLink} />
           <Item href="/docs/develop/fundamentals/motion" text="Motion" onLink={onLink} />
           <Item href="/docs/develop/fundamentals/audio" text="Audio" onLink={onLink} />
-          <Item href="/docs/develop/fundamentals/ui" text="UI" onLink={onLink} />
+          <Item href="/docs/develop/fundamentals/text" text="Text" onLink={onLink} />
+          <Item href="/docs/develop/fundamentals/frames" text="Frames" onLink={onLink} />
+          <Item href="/docs/develop/fundamentals/bgs" text="Backgrounds" onLink={onLink} />
         </Item>
         <Item href="/docs/develop/vanilla" icon={<IconVanilla />} text="Vanilla" onLink={onLink} />
         <Item

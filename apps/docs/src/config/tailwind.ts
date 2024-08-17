@@ -74,6 +74,9 @@ export const tailwind: Config = {
               textWrap: 'pretty',
               color: theme.colors.primary.main(3)
             },
+            'p svg': {
+              display: 'inline-block'
+            },
             'b, strong': {
               fontWeight: 600
             },

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Animated, Animator, AnimatorGeneralProvider, Text } from '@arwes/react'
 
 const Example = (): JSX.Element => {
-  const [active, setActive] = useState(false)
+  const [active, setActive] = useState(true)
 
   useEffect(() => {
     const tid = setTimeout(() => setActive(!active), active ? 5_000 : 1_500)

@@ -138,8 +138,8 @@ export default (): JSX.Element => (
     <AR.Navigation
       prevHref="/docs/develop/fundamentals/motion"
       prev="Motion"
-      nextHref="/docs/develop/fundamentals/ui"
-      next="UI"
+      nextHref="/docs/develop/fundamentals/text"
+      next="Text"
     />
   </>
 )

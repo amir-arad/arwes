@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { Animated, Animator } from '@arwes/react'
-import { Codepen as IconPlay } from 'iconoir-react'
+import { Cube as IconVanilla, Codepen as IconPlay } from 'iconoir-react'
 
 import { AR } from '@/ui'
 
@@ -31,8 +31,12 @@ export default (): JSX.Element => (
         React
       </a>{' '}
       v18 specific packages with Server-Side Rendering (SSR) support. Most of the functionalities
-      simplify the use of <Link href="/docs/develop/vanilla">ARWES vanilla packages</Link> and some
-      others are specific React APIs. You can/should still use the vanilla packages when applicable.
+      simplify the use of{' '}
+      <Link href="/docs/develop/vanilla">
+        <IconVanilla /> ARWES vanilla packages
+      </Link>{' '}
+      and some others are specific React APIs. You can/should still use the vanilla packages when
+      applicable.
     </AR.P>
 
     <AR.Blockquote>

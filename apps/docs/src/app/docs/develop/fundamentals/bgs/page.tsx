@@ -4,7 +4,7 @@ import { settings } from '@/config/settings'
 import Content from './Content'
 
 export const metadata: Metadata = {
-  title: `UI Fundamentals | ${settings.title}`,
+  title: `Background Fundamentals | ${settings.title}`,
   description: settings.description
 }
 

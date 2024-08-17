@@ -1,7 +1,7 @@
 import { type HTMLAttributes } from 'react'
 import { Animated, Animator, Text, type TextProps, cx } from '@arwes/react'
 import Link from 'next/link'
-import { ArrowLeft, ArrowRight, FastArrowRight } from 'iconoir-react'
+import { ArrowLeft, ArrowRight, FastArrowRight, OpenNewWindow } from 'iconoir-react'
 import { animate, stagger } from 'motion'
 
 import { theme } from '@/config'
@@ -167,7 +167,7 @@ const AR = {
   ),
 
   Links: (props: {
-    links: Array<{ href: string; text: string; icon?: React.ReactNode }>
+    links: Array<{ href: string; target?: string; text: string; icon?: React.ReactNode }>
   }): JSX.Element => {
     return (
       <Animator>
@@ -187,11 +187,11 @@ const AR = {
             }
           }}
         >
-          {props.links.map(({ href, text, icon }) => (
-            <Link key={href} className="w-full" href={href}>
+          {props.links.map(({ href, target, text, icon }) => (
+            <Link key={href} className="w-full" href={href} target={target}>
               <ButtonContent className="w-full" tabIndex={-1}>
                 <span>{text}</span>
-                {icon || <FastArrowRight />}
+                {icon || (target === undefined ? <FastArrowRight /> : <OpenNewWindow />)}
               </ButtonContent>
             </Link>
           ))}

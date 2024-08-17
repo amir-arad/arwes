@@ -42,7 +42,9 @@ export default (): JSX.Element => (
 
     <Example isDisabled />
 
-    <AR.H2>&lt;Animator&gt;</AR.H2>
+    <AR.H2>
+      <code>&lt;Animator&gt;</code>
+    </AR.H2>
 
     <AR.P>
       Generally, an UI component can have one animator to manage its animations but if more complex
@@ -74,7 +76,9 @@ const Card = (): JSX.Element => (
 )`}
     />
 
-    <AR.H2>&lt;Animated&gt;</AR.H2>
+    <AR.H2>
+      <code>&lt;Animated&gt;</code>
+    </AR.H2>
 
     <AR.P>
       By itself, it does not do anything but it is complemented by the <code>&lt;Animated&gt;</code>{' '}

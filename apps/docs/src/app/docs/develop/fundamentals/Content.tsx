@@ -35,14 +35,22 @@ export default (): JSX.Element => (
       can be integrated with ARWES motion tools. And so on.
     </AR.P>
 
+    <AR.P>
+      All ARWES tools and base components can be used to compose a design system as required or to
+      complement an existing one. If a new design system needs to be created, pro ui/ux design
+      skills are required, or existing design guidelines should be followed.
+    </AR.P>
+
     <AR.P>Check out the guides on the framework fundamentals:</AR.P>
 
     <AR.Links
       links={[
-        { href: '/docs/develop/fundamentals/visuals', text: 'Visual Fundamentals' },
+        { href: '/docs/develop/fundamentals/visual', text: 'Visual Fundamentals' },
         { href: '/docs/develop/fundamentals/motion', text: 'Motion Fundamentals' },
         { href: '/docs/develop/fundamentals/audio', text: 'Audio Fundamentals' },
-        { href: '/docs/develop/fundamentals/ui', text: 'UI Fundamentals' }
+        { href: '/docs/develop/fundamentals/text', text: 'Text Fundamentals' },
+        { href: '/docs/develop/fundamentals/frames', text: 'Frames Fundamentals' },
+        { href: '/docs/develop/fundamentals/bgs', text: 'Background Fundamentals' }
       ]}
     />
 

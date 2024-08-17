@@ -92,12 +92,12 @@ const PageDocs = (): JSX.Element => {
                       Halo
                     </a>
                     ,{' '}
-                    <a href="https://www.mechabreak.com" target="_blank">
-                      Mecha Break
-                    </a>
-                    , and{' '}
                     <a href="https://nikke-en.com" target="_blank">
                       NIKKE
+                    </a>
+                    , and{' '}
+                    <a href="https://www.mechabreak.com" target="_blank">
+                      Mecha Break
                     </a>
                     . It tries to inspire advanced science and technology.
                   </Text>

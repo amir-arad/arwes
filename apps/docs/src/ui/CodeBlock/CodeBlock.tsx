@@ -7,13 +7,13 @@ type CodeBlockProps = {
   className?: string
   animated?: AnimatedProp
   filename?: string
-  lang: 'html' | 'css' | 'tsx' | 'json' | 'bash'
+  lang?: 'html' | 'css' | 'tsx' | 'json' | 'bash'
   highlightLines?: number[]
   code: string
 }
 
 const CodeBlock = memo((props: CodeBlockProps): JSX.Element => {
-  const { className, animated, filename, lang, code, highlightLines } = props
+  const { className, animated, filename, lang = 'tsx', code, highlightLines } = props
 
   return (
     <Animated data-name="codeblock" className={cx('flex flex-col', className)} animated={animated}>

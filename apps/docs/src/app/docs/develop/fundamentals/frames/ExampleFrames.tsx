@@ -31,32 +31,32 @@ const Frames = (): JSX.Element => {
       }}
     >
       <FrameSVGOctagon
-        className="!relative !inset-auto !w-48 !h-32"
+        className="!relative !inset-auto !w-36 !h-32 md:!w-48"
         padding={4}
         strokeWidth={2}
         squareSize={20}
       />
       <FrameSVGUnderline
-        className="!relative !inset-auto !w-48 !h-32"
+        className="!relative !inset-auto !w-36 !h-32 md:!w-48"
         padding={4}
         strokeWidth={2}
         squareSize={20}
       />
       <FrameSVGCorners
-        className="!relative !inset-auto !w-48 !h-32"
+        className="!relative !inset-auto !w-36 !h-32 md:!w-48"
         padding={4}
         cornerLength={20}
         strokeWidth={2}
       />
       <FrameSVGLines
-        className="!relative !inset-auto !w-48 !h-32"
+        className="!relative !inset-auto !w-36 !h-32 md:!w-48"
         padding={4}
         largeLineWidth={2}
         smallLineWidth={2}
         smallLineLength={20}
       />
       <FrameSVGNefrex
-        className="!relative !inset-auto !w-48 !h-32"
+        className="!relative !inset-auto !w-36 !h-32 md:!w-48"
         padding={4}
         strokeWidth={2}
         squareSize={20}
@@ -64,7 +64,7 @@ const Frames = (): JSX.Element => {
         largeLineLength={40}
       />
       <FrameSVGKranox
-        className="!relative !inset-auto !w-48 !h-32"
+        className="!relative !inset-auto !w-36 !h-32 md:!w-48"
         padding={4}
         strokeWidth={2}
         squareSize={10}
@@ -76,7 +76,7 @@ const Frames = (): JSX.Element => {
 }
 
 const Example = (): JSX.Element => {
-  const [active, setActive] = useState(false)
+  const [active, setActive] = useState(true)
 
   useEffect(() => {
     const tid = setTimeout(() => setActive(!active), active ? 2_500 : 1_500)

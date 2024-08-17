@@ -2,8 +2,10 @@
 
 import Link from 'next/link'
 import { Animated, Animator } from '@arwes/react'
+import { Codepen as IconPlay } from 'iconoir-react'
 
 import { AR } from '@/ui'
+import { IconReact, IconSolid } from '@/icons'
 
 export default (): JSX.Element => (
   <>
@@ -28,7 +30,13 @@ export default (): JSX.Element => (
       Vanilla packages are the core of the framework. They do not have major external dependencies
       but most tools are low level APIs and sometimes require elaborated setups/configurations. Many
       of these APIs are simplified using the other implementation packages such as{' '}
-      <Link href="/docs/develop/react">React</Link> or <Link href="/docs/develop/solid">Solid</Link>
+      <Link href="/docs/develop/react">
+        <IconReact /> React
+      </Link>{' '}
+      or{' '}
+      <Link href="/docs/develop/solid">
+        <IconSolid /> Solid
+      </Link>
       .
     </AR.P>
 
@@ -39,8 +47,11 @@ export default (): JSX.Element => (
     <AR.CodeBlock lang="bash" code="npm install arwes" />
 
     <AR.P>
-      Check out the <a href="/play">Playground</a> for examples on how to use the vanilla
-      functionalities.
+      Check out the{' '}
+      <a href="/play">
+        <IconPlay /> Playground
+      </a>{' '}
+      for examples on how to use the vanilla functionalities.
     </AR.P>
 
     <AR.H2>Packages</AR.H2>
