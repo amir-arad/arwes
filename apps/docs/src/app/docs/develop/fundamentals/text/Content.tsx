@@ -15,7 +15,11 @@ export default (): JSX.Element => (
 
     <ExampleText />
 
-    <AR.P>It supports nested HTML elements with inline and block layouts.</AR.P>
+    <AR.P>
+      Nested HTML elements with inline and block layouts are supported. If there are nested HTML/SVG
+      elements which have CSS <code>transition</code> property effects, it might disturb any of the
+      animations.
+    </AR.P>
 
     <AR.P>
       The deciphering/ciphering animation is recommended only for short, or centered, or monospace

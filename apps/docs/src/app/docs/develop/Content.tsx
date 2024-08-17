@@ -32,6 +32,7 @@ export default (): JSX.Element => (
     <AR.P>Check out the framework development guides:</AR.P>
 
     <AR.Links
+      compact
       links={[
         { href: '/docs/develop/fundamentals', text: 'Fundamentals', icon: <IconFundamentals /> },
         { href: '/docs/develop/vanilla', text: 'Vanilla', icon: <IconVanilla /> },

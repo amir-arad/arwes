@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { Codepen as IconPlay } from 'iconoir-react'
+
 import { AR } from '@/ui'
 import { ExampleButton } from './ExampleButton'
 import { ExampleOnAnimator } from './ExampleOnAnimator'
@@ -147,6 +149,14 @@ const Content = (): JSX.Element => (
     />
 
     <ExampleOnAnimator />
+
+    <AR.P>
+      Check out the{' '}
+      <a href="/play">
+        <IconPlay /> Playground
+      </a>{' '}
+      for more examples.
+    </AR.P>
 
     <AR.Navigation
       prevHref="/docs/develop/react/animators"

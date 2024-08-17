@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { Codepen as IconPlay } from 'iconoir-react'
+
 import { AR } from '@/ui'
 import { Example } from './Example'
 
@@ -392,8 +394,11 @@ const Card = (): JSX.Element => (
     </AR.P>
 
     <AR.P>
-      There are many more more use cases to explore about the animator system in the{' '}
-      <a href="/play">Playground</a>.
+      Check out the{' '}
+      <a href="/play">
+        <IconPlay /> Playground
+      </a>{' '}
+      for more examples.
     </AR.P>
 
     <AR.Navigation

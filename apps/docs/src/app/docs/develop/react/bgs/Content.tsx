@@ -34,9 +34,9 @@ export default (): JSX.Element => (
     <AR.CodeBlock
       code={`import { Animator, Puffs } from '@arwes/react'
 
-<Animator duration={{ enter: 1, exit: 1 }}>
+<Animator duration={{ enter: 1 }}>
   <Puffs
-    color="hsl(180, 68%, 53%, 0.5)"
+    color="hsl(60, 75%, 50%, 0.5)"
     quantity={100}
     padding={0}
     xOffset={[10, 50]}
@@ -56,7 +56,7 @@ export default (): JSX.Element => (
       <a href="/play">
         <IconPlay /> Playground
       </a>{' '}
-      for more background examples.
+      for more examples.
     </AR.P>
 
     <AR.Navigation

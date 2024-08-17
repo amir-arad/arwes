@@ -37,7 +37,7 @@
 
 ---
 
-[ARWES](https://arwes.dev) is a web framework to build user interfaces based on futuristic science fiction designs, animations, and sound effects. The concepts behind are opinionated with influences from [Cyberprep](https://aesthetics.fandom.com/wiki/Cyberprep) and productions like [Star Citizen](http://robertsspaceindustries.com), [Halo](https://www.halowaypoint.com/en-us/games), [Mecha Break](https://www.mechabreak.com), and [NIKKE](https://nikke-en.com). It tries to inspire advanced science and technology.
+[ARWES](https://arwes.dev) is a web framework to build user interfaces based on futuristic science fiction designs, animations, and sound effects. The concepts behind are opinionated with influences from [Cyberprep](https://aesthetics.fandom.com/wiki/Cyberprep) and productions like [Star Citizen](http://robertsspaceindustries.com), [Halo](https://www.halowaypoint.com/en-us/games), [NIKKE](https://nikke-en.com), and [Mecha Break](https://www.mechabreak.com/index). It tries to inspire advanced science and technology.
 
 > The project is under development and not ready for production yet. It is still in
 > [alpha release](https://stackoverflow.com/questions/40067469), so the components

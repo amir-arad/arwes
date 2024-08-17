@@ -96,7 +96,7 @@ const PageDocs = (): JSX.Element => {
                       NIKKE
                     </a>
                     , and{' '}
-                    <a href="https://www.mechabreak.com" target="_blank">
+                    <a href="https://www.mechabreak.com/index" target="_blank">
                       Mecha Break
                     </a>
                     . It tries to inspire advanced science and technology.

@@ -167,6 +167,7 @@ const AR = {
   ),
 
   Links: (props: {
+    compact?: boolean
     links: Array<{ href: string; target?: string; text: string; icon?: React.ReactNode }>
   }): JSX.Element => {
     return (
@@ -174,7 +175,10 @@ const AR = {
         <Animated
           as="nav"
           data-name="links"
-          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+          className={cx(
+            'grid gap-4',
+            props.compact ? 'grid-cols-2 md:grid-cols-3' : 'grid-cols-1 md:grid-cols-2'
+          )}
           animated={{
             transitions: {
               entering: ({ $, duration }) =>

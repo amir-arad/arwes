@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { Codepen as IconPlay } from 'iconoir-react'
 
 import { AR } from '@/ui'
 import { ExampleTextSequence } from './ExampleTextSequence'
@@ -105,8 +106,11 @@ export default (): JSX.Element => (
     </AR.P>
 
     <AR.P>
-      If there are nested HTML/SVG elements which have CSS <code>transition</code> property effects,
-      it might disturb any of the animations.
+      Check out the{' '}
+      <a href="/play">
+        <IconPlay /> Playground
+      </a>{' '}
+      for more examples.
     </AR.P>
 
     <AR.Navigation
