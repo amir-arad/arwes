@@ -35,13 +35,7 @@ export const sandboxes = [
           },
           {
             name: 'createCreateTheme',
-            code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createCreateTheme/createCreateTheme.sandbox.tsx'),
-            children: [
-              {
-                name: 'colors',
-                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createCreateTheme/createCreateTheme.colors.sandbox.tsx')
-              }
-            ]
+            code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createCreateTheme/createCreateTheme.sandbox.tsx')
           }
         ]
       },

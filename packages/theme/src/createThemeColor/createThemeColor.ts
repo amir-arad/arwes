@@ -1,8 +1,15 @@
-import type { ThemeSettingsColor, ThemeColorOptions, ThemeColor } from '../types.js'
+import type {
+  ThemeSettingsColorNames,
+  ThemeSettingsColorSeries,
+  ThemeSettingsColorFunction,
+  ThemeSettingsColor,
+  ThemeColorOptions,
+  ThemeColor
+} from '../types.js'
 
 const minMax = (min: number, max: number) => (value: number) => Math.min(max, Math.max(min, value))
-const minMax0to360 = minMax(0, 360)
 const minMax0to100 = minMax(0, 100)
+const minMax0to360 = minMax(0, 360)
 const minMax0to1 = minMax(0, 1)
 const searchRegExp = (string: string, regexp: RegExp): string | null => {
   const result = string.match(regexp)
@@ -14,28 +21,35 @@ const searchRegExp = (string: string, regexp: RegExp): string | null => {
 
 const colorOptionsDefault = {}
 
-const fromHSLAArrayToHSLAString = (
+const fromArrayToHSLA = (
   src: [number, number, number, number?],
   options: ThemeColorOptions = colorOptionsDefault
 ): string => {
-  const { alpha = 1 } = options
-  const alphaAdjust = minMax0to1(alpha)
+  const [hue, saturation, lightness, alpha = 1] = src
+  const { alpha: alphaOverwrite = 1 } = options
 
-  const h = minMax0to360(src[0])
-  const s = minMax0to100(src[1])
-  const l = minMax0to100(src[2])
-  const a = minMax0to1((src[3] ?? 1) * alphaAdjust)
-  return `hsla(${h},${s}%,${l}%,${a})`
+  const h = minMax0to360(hue)
+  const s = minMax0to100(saturation)
+  const l = minMax0to100(lightness)
+  const a = minMax0to1(alpha) * minMax0to1(alphaOverwrite)
+  return `hsl(${h},${s}%,${l}%,${a})`
 }
 
-const formatColor = (
-  color: string | [number, number, number, number?],
+const fromArrayToRGBA = (
+  src: [number, number, number, number?],
   options: ThemeColorOptions = colorOptionsDefault
 ): string => {
-  if (typeof color !== 'string') {
-    return fromHSLAArrayToHSLAString(color, options)
-  }
+  const [red, green, blue, alpha = 1] = src
+  const { alpha: alphaOverwrite = 1 } = options
 
+  const r = minMax0to100(red)
+  const g = minMax0to100(green)
+  const b = minMax0to100(blue)
+  const a = minMax0to1(alpha) * minMax0to1(alphaOverwrite)
+  return `rgb(${r}%,${g}%,${b}%,${a})`
+}
+
+const formatColor = (color: string, options: ThemeColorOptions = colorOptionsDefault): string => {
   const { alpha } = options
 
   if (alpha === undefined || alpha === null) {
@@ -69,7 +83,9 @@ const formatColor = (
   if (hasCurrentAlpha) {
     const alphaCurrentMatch = searchRegExp(color, /\d+(\.\d+)?%?\)$/)!
     const isPercentage = alphaCurrentMatch.includes('%')
-    const alphaCurrent = Number(alphaCurrentMatch.replace(/%?\)$/g, ''))
+
+    let alphaCurrent = Number(alphaCurrentMatch.replace(/%?\)$/g, ''))
+    alphaCurrent = isPercentage ? minMax0to100(alphaCurrent) : minMax0to1(alphaCurrent)
 
     return color.replace(
       /\d+(\.\d+)?%?\)$/,
@@ -80,27 +96,64 @@ const formatColor = (
   return color.replace(/\)$/, isCommaSeparated ? `,${alphaAdjust})` : ` / ${alphaAdjust})`)
 }
 
-const createThemeColor = (settings: ThemeSettingsColor): ThemeColor => {
-  if (typeof settings === 'function') {
-    const createColor = settings
-
-    return (indexProvided: number, options?: ThemeColorOptions): string => {
-      const index = Math.round(indexProvided)
-      const color = createColor(index)
-      return formatColor(color, options)
-    }
-  }
-
-  const series = settings
-
-  return (indexProvided: number, options?: ThemeColorOptions): string => {
+const createThemeColorBySeries =
+  (name: ThemeSettingsColorNames, series: ThemeSettingsColorSeries) =>
+  (indexProvided: number, options?: ThemeColorOptions): string => {
     if (!series.length) {
       return ''
     }
+
     const index = Math.round(indexProvided)
     const color = series[index > series.length - 1 ? series.length - 1 : index]
-    return formatColor(color, options)
+
+    if (typeof color === 'string') {
+      return formatColor(color, options)
+    }
+
+    if (name === 'rgb') {
+      return fromArrayToRGBA(color, options)
+    }
+
+    return fromArrayToHSLA(color, options)
   }
+
+const createThemeColorByFunction =
+  (name: ThemeSettingsColorNames, create: ThemeSettingsColorFunction) =>
+  (indexProvided: number, options?: ThemeColorOptions): string => {
+    const index = Math.round(indexProvided)
+    const color = create(index)
+
+    if (typeof color === 'string') {
+      return formatColor(color, options)
+    }
+
+    if (name === 'rgb') {
+      return fromArrayToRGBA(color, options)
+    }
+
+    return fromArrayToHSLA(color, options)
+  }
+
+const createThemeColor = (settings: ThemeSettingsColor): ThemeColor => {
+  if (Array.isArray(settings)) {
+    return createThemeColorBySeries('hsl', settings)
+  }
+
+  if (typeof settings === 'function') {
+    return createThemeColorByFunction('hsl', settings)
+  }
+
+  if (Array.isArray(settings.list)) {
+    return createThemeColorBySeries(settings.color, settings.list)
+  }
+
+  const createColor = settings.create
+
+  if (typeof createColor !== 'function') {
+    throw new Error('ARWES createThemeColor requires a valid list of colors or a color creator.')
+  }
+
+  return createThemeColorByFunction(settings.color, createColor)
 }
 
 export { createThemeColor }

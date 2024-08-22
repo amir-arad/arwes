@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { createThemeUnit } from '@arwes/theme'
 
 const size = createThemeUnit((i) => `${i * 0.25}rem`)
+// size(2) => '0.5rem'
+// size([2, 'auto', 3]) => '0.5rem auto 0.75rem'
 
 const Sandbox = (): ReactElement => {
   return (

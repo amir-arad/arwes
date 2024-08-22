@@ -1,6 +1,5 @@
-import React, { type ReactElement, Fragment, useMemo } from 'react'
+import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Global } from '@emotion/react'
 import {
   type ThemeSettingsUnit,
   type ThemeSettingsMultiplier,
@@ -35,7 +34,7 @@ interface Theme {
 }
 
 const themeStructure: ThemeCreatorStructure = {
-  space: 'multiplier',
+  space: 'unit',
   outline: 'multiplier',
   font: 'style',
   color: {
@@ -46,58 +45,52 @@ const themeStructure: ThemeCreatorStructure = {
 
 const themeDefaults: ThemeSettings = {
   // Values to be multiplied by a provided integer.
-  space: (i) => `${i}rem`,
+  space: (i) => `${i * 0.25}rem`,
   outline: 1,
   // A list of styles with any CSS properties.
   font: [
-    { fontFamily: 'monospace', fontSize: '30px' },
-    { fontFamily: 'sans-serif', fontSize: '21px' }
+    { fontFamily: 'Tomorrow', fontWeight: 500, fontSize: '2rem' },
+    { fontFamily: '"Titillium Web"', fontWeight: 300, fontSize: '1.5rem' }
   ],
   color: {
     // A function to return a HSLA value as [number, number, number, number?].
     // The colors go from light to dark.
-    primary: (i) => [180, 70, 95 - i * 5, 1],
-    secondary: (i) => [60, 70, 95 - i * 5, 1]
+    primary: (i) => [180, 60 + i, 92.5 - i * 9.44],
+    secondary: (i) => [60, 60 + i, 92.5 - i * 9.44]
   }
 }
 
 const createTheme = createCreateTheme<ThemeSettings, Theme>(themeStructure, themeDefaults)
 
-const Sandbox = (): ReactElement => {
-  const theme: Theme = useMemo(() => {
-    const themeExtensions = {
-      outline: 3
-    }
-    const theme = createTheme(themeExtensions)
-    return theme
-  }, [])
+const theme = createTheme({
+  outline: 3
+})
 
+const Sandbox = (): ReactElement => {
   return (
-    <Fragment>
-      <Global
-        styles={{
-          html: {
-            margin: theme.space(2),
-            backgroundColor: theme.color.primary(18)
-          },
-          h1: {
-            ...theme.font(0),
-            marginBottom: theme.space(1),
-            borderBottomWidth: theme.outline(1),
-            borderBottomStyle: 'solid',
-            borderBottomColor: theme.color.primary(14),
-            paddingBottom: theme.space(1),
-            color: theme.color.primary(5)
-          },
-          p: {
-            ...theme.font(1),
-            color: theme.color.secondary(8)
-          }
+    <div
+      style={{
+        padding: theme.space([4, 8]),
+        background: theme.color.primary(9)
+      }}
+    >
+      <h1
+        style={{
+          ...theme.font(0),
+          margin: theme.space([0, 0, 4]),
+          borderBottomWidth: theme.outline(1),
+          borderBottomStyle: 'solid',
+          borderBottomColor: theme.color.primary(6),
+          paddingBottom: theme.space(4),
+          color: theme.color.primary(4)
         }}
-      />
-      <h1>Arwes Framework</h1>
-      <p>Futuristic Sci-Fi UI Web Framework</p>
-    </Fragment>
+      >
+        ARWES
+      </h1>
+      <p style={{ ...theme.font(1), margin: 0, color: theme.color.secondary(4) }}>
+        Futuristic Sci-Fi UI Web Framework
+      </p>
+    </div>
   )
 }
 
