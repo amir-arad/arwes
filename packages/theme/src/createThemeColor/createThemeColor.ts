@@ -49,6 +49,20 @@ const fromArrayToRGBA = (
   return `rgb(${r}%,${g}%,${b}%,${a})`
 }
 
+const fromArrayToLCHA = (
+  src: [number, number, number, number?],
+  options: ThemeColorOptions = colorOptionsDefault
+): string => {
+  const [light, chroma, hue, alpha = 1] = src
+  const { alpha: alphaOverwrite = 1 } = options
+
+  const l = minMax0to100(light)
+  const c = minMax0to100(chroma)
+  const h = minMax0to360(hue)
+  const a = minMax0to1(alpha) * minMax0to1(alphaOverwrite)
+  return `lch(${l}% ${c}% ${h} / ${a})`
+}
+
 const formatColor = (color: string, options: ThemeColorOptions = colorOptionsDefault): string => {
   const { alpha } = options
 
@@ -56,23 +70,15 @@ const formatColor = (color: string, options: ThemeColorOptions = colorOptionsDef
     return color
   }
 
-  // Make sure the color format complies with:
-  // - hsl, hsla, rgb, rgba color functions.
-  // - Either 3 or 4 arguments.
-  // - Each argument separated by either "," or "space", except fourth one.
-  // - Fourth argument is optional and can be separated by either "," or "/".
-  // - First argument can be an integer, floating, percentage or degree value.
-  // - Each argument can be an integer, floating, or percentage value.
-  // See:
-  // - https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hsl
-  // - https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/rgb
-  if (
-    !/^(hsla?|rgba?)\(\d+(\.\d+)?(%|deg)?(,\s?|\s)\d+(\.\d+)?%?(,\s?|\s)\d+(\.\d+)?%?((,\s?|\s?\/\s?)\d+(\.\d+)?%?)?\)$/.test(
-      color
-    )
-  ) {
+  // DEBUG:
+  console.log('formatColor 1')
+
+  if (!/^(hsla?|rgba?|lch)\([a-zA-Z0-9,./% -]+\)$/.test(color)) {
     return color
   }
+
+  // DEBUG:
+  console.log('formatColor 2')
 
   const separators = Array.from(color.matchAll(/(,\s?|\s?\/\s?|\s)/g))
   const hasCurrentAlpha = separators.length === 3
@@ -80,12 +86,18 @@ const formatColor = (color: string, options: ThemeColorOptions = colorOptionsDef
   const isCommaSeparated = color.includes(',')
   const alphaAdjust = minMax0to1(alpha)
 
+  // DEBUG:
+  console.log('formatColor 3', hasCurrentAlpha, isCommaSeparated)
+
   if (hasCurrentAlpha) {
     const alphaCurrentMatch = searchRegExp(color, /\d+(\.\d+)?%?\)$/)!
     const isPercentage = alphaCurrentMatch.includes('%')
 
     let alphaCurrent = Number(alphaCurrentMatch.replace(/%?\)$/g, ''))
     alphaCurrent = isPercentage ? minMax0to100(alphaCurrent) : minMax0to1(alphaCurrent)
+
+    // DEBUG:
+    console.log('formatColor 4', alphaCurrent)
 
     return color.replace(
       /\d+(\.\d+)?%?\)$/,
@@ -113,6 +125,9 @@ const createThemeColorBySeries =
     if (name === 'rgb') {
       return fromArrayToRGBA(color, options)
     }
+    if (name === 'lch') {
+      return fromArrayToLCHA(color, options)
+    }
 
     return fromArrayToHSLA(color, options)
   }
@@ -129,6 +144,9 @@ const createThemeColorByFunction =
 
     if (name === 'rgb') {
       return fromArrayToRGBA(color, options)
+    }
+    if (name === 'lch') {
+      return fromArrayToLCHA(color, options)
     }
 
     return fromArrayToHSLA(color, options)

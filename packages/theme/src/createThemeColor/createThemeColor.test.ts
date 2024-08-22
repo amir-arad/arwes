@@ -23,11 +23,21 @@ test('Should return empty string if empty list is provided', () => {
 
 describe('alpha', () => {
   test('Should not update alpha in not applicable colors', () => {
-    const themeColor = createThemeColor(['red', 'blue', 'currentcolor', 'transparent', '#17c'])
+    const themeColor = createThemeColor([
+      'red',
+      'blue',
+      'currentcolor',
+      'transparent',
+      '#17c',
+      '#1177cc',
+      '#1177ccaa'
+    ])
     expect(themeColor(0, { alpha: 0.5 })).toBe('red')
     expect(themeColor(1, { alpha: 0.5 })).toBe('blue')
     expect(themeColor(2, { alpha: 0.5 })).toBe('currentcolor')
     expect(themeColor(3, { alpha: 0.5 })).toBe('transparent')
     expect(themeColor(4, { alpha: 0.5 })).toBe('#17c')
+    expect(themeColor(5, { alpha: 0.5 })).toBe('#1177cc')
+    expect(themeColor(6, { alpha: 0.5 })).toBe('#1177ccaa')
   })
 })

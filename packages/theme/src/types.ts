@@ -11,7 +11,7 @@ export type ThemeSettingsMultiplier = number | number[] | ThemeSettingsMultiplie
 export type ThemeSettingsUnitFunction = (index: number) => string
 export type ThemeSettingsUnit = string[] | ThemeSettingsUnitFunction
 
-export type ThemeSettingsColorNames = 'hsl' | 'rgb'
+export type ThemeSettingsColorNames = 'hsl' | 'rgb' | 'lch'
 export type ThemeSettingsColorSeries = Array<string | [number, number, number, number?]>
 export type ThemeSettingsColorFunction = (
   index: number
