@@ -14,7 +14,8 @@ import {
   BleepsProvider,
   useBleeps,
   memo,
-  cx
+  cx,
+  styleFrameClipOctagon
 } from '@arwes/react'
 
 const addStyles = (css: string) => {
@@ -24,18 +25,13 @@ const addStyles = (css: string) => {
 }
 
 const theme = {
-  // HTML unit as REMs.
   space: createThemeUnit((index) => `${index * 0.25}rem`),
-
-  // Number unit as pixels.
   spacen: createThemeMultiplier((index) => index * 4),
-
   colors: {
     background: 'hsla(180, 100%, 3%)',
     primary: createThemeColor((i) => [180, 100, 100 - i * 10]),
     secondary: createThemeColor((i) => [60, 100, 100 - i * 10])
   },
-
   fontFamily: 'Tomorrow, sans-serif'
 }
 
@@ -54,20 +50,24 @@ addStyles(`
 `)
 
 type BleepsNames = 'hover' | 'click'
-
-// WEBM for Chromium and Firefox browsers and MP3 for Safari and iOS.
 const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
-  master: {
-    volume: 0.9
+  master: { volume: 0.5 },
+  categories: {
+    background: { volume: 0.25 },
+    transition: { volume: 0.5 },
+    interaction: { volume: 0.75 },
+    notification: { volume: 1 }
   },
   bleeps: {
     hover: {
+      category: 'background',
       sources: [
         { src: '/assets/sounds/hover.webm', type: 'audio/webm' },
         { src: '/assets/sounds/hover.mp3', type: 'audio/mpeg' }
       ]
     },
     click: {
+      category: 'interaction',
       sources: [
         { src: '/assets/sounds/click.webm', type: 'audio/webm' },
         { src: '/assets/sounds/click.mp3', type: 'audio/mpeg' }
@@ -139,6 +139,7 @@ addStyles(`
     position: absolute;
     inset: 0;
     overflow: hidden;
+    clip-path: ${styleFrameClipOctagon({ squareSize: theme.spacen(2) })};
   }
 
   .button-content {

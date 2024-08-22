@@ -5,11 +5,10 @@ import {
   createThemeMultiplier,
   createThemeColor,
   styleSteps,
+  styleStrip,
   Animator,
   Animated,
   AnimatedProp,
-  transition,
-  flicker,
   Dots,
   styleFrameClipOctagon,
   useFrameSVGAssembler,
@@ -31,19 +30,14 @@ const addStyles = (css: string) => {
 }
 
 const theme = {
-  // REMs as HTML unit.
   space: createThemeUnit((index) => `${index * 0.25}rem`),
-
-  // Pixels as number unit.
   spacen: createThemeMultiplier((index) => index * 4),
-
   colors: {
     background: 'hsla(180, 100%, 3%)',
     primary: createThemeColor((i) => [180, 100, 100 - i * 10]),
     secondary: createThemeColor((i) => [60, 100, 100 - i * 10])
   },
-
-  fontFamily: 'Tomorrow'
+  fontFamily: 'Tomorrow, sans-serif'
 }
 
 addStyles(`
@@ -59,88 +53,99 @@ addStyles(`
   }
 `)
 
-type BleepsNames = 'intro' | 'assemble' | 'type' | 'click'
+type BleepsNames = 'hover' | 'assemble' | 'type' | 'click' | 'intro'
 
-// WEBM for Chromium and Firefox browsers and MP3 for Safari and iOS.
 const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
-  master: {
-    volume: 0.9
+  master: { volume: 0.5 },
+  categories: {
+    background: { volume: 0.25 },
+    transition: { volume: 0.5 },
+    interaction: { volume: 0.75 },
+    notification: { volume: 1 }
   },
   bleeps: {
-    intro: {
+    hover: {
+      category: 'background',
       sources: [
-        { src: '/assets/sounds/intro.webm', type: 'audio/webm' },
-        { src: '/assets/sounds/intro.mp3', type: 'audio/mpeg' }
+        { src: '/assets/sounds/hover.webm', type: 'audio/webm' },
+        { src: '/assets/sounds/hover.mp3', type: 'audio/mpeg' }
       ]
     },
     assemble: {
+      category: 'transition',
       sources: [
         { src: '/assets/sounds/assemble.webm', type: 'audio/webm' },
         { src: '/assets/sounds/assemble.mp3', type: 'audio/mpeg' }
       ]
     },
     type: {
+      category: 'transition',
       sources: [
         { src: '/assets/sounds/type.webm', type: 'audio/webm' },
         { src: '/assets/sounds/type.mp3', type: 'audio/mpeg' }
       ]
     },
     click: {
+      category: 'interaction',
       sources: [
         { src: '/assets/sounds/click.webm', type: 'audio/webm' },
         { src: '/assets/sounds/click.mp3', type: 'audio/mpeg' }
+      ]
+    },
+    intro: {
+      category: 'notification',
+      sources: [
+        { src: '/assets/sounds/intro.webm', type: 'audio/webm' },
+        { src: '/assets/sounds/intro.mp3', type: 'audio/mpeg' }
       ]
     }
   }
 }
 
+const pageFrameSettings: FrameSVGSettings = {
+  elements: [
+    {
+      name: 'line',
+      path: [
+        ['M', 10, 10],
+        ['h', '7%'],
+        ['l', 10, 10],
+        ['h', '7%']
+      ]
+    },
+    {
+      name: 'line',
+      path: [
+        ['M', '100%-10', 10],
+        ['h', '-7%'],
+        ['l', -10, 10],
+        ['h', '-7%']
+      ]
+    },
+    {
+      name: 'line',
+      path: [
+        ['M', '100%-10', '100%-10'],
+        ['h', '-7%'],
+        ['l', -10, -10],
+        ['h', '-7%']
+      ]
+    },
+    {
+      name: 'line',
+      path: [
+        ['M', '10', '100%-10'],
+        ['h', '7%'],
+        ['l', 10, -10],
+        ['h', '7%']
+      ]
+    }
+  ]
+}
 const PageFrame = (): ReactElement => {
   const frameRef = useRef<SVGSVGElement>(null)
   useFrameSVGAssembler(frameRef)
-  const frameSettings = useMemo<FrameSVGSettings>(
-    () => ({
-      elements: [
-        {
-          name: 'line',
-          path: [
-            ['M', 10, 10],
-            ['h', '7%'],
-            ['l', 10, 10],
-            ['h', '7%']
-          ]
-        },
-        {
-          name: 'line',
-          path: [
-            ['M', '100%-10', 10],
-            ['h', '-7%'],
-            ['l', -10, 10],
-            ['h', '-7%']
-          ]
-        },
-        {
-          name: 'line',
-          path: [
-            ['M', '100%-10', '100%-10'],
-            ['h', '-7%'],
-            ['l', -10, -10],
-            ['h', '-7%']
-          ]
-        },
-        {
-          name: 'line',
-          path: [
-            ['M', '10', '100%-10'],
-            ['h', '7%'],
-            ['l', 10, -10],
-            ['h', '7%']
-          ]
-        }
-      ]
-    }),
-    []
-  )
-  return <FrameSVG elementRef={frameRef} className="page-frame" {...frameSettings} />
+  return <FrameSVG elementRef={frameRef} className="page-frame" {...pageFrameSettings} />
 }
 addStyles(`
   .page-frame [data-name=line] {
@@ -180,7 +185,13 @@ addStyles(`
   .main-frame-bg {
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(-45deg, ${theme.colors.primary(3, { alpha: 0.01 })}, ${theme.colors.primary(3, { alpha: 0.01 })} 5px, transparent 5px, transparent 10px);
+    background: ${styleStrip({
+      direction: '-45deg',
+      stops: [
+        [theme.colors.primary(3, { alpha: 0.01 }), '5px'],
+        ['transparent', '10px']
+      ]
+    })}
   }
 `)
 
@@ -193,6 +204,7 @@ const Button = (props: { animated?: AnimatedProp; children: ReactNode }): ReactE
       as="button"
       className="button"
       animated={props.animated}
+      onMouseEnter={() => bleeps.hover?.play()}
       onClick={() => bleeps.click?.play()}
     >
       <FrameSVGCorners elementRef={frameRef} cornerLength={theme.spacen(2)} />
@@ -277,7 +289,7 @@ const Sandbox = (): ReactElement => {
           <BleepsOnAnimator<BleepsNames> transitions={{ entering: 'assemble' }} />
 
           <Animator combine manager="stagger">
-            <Animated as="main" className="page-main" animated={transition('scale', 0.8, 1)}>
+            <Animated as="main" className="page-main" animated={[['scale', 0.8, 1]]}>
               <MainFrame />
 
               <BleepsOnAnimator<BleepsNames> transitions={{ entering: 'intro' }} />
@@ -290,7 +302,7 @@ const Sandbox = (): ReactElement => {
                   as="img"
                   src="/assets/images/logotype.svg"
                   animated={[
-                    flicker(),
+                    'flicker',
                     {
                       transitions: {
                         entering: { y: [100, 0], delay: 0.6, duration: 0.2 }
@@ -301,7 +313,7 @@ const Sandbox = (): ReactElement => {
               </Animator>
 
               <Animator duration={{ offset: 0.8 }}>
-                <Animated as="h1" animated={[flicker(), transition('y', 20, 0, 0)]}>
+                <Animated as="h1" animated={['flicker', ['y', 20, 0, 0]]}>
                   Futuristic Sci-Fi UI Web Framework
                 </Animated>
               </Animator>
@@ -309,33 +321,36 @@ const Sandbox = (): ReactElement => {
               <Animator>
                 <Animated
                   className="page-separator"
-                  style={{ background: styleSteps(20, 'currentcolor', '-45deg') }}
-                  animated={[flicker(), transition('y', 20, 1, 0)]}
+                  style={{
+                    background: styleSteps({
+                      length: 20,
+                      color: 'currentcolor',
+                      direction: '-45deg'
+                    })
+                  }}
+                  animated={['flicker', ['y', 20, 1, 0]]}
                 />
               </Animator>
 
               <Animator>
-                <Animated as="p" animated={[flicker(), transition('y', 20, 0, 0)]}>
+                <Animated as="p" animated={['flicker', ['y', 20, 0, 0]]}>
                   Arwes is a web framework to build user interfaces based on futuristic science
                   fiction designs, animations, and sound effects.
                 </Animated>
               </Animator>
 
               <Animator>
-                <Animated className="page-buttons" animated={transition('y', 20, 0, 0)}>
-                  <Button animated={[flicker(), transition('x', 10, 0, 0)]}>Exit</Button>
-                  <Button animated={[flicker(), transition('x', -10, 0, 0)]}>Enter</Button>
+                <Animated className="page-buttons" animated={[['y', 20, 0, 0]]}>
+                  <Button animated={['flicker', ['x', 10, 0, 0]]}>Exit</Button>
+                  <Button animated={['flicker', ['x', -10, 0, 0]]}>Enter</Button>
                 </Animated>
               </Animator>
 
               <Animator>
-                <Animated
-                  className="page-header"
-                  animated={[flicker(), transition('x', -10, 0, 0)]}
-                >
+                <Animated className="page-header" animated={['flicker', ['x', -10, 0, 0]]}>
                   Arwes Demo Project |
                 </Animated>
-                <Animated className="page-footer" animated={[flicker(), transition('x', 10, 0, 0)]}>
+                <Animated className="page-footer" animated={['flicker', ['x', 10, 0, 0]]}>
                   | Futuristic Sci-Fi UI Web Framework
                 </Animated>
               </Animator>

@@ -71,12 +71,15 @@ export const sandboxes = [
         children: [
           {
             name: 'styleSteps',
-            children: [
-              {
-                name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/styles/src/styleSteps/styleSteps.basic.sandbox.tsx')
-              }
-            ]
+            code: require('!raw-loader?esModule=false!@repository/packages/styles/src/styleSteps/styleSteps.sandbox.tsx')
+          },
+          {
+            name: 'styleStrip',
+            code: require('!raw-loader?esModule=false!@repository/packages/styles/src/styleStrip/styleStrip.sandbox.tsx')
+          },
+          {
+            name: 'styleSeparator',
+            code: require('!raw-loader?esModule=false!@repository/packages/styles/src/styleSeparator/styleSeparator.sandbox.tsx')
           }
         ]
       }
