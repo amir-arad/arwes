@@ -1,8 +1,12 @@
-const styleSteps = (
-  length: number,
-  color: string = 'currentcolor',
-  direction: string = 'to right'
-): string => {
+type StyleStepsProps = {
+  length: number
+  direction?: string
+  color?: string
+}
+
+const styleSteps = (props: StyleStepsProps): string => {
+  const { length, direction = 'to right', color = 'currentcolor' } = props
+
   if (length < 2) {
     return color
   }
