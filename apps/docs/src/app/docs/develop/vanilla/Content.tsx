@@ -5,7 +5,7 @@ import { Animated, Animator } from '@arwes/react'
 import { Codepen as IconPlay } from 'iconoir-react'
 
 import { AR } from '@/ui'
-import { IconReact, IconSolid } from '@/icons'
+import { IconReact } from '@/icons'
 
 export default (): JSX.Element => (
   <>
@@ -32,10 +32,6 @@ export default (): JSX.Element => (
       of these APIs are simplified using the other implementation packages such as{' '}
       <Link href="/docs/develop/react">
         <IconReact /> React
-      </Link>{' '}
-      or{' '}
-      <Link href="/docs/develop/solid">
-        <IconSolid /> Solid
       </Link>
       .
     </AR.P>

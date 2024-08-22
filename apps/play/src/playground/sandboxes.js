@@ -8,25 +8,17 @@ export const sandboxes = [
         name: '@arwes/theme',
         children: [
           {
+            name: 'createThemeMultiplier',
+            code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeMultiplier/createThemeMultiplier.sandbox.tsx')
+          },
+          {
             name: 'createThemeUnit',
-            children: [
-              {
-                name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeUnit/createThemeUnit.basic.sandbox.tsx')
-              }
-            ]
+            code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeUnit/createThemeUnit.sandbox.tsx')
           },
           {
             name: 'createThemeColor',
+            code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeColor/createThemeColor.sandbox.tsx'),
             children: [
-              {
-                name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeColor/createThemeColor.basic.sandbox.tsx')
-              },
-              {
-                name: 'variations',
-                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeColor/createThemeColor.variations.sandbox.tsx')
-              },
               {
                 name: 'alpha',
                 code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeColor/createThemeColor.alpha.sandbox.tsx')
@@ -35,29 +27,16 @@ export const sandboxes = [
           },
           {
             name: 'createThemeStyle',
-            children: [
-              {
-                name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeStyle/createThemeStyle.basic.sandbox.tsx')
-              }
-            ]
+            code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeStyle/createThemeStyle.sandbox.tsx')
           },
           {
             name: 'createThemeBreakpoints',
-            children: [
-              {
-                name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeBreakpoints/createThemeBreakpoints.basic.sandbox.tsx')
-              }
-            ]
+            code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeBreakpoints/createThemeBreakpoints.sandbox.tsx')
           },
           {
             name: 'createCreateTheme',
+            code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createCreateTheme/createCreateTheme.sandbox.tsx'),
             children: [
-              {
-                name: 'basic',
-                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createCreateTheme/createCreateTheme.basic.sandbox.tsx')
-              },
               {
                 name: 'colors',
                 code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createCreateTheme/createCreateTheme.colors.sandbox.tsx')

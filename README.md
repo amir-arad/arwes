@@ -62,17 +62,13 @@
 
 ## Packages
 
-ARWES packages are categorized by vanilla and implementation packages. ARWES vanilla packages do not have
-major external dependencies, while the implementation packages depend on specific frameworks to simplify
-their use and add custom UI components.
-
 ### Vanilla
 
 [![bundle size](https://img.shields.io/bundlephobia/minzip/arwes.svg)](https://bundlephobia.com/package/arwes)
 [![installs](https://img.shields.io/npm/dm/arwes?label=installs&style=flat-square)](https://bundlephobia.com/package/arwes)
 
 Core of the framework. Vanilla packages do not have major external dependencies but most tools are
-low level APIs and sometimes require elaborated setups/configurations. Other implementation packages
+low level APIs and sometimes require elaborated setups. Other implementation packages
 simplify its use.
 
 ### React
@@ -82,14 +78,6 @@ simplify its use.
 
 ARWES offers [React](https://react.dev) v18 specific packages with SSR support.
 ARWES does not work with React strict mode nor React Server Components.
-
-### Solid
-
-ARWES offers [Solid](https://solidjs.com) v1 specific packages with SSR support.
-
-### Svelte
-
-ARWES offers [Svelte](https://svelte.dev) v4 specific packages with SSR support.
 
 ## Community
 
@@ -124,8 +112,6 @@ ARWES offers [Svelte](https://svelte.dev) v4 specific packages with SSR support.
 
 Open [a GitHub issue](https://github.com/arwes/arwes/issues/new/choose) or let's
 chat on [Discord](https://discord.gg/s5sbTkw).
-
-Review [frequently asked questions](./FAQ.md) and [code of conduct](./.github/CODE_OF_CONDUCT.md).
 
 ## Roadmap
 

@@ -19,10 +19,6 @@ const generateTypes = () => {
     '@types/react',
     '@types/react-dom',
     '@types/prop-types',
-    '@emotion/react',
-    '@emotion/serialize',
-    '@emotion/cache',
-    '@emotion/utils',
     'motion',
     '@motionone/dom',
     '@motionone/types',
@@ -49,10 +45,6 @@ const generateTypes = () => {
     )
     .flat()
     .concat([
-      {
-        filename: `file:///node_modules/@emotion/react/index.d.ts`,
-        code: "export * from './types/index.d.ts';"
-      },
       {
         filename: `file:///node_modules/motion/index.d.ts`,
         code: "export * from './types/index.d.ts';"
