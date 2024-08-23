@@ -1,18 +1,18 @@
 import { filterProps, randomizeList } from '@arwes/tools'
 import { type Animation, createAnimation } from '@arwes/animated'
 
-import type { TextTransitionProps } from '../types.js'
+import type { AnimateTextProps } from '../types.js'
 import { walkTextNodes } from '../internal/walkTextNodes/index.js'
 import { setTextNodesContent } from '../internal/setTextNodesContent/index.js'
 
 const CIPHERED_CHARACTERS =
   '    ----____abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 
-type TransitionTextDecipherProps = TextTransitionProps & {
+type AnimateTextDecipherProps = AnimateTextProps & {
   characters?: string
 }
 
-const transitionTextDecipher = (props: TransitionTextDecipherProps): Animation => {
+const animateTextDecipher = (props: AnimateTextDecipherProps): Animation => {
   const {
     rootElement,
     contentElement,
@@ -25,7 +25,7 @@ const transitionTextDecipher = (props: TransitionTextDecipherProps): Animation =
   } = filterProps(props)
 
   if (!rootElement || !contentElement) {
-    throw new Error('Arwes transitionTextDecipher() requires valid DOM elements.')
+    throw new Error('ARWES animateTextDecipher() requires valid DOM elements.')
   }
 
   const cloneElement = contentElement.cloneNode(true) as HTMLElement
@@ -99,4 +99,5 @@ const transitionTextDecipher = (props: TransitionTextDecipherProps): Animation =
   })
 }
 
-export { transitionTextDecipher }
+export type { AnimateTextDecipherProps }
+export { animateTextDecipher }

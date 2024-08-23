@@ -1,16 +1,16 @@
 import { filterProps } from '@arwes/tools'
 import { type Animation, createAnimation, easeAmong } from '@arwes/animated'
 
-import type { TextTransitionProps } from '../types.js'
+import type { AnimateTextProps } from '../types.js'
 import { walkTextNodes } from '../internal/walkTextNodes/index.js'
 import { setTextNodesContent } from '../internal/setTextNodesContent/index.js'
 
-type TransitionTextSequenceProps = TextTransitionProps & {
+type AnimateTextSequenceProps = AnimateTextProps & {
   blink?: boolean
   blinkDuration?: number
 }
 
-const transitionTextSequence = (props: TransitionTextSequenceProps): Animation => {
+const animateTextSequence = (props: AnimateTextSequenceProps): Animation => {
   const {
     rootElement,
     contentElement,
@@ -24,7 +24,7 @@ const transitionTextSequence = (props: TransitionTextSequenceProps): Animation =
   } = filterProps(props)
 
   if (!rootElement || !contentElement) {
-    throw new Error('Arwes transitionTextSequence() requires valid DOM elements.')
+    throw new Error('ARWES animateTextSequence() requires valid DOM elements.')
   }
 
   let blinkElement: HTMLElement | undefined
@@ -114,5 +114,5 @@ const transitionTextSequence = (props: TransitionTextSequenceProps): Animation =
   })
 }
 
-export type { TransitionTextSequenceProps }
-export { transitionTextSequence }
+export type { AnimateTextSequenceProps }
+export { animateTextSequence }

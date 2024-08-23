@@ -15,10 +15,10 @@ import { memo, mergeRefs } from '@arwes/react-tools'
 import type { Easing, Animation } from '@arwes/animated'
 import { useAnimator } from '@arwes/react-animator'
 import {
-  type TextTransitionManager,
-  getTransitionTextDuration,
-  transitionTextSequence,
-  transitionTextDecipher
+  type AnimateTextManager,
+  getAnimationTextDuration,
+  animateTextSequence,
+  animateTextDecipher
 } from '@arwes/text'
 
 interface TextProps<E extends HTMLElement = HTMLSpanElement> extends HTMLProps<E> {
@@ -27,7 +27,7 @@ interface TextProps<E extends HTMLElement = HTMLSpanElement> extends HTMLProps<E
   contentClassName?: string
   contentStyle?: CSSProperties
   elementRef?: ForwardedRef<E>
-  manager?: TextTransitionManager
+  manager?: AnimateTextManager
   easing?: Easing
   /**
    * If the duration of the animation should be fixed by the parent Animator
@@ -40,6 +40,7 @@ interface TextProps<E extends HTMLElement = HTMLSpanElement> extends HTMLProps<E
    */
   blink?: boolean
   blinkDuration?: number
+  characters?: string
   hideOnEntered?: boolean
   hideOnExited?: boolean
   children: ReactNode
@@ -57,6 +58,7 @@ const Text = memo(<E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>)
     fixed,
     blink,
     blinkDuration,
+    characters,
     hideOnEntered,
     hideOnExited = true,
     elementRef: elementRefProvided,
@@ -84,11 +86,11 @@ const Text = memo(<E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>)
 
     if (!fixed) {
       const { settings } = animator.node
-      const durationEnter = getTransitionTextDuration({
+      const durationEnter = getAnimationTextDuration({
         length: childrenText.length,
         maxDuration: settings.duration.enter
       })
-      const durationExit = getTransitionTextDuration({
+      const durationExit = getAnimationTextDuration({
         length: childrenText.length,
         maxDuration: settings.duration.exit
       })
@@ -111,9 +113,9 @@ const Text = memo(<E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>)
 
       transitionControl.current?.cancel()
       if (manager === 'decipher') {
-        transitionControl.current = transitionTextDecipher(baseOptions)
+        transitionControl.current = animateTextDecipher({ ...baseOptions, characters })
       } else {
-        transitionControl.current = transitionTextSequence({ ...baseOptions, blink, blinkDuration })
+        transitionControl.current = animateTextSequence({ ...baseOptions, blink, blinkDuration })
       }
     }
 

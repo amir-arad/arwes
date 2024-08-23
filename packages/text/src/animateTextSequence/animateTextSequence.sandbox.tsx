@@ -1,4 +1,4 @@
-import { transitionTextSequence } from '@arwes/text'
+import { animateTextSequence } from '@arwes/text'
 
 const root = document.querySelector('#root')!
 
@@ -17,7 +17,7 @@ root.innerHTML = `
 const rootElement = document.querySelector<HTMLElement>('#rootElement')!
 const contentElement = document.querySelector<HTMLElement>('#contentElement')!
 
-transitionTextSequence({
+animateTextSequence({
   rootElement,
   contentElement,
   duration: 1

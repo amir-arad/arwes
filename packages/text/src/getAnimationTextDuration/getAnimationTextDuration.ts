@@ -1,4 +1,4 @@
-interface GetTransitionTextDurationProps {
+interface GetAnimationTextDurationProps {
   /**
    * Text length.
    */
@@ -13,7 +13,7 @@ interface GetTransitionTextDurationProps {
   charactersPerSecond?: number
 }
 
-const getTransitionTextDuration = (props: GetTransitionTextDurationProps): number => {
+const getAnimationTextDuration = (props: GetAnimationTextDurationProps): number => {
   const { length, maxDuration = 4, charactersPerSecond = 100 } = props
 
   // The time it will take to add/remove a character per frame multiplied by
@@ -23,4 +23,4 @@ const getTransitionTextDuration = (props: GetTransitionTextDurationProps): numbe
   return Math.min(realDuration, maxDuration)
 }
 
-export { getTransitionTextDuration }
+export { getAnimationTextDuration }

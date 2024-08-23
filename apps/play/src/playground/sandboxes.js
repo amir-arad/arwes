@@ -136,12 +136,12 @@ export const sandboxes = [
         name: '@arwes/text',
         children: [
           {
-            name: 'transitionTextSequence',
-            code: require('!raw-loader?esModule=false!@repository/packages/text/src/transitionTextSequence/transitionTextSequence.sandbox.tsx')
+            name: 'animateTextSequence',
+            code: require('!raw-loader?esModule=false!@repository/packages/text/src/animateTextSequence/animateTextSequence.sandbox.tsx')
           },
           {
-            name: 'transitionTextDecipher',
-            code: require('!raw-loader?esModule=false!@repository/packages/text/src/transitionTextDecipher/transitionTextDecipher.sandbox.tsx')
+            name: 'animateTextDecipher',
+            code: require('!raw-loader?esModule=false!@repository/packages/text/src/animateTextDecipher/animateTextDecipher.sandbox.tsx')
           }
         ]
       }
@@ -502,10 +502,7 @@ export const sandboxes = [
                   }
                 ]
               },
-              {
-                name: 'useFrameSVGAssembler',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/useFrameSVGAssembler.sandbox.tsx')
-              },
+
               {
                 name: 'Illuminator',
                 code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/Illuminator/Illuminator.sandbox.tsx')
@@ -551,6 +548,10 @@ export const sandboxes = [
           {
             name: '@arwes/react-core',
             children: [
+              {
+                name: 'useFrameSVGAssembler',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-core/src/useFrameSVGAssembler/useFrameSVGAssembler.sandbox.tsx')
+              },
               {
                 name: 'BleepsOnAnimator',
                 code: require('!raw-loader?esModule=false!@repository/packages/react-core/src/BleepsOnAnimator/BleepsOnAnimator.sandbox.tsx')

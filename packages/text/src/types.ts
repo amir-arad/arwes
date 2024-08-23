@@ -1,8 +1,8 @@
 import type { Easing } from '@arwes/animated'
 
-export type TextTransitionManager = 'sequence' | 'decipher'
+export type AnimateTextManager = 'sequence' | 'decipher'
 
-export type TextTransitionProps = {
+export type AnimateTextProps = {
   rootElement: HTMLElement
   contentElement: HTMLElement
   /**

@@ -1,4 +1,4 @@
 export * from './types.js'
-export * from './transitionTextSequence/index.js'
-export * from './transitionTextDecipher/index.js'
-export * from './getTransitionTextDuration/index.js'
+export * from './animateTextSequence/index.js'
+export * from './animateTextDecipher/index.js'
+export * from './getAnimationTextDuration/index.js'
