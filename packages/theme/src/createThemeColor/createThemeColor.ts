@@ -9,6 +9,7 @@ import type {
 
 const minMax = (min: number, max: number) => (value: number) => Math.min(max, Math.max(min, value))
 const minMax0to100 = minMax(0, 100)
+const minMax0to230 = minMax(0, 230)
 const minMax0to360 = minMax(0, 360)
 const minMax0to1 = minMax(0, 1)
 const searchRegExp = (string: string, regexp: RegExp): string | null => {
@@ -21,7 +22,7 @@ const searchRegExp = (string: string, regexp: RegExp): string | null => {
 
 const colorOptionsDefault = {}
 
-const fromArrayToHSLA = (
+const fromArrayToHSL = (
   src: [number, number, number, number?],
   options: ThemeColorOptions = colorOptionsDefault
 ): string => {
@@ -35,7 +36,7 @@ const fromArrayToHSLA = (
   return `hsl(${h},${s}%,${l}%,${a})`
 }
 
-const fromArrayToRGBA = (
+const fromArrayToRGB = (
   src: [number, number, number, number?],
   options: ThemeColorOptions = colorOptionsDefault
 ): string => {
@@ -49,7 +50,7 @@ const fromArrayToRGBA = (
   return `rgb(${r}%,${g}%,${b}%,${a})`
 }
 
-const fromArrayToLCHA = (
+const fromArrayToLCH = (
   src: [number, number, number, number?],
   options: ThemeColorOptions = colorOptionsDefault
 ): string => {
@@ -57,10 +58,24 @@ const fromArrayToLCHA = (
   const { alpha: alphaOverwrite = 1 } = options
 
   const l = minMax0to100(light)
-  const c = minMax0to100(chroma)
+  const c = minMax0to230(chroma)
   const h = minMax0to360(hue)
   const a = minMax0to1(alpha) * minMax0to1(alphaOverwrite)
-  return `lch(${l}% ${c}% ${h} / ${a})`
+  return `lch(${l} ${c} ${h} / ${a})`
+}
+
+const fromArrayToHWB = (
+  src: [number, number, number, number?],
+  options: ThemeColorOptions = colorOptionsDefault
+): string => {
+  const [hue, whiteness, blackness, alpha = 1] = src
+  const { alpha: alphaOverwrite = 1 } = options
+
+  const h = minMax0to360(hue)
+  const w = minMax0to100(whiteness)
+  const b = minMax0to100(blackness)
+  const a = minMax0to1(alpha) * minMax0to1(alphaOverwrite)
+  return `hwb(${h} ${w}% ${b}% / ${a})`
 }
 
 const formatColor = (color: string, options: ThemeColorOptions = colorOptionsDefault): string => {
@@ -70,15 +85,9 @@ const formatColor = (color: string, options: ThemeColorOptions = colorOptionsDef
     return color
   }
 
-  // DEBUG:
-  console.log('formatColor 1')
-
-  if (!/^(hsla?|rgba?|lch)\([a-zA-Z0-9,./% -]+\)$/.test(color)) {
+  if (!/^(hsla?|rgba?|lch|hwb)\([a-zA-Z0-9,./% -]+\)$/.test(color)) {
     return color
   }
-
-  // DEBUG:
-  console.log('formatColor 2')
 
   const separators = Array.from(color.matchAll(/(,\s?|\s?\/\s?|\s)/g))
   const hasCurrentAlpha = separators.length === 3
@@ -86,18 +95,12 @@ const formatColor = (color: string, options: ThemeColorOptions = colorOptionsDef
   const isCommaSeparated = color.includes(',')
   const alphaAdjust = minMax0to1(alpha)
 
-  // DEBUG:
-  console.log('formatColor 3', hasCurrentAlpha, isCommaSeparated)
-
   if (hasCurrentAlpha) {
     const alphaCurrentMatch = searchRegExp(color, /\d+(\.\d+)?%?\)$/)!
     const isPercentage = alphaCurrentMatch.includes('%')
 
     let alphaCurrent = Number(alphaCurrentMatch.replace(/%?\)$/g, ''))
     alphaCurrent = isPercentage ? minMax0to100(alphaCurrent) : minMax0to1(alphaCurrent)
-
-    // DEBUG:
-    console.log('formatColor 4', alphaCurrent)
 
     return color.replace(
       /\d+(\.\d+)?%?\)$/,
@@ -123,13 +126,16 @@ const createThemeColorBySeries =
     }
 
     if (name === 'rgb') {
-      return fromArrayToRGBA(color, options)
+      return fromArrayToRGB(color, options)
     }
     if (name === 'lch') {
-      return fromArrayToLCHA(color, options)
+      return fromArrayToLCH(color, options)
+    }
+    if (name === 'hwb') {
+      return fromArrayToHWB(color, options)
     }
 
-    return fromArrayToHSLA(color, options)
+    return fromArrayToHSL(color, options)
   }
 
 const createThemeColorByFunction =
@@ -143,13 +149,16 @@ const createThemeColorByFunction =
     }
 
     if (name === 'rgb') {
-      return fromArrayToRGBA(color, options)
+      return fromArrayToRGB(color, options)
     }
     if (name === 'lch') {
-      return fromArrayToLCHA(color, options)
+      return fromArrayToLCH(color, options)
+    }
+    if (name === 'hwb') {
+      return fromArrayToHWB(color, options)
     }
 
-    return fromArrayToHSLA(color, options)
+    return fromArrayToHSL(color, options)
   }
 
 const createThemeColor = (settings: ThemeSettingsColor): ThemeColor => {

@@ -17,9 +17,13 @@ const Sandbox = (): ReactElement => {
       }}
     >
       {/* Adjust color alpha value proportional to the calculated value. */}
+      {/* alpha => 0.5 */}
       <div style={{ background: color(0) }} />
+      {/* alpha => 0.5 */}
       <div style={{ background: color(0, { alpha: 1 }) }} />
+      {/* alpha => 0.25 */}
       <div style={{ background: color(0, { alpha: 0.5 }) }} />
+      {/* alpha => 0.125 */}
       <div style={{ background: color(0, { alpha: 0.25 }) }} />
     </div>
   )

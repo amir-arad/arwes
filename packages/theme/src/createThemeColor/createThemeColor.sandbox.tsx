@@ -2,44 +2,40 @@ import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createThemeColor } from '@arwes/theme'
 
-// A function to return a HSLA value as [number, number, number, number?],
-// representing [hue, saturation, lightness, alpha channel].
-// See https://developer.mozilla.org/en-US/docs/web/css/color_value/hsla
-// This specific function will create values for 0 to 20 multiplier value provided
-// with variation of the lightness.
-
-// All colors will work from 0 to 20 variant/multiplier index.
 const colors = [
-  // Variations of hue.
-  createThemeColor((i) => [i * 18, 50, 50, 1]),
-  // Variations of saturation.
-  createThemeColor((i) => [180, i * 5, 50, 1]),
-  // Variations of lightness.
-  createThemeColor((i) => [180, 50, i * 5, 1]),
-  // Variations of opacity.
-  createThemeColor((i) => [180, 50, 50, i * 0.05])
+  createThemeColor([
+    'hsl(180, 71.43%, 97.25%)',
+    'hsl(180, 68.63%, 90.00%)',
+    'hsl(180, 67.41%, 73.53%)',
+    'hsl(180, 68.07%, 53.33%)',
+    'hsl(180, 68.14%, 44.31%)',
+    'hsl(180, 68.59%, 37.45%)',
+    'hsl(180, 69.03%, 30.39%)',
+    'hsl(180, 68.18%, 25.88%)',
+    'hsl(180, 67.92%, 20.78%)',
+    'hsl(180, 69.23%, 15.29%)'
+  ]),
+  createThemeColor((i) => [180, 60 + i, 92.5 - i * 9.44]),
+  createThemeColor({
+    color: 'lch',
+    create: (i) => [95 - i * 8, i < 5 ? 8 + i * 9 : 60 - i * 3, 200]
+  })
 ]
 
 const Sandbox = (): ReactElement => {
   return (
     <div>
-      {Array(4)
+      {Array(colors.length)
         .fill(0)
         .map((_, colorIndex) => (
-          <div
-            key={colorIndex}
-            style={{
-              display: 'flex',
-              flexDirection: 'row'
-            }}
-          >
-            {Array(20)
+          <div key={colorIndex} style={{ display: 'flex' }}>
+            {Array(10)
               .fill(0)
               .map((_, variantIndex) => (
                 <div
                   key={variantIndex}
                   style={{
-                    width: 20,
+                    width: 30,
                     height: 100,
                     background: colors[colorIndex](variantIndex)
                   }}
