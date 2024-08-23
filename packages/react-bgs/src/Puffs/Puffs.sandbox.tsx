@@ -1,3 +1,5 @@
+// React integration of `createBackgroundPuffs`.
+
 import React, { type ReactElement, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Animator } from '@arwes/react-animator'

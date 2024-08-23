@@ -37,9 +37,9 @@ const GridLines = memo((props: GridLinesProps): ReactElement => {
     }
 
     const background = createBackgroundGridLines({
-      settings: propsRef,
       canvas,
-      animator
+      animator: animator?.node,
+      settings: propsRef
     })
 
     background.start()

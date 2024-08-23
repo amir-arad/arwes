@@ -7,7 +7,10 @@ rootElement.innerHTML = '<button class="bleep">Bleep!</button>'
 const bleepElement = rootElement.querySelector('.bleep')!
 
 const bleep = createBleep({
-  sources: [{ src: '/assets/sounds/click.mp3', type: 'audio/mpeg' }]
+  sources: [
+    { src: '/assets/sounds/click.webm', type: 'audio/webm' },
+    { src: '/assets/sounds/click.mp3', type: 'audio/mpeg' }
+  ]
 })
 
 bleepElement.addEventListener('click', () => {

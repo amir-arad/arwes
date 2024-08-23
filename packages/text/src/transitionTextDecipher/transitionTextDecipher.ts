@@ -5,10 +5,14 @@ import type { TextTransitionProps } from '../types.js'
 import { walkTextNodes } from '../internal/walkTextNodes/index.js'
 import { setTextNodesContent } from '../internal/setTextNodesContent/index.js'
 
-const LETTERS =
-  '                   abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ>!·$%&/()=?¿≤|@#'
+const CIPHERED_CHARACTERS =
+  '    ----____abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 
-const transitionTextDecipher = (props: TextTransitionProps): Animation => {
+type TransitionTextDecipherProps = TextTransitionProps & {
+  characters?: string
+}
+
+const transitionTextDecipher = (props: TransitionTextDecipherProps): Animation => {
   const {
     rootElement,
     contentElement,
@@ -16,7 +20,8 @@ const transitionTextDecipher = (props: TextTransitionProps): Animation => {
     easing = 'linear',
     isEntering = true,
     hideOnExited = true,
-    hideOnEntered
+    hideOnEntered,
+    characters = CIPHERED_CHARACTERS
   } = filterProps(props)
 
   if (!rootElement || !contentElement) {
@@ -75,7 +80,7 @@ const transitionTextDecipher = (props: TextTransitionProps): Animation => {
           .map((char, index) => {
             if (char === ' ') return ' '
             if (deciphered[index]) return char
-            return LETTERS[Math.round(Math.random() * (LETTERS.length - 1))]
+            return characters[Math.round(Math.random() * (characters.length - 1))]
           })
           .join('')
       )

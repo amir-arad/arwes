@@ -1,3 +1,5 @@
+// React integration of `createBackgroundMovingLines`.
+
 import React, { type ReactElement, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Animator } from '@arwes/react-animator'
@@ -12,13 +14,7 @@ const Sandbox = (): ReactElement => {
   }, [active])
 
   return (
-    <Animator
-      active={active}
-      duration={{
-        // Duration of an individual animation sequence.
-        interval: 4
-      }}
-    >
+    <Animator active={active}>
       <MovingLines lineColor="hsla(180, 100%, 75%, 0.5)" />
     </Animator>
   )

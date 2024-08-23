@@ -413,6 +413,14 @@ export default (): JSX.Element => (
       percentages in [x, y] axes are automatically calculated where it applies.
     </AR.P>
 
+    <AR.P>
+      There are some alternatives such as{' '}
+      <a href="https://github.com/propjockey/augmented-ui" target="_blank">
+        Augmented UI
+      </a>
+      .
+    </AR.P>
+
     <AR.Navigation
       prevHref="/docs/develop/fundamentals/text"
       prev="Text"

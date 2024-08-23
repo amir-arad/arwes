@@ -37,9 +37,9 @@ const MovingLines = memo((props: MovingLinesProps): ReactElement => {
     }
 
     const background = createBackgroundMovingLines({
-      settings: propsRef,
       canvas,
-      animator
+      animator: animator?.node,
+      settings: propsRef
     })
 
     background.start()

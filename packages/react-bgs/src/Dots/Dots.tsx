@@ -37,9 +37,9 @@ const Dots = memo((props: DotsProps): ReactElement => {
     }
 
     const background = createBackgroundDots({
-      settings: propsRef,
       canvas,
-      animator
+      animator: animator?.node,
+      settings: propsRef
     })
 
     background.start()

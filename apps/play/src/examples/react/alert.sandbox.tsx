@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useMemo, useRef, useState, type ReactElement } from 'react'
+import React, { ReactNode, useEffect, useRef, useState, type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
   createThemeUnit,

@@ -28,18 +28,20 @@ const Sandbox = (): ReactElement => {
       {Array(colors.length)
         .fill(0)
         .map((_, colorIndex) => (
-          <div key={colorIndex} style={{ display: 'flex' }}>
+          <div
+            key={colorIndex}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(10, 1fr)',
+              gridTemplateRows: '1fr',
+              width: 300,
+              height: 100
+            }}
+          >
             {Array(10)
-              .fill(0)
+              .fill(null)
               .map((_, variantIndex) => (
-                <div
-                  key={variantIndex}
-                  style={{
-                    width: 30,
-                    height: 100,
-                    background: colors[colorIndex](variantIndex)
-                  }}
-                />
+                <div key={variantIndex} style={{ background: colors[colorIndex](variantIndex) }} />
               ))}
           </div>
         ))}

@@ -37,9 +37,9 @@ const Puffs = memo((props: PuffsProps): ReactElement => {
     }
 
     const background = createBackgroundPuffs({
-      settings: propsRef,
       canvas,
-      animator
+      animator: animator?.node,
+      settings: propsRef
     })
 
     background.start()

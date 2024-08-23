@@ -1,21 +1,18 @@
+// React integration of `createFrameSVGCorners`.
+
 import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { FrameSVGOctagon } from '@arwes/react-frames'
+import { FrameSVGCorners } from '@arwes/react-frames'
 
 const Sandbox = (): ReactElement => {
   return (
-    <div style={{ position: 'relative', width: 200, height: 200 }}>
-      <FrameSVGOctagon
+    <div style={{ position: 'relative', width: 300, height: 300 }}>
+      <FrameSVGCorners
         style={{
           // @ts-expect-error css variables
           '--arwes-frames-bg-color': 'hsl(180, 75%, 10%)',
           '--arwes-frames-line-color': 'hsl(180, 75%, 50%)'
         }}
-        squareSize={30}
-        leftTop={false}
-        rightTop={true}
-        rightBottom={true}
-        leftBottom={false}
       />
     </div>
   )

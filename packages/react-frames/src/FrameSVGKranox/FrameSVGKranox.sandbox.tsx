@@ -1,11 +1,13 @@
+// React integration of `createFrameSVGKranox`.
+
 import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { FrameSVGOctagon } from '@arwes/react-frames'
+import { FrameSVGKranox } from '@arwes/react-frames'
 
 const Sandbox = (): ReactElement => {
   return (
     <div style={{ position: 'relative', width: 300, height: 300 }}>
-      <FrameSVGOctagon
+      <FrameSVGKranox
         style={{
           // @ts-expect-error css variables
           '--arwes-frames-bg-color': 'hsl(180, 75%, 10%)',
