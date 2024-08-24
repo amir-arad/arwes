@@ -169,7 +169,7 @@ const Text = memo(<E extends HTMLElement = HTMLSpanElement>(props: TextProps<E>)
             ? (animator.node.state === 'exited' && hideOnExited) ||
               (animator.node.state === 'entered' && hideOnEntered)
               ? 'hidden'
-              : 'visible'
+              : ''
             : undefined,
           ...contentStyle
         }

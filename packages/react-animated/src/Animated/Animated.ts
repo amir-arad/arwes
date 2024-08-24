@@ -94,7 +94,7 @@ const Animated = <
         ((hideOnExited && animator.node.state === 'exited') ||
           (hideOnEntered && animator.node.state === 'entered'))
           ? 'hidden'
-          : 'visible',
+          : '',
       ...dynamicStyles
     }
   })

@@ -89,7 +89,7 @@ const animateTextDecipher = (props: AnimateTextDecipherProps): Animation => {
     },
     onFinish: () => {
       contentElement.style.visibility =
-        (isEntering && hideOnEntered) || (!isEntering && hideOnExited) ? 'hidden' : 'visible'
+        (isEntering && hideOnEntered) || (!isEntering && hideOnExited) ? 'hidden' : ''
       cloneElement.remove()
     },
     onCancel: () => {

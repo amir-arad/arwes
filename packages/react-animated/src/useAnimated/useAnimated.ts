@@ -81,7 +81,7 @@ const useAnimated = <E extends HTMLElement | SVGElement = HTMLElement>(
         (options.hideOnExited && node.state === 'exited') ||
         (options.hideOnEntered && node.state === 'entered')
           ? 'hidden'
-          : 'visible'
+          : ''
 
       const nodeSettings = node.settings
       const nodeDuration = nodeSettings.duration

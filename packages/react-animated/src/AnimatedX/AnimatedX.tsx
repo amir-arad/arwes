@@ -76,7 +76,7 @@ const AnimatedX = <
     className,
     style: {
       ...style,
-      visibility: hasState && hideOnStates.includes(animatedState) ? 'hidden' : 'visible',
+      visibility: hasState && hideOnStates.includes(animatedState) ? 'hidden' : '',
       ...dynamicStyles
     }
   })

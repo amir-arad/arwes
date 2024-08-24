@@ -80,7 +80,7 @@ const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement 
       ...(filterProps(optionsRef.current ?? ({} as any)) as Required<UseAnimatedXOptions<States>>)
     }
 
-    element.style.visibility = options.hideOnStates.includes(state) ? 'hidden' : 'visible'
+    element.style.visibility = options.hideOnStates.includes(state) ? 'hidden' : ''
 
     const $ = <T = HTMLElement | SVGElement>(query: string): T[] =>
       Array.from(element.querySelectorAll(query)) as T[]
