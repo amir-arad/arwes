@@ -1,4 +1,4 @@
-import { animateTextSequence } from '@arwes/text'
+import { animateTextSequence, getAnimationTextDuration } from '@arwes/text'
 
 const root = document.querySelector('#root')!
 
@@ -17,10 +17,16 @@ root.innerHTML = `
 const rootElement = document.querySelector<HTMLElement>('#rootElement')!
 const contentElement = document.querySelector<HTMLElement>('#contentElement')!
 
+const duration = getAnimationTextDuration({
+  length: (contentElement.textContent ?? '').length,
+  maxDuration: 1,
+  charactersPerSecond: 60
+})
+
 animateTextSequence({
   rootElement,
   contentElement,
-  duration: 1
+  duration
   // easing: 'linear',
   // blink: true,
   // blinkDuration: 0.1,

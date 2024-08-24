@@ -1,29 +1,23 @@
 import React, { memo } from 'react'
-import { type AnimatedProp, Animated, cx } from '@arwes/react'
+import {
+  type AnimatedProp,
+  type StyleSeparatorProps,
+  Animated,
+  cx,
+  styleSeparator
+} from '@arwes/react'
 
 import { theme } from '@/config'
 
-type HrProps = {
+type HrProps = Omit<StyleSeparatorProps, 'colorStatic' | 'colorActive'> & {
   className?: string
   color?: 'primary' | 'secondary' | 'neutral' | 'error'
   size?: 1 | 2
-  direction?: 'left' | 'right' | 'both'
-  isVertical?: boolean
   animated?: AnimatedProp
 }
 
-const width = theme.space(2)
-const space = theme.space(1)
-
 const Hr = memo((props: HrProps): JSX.Element => {
-  const {
-    className,
-    color = 'primary',
-    size = 1,
-    direction = 'right',
-    isVertical,
-    animated
-  } = props
+  const { className, color = 'primary', size = 1, direction, isVertical, animated } = props
 
   const colorFn =
     color === 'primary'
@@ -51,37 +45,7 @@ const Hr = memo((props: HrProps): JSX.Element => {
         className
       )}
       style={{
-        background:
-          `linear-gradient(to ${isVertical ? 'bottom' : 'right'}, ` +
-          [
-            ...(direction === 'left' || direction === 'both'
-              ? [
-                  `${colorActive} 0px`,
-                  `${colorActive} ${width}`,
-                  `transparent ${width}`,
-                  `transparent calc(${width} + ${space})`,
-                  `${colorActive} calc(${width} + ${space})`,
-                  `${colorActive} calc(${width} * 2 + ${space})`,
-                  `transparent calc(${width} * 2 + ${space})`,
-                  `transparent calc(${width} * 2 + ${space} * 2)`,
-                  `${colorStatic} calc(${width} * 2 + ${space} * 2)`
-                ]
-              : [`${colorStatic} 0%`]),
-            ...(direction === 'right' || direction === 'both'
-              ? [
-                  `${colorStatic} calc(100% - ${width} * 2 - ${space} * 2)`,
-                  `transparent calc(100% - ${width} * 2 - ${space} * 2)`,
-                  `transparent calc(100% - ${width} * 2 - ${space})`,
-                  `${colorActive} calc(100% - ${width} * 2 - ${space})`,
-                  `${colorActive} calc(100% - ${width} - ${space})`,
-                  `transparent calc(100% - ${width} - ${space})`,
-                  `transparent calc(100% - ${width})`,
-                  `${colorActive} calc(100% - ${width})`,
-                  `${colorActive} 100%`
-                ]
-              : [`${colorStatic} 100%`])
-          ].join(',') +
-          ')'
+        background: styleSeparator({ colorStatic, colorActive, direction, isVertical })
       }}
       animated={animated}
     />

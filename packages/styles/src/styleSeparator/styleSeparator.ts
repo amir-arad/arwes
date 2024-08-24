@@ -51,4 +51,5 @@ const styleSeparator = (props: StyleSeparatorProps): string => {
   )
 }
 
+export type { StyleSeparatorProps }
 export { styleSeparator }

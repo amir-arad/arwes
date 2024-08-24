@@ -6,6 +6,3 @@ export * from './FrameSVGCorners/index.js'
 export * from './FrameSVGLines/index.js'
 export * from './FrameSVGNefrex/index.js'
 export * from './FrameSVGKranox/index.js'
-
-export * from './Illuminator/index.js'
-export * from './IlluminatorSVG/index.js'

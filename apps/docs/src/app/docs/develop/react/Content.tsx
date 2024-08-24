@@ -158,6 +158,12 @@ export default (): JSX.Element => (
       </AR.Row>
       <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
         <AR.Cell>
+          <code>@arwes/react-effects</code>
+        </AR.Cell>
+        <AR.Cell>React special effects</AR.Cell>
+      </AR.Row>
+      <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
+        <AR.Cell>
           <code>@arwes/react-core</code>
         </AR.Cell>
         <AR.Cell>React integration functionalities</AR.Cell>

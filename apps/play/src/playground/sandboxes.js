@@ -243,6 +243,23 @@ export const sandboxes = [
       }
     ]
   },
+  {
+    name: 'Effects',
+    children: [
+      {
+        name: 'animateFrameSVGAssembler',
+        code: require('!raw-loader?esModule=false!@repository/packages/effects/src/animateFrameSVGAssembler/animateFrameSVGAssembler.sandbox.tsx')
+      },
+      {
+        name: 'createEffectIlluminator',
+        code: require('!raw-loader?esModule=false!@repository/packages/effects/src/createEffectIlluminator/createEffectIlluminator.sandbox.tsx')
+      },
+      {
+        name: 'createEffectIlluminatorSVG',
+        code: require('!raw-loader?esModule=false!@repository/packages/effects/src/createEffectIlluminatorSVG/createEffectIlluminatorSVG.sandbox.tsx')
+      }
+    ]
+  },
 
   //
   // REACT
@@ -501,15 +518,6 @@ export const sandboxes = [
                     code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVG/FrameSVG.clipping.sandbox.tsx')
                   }
                 ]
-              },
-
-              {
-                name: 'Illuminator',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/Illuminator/Illuminator.sandbox.tsx')
-              },
-              {
-                name: 'IlluminatorSVG',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/IlluminatorSVG/IlluminatorSVG.sandbox.tsx')
               }
             ]
           }
@@ -543,15 +551,28 @@ export const sandboxes = [
         ]
       },
       {
+        name: 'Effects',
+        children: [
+          {
+            name: 'useFrameSVGAssembler',
+            code: require('!raw-loader?esModule=false!@repository/packages/react-effects/src/useFrameSVGAssembler/useFrameSVGAssembler.sandbox.tsx')
+          },
+          {
+            name: 'Illuminator',
+            code: require('!raw-loader?esModule=false!@repository/packages/react-effects/src/Illuminator/Illuminator.sandbox.tsx')
+          },
+          {
+            name: 'IlluminatorSVG',
+            code: require('!raw-loader?esModule=false!@repository/packages/react-effects/src/IlluminatorSVG/IlluminatorSVG.sandbox.tsx')
+          }
+        ]
+      },
+      {
         name: 'General',
         children: [
           {
             name: '@arwes/react-core',
             children: [
-              {
-                name: 'useFrameSVGAssembler',
-                code: require('!raw-loader?esModule=false!@repository/packages/react-core/src/useFrameSVGAssembler/useFrameSVGAssembler.sandbox.tsx')
-              },
               {
                 name: 'BleepsOnAnimator',
                 code: require('!raw-loader?esModule=false!@repository/packages/react-core/src/BleepsOnAnimator/BleepsOnAnimator.sandbox.tsx')
