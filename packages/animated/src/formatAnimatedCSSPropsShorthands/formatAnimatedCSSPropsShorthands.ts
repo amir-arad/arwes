@@ -1,6 +1,6 @@
-import type { CSSProperties } from 'react'
+import type { Properties as CSSProperties } from 'csstype'
 
-import type { AnimatedCSSProps } from '../../types.js'
+import type { AnimatedCSSProps } from '../types.js'
 
 const propsTransformDistances = {
   x: 'translateX',

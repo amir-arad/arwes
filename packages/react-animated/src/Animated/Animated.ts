@@ -13,10 +13,10 @@ import {
 import { type NoInfer } from '@arwes/tools'
 import { mergeRefs } from '@arwes/react-tools'
 import { type AnimatorNode } from '@arwes/animator'
+import { formatAnimatedCSSPropsShorthands } from '@arwes/animated'
 import { useAnimator } from '@arwes/react-animator'
 
 import type { AnimatedProp } from '../types.js'
-import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js'
 import { useAnimated } from '../useAnimated/index.js'
 
 interface AnimatedProps<E extends HTMLElement | SVGElement = HTMLDivElement> {

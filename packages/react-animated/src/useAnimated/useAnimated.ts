@@ -2,12 +2,11 @@ import { type MutableRefObject, useRef, useEffect } from 'react'
 import { animate } from 'motion'
 import { filterProps } from '@arwes/tools'
 import type { AnimatorNode } from '@arwes/animator'
-import { type EasingName, easing } from '@arwes/animated'
+import { type EasingName, easing, formatAnimatedCSSPropsShorthands } from '@arwes/animated'
 import { useAnimator } from '@arwes/react-animator'
 
 import type { AnimatedProp, AnimatedTransitionFunctionReturn } from '../types.js'
 import { transition, fade, flicker, draw } from '../transitions/index.js'
-import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js'
 
 type UseAnimatedOptions<E = HTMLElement | SVGElement> = {
   hideOnExited?: boolean | undefined

@@ -1,3 +1,5 @@
+export * from './types.js'
+export * from './formatAnimatedCSSPropsShorthands/index.js'
 export * from './easing/index.js'
 export * from './easeAmong/index.js'
 export * from './easeSteps/index.js'

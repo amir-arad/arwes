@@ -1,7 +1,7 @@
 import { type MutableRefObject, useRef, useEffect } from 'react'
 import { animate } from 'motion'
 import { filterProps } from '@arwes/tools'
-import { type EasingName, easing } from '@arwes/animated'
+import { type EasingName, easing, formatAnimatedCSSPropsShorthands } from '@arwes/animated'
 
 import type {
   AnimatedXProp,
@@ -9,7 +9,6 @@ import type {
   AnimatedXTransition,
   AnimatedXTransitionFunctionReturn
 } from '../types.js'
-import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index.js'
 
 interface UseAnimatedXOptions<States extends string> {
   hideOnStates?: States[] | undefined
