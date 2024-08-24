@@ -1,4 +1,5 @@
 import type { BleepProps, Bleep, BleepPropsUpdatable } from '../types.js'
+import { type BleepSource, createBleepSource } from './createBleepSource.js'
 
 const createBleep = (props: BleepProps): Bleep | null => {
   const isBrowser: boolean = typeof window !== 'undefined'
@@ -28,7 +29,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
   let isBufferPlaying = false
   let playbackCallbackTime = 0
 
-  let source: AudioBufferSourceNode | null = null
+  let bleepSource: BleepSource | null = null
   let buffer: AudioBuffer | null = null
   let duration = 0
   let fetchPromise: Promise<void>
@@ -49,7 +50,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
     if (!sources.length) {
       isBufferError = true
       console.error(
-        'Every bleep must have at least one source with a valid audio file URL and type.'
+        'ARWES bleep must have at least one source with a valid audio file URL and type.'
       )
       return
     }
@@ -68,7 +69,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
     if (!source) {
       isBufferError = true
       console.error(
-        `The bleep sources "${JSON.stringify(sources)}" are not supported on this navigator.`
+        `ARWES bleep sources "${JSON.stringify(sources)}" are not supported on this navigator.`
       )
       return
     }
@@ -84,7 +85,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
       })
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Bleep source could not be fetched.')
+          throw new Error('ARWES bleep source could not be fetched.')
         }
         return response
       })
@@ -97,7 +98,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
       .catch((err) => {
         isBufferError = true
         console.error(
-          `The bleep with source URL "${src}" and type "${type}" could not be used:`,
+          `ARWES bleep with source URL "${src}" and type "${type}" could not be used:`,
           err
         )
       })
@@ -115,9 +116,9 @@ const createBleep = (props: BleepProps): Bleep | null => {
   }
 
   function play(caller?: string): void {
-    const playback = (): void => {
+    const schedulePlay = (): void => {
       if (Date.now() <= playbackCallbackTime + maxPlaybackDelay * 1_000) {
-        play()
+        play(caller)
       }
     }
 
@@ -128,7 +129,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
     }
 
     if (isBufferLoading) {
-      void fetchPromise.then(playback)
+      void fetchPromise.then(schedulePlay)
 
       return
     }
@@ -136,12 +137,12 @@ const createBleep = (props: BleepProps): Bleep | null => {
     if (!buffer) {
       fetchAudioBuffer()
 
-      void fetchPromise.then(playback)
+      void fetchPromise.then(schedulePlay)
 
       return
     }
 
-    if (caller) {
+    if (caller !== undefined) {
       callersAccount.add(caller)
     }
 
@@ -156,12 +157,11 @@ const createBleep = (props: BleepProps): Bleep | null => {
 
       context
         .resume()
-        .then(playback)
+        .then(schedulePlay)
         .catch((err: Event) => {
+          const sourcesText = JSON.stringify(sources)
           console.error(
-            `The bleep audio context with sources "${JSON.stringify(
-              sources
-            )}" could not be resumed to be played:`,
+            `ARWES bleep audio context with sources "${sourcesText}" could not be resumed to be played:`,
             err
           )
         })
@@ -169,35 +169,23 @@ const createBleep = (props: BleepProps): Bleep | null => {
       return
     }
 
+    if (bleepSource) {
+      bleepSource.stop()
+    }
+
+    bleepSource = createBleepSource({
+      context,
+      buffer,
+      gain,
+      loop,
+      onStop() {
+        isBufferPlaying = false
+      }
+    })
+
     isBufferPlaying = true
 
-    if (source) {
-      source.stop()
-      source.disconnect(gain)
-      source = null
-    }
-
-    source = context.createBufferSource()
-    source.buffer = buffer
-    source.loop = loop
-
-    if (loop) {
-      source.loopStart = 0
-      source.loopEnd = buffer.duration
-    }
-
-    source.connect(gain)
-    source.start()
-
-    source.onended = () => {
-      isBufferPlaying = false
-
-      if (source) {
-        source.stop()
-        source.disconnect(gain)
-        source = null
-      }
-    }
+    bleepSource.start()
   }
 
   function stop(caller?: string): void {
@@ -205,17 +193,15 @@ const createBleep = (props: BleepProps): Bleep | null => {
       return
     }
 
-    if (caller) {
+    if (caller !== undefined) {
       callersAccount.delete(caller)
     }
 
     const canStop = loop ? !callersAccount.size : true
 
     if (canStop) {
-      if (source) {
-        source.stop()
-        source.disconnect(gain)
-        source = null
+      if (bleepSource) {
+        bleepSource.stop()
       }
 
       isBufferPlaying = false
@@ -227,13 +213,12 @@ const createBleep = (props: BleepProps): Bleep | null => {
   }
 
   function unload(): void {
-    if (source) {
-      source.stop()
-      source.disconnect(gain)
-      source = null
+    if (bleepSource) {
+      bleepSource.stop()
     }
 
     // Remove audio buffer from memory.
+    bleepSource = null
     buffer = null
 
     isBufferLoading = false
@@ -243,9 +228,9 @@ const createBleep = (props: BleepProps): Bleep | null => {
     window.removeEventListener('click', onUserAllowAudio)
   }
 
-  function update(props: BleepPropsUpdatable): void {
-    if (props.volume !== undefined) {
-      const bleepVolume = Math.max(0, Math.min(1, props.volume))
+  function update(newProps: BleepPropsUpdatable): void {
+    if (newProps.volume !== undefined) {
+      const bleepVolume = Math.max(0, Math.min(1, newProps.volume))
       gain.gain.setValueAtTime(bleepVolume, context.currentTime)
     }
   }

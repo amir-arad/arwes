@@ -7,13 +7,13 @@ export interface BleepGeneralProps {
   readonly volume?: number
   readonly fetchHeaders?: Headers
   readonly maxPlaybackDelay?: number
+  readonly category?: BleepCategory
   readonly disabled?: boolean
 }
 
-export interface BleepProps extends Omit<BleepGeneralProps, 'disabled'> {
+export interface BleepProps extends Omit<BleepGeneralProps, 'category' | 'disabled'> {
   readonly sources: Array<Readonly<{ src: string; type: string }>>
   readonly loop?: boolean
-  readonly category?: BleepCategory
   readonly context?: AudioContext
   readonly masterGain?: GainNode
 }
@@ -49,7 +49,10 @@ export interface BleepsManagerProps<Names extends string = string> {
   readonly categories?: {
     readonly [P in BleepCategory]?: BleepGeneralProps
   }
-  readonly bleeps: Record<Names, Omit<BleepProps, 'context' | 'masterGain'>>
+  readonly bleeps: Record<
+    Names,
+    Omit<BleepProps, 'context' | 'masterGain'> & { category?: BleepCategory }
+  >
 }
 
 export interface BleepsManagerPropsMasterUpdatable {

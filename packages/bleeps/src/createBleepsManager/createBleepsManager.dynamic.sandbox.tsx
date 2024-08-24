@@ -57,15 +57,15 @@ const bleepsManager = createBleepsManager<BleepsNames>({
   bleeps: {
     click: {
       category: 'interaction',
-      sources: [{ src: '/assets/sounds/click.webm', type: 'audio/webm' }]
+      sources: [{ src: '/assets/sounds/click.mp3', type: 'audio/mpeg' }]
     },
     error: {
       category: 'notification',
-      sources: [{ src: '/assets/sounds/error.webm', type: 'audio/webm' }]
+      sources: [{ src: '/assets/sounds/error.mp3', type: 'audio/mpeg' }]
     },
     type: {
       category: 'transition',
-      sources: [{ src: '/assets/sounds/type.webm', type: 'audio/webm' }]
+      sources: [{ src: '/assets/sounds/type.mp3', type: 'audio/mpeg' }]
     }
   }
 })

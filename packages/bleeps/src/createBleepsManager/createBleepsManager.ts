@@ -21,7 +21,8 @@ const createBleepsManager = <Names extends string>(
 
   bleepNames.forEach((bleepName) => {
     const bleepProps = props.bleeps[bleepName]
-    const categoryProps = bleepProps.category ? props.categories?.[bleepProps.category] : null
+    const category = bleepProps.category ?? props.common?.category
+    const categoryProps = category ? props.categories?.[category] : null
 
     const generalProps: BleepGeneralProps = {
       ...props.common,
