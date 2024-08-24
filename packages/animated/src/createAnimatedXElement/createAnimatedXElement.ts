@@ -12,22 +12,23 @@ import type {
   AnimatedXTransitionFunctionReturn
 } from '../types.js'
 
-type AnimatedXElementProps<
-  States extends string,
-  E extends HTMLElement | SVGElement = HTMLElement
-> = {
-  element: E
+type AnimatedXElementPropsSettings<States extends string> = {
   state: States
   animated: AnimatedXProp<States>
   hideOnStates?: States[] | undefined
   renderInitials?: boolean | undefined
 }
 
-type AnimatedXElement<
+type AnimatedXElementProps<
   States extends string,
   Element extends HTMLElement | SVGElement = HTMLElement
 > = {
-  update: (newProps: Partial<Omit<AnimatedXElementProps<States, Element>, 'element'>>) => void
+  element: Element
+  settingsRef: { current: AnimatedXElementPropsSettings<States> }
+}
+
+type AnimatedXElement = {
+  refresh: () => void
   cancel: () => void
 }
 
@@ -35,20 +36,24 @@ const createAnimatedXElement = <
   States extends string,
   Element extends HTMLElement | SVGElement = HTMLElement
 >(
-  propsInitial: AnimatedXElementProps<States, Element>
-): AnimatedXElement<States, Element> => {
-  const { element } = propsInitial
+  props: AnimatedXElementProps<States, Element>
+): AnimatedXElement => {
+  const { element } = props
 
-  const props: AnimatedXElementProps<States, Element> = {
+  const getSettings = (): AnimatedXElementPropsSettings<States> => ({
     hideOnStates: [],
     renderInitials: true,
-    ...filterProps(propsInitial)
-  }
+    ...filterProps(props.settingsRef.current)
+  })
+
+  let stateLastExecuted = props.settingsRef.current.state
 
   const animations = new Set<AnimatedXTransitionFunctionReturn>()
 
-  if (props.renderInitials) {
-    const { animated } = props
+  const settingsInitial = getSettings()
+
+  if (settingsInitial.renderInitials) {
+    const { animated } = settingsInitial
     const animatedListReceived = Array.isArray(animated) ? animated : [animated]
     const animatedList = animatedListReceived.filter(Boolean) as Array<AnimatedXSettings<States>>
 
@@ -68,7 +73,10 @@ const createAnimatedXElement = <
   }
 
   const runAnimations = (): void => {
-    const { state, animated, hideOnStates } = props
+    const { state, animated, hideOnStates } = getSettings()
+
+    stateLastExecuted = state
+
     const animatedListReceived = Array.isArray(animated) ? animated : [animated]
     const animatedList = animatedListReceived.filter(Boolean) as Array<AnimatedXSettings<States>>
 
@@ -143,14 +151,8 @@ const createAnimatedXElement = <
 
   runAnimations()
 
-  const update = (
-    newProps: Partial<Omit<AnimatedXElementProps<States, Element>, 'element'>>
-  ): void => {
-    const currentState = props.state
-
-    Object.assign(props, newProps)
-
-    if (newProps.state !== undefined && currentState !== newProps.state) {
+  const refresh = (): void => {
+    if (stateLastExecuted !== props.settingsRef.current.state) {
       runAnimations()
     }
   }
@@ -160,8 +162,8 @@ const createAnimatedXElement = <
     animations.clear()
   }
 
-  return Object.freeze({ update, cancel })
+  return Object.freeze({ refresh, cancel })
 }
 
-export type { AnimatedXElementProps, AnimatedXElement }
+export type { AnimatedXElementPropsSettings, AnimatedXElementProps, AnimatedXElement }
 export { createAnimatedXElement }

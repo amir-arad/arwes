@@ -47,9 +47,9 @@ interface CreateBackgroundPuffsSettings {
 }
 
 interface CreateBackgroundPuffsProps {
-  settings: { current: CreateBackgroundPuffsSettings }
   canvas: HTMLCanvasElement
   animator?: AnimatorNode
+  settingsRef: { current: CreateBackgroundPuffsSettings }
 }
 
 interface CreateBackgroundPuffs {
@@ -97,7 +97,7 @@ const createBackgroundPuffs = (props: CreateBackgroundPuffsProps): CreateBackgro
 
   const getSettings = (): Required<CreateBackgroundPuffsSettings> => ({
     ...defaultProps,
-    ...props.settings.current
+    ...props.settingsRef.current
   })
 
   const createPuff = (width: number, height: number): Puff => {

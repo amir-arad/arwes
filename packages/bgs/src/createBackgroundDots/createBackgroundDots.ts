@@ -44,9 +44,9 @@ interface CreateBackgroundDotsSettings {
 }
 
 interface CreateBackgroundDotsProps {
-  settings: { current: CreateBackgroundDotsSettings }
   canvas: HTMLCanvasElement
   animator?: AnimatorNode
+  settingsRef: { current: CreateBackgroundDotsSettings }
 }
 
 interface CreateBackgroundDots {
@@ -81,7 +81,7 @@ const createBackgroundDots = (props: CreateBackgroundDotsProps): CreateBackgroun
 
   const getSettings = (): Required<CreateBackgroundDotsSettings> => ({
     ...defaultProps,
-    ...props.settings.current
+    ...props.settingsRef.current
   })
 
   const resize = (): void => {

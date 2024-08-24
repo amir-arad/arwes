@@ -7,18 +7,23 @@ import { easing } from '../easing/index.js'
 import { formatAnimatedCSSPropsShorthands } from '../formatAnimatedCSSPropsShorthands/index.js'
 import { transition, fade, flicker, draw } from '../transitions/index.js'
 
-type AnimatedElementProps<E = HTMLElement | SVGElement> = {
-  element: E
-  animator: AnimatorNode
+type AnimatedElementPropsSettings<Element = HTMLElement | SVGElement> = {
   animated: AnimatedProp
   hideOnExited?: undefined | boolean
   hideOnEntered?: undefined | boolean
   renderInitials?: undefined | boolean
-  onTransition?: undefined | ((element: E, node: AnimatorNode) => void)
+  onTransition?: undefined | ((element: Element, node: AnimatorNode) => void)
 }
 
-type AnimatedElement<E extends HTMLElement | SVGElement = HTMLElement> = {
-  update: (newProps: Omit<AnimatedElementProps<E>, 'element' | 'animator'>) => void
+type AnimatedElementProps<Element = HTMLElement | SVGElement> = {
+  element: Element
+  animator: AnimatorNode
+  settingsRef: {
+    current: AnimatedElementPropsSettings<Element>
+  }
+}
+
+type AnimatedElement = {
   cancel: () => void
 }
 
@@ -28,21 +33,23 @@ const animatedPresets = {
   draw
 } as const
 
-const createAnimatedElement = <E extends HTMLElement | SVGElement = HTMLElement>(
-  propsInitial: AnimatedElementProps<E>
-): AnimatedElement<E> => {
-  const { element, animator } = propsInitial
+const createAnimatedElement = <Element extends HTMLElement | SVGElement = HTMLElement>(
+  props: AnimatedElementProps<Element>
+): AnimatedElement => {
+  const { element, animator } = props
 
-  const props: AnimatedElementProps<E> = {
+  const getSettings = (): AnimatedElementPropsSettings<Element> => ({
     hideOnExited: true,
     renderInitials: true,
-    ...filterProps(propsInitial)
-  }
+    ...filterProps(props.settingsRef.current)
+  })
 
   const animations = new Set<AnimatedTransitionFunctionReturn>()
 
-  if (props.renderInitials) {
-    const { animated } = props
+  const settingsInitial = getSettings()
+
+  if (settingsInitial.renderInitials) {
+    const { animated } = settingsInitial
     const animatedListReceived = Array.isArray(animated) ? animated : [animated]
     const animatedList = animatedListReceived
       .map((item) => (typeof item === 'string' || Array.isArray(item) ? undefined : item))
@@ -64,7 +71,7 @@ const createAnimatedElement = <E extends HTMLElement | SVGElement = HTMLElement>
   }
 
   const unsubscribe = animator.subscribe((node) => {
-    const { animated, hideOnExited, hideOnEntered, onTransition } = props
+    const { animated, hideOnExited, hideOnEntered, onTransition } = getSettings()
 
     element.style.visibility =
       (hideOnExited && node.state === 'exited') || (hideOnEntered && node.state === 'entered')
@@ -88,7 +95,7 @@ const createAnimatedElement = <E extends HTMLElement | SVGElement = HTMLElement>
         if (typeof item === 'string') {
           const preset = animatedPresets[item]
           if (!preset) {
-            throw new Error(`Arwes createAnimatedElement() unexpected animated preset "${item}".`)
+            throw new Error(`ARWES createAnimatedElement() unexpected animated preset "${item}".`)
           }
           return preset()
         }
@@ -167,18 +174,14 @@ const createAnimatedElement = <E extends HTMLElement | SVGElement = HTMLElement>
     onTransition?.(element, node)
   })
 
-  const update = (newProps: Omit<AnimatedElementProps<E>, 'element' | 'animator'>): void => {
-    Object.assign(props, newProps)
-  }
-
   const cancel = (): void => {
     unsubscribe()
     animations.forEach((animation) => animation.cancel())
     animations.clear()
   }
 
-  return Object.freeze({ update, cancel })
+  return Object.freeze({ cancel })
 }
 
-export type { AnimatedElementProps, AnimatedElement }
+export type { AnimatedElementPropsSettings, AnimatedElementProps, AnimatedElement }
 export { createAnimatedElement }

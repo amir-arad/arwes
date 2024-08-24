@@ -1,4 +1,4 @@
-import { createAnimatedXElement } from '@arwes/animated'
+import { type AnimatedXElementPropsSettings, createAnimatedXElement } from '@arwes/animated'
 
 const root = document.querySelector('#root')!
 root.innerHTML = `
@@ -18,22 +18,26 @@ type States = 'a' | 'b' | 'c'
 let state: States = 'a'
 let isCancelled = false
 
-const animatedXElement = createAnimatedXElement<States>({
-  state,
-  element,
-  animated: {
-    transitions: {
-      a: { x: 0, background: '#0ff' },
-      b: { x: 50, background: '#ff0' },
-      c: { x: 100, background: '#f0f' }
+const settingsRef: { current: AnimatedXElementPropsSettings<States> } = {
+  current: {
+    state,
+    animated: {
+      transitions: {
+        a: { x: 0, background: '#0ff' },
+        b: { x: 50, background: '#ff0' },
+        c: { x: 100, background: '#f0f' }
+      }
     }
   }
-})
+}
+
+const animatedXElement = createAnimatedXElement<States>({ element, settingsRef })
 
 const update = (): void => {
   if (isCancelled) {
     return
   }
+
   switch (state) {
     case 'a':
       state = 'b'
@@ -45,7 +49,9 @@ const update = (): void => {
       state = 'a'
       break
   }
-  animatedXElement.update({ state })
+
+  settingsRef.current.state = state
+  animatedXElement.refresh()
   setTimeout(update, 1_000)
 }
 

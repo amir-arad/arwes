@@ -25,9 +25,9 @@ const GridLines = memo((props: GridLinesProps): ReactElement => {
 
   const animator = useAnimator()
   const elementRef = useRef<HTMLCanvasElement>(null)
-  const propsRef = useRef(props)
+  const settingsRef = useRef(props)
 
-  propsRef.current = props
+  settingsRef.current = props
 
   useEffect(() => {
     const canvas = elementRef.current
@@ -39,14 +39,12 @@ const GridLines = memo((props: GridLinesProps): ReactElement => {
     const background = createBackgroundGridLines({
       canvas,
       animator: animator?.node,
-      settings: propsRef
+      settingsRef
     })
 
     background.start()
 
-    return () => {
-      background.stop()
-    }
+    return () => background.stop()
   }, [animator])
 
   return (

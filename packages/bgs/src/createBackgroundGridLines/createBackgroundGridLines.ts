@@ -13,9 +13,9 @@ interface CreateBackgroundGridLinesSettings {
 }
 
 interface CreateBackgroundGridLinesProps {
-  settings: { current: CreateBackgroundGridLinesSettings }
   canvas: HTMLCanvasElement
   animator?: AnimatorNode
+  settingsRef: { current: CreateBackgroundGridLinesSettings }
 }
 
 interface CreateBackgroundGridLines {
@@ -47,7 +47,7 @@ const createBackgroundGridLines = (
 
   const getSettings = (): Required<CreateBackgroundGridLinesSettings> => ({
     ...defaultProps,
-    ...props.settings.current
+    ...props.settingsRef.current
   })
 
   const resize = (): void => {

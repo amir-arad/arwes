@@ -1,7 +1,7 @@
 import React, { type ReactElement, useState, type CSSProperties, useEffect, ReactNode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Animator } from '@arwes/react-animator'
-import { Animated, transition, fade } from '@arwes/react-animated'
+import { Animated } from '@arwes/react-animated'
 
 // LINK
 
@@ -55,7 +55,7 @@ const Header = (props: HeaderProps): ReactElement => {
           padding: '1rem',
           background: '#055'
         }}
-        animated={[fade(), transition('y', 20, 0)]}
+        animated={['fade', ['y', 20, 0]]}
       >
         <Link path="a" active={path === 'a'} bg="#550" bgActive="#aa0" onLink={onLink}>
           A
@@ -81,7 +81,7 @@ const Footer = (): ReactElement => (
     <Animated
       as="footer"
       style={{ gridArea: 'footer', background: '#055' }}
-      animated={[fade(), transition('y', -20, 0)]}
+      animated={['fade', ['y', -20, 0]]}
     />
   </Animator>
 )
@@ -93,7 +93,7 @@ const PanelLeft = (): ReactElement => (
     <Animated
       as="aside"
       style={{ gridArea: 'panelLeft', background: '#055' }}
-      animated={[fade(), transition('x', 20, 0)]}
+      animated={['fade', ['x', 20, 0]]}
     />
   </Animator>
 )
@@ -105,7 +105,7 @@ const PanelRight = (): ReactElement => (
     <Animated
       as="aside"
       style={{ gridArea: 'panelRight', background: '#055' }}
-      animated={[fade(), transition('x', -20, 0)]}
+      animated={['fade', ['x', -20, 0]]}
     />
   </Animator>
 )
@@ -121,7 +121,7 @@ const Item = (props: ItemProps): ReactElement => {
   const { style, bg } = props
   return (
     <Animator>
-      <Animated style={{ ...style, background: bg }} animated={fade()} />
+      <Animated style={{ ...style, background: bg }} animated={['fade']} />
     </Animator>
   )
 }

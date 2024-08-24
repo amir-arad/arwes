@@ -16,9 +16,9 @@ interface CreateBackgroundMovingLinesSettings {
 }
 
 interface CreateBackgroundMovingLinesProps {
-  settings: { current: CreateBackgroundMovingLinesSettings }
   canvas: HTMLCanvasElement
   animator?: AnimatorNode
+  settingsRef: { current: CreateBackgroundMovingLinesSettings }
 }
 
 interface CreateBackgroundMovingLines {
@@ -88,7 +88,7 @@ const createBackgroundMovingLines = (
 
   const getSettings = (): Required<CreateBackgroundMovingLinesSettings> => ({
     ...defaultProps,
-    ...props.settings.current
+    ...props.settingsRef.current
   })
 
   const resize = (): void => {

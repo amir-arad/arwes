@@ -18,7 +18,7 @@ const animator = system.register(undefined, {
 const bg = createBackgroundMovingLines({
   canvas,
   animator,
-  settings: {
+  settingsRef: {
     current: {
       lineColor: 'hsla(180, 100%, 75%, 0.25)',
       distance: 20,

@@ -24,7 +24,7 @@ const animator = system.register(undefined, {
 const bg = createBackgroundPuffs({
   canvas,
   animator,
-  settings: {
+  settingsRef: {
     current: {
       color: 'hsla(60, 100%, 75%, 0.5)',
       quantity: 100,

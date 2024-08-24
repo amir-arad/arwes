@@ -1,26 +1,26 @@
 import { type MutableRefObject, useRef, useEffect } from 'react'
 import {
   type AnimatedXProp,
-  type AnimatedXElementProps,
-  type AnimatedXElement,
+  type AnimatedXElementPropsSettings,
   createAnimatedXElement
 } from '@arwes/animated'
 
 const useAnimatedX = <
   States extends string,
-  Element extends HTMLElement | SVGElement = HTMLElement
+  Element extends HTMLElement | SVGElement = HTMLDivElement
 >(
-  state: States | undefined | null,
+  state: undefined | null | States,
   elementRef: MutableRefObject<Element | null>,
-  animated: AnimatedXProp<States> | undefined,
-  props?: Omit<AnimatedXElementProps<States, Element>, 'element' | 'state' | 'animated'>
+  animated: undefined | AnimatedXProp<States>,
+  settings?: Omit<AnimatedXElementPropsSettings<States>, 'state' | 'animated'>
 ): void => {
-  const animatedRef = useRef(animated)
-  const propsRef = useRef(props)
-  const animatedXElementRef = useRef<undefined | AnimatedXElement<States, Element>>(undefined)
+  const settingsRef = useRef({} as unknown as AnimatedXElementPropsSettings<States>)
 
-  animatedRef.current = animated
-  propsRef.current = props
+  settingsRef.current = {
+    ...settings,
+    state: state!,
+    animated
+  }
 
   useEffect(() => {
     const element = elementRef.current
@@ -29,29 +29,10 @@ const useAnimatedX = <
       return
     }
 
-    const animatedXElement = createAnimatedXElement({
-      ...propsRef.current,
-      state,
-      element,
-      animated: animatedRef.current
-    })
-
-    animatedXElementRef.current = animatedXElement
+    const animatedXElement = createAnimatedXElement({ element, settingsRef })
 
     return () => animatedXElement.cancel()
-  }, [])
-
-  useEffect(() => {
-    if (state === undefined || state === null) {
-      return
-    }
-
-    const animatedXElement = animatedXElementRef.current
-
-    if (animatedXElement) {
-      animatedXElement.update({ ...props, state, animated })
-    }
-  }, [state, animated, props])
+  }, [state])
 }
 
 export { useAnimatedX }

@@ -18,7 +18,7 @@ const animator = system.register(undefined, {
 const bg = createBackgroundGridLines({
   canvas,
   animator,
-  settings: {
+  settingsRef: {
     current: {
       lineColor: 'hsla(180, 100%, 75%, 0.2)',
       lineWidth: 2,

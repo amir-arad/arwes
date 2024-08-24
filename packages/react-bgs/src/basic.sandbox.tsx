@@ -1,7 +1,7 @@
 import React, { type ReactElement, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Animator } from '@arwes/react-animator'
-import { Animated, fade } from '@arwes/react-animated'
+import { Animated } from '@arwes/react-animated'
 import { Dots } from '@arwes/react-bgs'
 
 const Sandbox = (): ReactElement => {
@@ -24,7 +24,7 @@ const Sandbox = (): ReactElement => {
             by using z-index property of any of them. */}
         <Animated
           style={{ position: 'relative', fontSize: '2rem', color: 'cyan' }}
-          animated={fade()}
+          animated={['fade']}
         >
           Futuristic Sci-Fi UI Web Framework
         </Animated>

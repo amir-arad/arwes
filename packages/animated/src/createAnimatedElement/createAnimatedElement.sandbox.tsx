@@ -28,7 +28,11 @@ const animator = system.register(undefined, {
 const animatedElement = createAnimatedElement({
   element,
   animator,
-  animated: ['fade', ['x', 0, 100], ['background', '#0ff', '#ff0']]
+  settingsRef: {
+    current: {
+      animated: ['fade', ['x', 0, 100], ['background', '#0ff', '#ff0']]
+    }
+  }
 })
 
 const update = (): void => {
