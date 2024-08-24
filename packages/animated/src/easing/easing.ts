@@ -1,4 +1,4 @@
-type EasingFn = (x: number) => number
+import type { EasingFn, EasingName } from '../types.js'
 
 const pow = Math.pow
 const sqrt = Math.sqrt
@@ -25,7 +25,7 @@ const bounceOut = (x: number): number => {
   return n1 * (x -= 2.625 / d1) * x + 0.984375
 }
 
-const easing = {
+const easing: Record<EasingName, EasingFn> = {
   linear: (x: number): number => x,
   inQuad: (x: number): number => {
     return x * x
@@ -131,8 +131,4 @@ const easing = {
   }
 }
 
-type EasingName = keyof typeof easing
-type Easing = EasingFn | EasingName
-
-export type { Easing, EasingName, EasingFn }
 export { easing }

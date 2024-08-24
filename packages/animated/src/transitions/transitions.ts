@@ -1,7 +1,8 @@
-import { animate } from 'motion'
 import type { AnimationOptionsWithOverrides } from '@motionone/dom'
-import type { AnimatedSettings, AnimatedTransition } from '../types.js'
-import { type EasingName, easing } from '@arwes/animated'
+import { animate } from 'motion'
+
+import type { EasingName, AnimatedSettings, AnimatedTransition } from '../types.js'
+import { easing } from '../easing/index.js'
 
 const transition = (
   prop: string,

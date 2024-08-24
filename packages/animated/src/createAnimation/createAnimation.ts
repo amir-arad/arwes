@@ -1,4 +1,5 @@
-import { type Easing, easing } from '../easing/index.js'
+import type { Easing } from '../types.js'
+import { easing } from '../easing/index.js'
 
 interface AnimationProps {
   /**
@@ -107,7 +108,7 @@ const createAnimation = (props: AnimationProps): Animation => {
 
   currentAnimationFrame = window.requestAnimationFrame(nextAnimation)
 
-  return { then, isPending, cancel, complete }
+  return Object.freeze({ then, isPending, cancel, complete })
 }
 
 export type { AnimationProps, Animation }

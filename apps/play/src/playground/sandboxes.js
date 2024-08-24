@@ -82,6 +82,14 @@ export const sandboxes = [
                 code: require('!raw-loader?esModule=false!@repository/packages/animated/src/createAnimation/createAnimation.easing.sandbox.tsx')
               }
             ]
+          },
+          {
+            name: 'createAnimatedElement',
+            code: require('!raw-loader?esModule=false!@repository/packages/animated/src/createAnimatedElement/createAnimatedElement.sandbox.tsx')
+          },
+          {
+            name: 'createAnimatedXElement',
+            code: require('!raw-loader?esModule=false!@repository/packages/animated/src/createAnimatedXElement/createAnimatedXElement.sandbox.tsx')
           }
         ]
       }
@@ -350,6 +358,22 @@ export const sandboxes = [
                 code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.sandbox.tsx'),
                 children: [
                   {
+                    name: 'transition',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.transition.sandbox.tsx')
+                  },
+                  {
+                    name: 'fade',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.fade.sandbox.tsx')
+                  },
+                  {
+                    name: 'flicker',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.flicker.sandbox.tsx')
+                  },
+                  {
+                    name: 'draw',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.draw.sandbox.tsx')
+                  },
+                  {
                     name: 'functions',
                     code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.functions.sandbox.tsx')
                   },
@@ -388,27 +412,6 @@ export const sandboxes = [
                   {
                     name: 'hideOnStates',
                     code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/useAnimatedX/useAnimatedX.hideOnStates.sandbox.tsx')
-                  }
-                ]
-              },
-              {
-                name: 'transitions',
-                children: [
-                  {
-                    name: 'transition',
-                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/transitions/transitions.transition.sandbox.tsx')
-                  },
-                  {
-                    name: 'fade',
-                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/transitions/transitions.fade.sandbox.tsx')
-                  },
-                  {
-                    name: 'flicker',
-                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/transitions/transitions.flicker.sandbox.tsx')
-                  },
-                  {
-                    name: 'draw',
-                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/transitions/transitions.draw.sandbox.tsx')
                   }
                 ]
               }

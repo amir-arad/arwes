@@ -1,4 +1,4 @@
-import type { EasingFn } from '../easing/index.js'
+import type { EasingFn } from '../types.js'
 
 const easeAmong =
   (breakpoints: [number, ...number[]]): EasingFn =>

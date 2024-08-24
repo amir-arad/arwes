@@ -12,9 +12,12 @@ import {
 
 import type { NoInfer } from '@arwes/tools'
 import { mergeRefs } from '@arwes/react-tools'
-import { formatAnimatedCSSPropsShorthands } from '@arwes/animated'
+import {
+  type AnimatedSettings,
+  type AnimatedXProp,
+  formatAnimatedCSSPropsShorthands
+} from '@arwes/animated'
 
-import type { AnimatedSettings, AnimatedXProp } from '../types.js'
 import { useAnimatedX } from '../useAnimatedX/index.js'
 
 interface AnimatedXProps<S extends string, E extends HTMLElement | SVGElement = HTMLDivElement> {

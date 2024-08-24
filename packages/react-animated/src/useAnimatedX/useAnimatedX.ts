@@ -1,37 +1,26 @@
 import { type MutableRefObject, useRef, useEffect } from 'react'
-import { animate } from 'motion'
-import { filterProps } from '@arwes/tools'
-import { type EasingName, easing, formatAnimatedCSSPropsShorthands } from '@arwes/animated'
+import {
+  type AnimatedXProp,
+  type AnimatedXElementProps,
+  type AnimatedXElement,
+  createAnimatedXElement
+} from '@arwes/animated'
 
-import type {
-  AnimatedXProp,
-  AnimatedXSettings,
-  AnimatedXTransition,
-  AnimatedXTransitionFunctionReturn
-} from '../types.js'
-
-interface UseAnimatedXOptions<States extends string> {
-  hideOnStates?: States[] | undefined
-  renderInitials?: boolean | undefined
-}
-
-const defaultOptions: UseAnimatedXOptions<string> = {
-  hideOnStates: [],
-  renderInitials: true
-}
-
-const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement = HTMLElement>(
+const useAnimatedX = <
+  States extends string,
+  Element extends HTMLElement | SVGElement = HTMLElement
+>(
   state: States | undefined | null,
-  elementRef: MutableRefObject<E | null>,
-  animatedProp: AnimatedXProp<States> | undefined,
-  optionsProp?: UseAnimatedXOptions<States>
+  elementRef: MutableRefObject<Element | null>,
+  animated: AnimatedXProp<States> | undefined,
+  props?: Omit<AnimatedXElementProps<States, Element>, 'element' | 'state' | 'animated'>
 ): void => {
-  const animatedRef = useRef<AnimatedXProp<States>>(animatedProp)
-  const optionsRef = useRef<UseAnimatedXOptions<States> | undefined>(optionsProp)
-  const animationsRef = useRef<Set<AnimatedXTransitionFunctionReturn>>(new Set())
+  const animatedRef = useRef(animated)
+  const propsRef = useRef(props)
+  const animatedXElementRef = useRef<undefined | AnimatedXElement<States, Element>>(undefined)
 
-  animatedRef.current = animatedProp
-  optionsRef.current = optionsProp
+  animatedRef.current = animated
+  propsRef.current = props
 
   useEffect(() => {
     const element = elementRef.current
@@ -40,116 +29,29 @@ const useAnimatedX = <States extends string, E extends HTMLElement | SVGElement 
       return
     }
 
-    const optionsInitial = { ...defaultOptions, ...filterProps(optionsRef.current ?? ({} as any)) }
+    const animatedXElement = createAnimatedXElement({
+      ...propsRef.current,
+      state,
+      element,
+      animated: animatedRef.current
+    })
 
-    if (optionsInitial.renderInitials) {
-      const animated = animatedRef.current
-      const animatedListReceived = Array.isArray(animated) ? animated : [animated]
-      const animatedList = animatedListReceived.filter(Boolean) as Array<AnimatedXSettings<States>>
+    animatedXElementRef.current = animatedXElement
 
-      const initialAttributes: Record<string, string> = animatedList
-        .map((item) => item?.initialAttributes)
-        .reduce((total: object, item: object | undefined) => ({ ...total, ...item }), {})
-
-      Object.keys(initialAttributes).forEach((attribute) => {
-        element.setAttribute(attribute, initialAttributes[attribute])
-      })
-
-      const dynamicStyles = animatedList
-        .map((item) => formatAnimatedCSSPropsShorthands(item?.initialStyle))
-        .reduce((total, item) => ({ ...total, ...item }), {})
-
-      Object.assign(element.style, dynamicStyles)
-    }
+    return () => animatedXElement.cancel()
   }, [])
 
   useEffect(() => {
-    const element = elementRef.current
-
-    if (state === undefined || state === null || !element) {
+    if (state === undefined || state === null) {
       return
     }
 
-    const animated = animatedRef.current
-    const animatedListReceived = Array.isArray(animated) ? animated : [animated]
-    const animatedList = animatedListReceived.filter(Boolean) as Array<AnimatedXSettings<States>>
+    const animatedXElement = animatedXElementRef.current
 
-    const options = {
-      ...defaultOptions,
-      ...(filterProps(optionsRef.current ?? ({} as any)) as Required<UseAnimatedXOptions<States>>)
+    if (animatedXElement) {
+      animatedXElement.update({ ...props, state, animated })
     }
-
-    element.style.visibility = options.hideOnStates.includes(state) ? 'hidden' : ''
-
-    const $ = <T = HTMLElement | SVGElement>(query: string): T[] =>
-      Array.from(element.querySelectorAll(query)) as T[]
-
-    animatedList
-      // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
-      .map((settingsItem) => settingsItem.transitions?.[state] as AnimatedXTransition)
-      .filter(Boolean)
-      .forEach((transition) => {
-        if (typeof transition === 'function') {
-          const animation = transition({ element, $ })
-
-          if (animation) {
-            animationsRef.current.add(animation)
-
-            if (animation.then) {
-              void animation.then(() => {
-                animationsRef.current.delete(animation)
-              })
-            } else if (animation.finished) {
-              void animation.finished.then(() => {
-                animationsRef.current.delete(animation)
-              })
-            }
-          }
-        }
-        //
-        else {
-          const {
-            duration,
-            delay,
-            easing: ease,
-            repeat,
-            direction,
-            options,
-            ...definition
-          } = transition
-
-          // TODO: Apply final animation state to element if duration is 0.
-          // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
-          if (Number.isFinite(duration) && (duration as number) <= 0) {
-            throw new Error('ARWES useAnimated() animation duration must be greater than 0.')
-          }
-
-          try {
-            const animation = animate(element, definition, {
-              duration,
-              delay,
-              easing: typeof ease === 'string' ? easing[ease as EasingName] : ease,
-              repeat,
-              direction,
-              ...options
-            })
-
-            animationsRef.current.add(animation)
-
-            void animation.finished.then(() => {
-              animationsRef.current.delete(animation)
-            })
-          } catch (err) {
-            throw new Error(`ARWES useAnimatedX() animation error:\n${String(err)}`)
-          }
-        }
-      })
-
-    return () => {
-      animationsRef.current.forEach((animation) => animation.cancel())
-      animationsRef.current.clear()
-    }
-  }, [state])
+  }, [state, animated, props])
 }
 
 export { useAnimatedX }

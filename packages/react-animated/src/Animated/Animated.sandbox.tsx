@@ -46,7 +46,7 @@ const Sandbox = (): ReactElement => {
   return (
     <Animator active={active} manager="stagger" combine>
       {Array(10)
-        .fill(0)
+        .fill(null)
         .map((_, i) => (
           <Item key={i} />
         ))}
