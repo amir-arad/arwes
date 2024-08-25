@@ -30,6 +30,10 @@ const BleepsProvider = <BleepsNames extends string = string>(
 
   useEffect(() => {
     return () => {
+      // In case any reference to a bleep was already used somewhere else,
+      // mute the sound to prevent playback when it is supposed to be removed.
+      bleepsManager?.update({ common: { muted: true } })
+
       bleepsManager?.unload()
     }
   }, [])

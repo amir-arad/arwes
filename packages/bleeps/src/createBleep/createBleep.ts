@@ -18,12 +18,13 @@ const createBleep = (props: BleepProps): Bleep | null => {
     sources,
     preload = true,
     loop = false,
-    volume = 1.0,
     fetchHeaders,
     masterGain,
     maxPlaybackDelay = 0.25
   } = props
 
+  let volume = props.volume ?? 1
+  let muted = props.muted ?? false
   let isBufferLoading = false
   let isBufferError = false
   let isBufferPlaying = false
@@ -37,10 +38,6 @@ const createBleep = (props: BleepProps): Bleep | null => {
   const context = props.context ?? new window.AudioContext()
   const gain = context.createGain()
   const callersAccount = new Set<string>()
-
-  const getDuration = (): number => duration
-  const getIsPlaying = (): boolean => isBufferPlaying
-  const getIsLoaded = (): boolean => !!buffer
 
   function fetchAudioBuffer(): void {
     if (buffer || isBufferLoading || isBufferError) {
@@ -230,23 +227,41 @@ const createBleep = (props: BleepProps): Bleep | null => {
 
   function update(newProps: BleepPropsUpdatable): void {
     if (newProps.volume !== undefined) {
-      const bleepVolume = Math.max(0, Math.min(1, newProps.volume))
-      gain.gain.setValueAtTime(bleepVolume, context.currentTime)
+      volume = Math.max(0, Math.min(1, newProps.volume))
+    }
+
+    if (newProps.muted !== undefined) {
+      muted = !!newProps.muted
+    }
+
+    const newVolume = muted ? 0 : volume
+    if (newVolume !== gain.gain.value) {
+      gain.gain.setValueAtTime(newVolume, context.currentTime)
     }
   }
 
   const bleep = {} as unknown as Bleep
   const bleepAPI: { [P in keyof Bleep]: PropertyDescriptor } = {
     duration: {
-      get: getDuration,
+      get: () => duration,
+      enumerable: true
+    },
+    volume: {
+      get: () => volume,
+      set: (volume: number) => update({ volume }),
+      enumerable: true
+    },
+    muted: {
+      get: () => muted,
+      set: (muted: boolean) => update({ muted }),
       enumerable: true
     },
     isPlaying: {
-      get: getIsPlaying,
+      get: () => isBufferPlaying,
       enumerable: true
     },
     isLoaded: {
-      get: getIsLoaded,
+      get: () => !!buffer,
       enumerable: true
     },
     play: {

@@ -1,7 +1,7 @@
 import React, { type ReactElement, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Animator } from '@arwes/react-animator'
-import { Animated, transition } from '@arwes/react-animated'
+import { Animated } from '@arwes/react-animated'
 import type { BleepsManagerProps } from '@arwes/bleeps'
 import { BleepsProvider } from '@arwes/react-bleeps'
 import { BleepsOnAnimator } from '@arwes/react-core'
@@ -36,7 +36,11 @@ const Sandbox = (): ReactElement => {
       <Animator active={active}>
         <Animated
           style={{ margin: 10, width: 40, height: 40 }}
-          animated={[transition('x', 0, 100), transition('background', '#0ff', '#ff0')]}
+          animated={[
+            ['x', 0, 100],
+            ['background', '#0ff', '#ff0']
+          ]}
+          hideOnExited={false}
         />
         <BleepsOnAnimator<BleepsNames>
           transitions={{

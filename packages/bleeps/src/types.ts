@@ -2,82 +2,82 @@
 
 export type BleepCategory = 'background' | 'transition' | 'interaction' | 'notification'
 
-export interface BleepGeneralProps {
-  readonly preload?: boolean
-  readonly volume?: number
-  readonly fetchHeaders?: Headers
-  readonly maxPlaybackDelay?: number
-  readonly category?: BleepCategory
-  readonly disabled?: boolean
+export type BleepGeneralProps = {
+  preload?: boolean
+  volume?: number
+  muted?: boolean
+  fetchHeaders?: Headers
+  maxPlaybackDelay?: number
+  category?: BleepCategory
+  disabled?: boolean
 }
 
-export interface BleepProps extends Omit<BleepGeneralProps, 'category' | 'disabled'> {
-  readonly sources: Array<Readonly<{ src: string; type: string }>>
-  readonly loop?: boolean
-  readonly context?: AudioContext
-  readonly masterGain?: GainNode
+export type BleepProps = BleepGeneralProps & {
+  sources: Array<Readonly<{ src: string; type: string }>>
+  loop?: boolean
+  context?: AudioContext
+  masterGain?: GainNode
 }
 
-// TODO: Add support to allow updates on other bleep properties.
-export interface BleepPropsUpdatable {
-  readonly volume?: number
+export type BleepPropsUpdatable = {
+  volume?: number
+  muted?: boolean
 }
 
-export interface Bleep {
+export type Bleep = {
   /**
    * Get audio duration in seconds.
    */
-  readonly duration: number
-  readonly isLoaded: boolean
-  readonly isPlaying: boolean
-  readonly play: (callerID?: string) => void
-  readonly stop: (callerID?: string) => void
-  readonly load: () => void
-  readonly unload: () => void
-  readonly update: (props: BleepPropsUpdatable) => void
+  duration: number
+  volume: number
+  muted: boolean
+  isLoaded: boolean
+  isPlaying: boolean
+  play: (callerID?: string) => void
+  stop: (callerID?: string) => void
+  load: () => void
+  unload: () => void
+  update: (props: BleepPropsUpdatable) => void
 }
 
 // BLEEPS MANAGER
 
-export interface BleepMasterProps {
-  readonly volume?: number
+export type BleepMasterProps = {
+  volume?: number
 }
 
-export interface BleepsManagerProps<Names extends string = string> {
-  readonly master?: BleepMasterProps
-  readonly common?: BleepGeneralProps
-  readonly categories?: {
-    readonly [P in BleepCategory]?: BleepGeneralProps
+export type BleepsManagerProps<Names extends string = string> = {
+  master?: BleepMasterProps
+  common?: BleepGeneralProps
+  categories?: {
+    [P in BleepCategory]?: BleepGeneralProps
   }
-  readonly bleeps: Record<
-    Names,
-    Omit<BleepProps, 'context' | 'masterGain'> & { category?: BleepCategory }
-  >
+  bleeps: Record<Names, Omit<BleepProps, 'context' | 'masterGain'> & { category?: BleepCategory }>
 }
 
-export interface BleepsManagerPropsMasterUpdatable {
-  readonly volume?: number
+export type BleepsManagerPropsMasterUpdatable = {
+  volume?: number
 }
 
-export interface BleepsManagerPropsGeneralUpdatable extends BleepPropsUpdatable {
-  readonly disabled?: boolean
+export type BleepsManagerPropsGeneralUpdatable = BleepPropsUpdatable & {
+  disabled?: boolean
 }
 
-export interface BleepsManagerPropsBleepUpdatable extends BleepPropsUpdatable {
-  readonly disabled?: boolean
+export type BleepsManagerPropsBleepUpdatable = BleepPropsUpdatable & {
+  disabled?: boolean
 }
 
-export interface BleepsManagerPropsUpdatable<Names extends string = string> {
-  readonly master?: BleepsManagerPropsMasterUpdatable
-  readonly common?: BleepsManagerPropsGeneralUpdatable
-  readonly categories?: {
-    readonly [P in BleepCategory]?: BleepsManagerPropsGeneralUpdatable
+export type BleepsManagerPropsUpdatable<Names extends string = string> = {
+  master?: BleepsManagerPropsMasterUpdatable
+  common?: BleepsManagerPropsGeneralUpdatable
+  categories?: {
+    [P in BleepCategory]?: BleepsManagerPropsGeneralUpdatable
   }
-  readonly bleeps?: Record<Names, BleepsManagerPropsBleepUpdatable>
+  bleeps?: Record<Names, BleepsManagerPropsBleepUpdatable>
 }
 
-export interface BleepsManager<Names extends string = string> {
-  readonly bleeps: Record<Names, Bleep | null>
-  readonly unload: () => void
-  readonly update: (props: BleepsManagerPropsUpdatable<Names>) => void
+export type BleepsManager<Names extends string = string> = {
+  bleeps: Record<Names, Bleep | null>
+  unload: () => void
+  update: (props: BleepsManagerPropsUpdatable<Names>) => void
 }
