@@ -14,7 +14,7 @@ export type BleepNames =
 
 export const bleepsSettings: BleepsProviderSettings<BleepNames> = {
   master: { volume: 0.5 },
-  common: { preload: false },
+  common: { muteOnWindowBlur: true },
   categories: {
     background: { volume: 0.25 },
     transition: { volume: 0.5 },

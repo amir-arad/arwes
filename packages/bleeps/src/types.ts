@@ -1,6 +1,6 @@
 // BLEEP
 
-export type BleepCategory = 'background' | 'transition' | 'interaction' | 'notification'
+export type BleepCategory = 'background' | 'transition' | 'interaction' | 'notification' | 'voice'
 
 export type BleepGeneralProps = {
   preload?: boolean

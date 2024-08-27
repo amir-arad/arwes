@@ -42,12 +42,15 @@ export default (): JSX.Element => (
       <li>
         <b>Notification</b>: Sounds on events with high volume.
       </li>
+      <li>
+        <b>Voice</b>: Communication sounds with highest volume.
+      </li>
     </AR.UL>
 
     <AR.P>
       For example, global app volume can be at 50% of current operative system volume, then relative
-      by category, notifications can be at 100% relative volume, interactions at 75%, transitions at
-      50%, and backgrounds at 25%.
+      by category, notifications/voice can be at 100% relative volume, interactions at 75%,
+      transitions at 50%, and backgrounds at 25%.
     </AR.P>
 
     <AR.P>
