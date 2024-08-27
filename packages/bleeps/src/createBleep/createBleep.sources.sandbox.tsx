@@ -17,7 +17,8 @@ const bleep = createBleep({
     { src: '/assets/sounds/type.webm', type: 'audio/webm' },
     { src: '/assets/sounds/type.mp3', type: 'audio/mpeg' }
   ],
-  loop: true
+  loop: true,
+  muteOnWindowBlur: true
 })
 
 playAllElement.addEventListener('click', () => {

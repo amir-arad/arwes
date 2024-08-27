@@ -17,14 +17,16 @@ const createBleep = (props: BleepProps): Bleep | null => {
   const {
     sources,
     preload = true,
-    loop = false,
+    loop,
     fetchHeaders,
     masterGain,
-    maxPlaybackDelay = 0.25
+    maxPlaybackDelay = 0.25,
+    muteOnWindowBlur
   } = props
 
   let volume = props.volume ?? 1
-  let muted = props.muted ?? false
+  let muted = !!props.muted
+  let isExternallyMuted = false
   let isBufferLoading = false
   let isBufferError = false
   let isBufferPlaying = false
@@ -109,6 +111,20 @@ const createBleep = (props: BleepProps): Bleep | null => {
 
     if (context.state === 'suspended') {
       void context.resume()
+    }
+  }
+
+  function onUserWindowFocus(): void {
+    if (muteOnWindowBlur) {
+      isExternallyMuted = true
+      update({})
+    }
+  }
+
+  function onUserWindowBlur(): void {
+    if (muteOnWindowBlur) {
+      isExternallyMuted = false
+      update({})
     }
   }
 
@@ -223,6 +239,8 @@ const createBleep = (props: BleepProps): Bleep | null => {
     isBufferPlaying = false
 
     window.removeEventListener('click', onUserAllowAudio)
+    window.removeEventListener('focus', onUserWindowFocus)
+    window.removeEventListener('blur', onUserWindowBlur)
   }
 
   function update(newProps: BleepPropsUpdatable): void {
@@ -234,7 +252,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
       muted = !!newProps.muted
     }
 
-    const newVolume = muted ? 0 : volume
+    const newVolume = muted || isExternallyMuted ? 0 : volume
     if (newVolume !== gain.gain.value) {
       gain.gain.setValueAtTime(newVolume, context.currentTime)
     }
@@ -301,6 +319,11 @@ const createBleep = (props: BleepProps): Bleep | null => {
 
   if (preload) {
     fetchAudioBuffer()
+  }
+
+  if (muteOnWindowBlur) {
+    window.addEventListener('focus', onUserWindowFocus)
+    window.addEventListener('blur', onUserWindowBlur)
   }
 
   return bleep

@@ -8,6 +8,7 @@ export type BleepGeneralProps = {
   muted?: boolean
   fetchHeaders?: Headers
   maxPlaybackDelay?: number
+  muteOnWindowBlur?: boolean
   category?: BleepCategory
   disabled?: boolean
 }
