@@ -1,5 +1,5 @@
+import type { AnimationControls } from 'motion'
 import { type RefObject, useEffect } from 'react'
-import { type Animation } from '@arwes/animated'
 import { animateFrameSVGAssembler } from '@arwes/effects'
 import { useAnimator } from '@arwes/react-animator'
 
@@ -13,7 +13,7 @@ const useFrameSVGAssembler = (svgRef: RefObject<SVGElement | HTMLElement>): void
       return
     }
 
-    let animation: Animation
+    let animation: AnimationControls
 
     const unsubscribe = animator.node.subscribe((node) => {
       switch (node.state) {

@@ -1,4 +1,5 @@
-import { type Animation, createAnimation, easing, easeAmong } from '@arwes/animated'
+import { type AnimationControls, type TimelineSegment, timeline } from 'motion'
+import { easing } from '@arwes/animated'
 
 type AnimateFrameSVGAssemblerProps = {
   element: HTMLElement | SVGElement
@@ -6,7 +7,7 @@ type AnimateFrameSVGAssemblerProps = {
   isEntering?: boolean
 }
 
-const animateFrameSVGAssembler = (props: AnimateFrameSVGAssemblerProps): Animation => {
+const animateFrameSVGAssembler = (props: AnimateFrameSVGAssemblerProps): AnimationControls => {
   const { element, duration, isEntering = true } = props
 
   const bgs = Array.from(element.querySelectorAll<SVGPathElement>('[data-name=bg]'))
@@ -21,38 +22,34 @@ const animateFrameSVGAssembler = (props: AnimateFrameSVGAssemblerProps): Animati
     line.dataset.length = String(length)
   }
 
-  const ease = isEntering ? easing.outSine : easing.inSine
-  const easeFade = easeAmong(isEntering ? [0, 1] : [1, 0])
-  const easeFlicker = easeAmong(isEntering ? [0, 1, 0.5, 1] : [1, 0, 0.5, 0])
-  const easeOffset = easeAmong(isEntering ? [1, 0] : [0, 1])
+  const lineAnimations: TimelineSegment[] = lines.map((line) => {
+    const length = Number(line.dataset.length)
+    return [line, { strokeDashoffset: [length, 0] }, { at: 0, duration, easing: easing.outSine }]
+  })
 
-  const animation = createAnimation({
-    duration,
-    onUpdate(progressGlobal) {
-      const progress = ease(progressGlobal)
+  const animation = timeline(
+    [
+      [bgs, { opacity: [0, 1] }, { at: 0, duration: duration / 2, easing: easing.outSine }],
+      [
+        decos,
+        { opacity: [0, 1, 0.5, 1] },
+        { at: duration / 2, duration: duration / 2, easing: easing.outSine }
+      ],
+      ...lineAnimations
+    ],
+    {
+      direction: isEntering ? 'normal' : 'reverse'
+    }
+  )
 
-      for (const bg of bgs) {
-        bg.style.opacity = String(easeFade(progress))
-      }
+  void animation.finished.then(() => {
+    for (const element of elements) {
+      element.style.opacity = isEntering ? '1' : '0'
+    }
 
-      for (const deco of decos) {
-        deco.style.opacity = String(easeFlicker(progress))
-      }
-
-      for (const line of lines) {
-        const length = Number(line.dataset.length)
-        line.style.strokeDashoffset = String(easeOffset(progress) * length)
-      }
-    },
-    onFinish() {
-      for (const element of elements) {
-        element.style.opacity = isEntering ? '1' : '0'
-      }
-
-      for (const line of lines) {
-        line.style.strokeDasharray = ''
-        line.style.strokeDashoffset = ''
-      }
+    for (const line of lines) {
+      line.style.strokeDasharray = ''
+      line.style.strokeDashoffset = ''
     }
   })
 
