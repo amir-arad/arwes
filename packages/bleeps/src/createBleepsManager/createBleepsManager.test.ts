@@ -24,18 +24,48 @@ test('Should create bleeps manager structure', () => {
   const bleepsManager = createBleepsManager({
     bleeps: {
       click: {
-        sources: [{ src: 'audio.mp3', type: 'audio/mpeg' }],
+        sources: [{ src: 'click.mp3', type: 'audio/mpeg' }],
         preload: false
+      },
+      type: {
+        sources: [{ src: 'type.mp3', type: 'audio/mpeg' }],
+        loop: true
       }
     }
   })
   expect(bleepsManager).toMatchObject({
-    bleeps: {
-      click: expect.any(Object)
-    },
+    bleeps: expect.any(Object),
     unload: expect.any(Function),
     update: expect.any(Function)
   })
+})
+
+test('Should console error if unknown bleep is accessed', () => {
+  const bleepsManager = createBleepsManager({
+    bleeps: {
+      click: {
+        sources: [{ src: 'click.mp3', type: 'audio/mpeg' }],
+        preload: false
+      },
+      type: {
+        sources: [{ src: 'type.mp3', type: 'audio/mpeg' }],
+        loop: true
+      }
+    }
+  })
+
+  const consoleError = vi.spyOn(console, 'error')
+
+  void bleepsManager.bleeps.click
+  void bleepsManager.bleeps.type
+  expect(consoleError).not.toHaveBeenCalled()
+
+  void (bleepsManager.bleeps as any).xyz
+  expect(consoleError).toHaveBeenCalledWith(
+    'ARWES bleeps manager bleep "xyz" was not found and can not be played.'
+  )
+
+  consoleError.mockRestore()
 })
 
 // TODO:

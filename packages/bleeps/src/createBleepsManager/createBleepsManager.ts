@@ -25,8 +25,8 @@ const createBleepsManager = <Names extends string>(
   const context = isBleepsAvailable ? new window.AudioContext() : (null as unknown as AudioContext)
   const masterGain = isBleepsAvailable ? context.createGain() : (null as unknown as GainNode)
 
-  const bleeps = {} as unknown as Record<Names, Bleep | null>
-  const bleepNames = Object.keys(props.bleeps) as Names[]
+  const bleepNames = new Set(Object.keys(props.bleeps) as Names[])
+  const bleepsInternal = {} as unknown as Record<Names, Bleep | null>
 
   const syncVolume = (): void => {
     const globalVolume = Math.max(0, Math.min(1, props.master?.volume ?? 1))
@@ -48,7 +48,7 @@ const createBleepsManager = <Names extends string>(
     }
 
     bleepNames.forEach((bleepName) => {
-      bleeps[bleepName]?.unload()
+      bleepsInternal[bleepName]?.unload()
     })
   }
 
@@ -74,6 +74,9 @@ const createBleepsManager = <Names extends string>(
 
     const newBleepsProps = newProps.bleeps
     if (newBleepsProps) {
+      // In case new bleeps are added in the update.
+      Object.keys(newBleepsProps).forEach((key) => bleepNames.add(key as Names))
+
       bleepNames.forEach((bleepName) => {
         props.bleeps[bleepName] = {
           ...props.bleeps[bleepName],
@@ -88,7 +91,7 @@ const createBleepsManager = <Names extends string>(
       const bleepProps = getBleepProps(bleepName)
 
       if (bleepProps.disabled) {
-        const bleep = bleeps[bleepName]
+        const bleep = bleepsInternal[bleepName]
         if (bleep) {
           // In case the reference to the bleep was already used somewhere else,
           // mute the sound to prevent playback when it is supposed to be disabled.
@@ -96,13 +99,13 @@ const createBleepsManager = <Names extends string>(
 
           bleep.unload()
         }
-        bleeps[bleepName] = null
+        bleepsInternal[bleepName] = null
       } else {
-        const bleep = bleeps[bleepName]
+        const bleep = bleepsInternal[bleepName]
         if (bleep) {
           bleep.update(bleepProps)
         } else {
-          bleeps[bleepName] = createBleep(bleepProps)
+          bleepsInternal[bleepName] = createBleep(bleepProps)
         }
       }
     })
@@ -124,6 +127,19 @@ const createBleepsManager = <Names extends string>(
     syncVolume()
     updateBleeps()
   }
+
+  const bleeps = new Proxy(bleepsInternal, {
+    get(obj, key) {
+      const bleepName = key as Names
+      if (bleepNames.has(bleepName)) {
+        return obj[bleepName]
+      }
+      console.error(
+        `ARWES bleeps manager bleep "${bleepName}" was not found and can not be played.`
+      )
+      return null
+    }
+  }) as unknown as Record<Names, Bleep | null>
 
   return Object.freeze({ bleeps, unload, update })
 }

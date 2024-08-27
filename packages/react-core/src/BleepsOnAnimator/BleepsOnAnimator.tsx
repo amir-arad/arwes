@@ -28,7 +28,7 @@ const BleepsOnAnimator = <BleepsNames extends string = string>(
   // To prevent multiple executions of the useEffect to check for Animator node updates.
   transitionsRef.current = transitions
 
-  const id = externalId || internalId
+  const id = externalId ?? internalId
 
   useEffect(() => {
     if (!animator) {
@@ -44,12 +44,14 @@ const BleepsOnAnimator = <BleepsNames extends string = string>(
         currentBleep?.stop(id)
       }
 
-      const newBleep: Bleep | null = bleeps[bleepName]
+      if (bleepName) {
+        const newBleep = bleeps[bleepName]
 
-      if (newBleep) {
-        currentBleep?.stop(id)
-        currentBleep = newBleep
-        currentBleep.play(id)
+        if (newBleep) {
+          currentBleep?.stop(id)
+          currentBleep = newBleep
+          currentBleep.play(id)
+        }
       }
     })
 

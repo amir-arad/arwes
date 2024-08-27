@@ -45,9 +45,7 @@ afterEach(() => {
 test('Should render bleeps provider content', () => {
   const Button = (): ReactElement => {
     const bleeps = useBleeps()
-    expect(bleeps).toMatchObject({
-      click: expect.any(Object)
-    })
+    expect(bleeps.click).toBeTruthy()
     return <button>Click</button>
   }
 
