@@ -1,6 +1,6 @@
 {
   "name": "@arwes/react-frames",
-  "version": "1.0.0-next.24080101",
+  "version": "1.0.0-next.24082701",
   "publishConfig": {
     "access": "public"
   },
@@ -43,9 +43,9 @@
     "react": "18"
   },
   "dependencies": {
-    "@arwes/frames": "^1.0.0-next.24080101",
-    "@arwes/react-tools": "^1.0.0-next.24080101",
-    "@arwes/tools": "^1.0.0-next.24080101",
+    "@arwes/frames": "^1.0.0-next.24082701",
+    "@arwes/react-tools": "^1.0.0-next.24082701",
+    "@arwes/tools": "^1.0.0-next.24082701",
     "tslib": "2"
   },
   "scripts": {
