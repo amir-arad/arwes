@@ -96,5 +96,12 @@
     "url": "https://beko.famkos.net/category/simpit",
     "repository": "",
     "image": "beko-primary-buffer-panel.jpg"
+  },
+  {
+    "name": "glitchy.website",
+    "description": "A glitchy DJ set",
+    "url": "https://glitchy.website",
+    "repository": "",
+    "image": "glitchy.website.jpg"
   }
 ]

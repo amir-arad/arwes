@@ -100,6 +100,7 @@ ARWES does not work with React strict mode nor React Server Components.
 <td align="center"><a href="https://universe-dawn.com"><img src="./static/assets/community/apps/images/universe-dawn.com.jpg" width="252px;" alt="Universe Dawn" /></a><br /><a href="https://universe-dawn.com">Universe Dawn</a><br /><sub>--</sub></td></tr>
 <tr><td align="center"><a href="https://paingthet.com"><img src="./static/assets/community/apps/images/paingthet.com.jpg" width="252px;" alt="paingthet.com" /></a><br /><a href="https://paingthet.com">paingthet.com</a><br /><sub>--</sub></td>
 <td align="center"><a href="https://beko.famkos.net/category/simpit"><img src="./static/assets/community/apps/images/beko-primary-buffer-panel.jpg" width="252px;" alt="Primary Buffer Panel" /></a><br /><a href="https://beko.famkos.net/category/simpit">Primary Buffer Panel</a><br /><sub>--</sub></td>
+<td align="center"><a href="https://glitchy.website"><img src="./static/assets/community/apps/images/glitchy.website.jpg" width="252px;" alt="glitchy.website" /></a><br /><a href="https://glitchy.website">glitchy.website</a><br /><sub>--</sub></td>
 </tr>
 </table>
 <!-- ARWES-COMMUNITY-APPS:END -->
