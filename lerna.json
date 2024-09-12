@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-next.24091101",
+  "version": "1.0.0-next.24091102",
   "command": {
     "publish": {
       "allowBranch": "dev",
