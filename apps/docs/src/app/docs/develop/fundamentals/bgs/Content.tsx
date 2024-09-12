@@ -14,7 +14,7 @@ export default (): JSX.Element => (
 
     <AR.Playground
       className="h-[30rem]"
-      url="/play?code=&type=predefined&sandbox=React%7CExamples%7Cbackgrounds&editor=false&preview=true&explorer=false"
+      url="?code=&type=predefined&sandbox=React%7CExamples%7Cbackgrounds&editor=false&preview=true&explorer=false"
     />
 
     <AR.P>
