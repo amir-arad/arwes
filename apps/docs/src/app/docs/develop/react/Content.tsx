@@ -78,27 +78,27 @@ export default (): JSX.Element => (
     <AR.Links
       links={[
         {
-          href: '/play?code=&type=predefined&sandbox=Examples%7CReact%7Cbutton&explorer=true&editor=true&preview=true',
+          href: '/play?code=&type=predefined&sandbox=React%7CExamples%7Cbutton',
           text: 'Button',
           icon: <IconPlay />
         },
         {
-          href: '/play?code=&type=predefined&sandbox=Examples%7CReact%7Cbackgrounds&explorer=true&editor=true&preview=true',
+          href: '/play?code=&type=predefined&sandbox=React%7CExamples%7Cbackgrounds',
           text: 'Backgrounds',
           icon: <IconPlay />
         },
         {
-          href: '/play?code=&type=predefined&sandbox=Examples%7CReact%7Calert&explorer=true&editor=true&preview=true',
+          href: '/play?code=&type=predefined&sandbox=React%7CExamples%7Calert',
           text: 'Alert',
           icon: <IconPlay />
         },
         {
-          href: '/play?code=&type=predefined&sandbox=Examples%7CReact%7CscrollList&explorer=true&editor=true&preview=true',
+          href: '/play?code=&type=predefined&sandbox=React%7CExamples%7CscrollList',
           text: 'Scroll List',
           icon: <IconPlay />
         },
         {
-          href: '/play?code=&type=predefined&sandbox=Examples%7CReact%7Csubsystems&explorer=true&editor=true&preview=true',
+          href: '/play?code=&type=predefined&sandbox=React%7CExamples%7Csubsystems',
           text: 'Subsystems',
           icon: <IconPlay />
         }
