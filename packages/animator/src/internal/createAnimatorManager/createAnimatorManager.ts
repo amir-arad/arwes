@@ -11,14 +11,14 @@ const createAnimatorManagerParallel: AnimatorManagerCreator = (node) => {
   const getDurationEnter = (childrenProvided?: AnimatorNode[]): number => {
     const children = childrenProvided || Array.from(node._children)
     return children.reduce((total, child) => {
-      const { duration } = child._getUserSettings()
+      const { duration } = child.settings
       return Math.max(total, duration.delay + duration.enter)
     }, 0)
   }
 
   const enterChildren = (children: AnimatorNode[]): void => {
     for (const child of children) {
-      const { duration } = child._getUserSettings()
+      const { duration } = child.settings
       child._scheduler.start(duration.delay, () => child.send(ACTIONS.enter))
     }
   }
