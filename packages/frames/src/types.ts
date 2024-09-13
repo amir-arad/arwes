@@ -29,6 +29,7 @@ export type FrameSettingsSVG<Contexts extends ContextType = ContextType> =
     width: number | string
     height: number | string
     elements: string | Array<FrameSettingsElement<Contexts>>
+    draw?: (config: { element: SVGSVGElement; width: number; height: number }) => void
     contexts?: {
       [C in keyof Contexts]?: {
         [S in Contexts[C]]?: {
@@ -48,24 +49,28 @@ export type FrameSettingsSVG<Contexts extends ContextType = ContextType> =
 export type FrameSettingsG<Contexts extends ContextType = ContextType> =
   FrameSettingsElementCommon<Contexts> & {
     type: 'g'
+    draw?: (config: { element: SVGGElement; width: number; height: number }) => void
     elements: string | Array<FrameSettingsElement<Contexts>>
   }
 
 export type FrameSettingsDefs<Contexts extends ContextType = ContextType> =
   FrameSettingsElementCommon<Contexts> & {
     type: 'defs'
+    draw?: (config: { element: SVGDefsElement; width: number; height: number }) => void
     elements: string | Array<FrameSettingsElement<Contexts>>
   }
 
 export type FrameSettingsClipPath<Contexts extends ContextType = ContextType> =
   FrameSettingsElementCommon<Contexts> & {
     type: 'clipPath'
+    draw?: (config: { element: SVGClipPathElement; width: number; height: number }) => void
     elements: string | Array<FrameSettingsElement<Contexts>>
   }
 
 export type FrameSettingsMask<Contexts extends ContextType = ContextType> =
   FrameSettingsElementCommon<Contexts> & {
     type: 'mask'
+    draw?: (config: { element: SVGMaskElement; width: number; height: number }) => void
     elements: string | Array<FrameSettingsElement<Contexts>>
   }
 
@@ -98,6 +103,7 @@ export type FrameSettingsPath<Contexts extends ContextType = ContextType> =
   FrameSettingsElementCommon<Contexts> & {
     type?: 'path'
     path: string | FrameSettingsPathDefinition
+    draw?: (config: { element: SVGPathElement; width: number; height: number }) => void
     contexts?: {
       [C in keyof Contexts]?: {
         [S in Contexts[C]]?: {
@@ -119,6 +125,7 @@ export type FrameSettingsRect<Contexts extends ContextType = ContextType> =
     height: number | string
     rx?: number | string
     ry?: number | string
+    draw?: (config: { element: SVGRectElement; width: number; height: number }) => void
     contexts?: {
       [C in keyof Contexts]?: {
         [S in Contexts[C]]?: {
@@ -143,6 +150,7 @@ export type FrameSettingsEllipse<Contexts extends ContextType = ContextType> =
     cy: number | string
     rx: number | string
     ry: number | string
+    draw?: (config: { element: SVGEllipseElement; width: number; height: number }) => void
     contexts?: {
       [C in keyof Contexts]?: {
         [S in Contexts[C]]?: {

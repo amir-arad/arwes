@@ -147,6 +147,10 @@ const drawFrameElements = (
         break
       }
     }
+
+    if (settings.draw) {
+      settings.draw({ element: element as any, width, height })
+    }
   }
 }
 

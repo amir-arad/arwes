@@ -129,18 +129,10 @@ const createFrameCircleSettings = (props?: CreateFrameCircleSettingsProps): Fram
                   transformOrigin: 'center',
                   rotate: -(360 / 16)
                 },
-                // TODO: Should this be executed as a context state animation or
-                // better as an imperative function in an element on render/draw.
-                contexts: {
-                  status: {
-                    initial: {
-                      animate: ({ element }) => {
-                        const radius = Number(element.getAttribute('rx'))
-                        const length = radius * Math.PI * 2
-                        element.setAttribute('stroke-dasharray', String(length / 8))
-                      }
-                    }
-                  }
+                draw: ({ element }) => {
+                  const radius = Number(element.getAttribute('rx'))
+                  const length = radius * Math.PI * 2
+                  element.setAttribute('stroke-dasharray', String(length / 8))
                 }
               },
               {
@@ -206,11 +198,7 @@ const createFrameCircleSettings = (props?: CreateFrameCircleSettingsProps): Fram
           }
         ]
       }
-    ],
-
-    contexts: {
-      status: 'initial'
-    }
+    ]
   }
 }
 
