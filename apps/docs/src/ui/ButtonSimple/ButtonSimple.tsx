@@ -53,7 +53,9 @@ const ButtonSimple = memo((props: ButtonSimpleProps): JSX.Element => {
         style={{
           filter: `drop-shadow(0 0 ${theme.space(2)} ${theme.colors.secondary.main(3)})`,
           // @ts-expect-error css variables
-          '--arwes-frames-bg-color': 'transparent'
+          '--arwes-frames-bg-color': 'transparent',
+          '--arwes-frames-line-color': 'currentcolor',
+          '--arwes-frames-deco-color': 'currentcolor'
         }}
         cornerLength={theme.spacen(2)}
       />

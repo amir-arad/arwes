@@ -43,21 +43,20 @@ const Card = (props: CardProps): JSX.Element => {
       </Animated>
 
       {isXL && (
-        <div
-          className="absolute inset-0.5 overflow-hidden"
+        <Illuminator
           style={{
+            inset: 2,
+            width: 'calc(100% - 4px)',
+            height: 'calc(100% - 4px)',
             clipPath: styleFrameClipOctagon({
               leftBottom: false,
               rightTop: false,
               squareSize: theme.space(4)
             })
           }}
-        >
-          <Illuminator
-            size={theme.spacen(100)}
-            color={theme.colors.primary.main(7, { alpha: 0.1 })}
-          />
-        </div>
+          size={theme.spacen(100)}
+          color={theme.colors.primary.main(7, { alpha: 0.1 })}
+        />
       )}
 
       <div className="flex-1 flex flex-row justify-between items-center gap-4 p-6 lg:p-8">

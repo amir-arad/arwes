@@ -42,7 +42,12 @@ const LayoutRoot = (props: { children: ReactNode }): JSX.Element => {
           <div
             className="absolute inset-0 overflow-hidden flex flex-col"
             style={{
-              // @ts-expect-error link `next/font` font families to TailwindCSS
+              // @ts-expect-error ARWES variables.
+              '--arwes-frames-bg-color': theme.colors.primary.main(9, { alpha: 0.15 }),
+              '--arwes-frames-line-color': theme.colors.primary.main(9, { alpha: 0.8 }),
+              '--arwes-frames-deco-color': theme.colors.primary.main(7, { alpha: 0.8 }),
+
+              // Link `next/font` font families to TailwindCSS
               '--app-font-family-header': fontTitilliumWeb.style.fontFamily,
               '--app-font-family-body': fontTitilliumWeb.style.fontFamily,
               '--app-font-family-cta': fontTitilliumWeb.style.fontFamily,
