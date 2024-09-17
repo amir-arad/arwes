@@ -1,9 +1,10 @@
 import { filterProps } from '@arwes/tools'
-import { type AnimatedCSSProps } from '@arwes/animated'
-import type { FrameSettingsPathDefinition, FrameSettingsElement, FrameSettings } from '../types.js'
+import { animateDraw } from '@arwes/animated'
+import type { FrameSettingsPathDefinition, FrameSettings, FrameSettingsElement } from '../types.js'
 
 type CreateFrameLinesSettingsProps = {
   styled?: boolean
+  animated?: boolean
   padding?: number
   largeLineWidth?: number
   smallLineWidth?: number
@@ -12,6 +13,7 @@ type CreateFrameLinesSettingsProps = {
 
 const defaultProps: Required<CreateFrameLinesSettingsProps> = {
   styled: true,
+  animated: true,
   padding: 0,
   largeLineWidth: 1,
   smallLineWidth: 1,
@@ -21,106 +23,128 @@ const defaultProps: Required<CreateFrameLinesSettingsProps> = {
 const createFrameLinesSettings = (props?: CreateFrameLinesSettingsProps): FrameSettings => {
   const {
     styled,
+    animated,
     padding: p,
-    largeLineWidth: llw,
-    smallLineWidth: slw,
-    smallLineLength: sll
+    largeLineWidth,
+    smallLineWidth,
+    smallLineLength
   } = { ...defaultProps, ...(props ? filterProps(props) : null) }
-
-  const polylineStyle: AnimatedCSSProps = {
-    strokeLinecap: 'square',
-    stroke: 'var(--arwes-frames-line-color, currentcolor)',
-    filter: 'var(--arwes-frames-line-filter)',
-    fill: 'none'
-  }
-
-  const llo = llw / 2
-  const slo = slw / 2
 
   const largePolylines: FrameSettingsPathDefinition[] = [
     // Top
     [
-      ['M', llo + p, llo + p],
-      ['L', '50% + 0.1', llo + p]
+      ['M', p, p + largeLineWidth / 2],
+      ['H', '50% + 0.1']
     ],
     [
-      ['M', `100% - ${llo + p}`, llo + p],
-      ['L', '50% - 0.1', llo + p]
+      ['M', `100% - ${p + largeLineWidth / 2}`, p + largeLineWidth / 2],
+      ['H', '50% - 0.1']
     ],
 
     // Bottom
     [
-      ['M', llo + p, `100% - ${llo + p}`],
-      ['L', '50% + 0.1', `100% - ${llo + p}`]
+      ['M', p + largeLineWidth / 2, `100% - ${p + largeLineWidth / 2}`],
+      ['H', '50% + 0.1']
     ],
     [
-      ['M', `100% - ${llo + p}`, `100% - ${llo + p}`],
-      ['L', '50% - 0.1', `100% - ${llo + p}`]
+      ['M', `100% - ${p + largeLineWidth / 2}`, `100% - ${p + largeLineWidth / 2}`],
+      ['H', '50% - 0.1']
     ]
   ]
 
   const smallPolylines: FrameSettingsPathDefinition[] = [
     // Top
     [
-      ['M', slo + p, llw + slo + p],
-      ['L', sll + slo + p, llw + slo + p]
+      ['M', p, p + smallLineWidth / 2],
+      ['h', smallLineLength]
     ],
     [
-      ['M', `100% - ${slo + p}`, llw + slo + p],
-      ['L', `100% - ${sll + slo + p}`, llw + slo + p]
+      ['M', `100% - ${p}`, p + smallLineWidth / 2],
+      ['h', -smallLineLength]
     ],
 
     // Bottom
     [
-      ['M', slo + p, `100% - ${llw + slo + p}`],
-      ['L', sll + slo + p, `100% - ${llw + slo + p}`]
+      ['M', p, `100% - ${p + smallLineWidth / 2}`],
+      ['h', smallLineLength]
     ],
     [
-      ['M', `100% - ${slo + p}`, `100% - ${llw + slo + p}`],
-      ['L', `100% - ${sll + slo + p}`, `100% - ${llw + slo + p}`]
+      ['M', `100% - ${p}`, `100% - ${p + smallLineWidth / 2}`],
+      ['h', -smallLineLength]
     ]
   ]
 
-  const elements: FrameSettingsElement[] = [
-    {
-      name: 'bg',
-      style: styled
-        ? {
-            strokeWidth: 0,
-            fill: 'var(--arwes-frames-bg-color, currentcolor)',
-            filter: 'var(--arwes-frames-bg-filter)'
+  return {
+    elements: [
+      {
+        type: 'rect',
+        name: 'bg',
+        style: {
+          filter: styled ? 'var(--arwes-frames-bg-filter)' : undefined,
+          fill: styled ? 'var(--arwes-frames-bg-color, currentcolor)' : undefined,
+          strokeWidth: 0
+        },
+        animated: animated && ['fade'],
+        x: p,
+        y: p,
+        width: `100% - ${p * 2}`,
+        height: `100% - ${p * 2}`
+      },
+      {
+        type: 'g',
+        name: 'line',
+        style: {
+          filter: styled ? 'var(--arwes-frames-line-filter)' : undefined,
+          fill: styled ? 'none' : undefined,
+          stroke: styled ? 'var(--arwes-frames-line-color, currentcolor)' : undefined,
+          strokeWidth: String(largeLineWidth)
+        },
+        elements: largePolylines.map(
+          (polyline) =>
+            ({
+              animated: animated && {
+                transitions: {
+                  entering: ({ element, duration }) =>
+                    animateDraw({
+                      element: element as SVGPathElement,
+                      duration,
+                      isEntering: true
+                    }),
+                  exiting: ({ element, duration }) =>
+                    animateDraw({
+                      element: element as SVGPathElement,
+                      duration,
+                      isEntering: false
+                    })
+                }
+              },
+              path: polyline
+            }) satisfies FrameSettingsElement
+        )
+      },
+      {
+        type: 'g',
+        name: 'deco',
+        style: {
+          filter: styled ? 'var(--arwes-frames-deco-filter)' : undefined,
+          fill: styled ? 'none' : undefined,
+          stroke: styled ? 'var(--arwes-frames-deco-color, currentcolor)' : undefined,
+          strokeWidth: String(smallLineWidth)
+        },
+        animated: animated && {
+          transitions: {
+            entering: ({ element, duration, animate }) =>
+              animate(element, { opacity: [0, 1] }, { duration: duration / 2 }),
+            exiting: ({ element, duration, animate }) =>
+              animate(element, { opacity: [1, 0] }, { delay: duration / 2, duration: duration / 2 })
           }
-        : undefined,
-      path: [
-        ['M', p, p],
-        ['L', p, `100% - ${p}`],
-        ['L', `100% - ${p}`, `100% - ${p}`],
-        ['L', `100% - ${p}`, p]
-      ]
-    },
-    ...largePolylines.map((polyline) => ({
-      name: 'line',
-      style: styled
-        ? {
-            ...polylineStyle,
-            strokeWidth: String(llw)
-          }
-        : undefined,
-      path: polyline
-    })),
-    ...smallPolylines.map((polyline) => ({
-      name: 'line',
-      style: styled
-        ? {
-            ...polylineStyle,
-            strokeWidth: String(slw)
-          }
-        : undefined,
-      path: polyline
-    }))
-  ]
-
-  return { elements }
+        },
+        elements: smallPolylines.map(
+          (polyline) => ({ path: polyline }) satisfies FrameSettingsElement
+        )
+      }
+    ]
+  }
 }
 
 export type { CreateFrameLinesSettingsProps }
