@@ -46,20 +46,20 @@ const createFrameHeaderSettings = (props?: CreateFrameHeaderSettingsProps): Fram
     filter: styled ? 'var(--arwes-frames-line-filter)' : undefined,
     stroke: styled ? 'var(--arwes-frames-line-color, currentcolor)' : undefined,
     fill: styled ? 'none' : undefined,
-    strokeWidth: styled ? String(strokeWidth) : undefined
+    strokeWidth: String(strokeWidth)
   }
 
   const decoDashStyle: AnimatedCSSProps = {
     filter: styled ? 'var(--arwes-frames-deco-filter)' : undefined,
     stroke: styled ? 'var(--arwes-frames-deco-color, currentcolor)' : undefined,
     fill: styled ? 'none' : undefined,
-    strokeWidth: styled ? String(strokeWidth) : undefined
+    strokeWidth: String(strokeWidth)
   }
 
   const decoBoxesStyle: AnimatedCSSProps = {
     filter: styled ? 'var(--arwes-frames-deco-filter)' : undefined,
     fill: styled ? 'var(--arwes-frames-deco-color, currentcolor)' : undefined,
-    strokeWidth: styled ? '0' : undefined
+    strokeWidth: '0'
   }
 
   const decoDashAnimated: AnimatedProp = animated
@@ -122,7 +122,67 @@ const createFrameHeaderSettings = (props?: CreateFrameHeaderSettingsProps): Fram
     }
   ]
 
-  if (direction === 'vertical' && align === 'top') {
+  if (direction === 'vertical') {
+    if (align === 'bottom') {
+      return {
+        elements: [
+          {
+            type: 'path',
+            name: 'deco',
+            style: decoDashStyle,
+            animated: decoDashAnimated,
+            path: [
+              ['M', contentLength ? `100% - ${p + strokeOffset}` : p + strokeOffset, `100% - ${p}`],
+              ['v', -decoWidth * 2],
+              ['m', 0, -decoWidth],
+              ['v', -decoWidth * 2]
+            ]
+          },
+          {
+            type: 'path',
+            name: 'line',
+            style: lineStyle,
+            animated: lineAnimated,
+            path: [
+              [
+                'M',
+                contentLength ? `100% - ${p + strokeOffset}` : p + strokeOffset,
+                `100% - ${p + decoWidth * 6}`
+              ],
+              ['v', -Math.max(0, contentLength - decoWidth * 6)],
+              [
+                'L',
+                contentLength ? '50%' : p + strokeOffset,
+                `100% - ${p + contentLength + contentOffset}`
+              ],
+              ['V', p + decoWidth * 6.5]
+            ]
+          },
+          {
+            type: 'g',
+            name: 'deco',
+            style: {
+              ...decoBoxesStyle,
+              skewY: -45,
+              transformOrigin: contentLength ? 'top center' : 'top left'
+            },
+            animated: decoBoxesAnimated,
+            elements: [
+              {
+                type: 'svg',
+                viewBox: `0 0 ${decoWidth * 2} ${decoWidth * 5}`,
+                x: contentLength ? `50% - ${strokeOffset}` : p,
+                y: p + decoWidth * 2,
+                width: decoWidth * 2,
+                height: decoWidth * 5,
+                elements: verticalBoxes
+              }
+            ]
+          }
+        ]
+      }
+    }
+
     return {
       elements: [
         {
@@ -148,12 +208,8 @@ const createFrameHeaderSettings = (props?: CreateFrameHeaderSettingsProps): Fram
               contentLength ? `100% - ${p + strokeOffset}` : p + strokeOffset,
               p + decoWidth * 6
             ],
-            ['v', contentLength],
-            [
-              'L',
-              contentLength ? '50%' : p + strokeOffset,
-              p + decoWidth * 6 + contentLength + contentOffset
-            ],
+            ['v', Math.max(0, contentLength - decoWidth * 6)],
+            ['L', contentLength ? '50%' : p + strokeOffset, p + contentLength + contentOffset],
             ['V', `100% - ${p + decoWidth * 6.5}`]
           ]
         },
@@ -172,66 +228,6 @@ const createFrameHeaderSettings = (props?: CreateFrameHeaderSettingsProps): Fram
               viewBox: `0 0 ${decoWidth * 2} ${decoWidth * 5}`,
               x: contentLength ? `50% - ${strokeOffset}` : p,
               y: `100% - ${p + decoWidth * 7}`,
-              width: decoWidth * 2,
-              height: decoWidth * 5,
-              elements: verticalBoxes
-            }
-          ]
-        }
-      ]
-    }
-  }
-
-  if (direction === 'vertical' && align === 'bottom') {
-    return {
-      elements: [
-        {
-          type: 'path',
-          name: 'deco',
-          style: decoDashStyle,
-          animated: decoDashAnimated,
-          path: [
-            ['M', contentLength ? `100% - ${p + strokeOffset}` : p + strokeOffset, `100% - ${p}`],
-            ['v', -decoWidth * 2],
-            ['m', 0, -decoWidth],
-            ['v', -decoWidth * 2]
-          ]
-        },
-        {
-          type: 'path',
-          name: 'line',
-          style: lineStyle,
-          animated: lineAnimated,
-          path: [
-            [
-              'M',
-              contentLength ? `100% - ${p + strokeOffset}` : p + strokeOffset,
-              `100% - ${p + decoWidth * 6}`
-            ],
-            ['v', -contentLength],
-            [
-              'L',
-              contentLength ? '50%' : p + strokeOffset,
-              `100% - ${p + decoWidth * 6 + contentLength + contentOffset}`
-            ],
-            ['V', p + decoWidth * 6.5]
-          ]
-        },
-        {
-          type: 'g',
-          name: 'deco',
-          style: {
-            ...decoBoxesStyle,
-            skewY: -45,
-            transformOrigin: contentLength ? 'top center' : 'top left'
-          },
-          animated: decoBoxesAnimated,
-          elements: [
-            {
-              type: 'svg',
-              viewBox: `0 0 ${decoWidth * 2} ${decoWidth * 5}`,
-              x: contentLength ? `50% - ${strokeOffset}` : p,
-              y: p + decoWidth * 2,
               width: decoWidth * 2,
               height: decoWidth * 5,
               elements: verticalBoxes
@@ -266,7 +262,7 @@ const createFrameHeaderSettings = (props?: CreateFrameHeaderSettingsProps): Fram
     }
   ]
 
-  if (direction === 'horizontal' && align === 'right') {
+  if (align === 'right') {
     return {
       elements: [
         {
@@ -292,10 +288,10 @@ const createFrameHeaderSettings = (props?: CreateFrameHeaderSettingsProps): Fram
               `100% - ${p + decoWidth * 6}`,
               contentLength ? `100% - ${p + strokeOffset}` : p + strokeOffset
             ],
-            ['h', -contentLength],
+            ['h', -Math.max(0, contentLength - decoWidth * 6)],
             [
               'L',
-              `100% - ${p + decoWidth * 6 + contentLength + contentOffset}`,
+              `100% - ${p + contentLength + contentOffset}`,
               contentLength ? '50%' : p + strokeOffset
             ],
             ['H', p + decoWidth * 6.5]
@@ -348,12 +344,8 @@ const createFrameHeaderSettings = (props?: CreateFrameHeaderSettingsProps): Fram
         animated: lineAnimated,
         path: [
           ['M', p + decoWidth * 6, contentLength ? `100% - ${p + strokeOffset}` : p + strokeOffset],
-          ['h', contentLength],
-          [
-            'L',
-            p + decoWidth * 6 + contentLength + contentOffset,
-            contentLength ? '50%' : p + strokeOffset
-          ],
+          ['h', Math.max(0, contentLength - decoWidth * 6)],
+          ['L', p + contentLength + contentOffset, contentLength ? '50%' : p + strokeOffset],
           ['H', `100% - ${p + decoWidth * 6.5}`]
         ]
       },
