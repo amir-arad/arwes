@@ -1,10 +1,10 @@
 {
   "name": "apps-perf",
-  "version": "1.0.0-next.24091102",
+  "version": "1.0.0-next.24091701",
   "private": true,
   "dependencies": {
-    "@arwes/react": "^1.0.0-next.24091102",
-    "arwes": "^1.0.0-next.24091102",
+    "@arwes/react": "^1.0.0-next.24091701",
+    "arwes": "^1.0.0-next.24091701",
     "copy-webpack-plugin": "^12.0.2",
     "html-webpack-plugin": "^5.6.0",
     "ts-loader": "^9.5.1",
