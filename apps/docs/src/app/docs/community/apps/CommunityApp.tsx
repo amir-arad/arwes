@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import {
   Animated,
   Animator,
@@ -38,6 +39,7 @@ const CommunityApp = memo((props: CommunityAppProps): JSX.Element => {
     children
   } = props
 
+  const videoRef = useRef<HTMLVideoElement>(null)
   const bleeps = useAppBleeps()
   const isMD = useAppBreakpoint('md')
 
@@ -55,12 +57,19 @@ const CommunityApp = memo((props: CommunityAppProps): JSX.Element => {
           })
         }}
         animated={['fade', ['y', '1rem', 0]]}
+        onMouseEnter={() => {
+          void videoRef.current?.play()
+        }}
+        onMouseLeave={() => {
+          void videoRef.current?.pause()
+        }}
       >
         <div className="relative w-full pb-[60%] select-none">
           {videoURL && (
             <video
+              ref={videoRef}
               className="absolute inset-0 size-full object-cover object-center"
-              autoPlay
+              preload="none"
               muted
               loop
               poster={`/assets/community/apps/media/${imageURL}`}

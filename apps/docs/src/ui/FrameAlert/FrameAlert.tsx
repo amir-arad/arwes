@@ -1,15 +1,11 @@
-import { useRef } from 'react'
 import { useMedia } from 'react-use'
-import { Animated, Animator, FrameLines, Illuminator, memo, useFrameAssembler } from '@arwes/react'
+import { Animated, Animator, FrameLines, Illuminator, memo } from '@arwes/react'
 
 import { theme } from '@/config'
 import { spring } from 'motion'
 
 const FrameAlert = memo((): JSX.Element => {
   const isMD = useMedia(theme.breakpoints.up('md', { strip: true }), false)
-  const frameRef = useRef<SVGSVGElement>(null)
-
-  useFrameAssembler(frameRef)
 
   return (
     <Animated
@@ -43,13 +39,13 @@ const FrameAlert = memo((): JSX.Element => {
       </div>
 
       <FrameLines
-        elementRef={frameRef}
         style={{
-          filter: `drop-shadow(0 0 ${theme.space(1)} ${theme.colors.error(5, { alpha: 0.1 })})`,
-
           // @ts-expect-error variables
           '--arwes-frames-bg-color': theme.colors.error(12, { alpha: 0.5 }),
-          '--arwes-frames-line-color': theme.colors.error(7)
+          '--arwes-frames-line-color': theme.colors.error(7),
+          '--arwes-frames-deco-color': theme.colors.error(7),
+
+          filter: `drop-shadow(0 0 ${theme.space(1)} ${theme.colors.error(5, { alpha: 0.1 })})`
         }}
         largeLineWidth={isMD ? 2 : 1}
         smallLineWidth={isMD ? 4 : 2}
