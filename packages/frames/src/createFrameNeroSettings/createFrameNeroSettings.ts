@@ -44,15 +44,12 @@ const createFrameNeroSettings = (props?: CreateFrameNeroSettingsProps): FrameSet
           strokeWidth: styled ? '0' : undefined
         },
         animated: animated && {
+          initialStyle: { opacity: 0 },
           transitions: {
             entering: ({ element, duration, animate }) =>
-              animate(
-                element,
-                { opacity: [0, 1, 0.5, 1] },
-                { delay: duration / 2, duration: duration / 2 }
-              ),
+              animate(element, { opacity: 1 }, { delay: duration / 2, duration: duration / 2 }),
             exiting: ({ element, duration, animate }) =>
-              animate(element, { opacity: [1, 0, 0.5, 0] }, { duration: duration / 2 })
+              animate(element, { opacity: 0 }, { duration: duration / 2 })
           }
         }
       },
