@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { useAtom } from 'jotai'
-import { useMedia } from 'react-use'
 import {
   type AnimatedProp,
   Animated,
@@ -11,8 +10,7 @@ import {
   cx,
   FrameOctagon,
   Illuminator,
-  memo,
-  useBleeps
+  memo
 } from '@arwes/react'
 import {
   X,
@@ -31,7 +29,8 @@ import {
   Menu as MenuIcon
 } from 'iconoir-react'
 
-import { type BleepNames, atomAudioEnabled, atomMotionEnabled, settings, theme } from '@/config'
+import { atomAudioEnabled, atomMotionEnabled, settings, theme } from '@/config'
+import { useAppBleeps, useAppBreakpoint } from '@/tools'
 import { ArwesLogoIcon } from '../ArwesLogoIcon'
 import { ArwesLogoType } from '../ArwesLogoType'
 import { Menu } from '../Menu'
@@ -52,10 +51,10 @@ const Header = memo((props: HeaderProps): JSX.Element => {
   const pathname = usePathname()
   const [isMotionEnabled, setIsMotionEnabled] = useAtom(atomMotionEnabled)
   const [isAudioEnabled, setIsAudioEnabled] = useAtom(atomAudioEnabled)
-  const isMD = useMedia(theme.breakpoints.up('md', { strip: true }), false)
-  const isLG = useMedia(theme.breakpoints.up('lg', { strip: true }), false)
-  const isXL = useMedia(theme.breakpoints.up('xl', { strip: true }), false)
-  const bleeps = useBleeps<BleepNames>()
+  const isMD = useAppBreakpoint('md')
+  const isLG = useAppBreakpoint('lg')
+  const isXL = useAppBreakpoint('xl')
+  const bleeps = useAppBleeps()
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const openMenu = useCallback(() => {

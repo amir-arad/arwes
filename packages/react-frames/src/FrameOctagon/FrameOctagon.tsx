@@ -8,22 +8,32 @@ import { type FrameBaseProps, FrameBase } from '../FrameBase/index.js'
 type FrameOctagonProps = Omit<FrameBaseProps, 'settings'> & CreateFrameOctagonSettingsProps
 
 const FrameOctagon = memo((props: FrameOctagonProps): JSX.Element => {
-  const { styled, leftTop, rightTop, rightBottom, leftBottom, squareSize, strokeWidth, padding } =
-    props
+  const {
+    styled,
+    animated,
+    padding,
+    leftTop,
+    rightTop,
+    rightBottom,
+    leftBottom,
+    squareSize,
+    strokeWidth
+  } = props
 
   const settings = useMemo(
     () =>
       createFrameOctagonSettings({
         styled,
+        animated,
+        padding,
         leftTop,
         rightTop,
         rightBottom,
         leftBottom,
         squareSize,
-        strokeWidth,
-        padding
+        strokeWidth
       }),
-    [styled, leftTop, rightTop, rightBottom, leftBottom, squareSize, strokeWidth, padding]
+    [styled, animated, padding, leftTop, rightTop, rightBottom, leftBottom, squareSize, strokeWidth]
   )
 
   return (

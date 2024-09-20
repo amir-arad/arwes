@@ -8,18 +8,19 @@ import { type FrameBaseProps, FrameBase } from '../FrameBase/index.js'
 type FrameLinesProps = Omit<FrameBaseProps, 'settings'> & CreateFrameLinesSettingsProps
 
 const FrameLines = memo((props: FrameLinesProps): JSX.Element => {
-  const { styled, padding, largeLineWidth, smallLineWidth, smallLineLength } = props
+  const { styled, animated, padding, largeLineWidth, smallLineWidth, smallLineLength } = props
 
   const settings = useMemo(
     () =>
       createFrameLinesSettings({
         styled,
+        animated,
         padding,
         largeLineWidth,
         smallLineWidth,
         smallLineLength
       }),
-    [styled, padding, largeLineWidth, smallLineWidth, smallLineLength]
+    [styled, animated, padding, largeLineWidth, smallLineWidth, smallLineLength]
   )
   return (
     <FrameBase

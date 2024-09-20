@@ -4,10 +4,7 @@ import { createAnimatorSystem } from '@arwes/animator'
 let active = false
 const system = createAnimatorSystem()
 const animator = system.register(undefined, {
-  getSettings: () => ({ active, duration: { enter: 1, exit: 1 } }),
-  setSettings: () => {},
-  getForeignRef: () => {},
-  setForeignRef: () => {}
+  getSettings: () => ({ active, duration: { enter: 1, exit: 1 } })
 })
 
 const root = document.querySelector('#root')!

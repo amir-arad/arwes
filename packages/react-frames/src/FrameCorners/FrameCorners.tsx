@@ -8,11 +8,11 @@ import { type FrameBaseProps, FrameBase } from '../FrameBase/index.js'
 type FrameCornersProps = Omit<FrameBaseProps, 'settings'> & CreateFrameCornersSettingsProps
 
 const FrameCorners = memo((props: FrameCornersProps): JSX.Element => {
-  const { styled, padding, strokeWidth, cornerLength } = props
+  const { styled, animated, padding, strokeWidth, cornerLength } = props
 
   const settings = useMemo(
-    () => createFrameCornersSettings({ styled, padding, strokeWidth, cornerLength }),
-    [styled, padding, strokeWidth, cornerLength]
+    () => createFrameCornersSettings({ styled, animated, padding, strokeWidth, cornerLength }),
+    [styled, animated, padding, strokeWidth, cornerLength]
   )
   return (
     <FrameBase

@@ -92,7 +92,6 @@ const createFrameLinesSettings = (props?: CreateFrameLinesSettingsProps): FrameS
       },
       {
         type: 'g',
-        name: 'line',
         style: {
           filter: styled ? 'var(--arwes-frames-line-filter)' : undefined,
           fill: styled ? 'none' : undefined,
@@ -102,6 +101,7 @@ const createFrameLinesSettings = (props?: CreateFrameLinesSettingsProps): FrameS
         elements: largePolylines.map(
           (polyline) =>
             ({
+              name: 'line',
               animated: animated && {
                 transitions: {
                   entering: ({ element, duration }) =>
@@ -124,7 +124,6 @@ const createFrameLinesSettings = (props?: CreateFrameLinesSettingsProps): FrameS
       },
       {
         type: 'g',
-        name: 'deco',
         style: {
           filter: styled ? 'var(--arwes-frames-deco-filter)' : undefined,
           fill: styled ? 'none' : undefined,
@@ -140,7 +139,7 @@ const createFrameLinesSettings = (props?: CreateFrameLinesSettingsProps): FrameS
           }
         },
         elements: smallPolylines.map(
-          (polyline) => ({ path: polyline }) satisfies FrameSettingsElement
+          (polyline) => ({ name: 'deco', path: polyline }) satisfies FrameSettingsElement
         )
       }
     ]

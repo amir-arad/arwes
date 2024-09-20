@@ -7,9 +7,9 @@ const useFrameAssembler = (svgRef: RefObject<SVGElement | HTMLElement>): void =>
   const animator = useAnimator()
 
   useEffect(() => {
-    const svg = svgRef.current
+    const container = svgRef.current
 
-    if (!animator || !svg) {
+    if (!animator || !container) {
       return
     }
 
@@ -20,7 +20,7 @@ const useFrameAssembler = (svgRef: RefObject<SVGElement | HTMLElement>): void =>
         case 'entering': {
           animation?.cancel()
           animation = animateFrameAssembler({
-            element: svg,
+            element: container,
             duration: node.settings.duration.enter,
             isEntering: true
           })
@@ -30,7 +30,7 @@ const useFrameAssembler = (svgRef: RefObject<SVGElement | HTMLElement>): void =>
         case 'exiting': {
           animation?.cancel()
           animation = animateFrameAssembler({
-            element: svg,
+            element: container,
             duration: node.settings.duration.exit,
             isEntering: false
           })

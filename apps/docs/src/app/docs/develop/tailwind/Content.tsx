@@ -48,13 +48,13 @@ const theme = Object.freeze({
 
   // Color palettes.
   colors: {
-    primary: createThemeColor((i: number) => [180, 10 + i, 92.5 - i * 9.44]),
-    secondary: createThemeColor((i: number) => [60, 10 + i, 92.5 - i * 9.44])
+    primary: createThemeColor(i => [180, 10 + i, 92.5 - i * 9.44]),
+    secondary: createThemeColor(i => [60, 10 + i, 92.5 - i * 9.44])
   },
 
   // Typography.
   fontFamily: {
-    header: ['Lato', 'sans-serif'],
+    header: ['Tomorrow', 'sans-serif'],
     body: ['Roboto', 'sans-serif']
   }
 })

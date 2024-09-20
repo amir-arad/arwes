@@ -29,6 +29,26 @@ const svg = root.querySelector('svg')!
 
 const settings: FrameSettings = {
   elements: [
+    // Background shape.
+    {
+      type: 'path',
+      name: 'bg',
+      style: { strokeWidth: 0, fill: 'hsl(180, 75%, 10%)' },
+      path: [
+        // Top.
+        ['M', 5, 35],
+        ['v', -20],
+        ['l', 10, -10],
+        ['H', '100% - 15'],
+        ['l', 10, 10],
+        ['v', 20],
+        // Bottom.
+        ['V', '100% - 15'],
+        ['l', -10, 10],
+        ['H', 15],
+        ['l', -10, -10]
+      ]
+    },
     // Top line.
     {
       type: 'path',
@@ -55,26 +75,6 @@ const settings: FrameSettings = {
         ['H', '100% - 11'],
         ['l', 10, -10],
         ['v', -20]
-      ]
-    },
-    // Background shape.
-    {
-      type: 'path',
-      name: 'bg',
-      style: { strokeWidth: 0, fill: 'hsl(180, 75%, 10%)' },
-      path: [
-        // Top.
-        ['M', 5, 35],
-        ['v', -20],
-        ['l', 10, -10],
-        ['H', '100% - 15'],
-        ['l', 10, 10],
-        ['v', 20],
-        // Bottom.
-        ['V', '100% - 15'],
-        ['l', -10, 10],
-        ['H', 15],
-        ['l', -10, -10]
       ]
     }
   ]

@@ -1,9 +1,10 @@
 import { filterProps } from '@arwes/tools'
-import { type AnimatedCSSProps } from '@arwes/animated'
-import type { FrameSettingsElement, FrameSettingsPathDefinition, FrameSettings } from '../types.js'
+import { type AnimatedProp, type AnimatedCSSProps, animateDraw } from '@arwes/animated'
+import type { FrameSettingsPathDefinition, FrameSettings } from '../types.js'
 
 type CreateFrameOctagonSettingsProps = {
   styled?: boolean
+  animated?: boolean
   leftTop?: boolean
   rightTop?: boolean
   rightBottom?: boolean
@@ -15,13 +16,14 @@ type CreateFrameOctagonSettingsProps = {
 
 const defaultProps: Required<CreateFrameOctagonSettingsProps> = {
   styled: true,
+  animated: true,
+  padding: 0,
   leftTop: true,
   rightTop: true,
   rightBottom: true,
   leftBottom: true,
   squareSize: 16,
-  strokeWidth: 1,
-  padding: 0
+  strokeWidth: 1
 }
 
 type Point = [number | string, number | string]
@@ -32,53 +34,61 @@ const toPath = (points: Point[]): FrameSettingsPathDefinition =>
 const createFrameOctagonSettings = (props?: CreateFrameOctagonSettingsProps): FrameSettings => {
   const {
     styled,
+    animated,
+    padding: p,
     leftTop,
     rightTop,
     rightBottom,
     leftBottom,
-    squareSize: ss,
-    strokeWidth,
-    padding: p
+    squareSize,
+    strokeWidth
   } = { ...defaultProps, ...(props ? filterProps(props) : null) }
 
   const so = strokeWidth / 2
 
-  const polylineStyle: AnimatedCSSProps | undefined = styled
-    ? {
-        filter: 'var(--arwes-frames-line-filter)',
-        stroke: 'var(--arwes-frames-line-color, currentcolor)',
-        strokeLinecap: 'round',
-        strokeLinejoin: 'round',
-        strokeWidth: String(strokeWidth),
-        fill: 'none'
-      }
-    : undefined
+  const polylineStyle: AnimatedCSSProps = {
+    filter: styled ? 'var(--arwes-frames-line-filter)' : undefined,
+    fill: styled ? 'none' : undefined,
+    stroke: styled ? 'var(--arwes-frames-line-color, currentcolor)' : undefined,
+    strokeLinecap: styled ? 'round' : undefined,
+    strokeLinejoin: styled ? 'round' : undefined,
+    strokeWidth: String(strokeWidth)
+  }
+
+  const polylineAnimated: false | AnimatedProp = animated && {
+    transitions: {
+      entering: ({ element, duration }) =>
+        animateDraw({ element: element as SVGPathElement, duration, isEntering: true }),
+      exiting: ({ element, duration }) =>
+        animateDraw({ element: element as SVGPathElement, duration, isEntering: false })
+    }
+  }
 
   const leftTopPoints: Point[] = leftTop
     ? [
-        [ss + so + p, so + p],
-        [so + p, ss + so + p]
+        [squareSize + so + p, so + p],
+        [so + p, squareSize + so + p]
       ]
     : [[so + p, so + p]]
 
   const leftBottomPoints: Point[] = leftBottom
     ? [
-        [so + p, `100% - ${ss + p}`],
-        [ss + so + p, `100% - ${so + p}`]
+        [so + p, `100% - ${squareSize + p}`],
+        [squareSize + so + p, `100% - ${so + p}`]
       ]
     : [[so + p, `100% - ${so + p}`]]
 
   const rightBottomPoints: Point[] = rightBottom
     ? [
-        [`100% - ${ss + so + p}`, `100% - ${so + p}`],
-        [`100% - ${so + p}`, `100% - ${ss + so + p}`]
+        [`100% - ${squareSize + so + p}`, `100% - ${so + p}`],
+        [`100% - ${so + p}`, `100% - ${squareSize + so + p}`]
       ]
     : [[`100% - ${so + p}`, `100% - ${so + p}`]]
 
   const rightTopPoints: Point[] = rightTop
     ? [
-        [`100% - ${so + p}`, ss - so + p],
-        [`100% - ${ss - so + p}`, so + p]
+        [`100% - ${so + p}`, squareSize - so + p],
+        [`100% - ${squareSize - so + p}`, so + p]
       ]
     : [[`100% - ${so + p}`, so + p]]
 
@@ -88,31 +98,32 @@ const createFrameOctagonSettings = (props?: CreateFrameOctagonSettingsProps): Fr
   // rightBottom > rightTop > leftTop
   const polyline2 = toPath([...rightBottomPoints, ...rightTopPoints, leftTopPoints[0]])
 
-  const elements: FrameSettingsElement[] = [
-    {
-      name: 'bg',
-      style: styled
-        ? {
-            strokeWidth: 0,
-            fill: 'var(--arwes-frames-bg-color, currentcolor)',
-            filter: 'var(--arwes-frames-bg-filter)'
-          }
-        : undefined,
-      path: polyline1.concat(polyline2)
-    },
-    {
-      name: 'line',
-      style: polylineStyle,
-      path: polyline1
-    },
-    {
-      name: 'line',
-      style: polylineStyle,
-      path: polyline2
-    }
-  ]
-
-  return { elements }
+  return {
+    elements: [
+      {
+        name: 'bg',
+        style: {
+          filter: styled ? 'var(--arwes-frames-bg-filter)' : undefined,
+          fill: styled ? 'var(--arwes-frames-bg-color, currentcolor)' : undefined,
+          strokeWidth: 0
+        },
+        animated: animated && ['fade'],
+        path: polyline1.concat(polyline2)
+      },
+      {
+        name: 'line',
+        style: polylineStyle,
+        animated: polylineAnimated,
+        path: polyline1
+      },
+      {
+        name: 'line',
+        style: polylineStyle,
+        animated: polylineAnimated,
+        path: polyline2
+      }
+    ]
+  }
 }
 
 export type { CreateFrameOctagonSettingsProps }

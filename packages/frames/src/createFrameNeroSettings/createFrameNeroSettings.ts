@@ -55,7 +55,6 @@ const createFrameNeroSettings = (props?: CreateFrameNeroSettingsProps): FrameSet
       },
       {
         type: 'g',
-        name: 'deco',
         style: {
           filter: styled ? 'var(--arwes-frames-deco-filter)' : undefined,
           fill: styled ? 'var(--arwes-frames-deco-color, currentcolor)' : undefined,
@@ -76,6 +75,7 @@ const createFrameNeroSettings = (props?: CreateFrameNeroSettingsProps): FrameSet
         elements: [
           {
             type: 'path',
+            name: 'deco',
             path: [
               ['M', p, p],
               ['h', cornerLength],
@@ -95,6 +95,7 @@ const createFrameNeroSettings = (props?: CreateFrameNeroSettingsProps): FrameSet
           },
           {
             type: 'path',
+            name: 'deco',
             path: [
               ['M', `100% - ${p}`, p],
               ['v', cornerLength],
@@ -114,6 +115,7 @@ const createFrameNeroSettings = (props?: CreateFrameNeroSettingsProps): FrameSet
           },
           {
             type: 'path',
+            name: 'deco',
             path: [
               ['M', `100% - ${p}`, `100% - ${p}`],
               ['h', -cornerLength],
@@ -133,6 +135,7 @@ const createFrameNeroSettings = (props?: CreateFrameNeroSettingsProps): FrameSet
           },
           {
             type: 'path',
+            name: 'deco',
             path: [
               ['M', p, `100% - ${p}`],
               ['h', cornerLength],
