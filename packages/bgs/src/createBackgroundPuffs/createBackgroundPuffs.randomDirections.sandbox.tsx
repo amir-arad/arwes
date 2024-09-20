@@ -8,10 +8,7 @@ root.appendChild(canvas)
 
 const system = createAnimatorSystem()
 const animator = system.register(undefined, {
-  getSettings: () => ({ duration: { interval: 3 } }),
-  setSettings: () => {},
-  getForeignRef: () => {},
-  setForeignRef: () => {}
+  getSettings: () => ({ duration: { interval: 3 } })
 })
 
 createBackgroundPuffs({

@@ -9,10 +9,7 @@ root.appendChild(canvas)
 let active = false
 const system = createAnimatorSystem()
 const animator = system.register(undefined, {
-  getSettings: () => ({ active, duration: { enter: 0.5, exit: 0.5 } }),
-  setSettings: () => {},
-  getForeignRef: () => {},
-  setForeignRef: () => {}
+  getSettings: () => ({ active, duration: { enter: 0.5, exit: 0.5 } })
 })
 
 createBackgroundMovingLines({

@@ -12,10 +12,10 @@ beforeEach(() => {
 })
 
 test('Should create parent and transition first child which condition is met', async () => {
-  const parent = createAnimator(undefined, { manager: 'switch' })
-  const child1 = createAnimator(parent, { condition: false })
+  const parent = createAnimator(undefined, () => ({ manager: 'switch' }))
+  const child1 = createAnimator(parent, () => ({ condition: false }))
   const child2 = createAnimator(parent)
-  const child3 = createAnimator(parent, { condition: false })
+  const child3 = createAnimator(parent, () => ({ condition: false }))
   queueMicrotask(() => child1.node.send('setup'))
   queueMicrotask(() => child2.node.send('setup'))
   queueMicrotask(() => child3.node.send('setup'))

@@ -15,10 +15,7 @@ const animator = system.register(undefined, {
       // Duration between one interval animation and the next.
       intervalPause: 0.5
     }
-  }),
-  setSettings: () => {},
-  getForeignRef: () => {},
-  setForeignRef: () => {}
+  })
 })
 
 createBackgroundPuffs({

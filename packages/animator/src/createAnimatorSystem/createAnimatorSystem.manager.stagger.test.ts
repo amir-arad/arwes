@@ -12,7 +12,7 @@ beforeEach(() => {
 })
 
 test('Should create parent and transition children', async () => {
-  const parent = createAnimator(undefined, { manager: 'stagger' })
+  const parent = createAnimator(undefined, () => ({ manager: 'stagger' }))
   const child1 = createAnimator(parent)
   const child2 = createAnimator(parent)
   const child3 = createAnimator(parent)
@@ -99,7 +99,7 @@ test('Should create parent and transition children', async () => {
 })
 
 test('Should create parent with staggerReverse and transition children', async () => {
-  const parent = createAnimator(undefined, { manager: 'staggerReverse' })
+  const parent = createAnimator(undefined, () => ({ manager: 'staggerReverse' }))
   const child1 = createAnimator(parent)
   const child2 = createAnimator(parent)
   const child3 = createAnimator(parent)
@@ -186,7 +186,7 @@ test('Should create parent with staggerReverse and transition children', async (
 })
 
 test('Should create combined parent and transition children', async () => {
-  const parent = createAnimator(undefined, { combine: true, manager: 'stagger' })
+  const parent = createAnimator(undefined, () => ({ combine: true, manager: 'stagger' }))
   const child1 = createAnimator(parent)
   const child2 = createAnimator(parent)
   const child3 = createAnimator(parent)
@@ -268,15 +268,15 @@ test('Should create combined parent and transition children', async () => {
 })
 
 test('Should create combined parent and transition children with custom durations', async () => {
-  const parent = createAnimator(undefined, {
+  const parent = createAnimator(undefined, () => ({
     active: false,
     combine: true,
     manager: 'stagger'
-  })
-  const child1 = createAnimator(parent, { duration: { enter: 0.2 } })
-  const child2 = createAnimator(parent, { duration: { offset: 0.1 } })
-  const child3 = createAnimator(parent, { duration: { enter: 0.1, delay: 0.05 } })
-  const child4 = createAnimator(parent, { duration: { enter: 0.05 } })
+  }))
+  const child1 = createAnimator(parent, () => ({ duration: { enter: 0.2 } }))
+  const child2 = createAnimator(parent, () => ({ duration: { offset: 0.1 } }))
+  const child3 = createAnimator(parent, () => ({ duration: { enter: 0.1, delay: 0.05 } }))
+  const child4 = createAnimator(parent, () => ({ duration: { enter: 0.05 } }))
   queueMicrotask(() => child4.node.send('setup'))
   queueMicrotask(() => child3.node.send('setup'))
   queueMicrotask(() => child2.node.send('setup'))
@@ -422,16 +422,16 @@ test('Should create combined parent and transition children with custom duration
 })
 
 test('Should create combined parent and transition dynamically updated children', async () => {
-  const parent = createAnimator(undefined, {
+  const parent = createAnimator(undefined, () => ({
     combine: true,
     manager: 'stagger',
     duration: { stagger: 0.5 }
-  })
-  const child1 = createAnimator(parent, { duration: { enter: 1 } })
-  const child2 = createAnimator(parent, { duration: { enter: 1 } })
-  const child3 = createAnimator(parent, { duration: { enter: 1 } })
-  const child4 = createAnimator(parent, { duration: { enter: 1 } })
-  const child5 = createAnimator(parent, { duration: { enter: 1 } })
+  }))
+  const child1 = createAnimator(parent, () => ({ duration: { enter: 1 } }))
+  const child2 = createAnimator(parent, () => ({ duration: { enter: 1 } }))
+  const child3 = createAnimator(parent, () => ({ duration: { enter: 1 } }))
+  const child4 = createAnimator(parent, () => ({ duration: { enter: 1 } }))
+  const child5 = createAnimator(parent, () => ({ duration: { enter: 1 } }))
   queueMicrotask(() => child1.node.send('setup'))
   queueMicrotask(() => child2.node.send('setup'))
   queueMicrotask(() => child3.node.send('setup'))
@@ -456,8 +456,8 @@ test('Should create combined parent and transition dynamically updated children'
   expect(child5.node.state).toBe('exited')
   parent.system.unregister(child1.node) // Remove node already entered.
   parent.system.unregister(child5.node) // Remove node not entering yet.
-  const child6 = createAnimator(parent, { duration: { enter: 1 } })
-  const child7 = createAnimator(parent, { duration: { enter: 1 } })
+  const child6 = createAnimator(parent, () => ({ duration: { enter: 1 } }))
+  const child7 = createAnimator(parent, () => ({ duration: { enter: 1 } }))
   queueMicrotask(() => child6.node.send('setup'))
   queueMicrotask(() => child7.node.send('setup'))
 
@@ -542,17 +542,17 @@ test('Should create combined parent and transition dynamically updated children'
 })
 
 test('Should create combined parent and transition dynamically updated children with refresh event', () => {
-  const parent = createAnimator(undefined, {
+  const parent = createAnimator(undefined, () => ({
     combine: true,
     manager: 'stagger',
     duration: { stagger: 0.5 }
-  })
-  const child1 = createAnimator(parent, { duration: { enter: 1 } })
-  const child2 = createAnimator(parent, { duration: { enter: 1 } })
-  const child3 = createAnimator(parent, { duration: { enter: 1 } })
-  const child4 = createAnimator(parent, { duration: { enter: 1 } })
-  const child5 = createAnimator(parent, { duration: { enter: 1 }, condition: () => false })
-  const child6 = createAnimator(parent, { duration: { enter: 1 } })
+  }))
+  const child1 = createAnimator(parent, () => ({ duration: { enter: 1 } }))
+  const child2 = createAnimator(parent, () => ({ duration: { enter: 1 } }))
+  const child3 = createAnimator(parent, () => ({ duration: { enter: 1 } }))
+  const child4 = createAnimator(parent, () => ({ duration: { enter: 1 } }))
+  const child5 = createAnimator(parent, () => ({ duration: { enter: 1 }, condition: () => false }))
+  const child6 = createAnimator(parent, () => ({ duration: { enter: 1 } }))
   queueMicrotask(() => child1.node.send('setup'))
   queueMicrotask(() => child2.node.send('setup'))
   queueMicrotask(() => child3.node.send('setup'))
@@ -682,17 +682,17 @@ test('Should create combined parent and transition dynamically updated children 
 })
 
 test('Should create parent combine nested children with combine and get dynamic durations', async () => {
-  const parent = createAnimator(undefined, { combine: true, manager: 'stagger' })
+  const parent = createAnimator(undefined, () => ({ combine: true, manager: 'stagger' }))
 
-  const childA = createAnimator(parent, { combine: true, manager: 'parallel' })
+  const childA = createAnimator(parent, () => ({ combine: true, manager: 'parallel' }))
   const granchildA1 = createAnimator(childA)
   const granchildA2 = createAnimator(childA)
 
-  const childB = createAnimator(parent, { combine: true, manager: 'stagger' })
+  const childB = createAnimator(parent, () => ({ combine: true, manager: 'stagger' }))
   const granchildB1 = createAnimator(childB)
   const granchildB2 = createAnimator(childB)
 
-  const childC = createAnimator(parent, { combine: true, manager: 'sequence' })
+  const childC = createAnimator(parent, () => ({ combine: true, manager: 'sequence' }))
   const granchildC1 = createAnimator(childC)
   const granchildC2 = createAnimator(childC)
 

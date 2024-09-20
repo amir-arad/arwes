@@ -12,17 +12,17 @@ beforeEach(() => {
 })
 
 test('Should create parent combine nested children with combine and get dynamic durations', async () => {
-  const parent = createAnimator(undefined, { combine: true, manager: 'parallel' })
+  const parent = createAnimator(undefined, () => ({ combine: true, manager: 'parallel' }))
 
-  const childA = createAnimator(parent, { combine: true, manager: 'sequence' })
+  const childA = createAnimator(parent, () => ({ combine: true, manager: 'sequence' }))
   const granchildA1 = createAnimator(childA)
   const granchildA2 = createAnimator(childA)
 
-  const childB = createAnimator(parent, { combine: true, manager: 'stagger' })
+  const childB = createAnimator(parent, () => ({ combine: true, manager: 'stagger' }))
   const granchildB1 = createAnimator(childB)
   const granchildB2 = createAnimator(childB)
 
-  const childC = createAnimator(parent, { combine: true, manager: 'parallel' })
+  const childC = createAnimator(parent, () => ({ combine: true, manager: 'parallel' }))
   const granchildC1 = createAnimator(childC)
   const granchildC2 = createAnimator(childC)
 

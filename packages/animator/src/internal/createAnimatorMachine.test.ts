@@ -1,7 +1,7 @@
 import { test, expect } from 'vitest'
 
-import type { AnimatorNode } from '../../types'
-import { ANIMATOR_STATES } from '../../constants'
+import type { AnimatorNode } from '../types'
+import { ANIMATOR_STATES } from '../constants'
 import { createAnimatorMachine } from './createAnimatorMachine'
 
 test('Should create a node machine with predefined structure', () => {

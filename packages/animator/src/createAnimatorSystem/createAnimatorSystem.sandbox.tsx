@@ -4,7 +4,7 @@
 
 import { animate } from 'motion'
 import {
-  type AnimatorControl,
+  type AnimatorSystemRegisterSetup,
   type AnimatorNode,
   type AnimatorSettingsPartial,
   type AnimatorInterface,
@@ -14,36 +14,23 @@ import {
 // An example utility to scaffold an animator interface.
 // An animator interface contains the current node and the system it belongs to.
 const createAnimator = (
-  parentInterface?: AnimatorInterface,
-  initialSettings?: AnimatorSettingsPartial
+  parentInterface: undefined | AnimatorInterface,
+  initialSettings: AnimatorSettingsPartial
 ): AnimatorInterface => {
-  let settings: AnimatorSettingsPartial = {
-    ...initialSettings,
-    duration: { ...initialSettings?.duration }
-  }
-  let foreign: any = null
-
-  // Animator node control.
+  // Animator node setup.
   // It is used as a link between the external components and the animator node.
-  const control: AnimatorControl = {
-    getSettings: () => settings,
-    setSettings: (value) => {
-      settings = { ...settings, ...value, duration: { ...settings?.duration, ...value?.duration } }
-    },
-    getForeignRef: () => foreign,
-    setForeignRef: (value) => {
-      foreign = value
-    }
+  const setup: AnimatorSystemRegisterSetup = {
+    getSettings: () => initialSettings
   }
 
   if (parentInterface) {
     const system = parentInterface.system
-    const node = system.register(parentInterface.node, control)
+    const node = system.register(parentInterface.node, setup)
     return { system, node }
   }
 
   const system = createAnimatorSystem()
-  const node = system.register(undefined, control)
+  const node = system.register(undefined, setup)
   return { system, node }
 }
 
@@ -114,15 +101,15 @@ const parent = createAnimator(undefined, { active, combine: true, manager: 'sequ
 createAnimated(parentElement, parent.node)
 
 const child1Element = rootElement.querySelector<HTMLDivElement>('#child1')!
-const child1 = createAnimator(parent)
+const child1 = createAnimator(parent, {})
 createAnimated(child1Element, child1.node)
 
 const child2Element = rootElement.querySelector<HTMLDivElement>('#child2')!
-const child2 = createAnimator(parent)
+const child2 = createAnimator(parent, {})
 createAnimated(child2Element, child2.node)
 
 const child3Element = rootElement.querySelector<HTMLDivElement>('#child3')!
-const child3 = createAnimator(parent)
+const child3 = createAnimator(parent, {})
 createAnimated(child3Element, child3.node)
 
 //

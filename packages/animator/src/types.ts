@@ -1,6 +1,6 @@
 import type { TOScheduler } from '@arwes/tools'
 
-export interface AnimatorControl {
+export type AnimatorControl = {
   /**
    * Get the animator settings.
    * @returns Animator settings.
@@ -14,13 +14,13 @@ export interface AnimatorControl {
   /**
    * Get the foreign value stored for this animator.
    */
-  readonly getForeignRef: () => unknown
+  readonly getForeign: () => unknown
   /**
    * Set a foreign value to store for this animator.
    * It is like a data which can be used for any purpose in the animator.
-   * @param ref - Any value.
+   * @param foreign - Any value.
    */
-  readonly setForeignRef: (ref: unknown) => void
+  readonly setForeign: (foreign: unknown) => void
 }
 
 export type AnimatorState = 'entered' | 'entering' | 'exiting' | 'exited'
@@ -71,12 +71,16 @@ export interface AnimatorNode {
   readonly send: (newAction: AnimatorAction) => void
 }
 
+export type AnimatorSystemRegisterSetup = {
+  getSettings: () => AnimatorSettingsPartial
+}
+
 export interface AnimatorSystem {
   readonly id: string
   readonly root: AnimatorNode | null
   readonly register: (
-    parentNode: AnimatorNode | undefined | null,
-    control: AnimatorControl
+    parentNode?: undefined | null | AnimatorNode,
+    setup?: AnimatorSystemRegisterSetup
   ) => AnimatorNode
   readonly unregister: (node: AnimatorNode) => void
 }

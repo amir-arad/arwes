@@ -14,10 +14,7 @@ import {
 import {
   type AnimatorNode,
   type AnimatorSettingsPartial,
-  type AnimatorSystem,
-  type AnimatorControl,
   type AnimatorInterface,
-  type AnimatorDuration,
   ANIMATOR_STATES as STATES,
   ANIMATOR_ACTIONS as ACTIONS,
   createAnimatorSystem
@@ -69,8 +66,6 @@ const Animator = (props: AnimatorProps): ReactElement => {
   const animatorGeneralInterface = useContext(AnimatorGeneralContext)
 
   const settingsRef = useRef<AnimatorSettingsPartial>(settings)
-  const dynamicSettingsRef = useRef<AnimatorSettingsPartial | null>(null)
-  const foreignRef = useRef<unknown>(null)
   const prevAnimatorRef = useRef<AnimatorInterface | undefined>(undefined)
   const isMountedRef = useRef<boolean>(true)
 
@@ -81,7 +76,7 @@ const Animator = (props: AnimatorProps): ReactElement => {
   const isDismissed = dismissed !== undefined ? !!dismissed : !!animatorGeneralSettings?.dismissed
   const isDisabled = disabled !== undefined ? !!disabled : !!animatorGeneralSettings?.disabled
 
-  const animatorInterface: AnimatorInterface | undefined = useMemo(() => {
+  const animatorInterface: undefined | AnimatorInterface = useMemo(() => {
     if (prevAnimatorRef.current) {
       prevAnimatorRef.current.system.unregister(prevAnimatorRef.current.node)
     }
@@ -96,59 +91,26 @@ const Animator = (props: AnimatorProps): ReactElement => {
       return undefined
     }
 
-    const system: AnimatorSystem = isRoot ? createAnimatorSystem() : parentAnimatorInterface.system
+    const system = isRoot ? createAnimatorSystem() : parentAnimatorInterface.system
 
     const getSettings = (): AnimatorSettingsPartial => {
       const animatorGeneralSettings = animatorGeneralInterface?.getSettings()
 
+      const duration = {
+        ...animatorGeneralSettings?.duration,
+        ...settingsRef.current.duration
+      }
+
       return {
         ...animatorGeneralSettings,
         ...settingsRef.current,
-        ...dynamicSettingsRef.current,
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-        duration: {
-          ...animatorGeneralSettings?.duration,
-          ...settingsRef.current.duration,
-          ...dynamicSettingsRef.current?.duration
-        } as AnimatorDuration,
-        condition: (node: AnimatorNode): boolean =>
-          [settingsRef.current.condition, dynamicSettingsRef.current?.condition].every(
-            (condition) =>
-              typeof condition === 'function'
-                ? condition(node)
-                : typeof condition === 'boolean'
-                  ? condition
-                  : true
-          ),
-        onTransition: (node: AnimatorNode): void => {
-          settingsRef.current?.onTransition?.(node)
-          dynamicSettingsRef.current?.onTransition?.(node)
-        }
+        duration
       }
     }
 
-    const setSettings = (newSettings: AnimatorSettingsPartial | null): void => {
-      dynamicSettingsRef.current = newSettings
-    }
-
-    const getForeignRef = (): unknown => {
-      return foreignRef.current
-    }
-
-    const setForeignRef = (ref: unknown): void => {
-      foreignRef.current = ref
-    }
-
-    const control: AnimatorControl = Object.freeze({
-      getSettings,
-      setSettings,
-      getForeignRef,
-      setForeignRef
-    })
-
     const node = isRoot
-      ? system.register(undefined, control)
-      : system.register(parentAnimatorInterface.node, control)
+      ? system.register(undefined, { getSettings })
+      : system.register(parentAnimatorInterface.node, { getSettings })
 
     setNodeRefValue(nodeRef, node)
 

@@ -12,10 +12,10 @@ beforeEach(() => {
 })
 
 test('Should create parent and transition children when their conditions are met', async () => {
-  const parent = createAnimator(undefined, { combine: true })
-  const child1 = createAnimator(parent, { condition: false })
+  const parent = createAnimator(undefined, () => ({ combine: true }))
+  const child1 = createAnimator(parent, () => ({ condition: false }))
   const child2 = createAnimator(parent)
-  const child3 = createAnimator(parent, { condition: () => false })
+  const child3 = createAnimator(parent, () => ({ condition: () => false }))
   queueMicrotask(() => child1.node.send('setup'))
   queueMicrotask(() => child2.node.send('setup'))
   queueMicrotask(() => child3.node.send('setup'))
@@ -49,11 +49,11 @@ test('Should create parent and transition children when their conditions are met
 })
 
 test('Should create parent and transition children when conditions change over time and parent is refreshed', async () => {
-  const parent = createAnimator(undefined, { combine: true })
-  const child1 = createAnimator(parent, { condition: false })
-  const child2 = createAnimator(parent, { condition: true })
-  const child3 = createAnimator(parent, { condition: () => false })
-  const child4 = createAnimator(parent, { condition: () => true })
+  const parent = createAnimator(undefined, () => ({ combine: true }))
+  const child1 = createAnimator(parent, () => ({ condition: false }))
+  const child2 = createAnimator(parent, () => ({ condition: true }))
+  const child3 = createAnimator(parent, () => ({ condition: () => false }))
+  const child4 = createAnimator(parent, () => ({ condition: () => true }))
   queueMicrotask(() => child1.node.send('setup'))
   queueMicrotask(() => child2.node.send('setup'))
   queueMicrotask(() => child3.node.send('setup'))

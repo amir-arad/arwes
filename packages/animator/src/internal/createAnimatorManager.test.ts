@@ -1,7 +1,7 @@
 import { test, expect } from 'vitest'
 
-import type { AnimatorNode } from '../../types'
-import { ANIMATOR_MANAGER_NAMES } from '../../constants'
+import type { AnimatorNode } from '../types'
+import { ANIMATOR_MANAGER_NAMES } from '../constants'
 import { createAnimatorManager } from './createAnimatorManager'
 
 Object.values(ANIMATOR_MANAGER_NAMES).forEach((managerName) => {

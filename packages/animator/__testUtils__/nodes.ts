@@ -1,37 +1,26 @@
 /* istanbul ignore file */
 
-import type { AnimatorControl, AnimatorInterface, AnimatorSettingsPartial } from '../src/types'
+import type {
+  AnimatorSystemRegisterSetup,
+  AnimatorInterface,
+  AnimatorSettingsPartial
+} from '../src/types'
 import { createAnimatorSystem } from '../src/createAnimatorSystem'
 
 const createAnimator = (
   parentInterface?: AnimatorInterface,
-  initialSettings?: AnimatorSettingsPartial
+  getSettings?: () => AnimatorSettingsPartial
 ): AnimatorInterface => {
-  let settings: AnimatorSettingsPartial = {
-    ...initialSettings,
-    duration: { ...initialSettings?.duration }
-  }
-  let foreign: any = null
-
-  const control: AnimatorControl = {
-    getSettings: () => settings,
-    setSettings: (value) => {
-      settings = { ...settings, ...value, duration: { ...settings?.duration, ...value?.duration } }
-    },
-    getForeignRef: () => foreign,
-    setForeignRef: (value) => {
-      foreign = value
-    }
-  }
+  const setup: undefined | AnimatorSystemRegisterSetup = getSettings ? { getSettings } : undefined
 
   if (parentInterface) {
     const system = parentInterface.system
-    const node = system.register(parentInterface.node, control)
+    const node = system.register(parentInterface.node, setup)
     return { system, node }
   }
 
   const system = createAnimatorSystem()
-  const node = system.register(undefined, control)
+  const node = system.register(undefined, setup)
   return { system, node }
 }
 

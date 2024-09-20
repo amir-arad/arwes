@@ -1,9 +1,9 @@
-import type { AnimatorManagerName, AnimatorManager, AnimatorNode } from '../../types.js'
+import type { AnimatorManagerName, AnimatorManager, AnimatorNode } from '../types.js'
 import {
   ANIMATOR_MANAGER_NAMES as MANAGERS,
   ANIMATOR_ACTIONS as ACTIONS,
   ANIMATOR_STATES as STATES
-} from '../../constants.js'
+} from '../constants.js'
 
 type AnimatorManagerCreator = (node: AnimatorNode, name: AnimatorManagerName) => AnimatorManager
 

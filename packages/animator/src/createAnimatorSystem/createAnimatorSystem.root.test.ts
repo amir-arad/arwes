@@ -27,7 +27,7 @@ test('Should create node and transition', async () => {
 })
 
 test('Should create node with delay and transition', async () => {
-  const root = createAnimator(undefined, { duration: { delay: 0.1 } })
+  const root = createAnimator(undefined, () => ({ duration: { delay: 0.1 } }))
   queueMicrotask(() => root.node.send('setup'))
 
   expect(root.node.state).toBe('exited')
