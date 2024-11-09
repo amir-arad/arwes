@@ -59,78 +59,27 @@ export default (): JSX.Element => (
         <AR.Cell isHeader>Package</AR.Cell>
         <AR.Cell isHeader>Description</AR.Cell>
       </AR.Row>
-      <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
-        <AR.Cell>
-          <code>@arwes/tools</code>
-        </AR.Cell>
-        <AR.Cell>General browser utilities</AR.Cell>
-      </AR.Row>
-      <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
-        <AR.Cell>
-          <code>@arwes/theme</code>
-        </AR.Cell>
-        <AR.Cell>Visual themes scaffolding</AR.Cell>
-      </AR.Row>
-      <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
-        <AR.Cell>
-          <code>@arwes/styles</code>
-        </AR.Cell>
-        <AR.Cell>Special visual styles</AR.Cell>
-      </AR.Row>
-      <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
-        <AR.Cell>
-          <code>@arwes/animator</code>
-        </AR.Cell>
-        <AR.Cell>Interfaces assembling</AR.Cell>
-      </AR.Row>
-      <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
-        <AR.Cell>
-          <code>@arwes/animated</code>
-        </AR.Cell>
-        <AR.Cell>Animation sequences effects</AR.Cell>
-      </AR.Row>
-      <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
-        <AR.Cell>
-          <code>@arwes/bleeps</code>
-        </AR.Cell>
-        <AR.Cell>Short sounds management</AR.Cell>
-      </AR.Row>
-      <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
-        <AR.Cell>
-          <code>@arwes/text</code>
-        </AR.Cell>
-        <AR.Cell>Text rendering effects</AR.Cell>
-      </AR.Row>
-      <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
-        <AR.Cell>
-          <code>@arwes/frames</code>
-        </AR.Cell>
-        <AR.Cell>Responsive scalable vector graphics</AR.Cell>
-      </AR.Row>
-      <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
-        <AR.Cell>
-          <code>@arwes/bgs</code>
-        </AR.Cell>
-        <AR.Cell>Passive background ambiences</AR.Cell>
-      </AR.Row>
-      <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
-        <AR.Cell>
-          <code>@arwes/effects</code>
-        </AR.Cell>
-        <AR.Cell>Special effects</AR.Cell>
-      </AR.Row>
-      <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
-        <AR.Cell>
-          <code>@arwes/core</code>
-        </AR.Cell>
-        <AR.Cell>Integration functionalities</AR.Cell>
-      </AR.Row>
-      <AR.Row className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
-        <AR.Cell>
-          <code>arwes</code>
-        </AR.Cell>
-        <AR.Cell>All vanilla packages bundle</AR.Cell>
-      </AR.Row>
+      {[
+        { name: '@arwes/tools', description: 'General browser utilities' },
+        { name: '@arwes/theme', description: 'Visual themes scaffolding' },
+        { name: '@arwes/styles', description: 'Special visual styles' },
+        { name: '@arwes/animator', description: 'Interfaces assembling' },
+        { name: '@arwes/animated', description: 'Animation sequences effects' },
+        { name: '@arwes/bleeps', description: 'Short sounds management' },
+        { name: '@arwes/text', description: 'Text rendering effects' },
+        { name: '@arwes/frames', description: 'Responsive scalable vector graphics' },
+        { name: '@arwes/bgs', description: 'Passive background ambiences' },
+        { name: '@arwes/effects', description: 'Special effects' },
+        { name: '@arwes/core', description: 'Integration functionalities' },
+        { name: 'arwes', description: 'All vanilla packages bundle' }
+      ].map(({ name, description }) => (
+        <AR.Row key={name} className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
+          <AR.Cell>
+            <code>{name}</code>
+          </AR.Cell>
+          <AR.Cell>{description}</AR.Cell>
+        </AR.Row>
+      ))}
     </AR.Table>
 
     <AR.Navigation prevHref="/docs/develop" prev="Develop" />

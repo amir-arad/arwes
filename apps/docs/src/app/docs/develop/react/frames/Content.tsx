@@ -25,8 +25,8 @@ export default (): JSX.Element => (
         <code>positioned=&#123;false&#125;</code>.
       </li>
       <li>
-        Default styles for <code>stroke</code>, <code>stroke-width</code>, and <code>fill</code> can
-        be removed with <code>styled=&#123;false&#125;</code>.
+        Default styles for <code>stroke</code>, <code>fill</code>, and <code>filter</code> can be
+        removed with <code>styled=&#123;false&#125;</code>.
       </li>
       <li>
         Default animations for the animator system can be removed with{' '}
@@ -46,7 +46,7 @@ export default (): JSX.Element => (
 <div style={{ position: 'relative', width: 300, height: 300 }}>
   <FrameOctagon
     style={{
-      '--arwes-frames-line-color': '#20DFDF',
+      '--arwes-frames-line-color': 'hsl(180deg 75% 50%)',
       '--arwes-frames-bg-color': 'hsl(180deg 75% 50% / 10%)'
     }}
     animated={false}

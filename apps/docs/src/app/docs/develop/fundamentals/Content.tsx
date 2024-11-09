@@ -37,8 +37,8 @@ export default (): JSX.Element => (
 
     <AR.P>
       All ARWES tools and base components can be used to compose a design system as required or to
-      complement an existing one. If a new design system needs to be created, pro ui/ux design
-      skills are required, or existing design guidelines should be followed.
+      complement an existing one. If a new design system needs to be created, UI/UX design skills
+      are required, or existing design guidelines should be followed.
     </AR.P>
 
     <AR.P>Check out the guides on the framework fundamentals:</AR.P>

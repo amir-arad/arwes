@@ -227,10 +227,9 @@ import { animate } from 'motion'
 
     <AR.P>
       <code>&lt;Animated&gt;</code> animations will get their durations from their parent{' '}
-      <code>&lt;Animator&gt;</code> node, but they can be overwriten directly in the{' '}
-      <code>&lt;Animator&gt;</code> component or in the animation definitions. There are also other
-      settings which can be configured in both components. Keep in mind that all durations are
-      defined in seconds.
+      <code>&lt;Animator&gt;</code> node but they can be overwriten. There are also other settings
+      which can be configured in both components. Keep in mind that all durations are defined in
+      seconds.
     </AR.P>
 
     <AR.CodeBlock
@@ -241,6 +240,8 @@ import { animate } from 'motion'
 <Animator duration={{ enter: 0.7, exit: 0.3, delay: 0.25 }}>
   <Animated animated={[['opacity', 0, 1, undefined, spring()]]} />
 </Animator>
+
+{/* Or */}
 
 {/* Defining durations and timings in <Animated>. */}
 <Animator>
@@ -299,6 +300,30 @@ import { animate } from 'motion'
 
     <Example isPolished />
 
+    <AR.H2>
+      <code>&lt;AnimatorGeneralProvider&gt;</code>
+    </AR.H2>
+
+    <AR.P>
+      All <code>&lt;Animator&gt;</code> components in a tree can have default settings customized
+      using the <code>&lt;AnimatorGeneralProvider&gt;</code> component. It can be used mostly to
+      enable/disable animators and setup default durations.
+    </AR.P>
+
+    <AR.CodeBlock
+      lang="tsx"
+      code={`import { AnimatorGeneralProvider } from '@arwes/react'
+
+<AnimatorGeneralProvider
+  disabled={false}
+  duration={{ enter: 0.4, exit: 0.4, stagger: 0.04 }}
+>
+  <Animator>
+    {/* ... */}
+  </Animator>
+</AnimatorGeneralProvider>`}
+    />
+
     <AR.H2>Simplification</AR.H2>
 
     <AR.P>
@@ -350,8 +375,9 @@ const Card = (): JSX.Element => (
     />
 
     <AR.P>
-      This approach does not allow for modularity of animators since the animations are hard-coded.
-      This depends on the use case and performance constraints.
+      This approach restricts the flexibility because animations are hard-coded. But in isolated
+      components it can be a performance improvement. This depends on the use case and performance
+      constraints.
     </AR.P>
 
     <AR.H2>Animation Tools</AR.H2>

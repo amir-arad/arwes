@@ -95,7 +95,7 @@ export const tailwind: Config = {
       screens: createTWScreens(),
       colors: {
         primary: createTWPalette(theme.colors.primary, 10),
-        secondary: createTWPalette(theme.colors.primary, 10)
+        secondary: createTWPalette(theme.colors.secondary, 10)
       },
       // \`fontFamily\` can be passed just like this.
       fontFamily: theme.fontFamily

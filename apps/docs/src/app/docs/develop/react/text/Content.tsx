@@ -41,6 +41,12 @@ export default (): JSX.Element => (
 </Animator>`}
     />
 
+    <AR.P>
+      By default, it will dynamically update the parent animator duration settings to match the
+      length of the text content, unless configured with the prop{' '}
+      <code>fixed=&#123;true&#125;</code> to use the already provided duration by the animator.
+    </AR.P>
+
     <AR.H2>Sequence</AR.H2>
 
     <AR.P>
@@ -57,6 +63,7 @@ export default (): JSX.Element => (
 <Animator duration={{ enter: 2 }}>
   <Text
     as='div' // 'p' by default
+    // manager='sequence'
     // Since it has an internal HTML element, pass the 'style: CSSProperties' to it.
     contentStyle={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
     // It also accepts 'contentClassName: string'.
@@ -92,18 +99,12 @@ export default (): JSX.Element => (
 
 <Animator duration={{ enter: 1, exit: 1 }}>
   <Text className='text-decipher' manager='decipher' fixed>
-    Nebula
+    Pillars of Creation
   </Text>
 </Animator>`}
     />
 
     <ExampleTextDecipher />
-
-    <AR.P>
-      By default, it will dynamically update the parent animator duration settings to match the
-      length of the text content, unless configured with the prop <code>fixed=true</code> to use the
-      already provided duration by the animator.
-    </AR.P>
 
     <AR.P>
       Check out the{' '}

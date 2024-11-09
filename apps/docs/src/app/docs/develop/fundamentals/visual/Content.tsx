@@ -15,7 +15,7 @@ export default (): JSX.Element => (
     <AR.H2>Theming</AR.H2>
 
     <AR.P>
-      A theme is the design configuration for an app. It is mostly visual design settings and tokens
+      A theme is a design configuration for an app. It is mostly visual design settings and tokens
       but it can also contain other configurations for motion design or even audio design.
     </AR.P>
 
@@ -34,7 +34,7 @@ export default (): JSX.Element => (
         <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hsl" target="_blank">
           hsl
         </a>
-        ,{' '}
+        , or{' '}
         <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/rgb" target="_blank">
           rgb
         </a>

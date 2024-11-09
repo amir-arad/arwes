@@ -211,6 +211,10 @@ export const sandboxes = [
                   {
                     name: 'drawing',
                     code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrame/createFrame.drawing.sandbox.tsx')
+                  },
+                  {
+                    name: 'skewing',
+                    code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrame/createFrame.skewing.sandbox.tsx')
                   }
                 ]
               },

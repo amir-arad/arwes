@@ -8,19 +8,48 @@ import { type FrameBaseProps, FrameBase } from '../FrameBase/index.js'
 type FrameNefrexProps = Omit<FrameBaseProps, 'settings'> & CreateFrameNefrexSettingsProps
 
 const FrameNefrex = memo((props: FrameNefrexProps): JSX.Element => {
-  const { styled, squareSize, strokeWidth, smallLineLength, largeLineLength, padding } = props
+  const {
+    styled,
+    animated,
+    padding,
+    leftTop,
+    leftBottom,
+    rightTop,
+    rightBottom,
+    squareSize,
+    strokeWidth,
+    smallLineLength,
+    largeLineLength
+  } = props
 
   const settings = useMemo(
     () =>
       createFrameNefrexSettings({
         styled,
+        animated,
+        padding,
+        leftTop,
+        leftBottom,
+        rightTop,
+        rightBottom,
         squareSize,
         strokeWidth,
         smallLineLength,
-        largeLineLength,
-        padding
+        largeLineLength
       }),
-    [styled, squareSize, strokeWidth, smallLineLength, largeLineLength, padding]
+    [
+      styled,
+      animated,
+      padding,
+      leftTop,
+      leftBottom,
+      rightTop,
+      rightBottom,
+      squareSize,
+      strokeWidth,
+      smallLineLength,
+      largeLineLength
+    ]
   )
 
   return (

@@ -73,6 +73,7 @@ const renderFrameElements = (
         animator,
         settingsRef: {
           current: {
+            ...settings.animatedSettings,
             animated: settings.animated
           }
         }

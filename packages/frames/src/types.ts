@@ -1,5 +1,10 @@
 import type { AnimatorNode } from '@arwes/animator'
-import type { AnimatedProp, AnimatedCSSProps, AnimatedXAnimation } from '@arwes/animated'
+import type {
+  AnimatedProp,
+  AnimatedElementPropsSettings,
+  AnimatedCSSProps,
+  AnimatedXAnimation
+} from '@arwes/animated'
 
 type ContextType = Record<string, string>
 
@@ -8,6 +13,7 @@ export type FrameSettingsElementCommon<Contexts extends ContextType = ContextTyp
   id?: string
   className?: string
   style?: AnimatedCSSProps
+  animatedSettings?: Omit<AnimatedElementPropsSettings, 'animated'>
   animated?: AnimatedProp
   contexts?: {
     [C in keyof Contexts]?: {

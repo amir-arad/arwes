@@ -46,6 +46,10 @@ const createFrame = <Contexts extends Record<string, string> = Record<string, st
   }
 
   const draw = (): void => {
+    if (width <= 0 || height <= 0) {
+      return
+    }
+
     drawFrameElements(container, width, height, settings.elements, contexts)
   }
 

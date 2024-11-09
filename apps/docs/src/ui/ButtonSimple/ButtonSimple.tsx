@@ -57,6 +57,7 @@ const ButtonSimple = memo((props: ButtonSimpleProps): JSX.Element => {
           '--arwes-frames-line-color': 'currentcolor',
           '--arwes-frames-deco-color': 'currentcolor'
         }}
+        animated={false}
         cornerLength={theme.spacen(2)}
       />
       <Illuminator

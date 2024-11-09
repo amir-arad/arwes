@@ -212,9 +212,9 @@ export default (): JSX.Element => (
     <ExampleAnimated />
 
     <AR.P>
-      In the example above, there is one animator node, but the two border lines, the background
-      shape, and the text element, have different transition animations in different times with
-      different durations.
+      In the example above, there is only one animator node, but the two border lines, the
+      background shape, and the text element, listen to it and have different transition animations
+      in different times with different durations.
     </AR.P>
 
     <AR.H2>Dynamic Transitions</AR.H2>

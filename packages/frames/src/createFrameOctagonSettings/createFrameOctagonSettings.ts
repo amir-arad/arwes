@@ -1,5 +1,4 @@
 import { filterProps } from '@arwes/tools'
-import { type AnimatedProp, type AnimatedCSSProps, animateDraw } from '@arwes/animated'
 import type { FrameSettingsPathDefinition, FrameSettings } from '../types.js'
 
 type CreateFrameOctagonSettingsProps = {
@@ -45,24 +44,6 @@ const createFrameOctagonSettings = (props?: CreateFrameOctagonSettingsProps): Fr
   } = { ...defaultProps, ...(props ? filterProps(props) : null) }
 
   const so = strokeWidth / 2
-
-  const polylineStyle: AnimatedCSSProps = {
-    filter: styled ? 'var(--arwes-frames-line-filter)' : undefined,
-    fill: styled ? 'none' : undefined,
-    stroke: styled ? 'var(--arwes-frames-line-color, currentcolor)' : undefined,
-    strokeLinecap: styled ? 'round' : undefined,
-    strokeLinejoin: styled ? 'round' : undefined,
-    strokeWidth: String(strokeWidth)
-  }
-
-  const polylineAnimated: false | AnimatedProp = animated && {
-    transitions: {
-      entering: ({ element, duration }) =>
-        animateDraw({ element: element as SVGPathElement, duration, isEntering: true }),
-      exiting: ({ element, duration }) =>
-        animateDraw({ element: element as SVGPathElement, duration, isEntering: false })
-    }
-  }
 
   const leftTopPoints: Point[] = leftTop
     ? [
@@ -111,16 +92,27 @@ const createFrameOctagonSettings = (props?: CreateFrameOctagonSettingsProps): Fr
         path: polyline1.concat(polyline2)
       },
       {
-        name: 'line',
-        style: polylineStyle,
-        animated: polylineAnimated,
-        path: polyline1
-      },
-      {
-        name: 'line',
-        style: polylineStyle,
-        animated: polylineAnimated,
-        path: polyline2
+        type: 'g',
+        style: {
+          filter: styled ? 'var(--arwes-frames-line-filter)' : undefined,
+          fill: styled ? 'none' : undefined,
+          stroke: styled ? 'var(--arwes-frames-line-color, currentcolor)' : undefined,
+          strokeLinecap: styled ? 'round' : undefined,
+          strokeLinejoin: styled ? 'round' : undefined,
+          strokeWidth: String(strokeWidth)
+        },
+        elements: [
+          {
+            name: 'line',
+            animated: animated && ['draw'],
+            path: polyline1
+          },
+          {
+            name: 'line',
+            animated: animated && ['draw'],
+            path: polyline2
+          }
+        ]
       }
     ]
   }

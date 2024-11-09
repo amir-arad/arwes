@@ -49,7 +49,7 @@ const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
   common: {
     disabled: false
   },
-  categories: { // Relative to the master settings.
+  categories: { // Relative to the \`master\` settings.
     background: { volume: 0.25 },
     transition: { volume: 0.5 },
     interaction: { volume: 0.75 },
@@ -126,7 +126,9 @@ const Button = (): JSX.Element => {
 
     <ExampleButton />
 
-    <AR.H2>Bleeps On Animators</AR.H2>
+    <AR.H2>
+      <code>&lt;BleepsOnAnimator&gt;</code>
+    </AR.H2>
 
     <AR.P>Bleeps can play declaratively on an animator state change.</AR.P>
 
@@ -149,6 +151,12 @@ const Content = (): JSX.Element => (
     />
 
     <ExampleOnAnimator />
+
+    <AR.P>
+      <code>continuous=&#123;true&#125;</code> prop can be used to play bleeps even after the state
+      specified changes. For non-loop bleeps which have longer audio durations than the animator
+      state change duration.
+    </AR.P>
 
     <AR.P>
       Check out the{' '}

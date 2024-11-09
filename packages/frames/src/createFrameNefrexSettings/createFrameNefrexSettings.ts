@@ -1,11 +1,15 @@
 import { filterProps } from '@arwes/tools'
-import { type AnimatedCSSProps } from '@arwes/animated'
 import type { FrameSettingsElement, FrameSettingsPathDefinition, FrameSettings } from '../types.js'
 
 type CreateFrameNefrexSettingsProps = {
   styled?: boolean
-  squareSize?: number
+  animated?: boolean
   padding?: number
+  leftTop?: boolean
+  leftBottom?: boolean
+  rightTop?: boolean
+  rightBottom?: boolean
+  squareSize?: number
   strokeWidth?: number
   smallLineLength?: number
   largeLineLength?: number
@@ -13,81 +17,153 @@ type CreateFrameNefrexSettingsProps = {
 
 const defaultProps: Required<CreateFrameNefrexSettingsProps> = {
   styled: true,
+  animated: true,
+  padding: 0,
+  leftTop: true,
+  leftBottom: false,
+  rightTop: false,
+  rightBottom: true,
   squareSize: 16,
   strokeWidth: 1,
   smallLineLength: 16,
-  largeLineLength: 64,
-  padding: 0
+  largeLineLength: 64
 }
-
-type Point = [number | string, number | string]
-
-const toPath = (points: Point[]): FrameSettingsPathDefinition =>
-  points.map((p, i) => [i === 0 ? 'M' : 'L', ...p])
 
 const createFrameNefrexSettings = (props?: CreateFrameNefrexSettingsProps): FrameSettings => {
   const {
     styled,
+    animated,
+    padding: p,
+    leftTop,
+    leftBottom,
+    rightTop,
+    rightBottom,
     squareSize: ss,
     strokeWidth,
-    smallLineLength: sll,
-    largeLineLength: lll,
-    padding: p
+    smallLineLength,
+    largeLineLength
   } = { ...defaultProps, ...(props ? filterProps(props) : null) }
 
   const so = strokeWidth / 2 // Stroke offset.
 
-  const polylineStyle: AnimatedCSSProps | undefined = styled
-    ? {
-        filter: 'var(--arwes-frames-line-filter)',
-        stroke: 'var(--arwes-frames-line-color, currentcolor)',
-        strokeLinecap: 'round',
-        strokeLinejoin: 'round',
-        strokeWidth: String(strokeWidth),
-        fill: 'none'
-      }
-    : undefined
+  const bgLeftTop: FrameSettingsPathDefinition = leftTop
+    ? [
+        ['M', p + so, p + so + ss + smallLineLength],
+        ['v', -smallLineLength],
+        ['l', ss, -ss],
+        ['h', largeLineLength]
+      ]
+    : [['M', p + so, p + so]]
 
-  const leftTopLine: Point[] = [
-    [so + p, sll + ss + so + p],
-    [so + p, ss + so + p],
-    [ss + so + p, so + p],
-    [ss + lll + so + p, so + p]
-  ]
+  const bgRightTop: FrameSettingsPathDefinition = rightTop
+    ? [
+        ['L', `100% - ${p + so + ss + largeLineLength}`, p + so],
+        ['h', largeLineLength],
+        ['l', ss, ss],
+        ['v', smallLineLength]
+      ]
+    : [['L', `100% - ${p + so}`, p + so]]
 
-  const rightBottomLine: Point[] = [
-    [`100% - ${so + p}`, `100% - ${sll + ss + so + p}`],
-    [`100% - ${so + p}`, `100% - ${ss + so + p}`],
-    [`100% - ${ss + so + p}`, `100% - ${so + p}`],
-    [`100% - ${ss + lll + so + p}`, `100% - ${so + p}`]
-  ]
+  const bgRightBottom: FrameSettingsPathDefinition = rightBottom
+    ? [
+        ['L', `100% - ${p + so}`, `100% - ${p + so + ss + smallLineLength}`],
+        ['v', smallLineLength],
+        ['l', -ss, ss],
+        ['h', -largeLineLength]
+      ]
+    : [['L', `100% - ${p + so}`, `100% - ${p + so}`]]
+
+  const bgLeftBottom: FrameSettingsPathDefinition = leftBottom
+    ? [
+        ['L', p + so + ss + largeLineLength, `100% - ${p + so}`],
+        ['h', -largeLineLength],
+        ['l', -ss, -ss],
+        ['v', -smallLineLength]
+      ]
+    : [['L', p + so, `100% - ${p + so}`]]
 
   const elements: FrameSettingsElement[] = [
     {
       name: 'bg',
-      style: styled
-        ? {
-            strokeWidth: 0,
-            fill: 'var(--arwes-frames-bg-color, currentcolor)',
-            filter: 'var(--arwes-frames-bg-filter)'
-          }
-        : undefined,
-      path: toPath(
-        leftTopLine
-          .concat([[`100% - ${so + p}`, so + p]])
-          .concat(rightBottomLine)
-          .concat([[so + p, `100% - ${so + p}`]])
-      ).concat('Z')
+      style: {
+        filter: styled ? 'var(--arwes-frames-bg-filter)' : undefined,
+        fill: styled ? 'var(--arwes-frames-bg-color, currentcolor)' : undefined,
+        strokeWidth: 0
+      },
+      animated: animated && {
+        transitions: {
+          entering: ({ element, duration, animate }) =>
+            animate(element, { opacity: [0, 1] }, { duration: duration / 2, delay: duration / 2 }),
+          exiting: ({ element, duration, animate }) =>
+            animate(element, { opacity: [1, 0] }, { duration: duration / 2 })
+        }
+      },
+      path: bgLeftTop.concat(bgRightTop).concat(bgRightBottom).concat(bgLeftBottom)
     },
     {
-      name: 'line',
-      style: polylineStyle,
-      path: toPath(leftTopLine)
-    },
-    {
-      name: 'line',
-      style: polylineStyle,
-      path: toPath(rightBottomLine)
+      type: 'g',
+      style: {
+        filter: styled ? 'var(--arwes-frames-line-filter)' : undefined,
+        fill: styled ? 'none' : undefined,
+        stroke: styled ? 'var(--arwes-frames-line-color, currentcolor)' : undefined,
+        strokeLinecap: styled ? 'round' : undefined,
+        strokeLinejoin: styled ? 'round' : undefined,
+        strokeWidth: String(strokeWidth)
+      },
+      elements: [
+        {
+          type: 'g',
+          animated: animated && [['x', ss, 0, undefined, 'outExpo']],
+          elements: [
+            leftTop && {
+              name: 'line',
+              animated: animated && ['draw'],
+              path: [
+                ['M', p + so, p + so + ss + smallLineLength],
+                ['v', -smallLineLength],
+                ['l', ss, -ss],
+                ['h', largeLineLength]
+              ]
+            },
+            leftBottom && {
+              name: 'line',
+              animated: animated && ['draw'],
+              path: [
+                ['M', p + so, `100% - ${p + so + ss + smallLineLength}`],
+                ['v', smallLineLength],
+                ['l', ss, ss],
+                ['h', largeLineLength]
+              ]
+            }
+          ].filter(Boolean) as FrameSettingsElement[]
+        },
+        {
+          type: 'g',
+          animated: animated && [['x', -ss, 0, undefined, 'outExpo']],
+          elements: [
+            rightTop && {
+              name: 'line',
+              animated: animated && ['draw'],
+              path: [
+                ['M', `100% - ${p + so}`, p + so + ss + smallLineLength],
+                ['v', -smallLineLength],
+                ['l', -ss, -ss],
+                ['h', -largeLineLength]
+              ]
+            },
+            rightBottom && {
+              name: 'line',
+              animated: animated && ['draw'],
+              path: [
+                ['M', `100% - ${p + so}`, `100% - ${p + so + ss + smallLineLength}`],
+                ['v', smallLineLength],
+                ['l', -ss, ss],
+                ['h', -largeLineLength]
+              ]
+            }
+          ].filter(Boolean) as FrameSettingsElement[]
+        }
+      ]
     }
   ]
 

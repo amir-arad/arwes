@@ -19,7 +19,7 @@ const Example = (): JSX.Element => {
           hideOnExited={false}
         >
           <Text className="!m-0 !font-code !text-size-4" manager="decipher" fixed>
-            Nebula
+            Pillars of Creation
           </Text>
         </Animated>
       </Animator>

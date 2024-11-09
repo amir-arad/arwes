@@ -56,6 +56,7 @@ const Button = memo((props: ButtonProps): JSX.Element => {
           '--arwes-frames-bg-color': theme.colors.secondary.main(2, { alpha: 0.1 }),
           '--arwes-frames-line-color': theme.colors.secondary.main(2, { alpha: 0.5 })
         }}
+        animated={false}
         leftBottom={false}
         rightTop={false}
         squareSize={theme.spacen(2)}

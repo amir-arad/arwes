@@ -63,9 +63,13 @@ export default (): JSX.Element => (
       <a href="https://github.com/propjockey/augmented-ui" target="_blank">
         Augmented UI
       </a>{' '}
-      to create frames using{' '}
+      (frames using{' '}
       <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path" target="_blank">
         CSS <code>clip-path</code>
+      </a>
+      ) or{' '}
+      <a href="https://rive.app" target="_blank">
+        Rive
       </a>
       . Otherwise, ARWES Frames can be the solution.
     </AR.P>

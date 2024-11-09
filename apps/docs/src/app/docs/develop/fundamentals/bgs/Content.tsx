@@ -1,6 +1,7 @@
 'use client'
 
 import { AR } from '@/ui'
+import { ExampleBgs } from './ExampleBgs'
 
 export default (): JSX.Element => (
   <>
@@ -12,10 +13,7 @@ export default (): JSX.Element => (
       common sci-fi effects.
     </AR.P>
 
-    <AR.Playground
-      className="h-[30rem]"
-      url="?code=&type=predefined&sandbox=React%7CExamples%7Cbackgrounds&editor=false&preview=true&explorer=false"
-    />
+    <ExampleBgs />
 
     <AR.P>
       They are 2D Canvas HTML elements with configurable visual effects. Some of them offer common

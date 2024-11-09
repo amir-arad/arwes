@@ -1,4 +1,4 @@
-import { Children } from 'react'
+import { Children, useEffect, useRef } from 'react'
 import {
   Animated,
   FrameOctagon,
@@ -9,9 +9,10 @@ import {
   Animator,
   BleepsOnAnimator
 } from '@arwes/react'
-import { useMedia } from 'react-use'
+import { usePathname } from 'next/navigation'
 
 import { type BleepNames, theme } from '@/config'
+import { useAppBreakpoint } from '@/tools'
 
 type LayoutContentProps = {
   className?: string
@@ -27,8 +28,17 @@ const MAIN_WIDTH_CLASS = 'w-full min-w-0 max-w-[50rem] min-h-0'
 const LayoutContent = memo((props: LayoutContentProps): JSX.Element => {
   const { className, left, right, children } = props
 
-  const isLG = useMedia(theme.breakpoints.up('lg', { strip: true }), false)
-  const isXL = useMedia(theme.breakpoints.up('xl', { strip: true }), false)
+  const pathname = usePathname()
+  const overflowElementRef = useRef<HTMLDivElement>(null)
+  const isLG = useAppBreakpoint('lg')
+  const isXL = useAppBreakpoint('xl')
+
+  useEffect(() => {
+    const overflowElement = overflowElementRef.current
+    if (overflowElement) {
+      overflowElement.scrollTop = 0
+    }
+  }, [pathname])
 
   return (
     <Animator combine>
@@ -40,6 +50,7 @@ const LayoutContent = memo((props: LayoutContentProps): JSX.Element => {
           className
         )}
       >
+        {/* Background elements. */}
         <Animator duration={{ delay: isLG ? 0.2 : 0 }}>
           <div
             role="presentation"
@@ -84,6 +95,7 @@ const LayoutContent = memo((props: LayoutContentProps): JSX.Element => {
           </div>
         </Animator>
 
+        {/* Content elements. */}
         <div
           className={cx(
             'relative flex-1 flex justify-center pb-2 w-full min-w-0 min-h-0',
@@ -91,6 +103,7 @@ const LayoutContent = memo((props: LayoutContentProps): JSX.Element => {
           )}
         >
           <div
+            ref={overflowElementRef}
             className={cx(
               'flex-1 overflow-y-auto flex justify-center gap-4 px-2',
               'md:px-4',

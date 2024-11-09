@@ -22,7 +22,7 @@ const LineMinor = (props: { children: ReactNode; offset?: number }): JSX.Element
 
 const CommunityLoadingScreen = memo((): JSX.Element => {
   return (
-    <AnimatorGeneralProvider duration={{ enter: 0.15, stagger: 0.075 }}>
+    <AnimatorGeneralProvider duration={{ enter: 0.1, stagger: 0.07 }}>
       <Animator combine manager="stagger" unmountOnEntered unmountOnDisabled>
         <div className="absolute inset-0 flex justify-center items-center p-2 md:p-4">
           <Animated
@@ -31,18 +31,21 @@ const CommunityLoadingScreen = memo((): JSX.Element => {
               'md:text-size-9',
               'xl:text-size-8'
             )}
-            animated={{
-              transitions: {
-                entering: ({ element, duration, animate }) => {
-                  element.style.opacity = '1'
-                  return animate(
-                    element,
-                    { opacity: [1, 0, 0.5, 0] },
-                    { delay: duration - 0.2, duration: 0.2 }
-                  )
+            animated={[
+              {
+                transitions: {
+                  entering: ({ element, duration, animate }) => {
+                    element.style.opacity = '1'
+                    return animate(
+                      element,
+                      { opacity: [1, 0, 0.5, 0] },
+                      { delay: duration - 0.2, duration: 0.2 }
+                    )
+                  }
                 }
-              }
-            }}
+              },
+              ['y', '2rem', 0, 0, 'outExpo']
+            ]}
           >
             <LineMajor>Loading community projects...</LineMajor>
             <LineMajor offset={0.1}> Initializing internet scanner...</LineMajor>

@@ -35,6 +35,7 @@ const Card = (props: CardProps): JSX.Element => {
         className="opacity-70 transition-all ease-out duration-200 group-hover:opacity-100"
         strokeWidth={4}
         styled={false}
+        animated={false}
       />
 
       <Animated className="font-code leading-none text-size-12 text-primary-main-3/20 md:text-size-11">
