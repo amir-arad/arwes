@@ -94,8 +94,12 @@ const createFrameNefrexSettings = (props?: CreateFrameNefrexSettingsProps): Fram
         transitions: {
           entering: ({ element, duration, animate }) =>
             animate(element, { opacity: [0, 1] }, { duration: duration / 2, delay: duration / 2 }),
-          exiting: ({ element, duration, animate }) =>
-            animate(element, { opacity: [1, 0] }, { duration: duration / 2 })
+          exiting: ({ element, duration, animate, easing }) =>
+            animate(
+              element,
+              { opacity: [1, 0] },
+              { duration: duration / 2, easing: easing.outExpo }
+            )
         }
       },
       path: bgLeftTop.concat(bgRightTop).concat(bgRightBottom).concat(bgLeftBottom)

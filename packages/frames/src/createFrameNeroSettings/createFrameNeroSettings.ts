@@ -73,9 +73,14 @@ const createFrameNeroSettings = (props?: CreateFrameNeroSettingsProps): FrameSet
           }
         },
         elements: [
+          // Left Top
           {
             type: 'path',
             name: 'deco',
+            animated: animated && [
+              ['x', cornerHalf, 0, undefined, 'outExpo'],
+              ['y', cornerHalf, 0, undefined, 'outExpo']
+            ],
             path: [
               ['M', p, p],
               ['h', cornerLength],
@@ -85,17 +90,16 @@ const createFrameNeroSettings = (props?: CreateFrameNeroSettingsProps): FrameSet
               ['v', cornerHalf],
               ['l', -cornerWidth, cornerWidth],
               'z'
-            ],
-            animated: animated && {
-              transitions: {
-                entering: { x: [cornerLength, 0], y: [cornerLength, 0], easing: 'outExpo' },
-                exiting: { x: [0, cornerLength], y: [0, cornerLength], easing: 'outExpo' }
-              }
-            }
+            ]
           },
+          // Right Top
           {
             type: 'path',
             name: 'deco',
+            animated: animated && [
+              ['x', -cornerHalf, 0, undefined, 'outExpo'],
+              ['y', cornerHalf, 0, undefined, 'outExpo']
+            ],
             path: [
               ['M', `100% - ${p}`, p],
               ['v', cornerLength],
@@ -105,17 +109,16 @@ const createFrameNeroSettings = (props?: CreateFrameNeroSettingsProps): FrameSet
               ['h', -cornerHalf],
               ['l', -cornerWidth, -cornerWidth],
               'z'
-            ],
-            animated: animated && {
-              transitions: {
-                entering: { x: [-cornerLength, 0], y: [cornerLength, 0], easing: 'outExpo' },
-                exiting: { x: [0, -cornerLength], y: [0, cornerLength], easing: 'outExpo' }
-              }
-            }
+            ]
           },
+          // Right Bottom
           {
             type: 'path',
             name: 'deco',
+            animated: animated && [
+              ['x', -cornerHalf, 0, undefined, 'outExpo'],
+              ['y', -cornerHalf, 0, undefined, 'outExpo']
+            ],
             path: [
               ['M', `100% - ${p}`, `100% - ${p}`],
               ['h', -cornerLength],
@@ -125,17 +128,16 @@ const createFrameNeroSettings = (props?: CreateFrameNeroSettingsProps): FrameSet
               ['v', -cornerHalf],
               ['l', cornerWidth, -cornerWidth],
               'z'
-            ],
-            animated: animated && {
-              transitions: {
-                entering: { x: [-cornerLength, 0], y: [-cornerLength, 0], easing: 'outExpo' },
-                exiting: { x: [0, -cornerLength], y: [0, -cornerLength], easing: 'outExpo' }
-              }
-            }
+            ]
           },
+          // Left Bottom
           {
             type: 'path',
             name: 'deco',
+            animated: animated && [
+              ['x', cornerHalf, 0, undefined, 'outExpo'],
+              ['y', -cornerHalf, 0, undefined, 'outExpo']
+            ],
             path: [
               ['M', p, `100% - ${p}`],
               ['h', cornerLength],
@@ -145,13 +147,7 @@ const createFrameNeroSettings = (props?: CreateFrameNeroSettingsProps): FrameSet
               ['v', -cornerHalf],
               ['l', -cornerWidth, -cornerWidth],
               'z'
-            ],
-            animated: animated && {
-              transitions: {
-                entering: { x: [cornerLength, 0], y: [-cornerLength, 0], easing: 'outExpo' },
-                exiting: { x: [0, cornerLength], y: [0, -cornerLength], easing: 'outExpo' }
-              }
-            }
+            ]
           }
         ]
       }

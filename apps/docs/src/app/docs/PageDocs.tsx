@@ -7,7 +7,6 @@ import {
   DesignNib as IconDocsDesign,
   Community as IconDocsCommunity
 } from 'iconoir-react'
-import { animate, stagger } from 'motion'
 
 import { Hr, Card, ArwesLogoIcon } from '@/ui'
 
@@ -31,7 +30,7 @@ const PageDocs = (): JSX.Element => {
                 { transitions: { entering: { opacity: 0, delay: 0.75, duration: 0.25 } } },
                 {
                   transitions: {
-                    entering: ({ $ }) =>
+                    entering: ({ $, animate, stagger }) =>
                       animate(
                         [...$('[data-name="out"]'), ...$('[data-name="center"]')],
                         { opacity: [0, 1, 0.5, 1] },
@@ -41,7 +40,7 @@ const PageDocs = (): JSX.Element => {
                 },
                 {
                   transitions: {
-                    entering: ({ $ }) =>
+                    entering: ({ $, animate }) =>
                       animate(
                         $('[data-name="out-bg"], [data-name="middle"]'),
                         { opacity: [0, 1] },
@@ -72,7 +71,12 @@ const PageDocs = (): JSX.Element => {
                 </Animator>
 
                 <Animator>
-                  <Hr className="!m-0 origin-left" animated={[['scaleX', 0, 1]]} direction="both" />
+                  <Hr
+                    className="!m-0 origin-left"
+                    size={2}
+                    animated={[['scaleX', 0, 1]]}
+                    direction="both"
+                  />
                 </Animator>
 
                 <Animator>
@@ -109,7 +113,7 @@ const PageDocs = (): JSX.Element => {
                     className="flex flex-row flex-wrap !m-0 gap-1 lg:flex-nowrap"
                     animated={{
                       transitions: {
-                        entering: ({ $, duration }) =>
+                        entering: ({ $, duration, animate, stagger }) =>
                           animate(
                             $('a'),
                             { opacity: [0, 1, 0.5, 1] },

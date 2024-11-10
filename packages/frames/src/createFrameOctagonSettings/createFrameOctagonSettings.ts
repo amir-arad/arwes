@@ -25,11 +25,6 @@ const defaultProps: Required<CreateFrameOctagonSettingsProps> = {
   strokeWidth: 1
 }
 
-type Point = [number | string, number | string]
-
-const toPath = (points: Point[]): FrameSettingsPathDefinition =>
-  points.map((p, i) => [i === 0 ? 'M' : 'L', ...p])
-
 const createFrameOctagonSettings = (props?: CreateFrameOctagonSettingsProps): FrameSettings => {
   const {
     styled,
@@ -45,43 +40,10 @@ const createFrameOctagonSettings = (props?: CreateFrameOctagonSettingsProps): Fr
 
   const so = strokeWidth / 2
 
-  const leftTopPoints: Point[] = leftTop
-    ? [
-        [squareSize + so + p, so + p],
-        [so + p, squareSize + so + p]
-      ]
-    : [[so + p, so + p]]
-
-  const leftBottomPoints: Point[] = leftBottom
-    ? [
-        [so + p, `100% - ${squareSize + p}`],
-        [squareSize + so + p, `100% - ${so + p}`]
-      ]
-    : [[so + p, `100% - ${so + p}`]]
-
-  const rightBottomPoints: Point[] = rightBottom
-    ? [
-        [`100% - ${squareSize + so + p}`, `100% - ${so + p}`],
-        [`100% - ${so + p}`, `100% - ${squareSize + so + p}`]
-      ]
-    : [[`100% - ${so + p}`, `100% - ${so + p}`]]
-
-  const rightTopPoints: Point[] = rightTop
-    ? [
-        [`100% - ${so + p}`, squareSize - so + p],
-        [`100% - ${squareSize - so + p}`, so + p]
-      ]
-    : [[`100% - ${so + p}`, so + p]]
-
-  // leftTop > leftBottom > rightBottom
-  const polyline1 = toPath([...leftTopPoints, ...leftBottomPoints, rightBottomPoints[0]])
-
-  // rightBottom > rightTop > leftTop
-  const polyline2 = toPath([...rightBottomPoints, ...rightTopPoints, leftTopPoints[0]])
-
   return {
     elements: [
       {
+        type: 'path',
         name: 'bg',
         style: {
           filter: styled ? 'var(--arwes-frames-bg-filter)' : undefined,
@@ -89,7 +51,33 @@ const createFrameOctagonSettings = (props?: CreateFrameOctagonSettingsProps): Fr
           strokeWidth: 0
         },
         animated: animated && ['fade'],
-        path: polyline1.concat(polyline2)
+        path: [
+          ...(leftTop
+            ? [
+                ['M', p + so, p + so + squareSize],
+                ['l', squareSize, -squareSize]
+              ]
+            : [['M', p + so, p + so]]),
+          ...(rightTop
+            ? [
+                ['H', `100% - ${p + so + squareSize}`],
+                ['l', squareSize, squareSize]
+              ]
+            : [['H', `100% - ${p + so}`]]),
+          ...(rightBottom
+            ? [
+                ['V', `100% - ${p + so + squareSize}`],
+                ['l', -squareSize, squareSize]
+              ]
+            : [['V', `100% - ${p + so}`]]),
+          ...(leftBottom
+            ? [
+                ['H', p + so + squareSize],
+                ['l', -squareSize, -squareSize]
+              ]
+            : [['H', p + so]]),
+          'Z'
+        ] as FrameSettingsPathDefinition
       },
       {
         type: 'g',
@@ -102,15 +90,49 @@ const createFrameOctagonSettings = (props?: CreateFrameOctagonSettingsProps): Fr
           strokeWidth: String(strokeWidth)
         },
         elements: [
+          // Left Top > Right Top > Right Bottom
           {
+            type: 'path',
             name: 'line',
             animated: animated && ['draw'],
-            path: polyline1
+            path: [
+              ...(leftTop
+                ? [
+                    ['M', p + so, p + so + squareSize],
+                    ['l', squareSize, -squareSize]
+                  ]
+                : [['M', p + so, p + so]]),
+              ...(rightTop
+                ? [
+                    ['H', `100% - ${p + so + squareSize}`],
+                    ['l', squareSize, squareSize]
+                  ]
+                : [['H', `100% - ${p + so}`]]),
+              ...(rightBottom
+                ? [['V', `100% - ${p + so + squareSize}`]]
+                : [['V', `100% - ${p + so}`]])
+            ] as FrameSettingsPathDefinition
           },
+          // Right Bottom > Left Bottom > Left Top
           {
+            type: 'path',
             name: 'line',
             animated: animated && ['draw'],
-            path: polyline2
+            path: [
+              ...(rightBottom
+                ? [
+                    ['M', `100% - ${p + so}`, `100% - ${p + so + squareSize}`],
+                    ['l', -squareSize, squareSize]
+                  ]
+                : [['M', `100% - ${p + so}`, `100% - ${p + so}`]]),
+              ...(leftBottom
+                ? [
+                    ['H', p + so + squareSize],
+                    ['l', -squareSize, -squareSize]
+                  ]
+                : [['H', p + so]]),
+              ...(leftTop ? [['V', p + so + squareSize]] : [['V', p + so]])
+            ] as FrameSettingsPathDefinition
           }
         ]
       }

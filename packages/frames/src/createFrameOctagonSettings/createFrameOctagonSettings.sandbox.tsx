@@ -50,7 +50,7 @@ createFrame(root.querySelector('.frame2')!, {
     leftTop: false,
     rightBottom: false,
     squareSize: 32,
-    strokeWidth: 2
+    strokeWidth: 3
   })
 })
 

@@ -63,11 +63,7 @@ export default (): JSX.Element => (
       <a href="https://github.com/propjockey/augmented-ui" target="_blank">
         Augmented UI
       </a>{' '}
-      (frames using{' '}
-      <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path" target="_blank">
-        CSS <code>clip-path</code>
-      </a>
-      ) or{' '}
+      or{' '}
       <a href="https://rive.app" target="_blank">
         Rive
       </a>
