@@ -1,9 +1,9 @@
 import { filterProps } from '@arwes/tools'
-import { type AnimatedCSSProps } from '@arwes/animated'
-import type { FrameSettingsPathDefinition, FrameSettingsElement, FrameSettings } from '../types.js'
+import type { FrameSettingsPathDefinition, FrameSettings } from '../types.js'
 
 type CreateFrameKranoxSettingsProps = {
   styled?: boolean
+  animated?: boolean
   padding?: number
   strokeWidth?: number
   bgStrokeWidth?: number
@@ -14,6 +14,7 @@ type CreateFrameKranoxSettingsProps = {
 
 const defaultProps: Required<CreateFrameKranoxSettingsProps> = {
   styled: true,
+  animated: true,
   padding: 0,
   strokeWidth: 2,
   bgStrokeWidth: 0,
@@ -30,6 +31,7 @@ const toPath = (points: Point[]): FrameSettingsPathDefinition =>
 const createFrameKranoxSettings = (props?: CreateFrameKranoxSettingsProps): FrameSettings => {
   const {
     styled,
+    animated,
     padding: p,
     strokeWidth: sw,
     bgStrokeWidth: bsw,
@@ -40,17 +42,6 @@ const createFrameKranoxSettings = (props?: CreateFrameKranoxSettingsProps): Fram
 
   const so = sw / 2 // Stroke offset.
   const bso = bsw / 2 // Background stroke offset.
-
-  const polylineStyle: AnimatedCSSProps | undefined = styled
-    ? {
-        stroke: 'var(--arwes-frames-line-color, currentcolor)',
-        strokeLinecap: 'round',
-        strokeLinejoin: 'round',
-        strokeWidth: String(sw),
-        fill: 'none',
-        filter: 'var(--arwes-frames-line-filter)'
-      }
-    : undefined
 
   // Left-bottom > left-top > right-top.
   const leftTopBgPolyline: Point[] = [
@@ -100,31 +91,44 @@ const createFrameKranoxSettings = (props?: CreateFrameKranoxSettingsProps): Fram
     [`100% - ${p + so + ss * 2 + lll} + ${sw * 2}`, `100% - ${p + so}`]
   ]
 
-  const elements: FrameSettingsElement[] = [
-    {
-      name: 'bg',
-      style: styled
-        ? {
-            strokeWidth: 0,
-            fill: 'var(--arwes-frames-bg-color, currentcolor)',
-            filter: 'var(--arwes-frames-bg-filter)'
+  return {
+    elements: [
+      {
+        name: 'bg',
+        style: {
+          filter: styled ? 'var(--arwes-frames-bg-filter)' : undefined,
+          fill: styled ? 'var(--arwes-frames-bg-color, currentcolor)' : undefined,
+          stroke: styled ? 'var(--arwes-frames-deco-color, currentcolor)' : undefined,
+          strokeWidth: String(bsw)
+        },
+        animated: animated && ['fade'],
+        path: toPath(leftTopBgPolyline.concat(rightBottomBgPolyline))
+      },
+      {
+        type: 'g',
+        style: {
+          filter: styled ? 'var(--arwes-frames-line-filter)' : undefined,
+          fill: styled ? 'none' : undefined,
+          stroke: styled ? 'var(--arwes-frames-line-color, currentcolor)' : undefined,
+          strokeLinecap: styled ? 'round' : undefined,
+          strokeLinejoin: styled ? 'round' : undefined,
+          strokeWidth: String(sw)
+        },
+        elements: [
+          {
+            name: 'line',
+            animated: animated && ['draw'],
+            path: toPath(leftTopLine)
+          },
+          {
+            name: 'line',
+            animated: animated && ['draw'],
+            path: toPath(rightBottomLine)
           }
-        : undefined,
-      path: toPath(leftTopBgPolyline.concat(rightBottomBgPolyline))
-    },
-    {
-      name: 'line',
-      style: polylineStyle,
-      path: toPath(leftTopLine)
-    },
-    {
-      name: 'line',
-      style: polylineStyle,
-      path: toPath(rightBottomLine)
-    }
-  ]
-
-  return { elements }
+        ]
+      }
+    ]
+  }
 }
 
 export type { CreateFrameKranoxSettingsProps }

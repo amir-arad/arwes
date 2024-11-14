@@ -10,6 +10,7 @@ type FrameKranoxProps = Omit<FrameBaseProps, 'settings'> & CreateFrameKranoxSett
 const FrameKranox = memo((props: FrameKranoxProps): JSX.Element => {
   const {
     styled,
+    animated,
     padding,
     strokeWidth,
     bgStrokeWidth,
@@ -22,6 +23,7 @@ const FrameKranox = memo((props: FrameKranoxProps): JSX.Element => {
     () =>
       createFrameKranoxSettings({
         styled,
+        animated,
         padding,
         strokeWidth,
         bgStrokeWidth,
@@ -29,7 +31,16 @@ const FrameKranox = memo((props: FrameKranoxProps): JSX.Element => {
         smallLineLength,
         largeLineLength
       }),
-    [styled, padding, strokeWidth, bgStrokeWidth, squareSize, smallLineLength, largeLineLength]
+    [
+      styled,
+      animated,
+      padding,
+      strokeWidth,
+      bgStrokeWidth,
+      squareSize,
+      smallLineLength,
+      largeLineLength
+    ]
   )
   return (
     <FrameBase

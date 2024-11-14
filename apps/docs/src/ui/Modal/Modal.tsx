@@ -55,6 +55,7 @@ const Modal = memo((props: ModalProps): JSX.Element => {
           elementRef={frameRef}
           className={styles.frame}
           styled={false}
+          animated={false}
           padding={2}
           strokeWidth={2}
           bgStrokeWidth={1}
