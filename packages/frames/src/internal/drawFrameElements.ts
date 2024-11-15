@@ -35,7 +35,9 @@ const drawFrameElements = (
       const d =
         typeof settings.path === 'string'
           ? settings.path
-          : formatFramePath(width, height, settings.path)
+          : typeof settings.path === 'function'
+            ? settings.path({ width, height })
+            : formatFramePath(width, height, settings.path)
 
       if (element.getAttribute('d') !== d) {
         element.setAttribute('d', d)

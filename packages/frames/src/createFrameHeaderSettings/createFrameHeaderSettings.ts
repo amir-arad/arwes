@@ -1,5 +1,5 @@
 import { filterProps } from '@arwes/tools'
-import { animateDraw, type AnimatedCSSProps, type AnimatedProp } from '@arwes/animated'
+import { type AnimatedCSSProps, type AnimatedProp } from '@arwes/animated'
 import type { FrameSettings, FrameSettingsElement } from '../types.js'
 import { animate } from 'motion'
 
@@ -39,9 +39,6 @@ const createFrameHeaderSettings = (props?: CreateFrameHeaderSettingsProps): Fram
 
   const strokeOffset = strokeWidth / 2
 
-  // TODO: Replace with dynamic calculation.
-  const contentOffset = 20
-
   const lineStyle: AnimatedCSSProps = {
     filter: styled ? 'var(--arwes-frames-line-filter)' : undefined,
     stroke: styled ? 'var(--arwes-frames-line-color, currentcolor)' : undefined,
@@ -66,23 +63,18 @@ const createFrameHeaderSettings = (props?: CreateFrameHeaderSettingsProps): Fram
     ? {
         transitions: {
           entering: ({ element, duration }) =>
-            animate(element, { opacity: [0, 1, 0.5, 1] }, { duration: duration * (2 / 5) }),
+            animate(element, { opacity: [0, 1, 0.5, 1] }, { duration: duration * 0.4 }),
           exiting: ({ element, duration }) =>
-            animate(element, { opacity: [1, 0, 0.5, 0] }, { duration: duration * (2 / 5) })
+            animate(
+              element,
+              { opacity: [1, 0, 0.5, 0] },
+              { duration: duration * 0.4, delay: duration * 0.6 }
+            )
         }
       }
     : undefined
 
-  const lineAnimated: AnimatedProp = animated
-    ? {
-        transitions: {
-          entering: ({ element, duration }) =>
-            animateDraw({ element: element as SVGPathElement, duration, isEntering: true }),
-          exiting: ({ element, duration }) =>
-            animateDraw({ element: element as SVGPathElement, duration, isEntering: false })
-        }
-      }
-    : undefined
+  const lineAnimated: AnimatedProp = animated ? ['draw'] : undefined
 
   const decoBoxesAnimated: AnimatedProp = animated
     ? {
@@ -91,7 +83,7 @@ const createFrameHeaderSettings = (props?: CreateFrameHeaderSettingsProps): Fram
             animate(
               element,
               { opacity: [0, 1, 0.5, 1] },
-              { delay: duration * (3 / 5), duration: duration * (2 / 5) }
+              { delay: duration * 0.6, duration: duration * 0.4 }
             ),
           exiting: { opacity: [1, 0, 0.5, 0] }
         }
@@ -143,20 +135,19 @@ const createFrameHeaderSettings = (props?: CreateFrameHeaderSettingsProps): Fram
             name: 'line',
             style: lineStyle,
             animated: lineAnimated,
-            path: [
+            path: ({ width, height }) =>
               [
                 'M',
-                contentLength ? `100% - ${p + strokeOffset}` : p + strokeOffset,
-                `100% - ${p + decoWidth * 6}`
-              ],
-              ['v', -Math.max(0, contentLength - decoWidth * 6)],
-              [
+                contentLength ? width - (p + strokeOffset) : p + strokeOffset,
+                height - (p + decoWidth * 6),
+                'v',
+                -Math.max(0, contentLength - decoWidth * 6),
                 'L',
-                contentLength ? '50%' : p + strokeOffset,
-                `100% - ${p + contentLength + contentOffset}`
-              ],
-              ['V', p + decoWidth * 6.5]
-            ]
+                contentLength ? width * 0.5 : p + strokeOffset,
+                height - (p + contentLength + width * 0.5),
+                'V',
+                p + decoWidth * 6.5
+              ].join(' ')
           },
           {
             type: 'g',
@@ -202,16 +193,19 @@ const createFrameHeaderSettings = (props?: CreateFrameHeaderSettingsProps): Fram
           name: 'line',
           style: lineStyle,
           animated: lineAnimated,
-          path: [
+          path: ({ width, height }) =>
             [
               'M',
-              contentLength ? `100% - ${p + strokeOffset}` : p + strokeOffset,
-              p + decoWidth * 6
-            ],
-            ['v', Math.max(0, contentLength - decoWidth * 6)],
-            ['L', contentLength ? '50%' : p + strokeOffset, p + contentLength + contentOffset],
-            ['V', `100% - ${p + decoWidth * 6.5}`]
-          ]
+              contentLength ? width - (p + strokeOffset) : p + strokeOffset,
+              p + decoWidth * 6,
+              'v',
+              Math.max(0, contentLength - decoWidth * 6),
+              'L',
+              contentLength ? width * 0.5 : p + strokeOffset,
+              p + contentLength + width * 0.5,
+              'V',
+              height - (p + decoWidth * 6.5)
+            ].join(' ')
         },
         {
           type: 'g',
@@ -282,20 +276,19 @@ const createFrameHeaderSettings = (props?: CreateFrameHeaderSettingsProps): Fram
           name: 'line',
           style: lineStyle,
           animated: lineAnimated,
-          path: [
+          path: ({ width, height }) =>
             [
               'M',
-              `100% - ${p + decoWidth * 6}`,
-              contentLength ? `100% - ${p + strokeOffset}` : p + strokeOffset
-            ],
-            ['h', -Math.max(0, contentLength - decoWidth * 6)],
-            [
+              width - (p + decoWidth * 6),
+              contentLength ? height - (p + strokeOffset) : p + strokeOffset,
+              'h',
+              -Math.max(0, contentLength - decoWidth * 6),
               'L',
-              `100% - ${p + contentLength + contentOffset}`,
-              contentLength ? '50%' : p + strokeOffset
-            ],
-            ['H', p + decoWidth * 6.5]
-          ]
+              width - (p + contentLength + height * 0.5),
+              contentLength ? height * 0.5 : p + strokeOffset,
+              'H',
+              p + decoWidth * 6.5
+            ].join(' ')
         },
         {
           type: 'g',
@@ -342,12 +335,19 @@ const createFrameHeaderSettings = (props?: CreateFrameHeaderSettingsProps): Fram
         name: 'line',
         style: lineStyle,
         animated: lineAnimated,
-        path: [
-          ['M', p + decoWidth * 6, contentLength ? `100% - ${p + strokeOffset}` : p + strokeOffset],
-          ['h', Math.max(0, contentLength - decoWidth * 6)],
-          ['L', p + contentLength + contentOffset, contentLength ? '50%' : p + strokeOffset],
-          ['H', `100% - ${p + decoWidth * 6.5}`]
-        ]
+        path: ({ width, height }) =>
+          [
+            'M',
+            p + decoWidth * 6,
+            contentLength ? height - (p + strokeOffset) : p + strokeOffset,
+            'h',
+            Math.max(0, contentLength - decoWidth * 6),
+            'L',
+            p + contentLength + height * 0.5,
+            contentLength ? height * 0.5 : p + strokeOffset,
+            'H',
+            width - (p + decoWidth * 6.5)
+          ].join(' ')
       },
       {
         type: 'g',

@@ -57,14 +57,6 @@ const Frames = (): JSX.Element => {
         smallLineWidth={2}
         smallLineLength={20}
       />
-      <FrameNefrex
-        className="!relative !inset-auto !w-36 !h-32 md:!w-48"
-        padding={4}
-        strokeWidth={2}
-        squareSize={20}
-        smallLineLength={20}
-        largeLineLength={40}
-      />
       <FrameKranox
         className="!relative !inset-auto !w-36 !h-32 md:!w-48"
         padding={4}
@@ -72,6 +64,14 @@ const Frames = (): JSX.Element => {
         squareSize={10}
         smallLineLength={10}
         largeLineLength={20}
+      />
+      <FrameNefrex
+        className="!relative !inset-auto !w-36 !h-32 md:!w-48"
+        padding={4}
+        strokeWidth={2}
+        squareSize={20}
+        smallLineLength={20}
+        largeLineLength={40}
       />
       <FrameNero className="!relative !inset-auto !w-36 !h-32 md:!w-48" padding={4} />
       <FrameCircle className="!relative !inset-auto !w-32 !h-32 md:!w-36 md:!h-36" padding={4} />

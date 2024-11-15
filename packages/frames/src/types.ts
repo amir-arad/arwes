@@ -108,7 +108,10 @@ export type FrameSettingsPathDefinition = FrameSettingsPathCommand[]
 export type FrameSettingsPath<Contexts extends ContextType = ContextType> =
   FrameSettingsElementCommon<Contexts> & {
     type?: 'path'
-    path: string | FrameSettingsPathDefinition
+    path:
+      | string
+      | FrameSettingsPathDefinition
+      | ((config: { width: number; height: number }) => string)
     draw?: (config: { element: SVGPathElement; width: number; height: number }) => void
     contexts?: {
       [C in keyof Contexts]?: {
@@ -116,7 +119,10 @@ export type FrameSettingsPath<Contexts extends ContextType = ContextType> =
           className?: string
           style?: AnimatedCSSProps
           animate?: AnimatedXAnimation
-          path?: FrameSettingsPathDefinition
+          path?:
+            | string
+            | FrameSettingsPathDefinition
+            | ((config: { width: number; height: number }) => string)
         }
       }
     }
