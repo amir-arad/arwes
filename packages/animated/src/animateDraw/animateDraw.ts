@@ -28,7 +28,7 @@ const animateDraw = (props: AnimateDrawProps): AnimationControls => {
   const animation = animate(
     element,
     { strokeDashoffset: isEntering ? [length, 0] : [0, length] },
-    { duration, delay, easing: easingCustom || easing.outSine }
+    { duration, delay, easing: easingCustom || (isEntering ? easing.outExpo : easing.outSine) }
   )
 
   if (isEntering) {

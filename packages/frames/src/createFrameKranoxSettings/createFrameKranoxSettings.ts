@@ -98,7 +98,7 @@ const createFrameKranoxSettings = (props?: CreateFrameKranoxSettingsProps): Fram
         style: {
           filter: styled ? 'var(--arwes-frames-bg-filter)' : undefined,
           fill: styled ? 'var(--arwes-frames-bg-color, currentcolor)' : undefined,
-          stroke: styled ? 'var(--arwes-frames-deco-color, currentcolor)' : undefined,
+          stroke: styled ? 'var(--arwes-frames-bg-stroke, currentcolor)' : undefined,
           strokeWidth: String(bsw)
         },
         animated: animated && ['fade'],

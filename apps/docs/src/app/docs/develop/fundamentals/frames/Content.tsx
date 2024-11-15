@@ -102,6 +102,9 @@ export default (): JSX.Element => (
             <code>--arwes-frames-bg-color</code> for fill color.
           </li>
           <li>
+            <code>--arwes-frames-bg-stroke</code> for stroke color.
+          </li>
+          <li>
             <code>--arwes-frames-bg-filter</code> for filter effect.
           </li>
         </ul>

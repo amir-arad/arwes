@@ -54,11 +54,11 @@ const createFrameCircleSettings = (props?: CreateFrameCircleSettingsProps): Fram
                 entering: ({ element, duration }) =>
                   animate(
                     element,
-                    { opacity: [0, 1, 0.5, 1] },
+                    { opacity: [0, 1] },
                     { delay: duration / 2, duration: duration / 2 }
                   ),
                 exiting: ({ element, duration }) =>
-                  animate(element, { opacity: [1, 0, 0.5, 0] }, { duration: duration / 2 })
+                  animate(element, { opacity: [1, 0] }, { duration: duration / 2 })
               }
             },
             elements: [
@@ -72,8 +72,7 @@ const createFrameCircleSettings = (props?: CreateFrameCircleSettingsProps): Fram
                 style: {
                   filter: styled ? 'var(--arwes-frames-bg-filter)' : undefined,
                   fill: styled ? 'var(--arwes-frames-bg-color, currentcolor)' : undefined,
-                  stroke: styled ? 'none' : undefined,
-                  strokeWidth: '0'
+                  strokeWidth: 0
                 }
               },
               {

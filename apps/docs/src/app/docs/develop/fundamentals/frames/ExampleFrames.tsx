@@ -1,42 +1,44 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Animated,
   Animator,
   AnimatorGeneralProvider,
+  FrameUnderline,
+  FrameOctagon,
   FrameCorners,
-  FrameKranox,
   FrameLines,
   FrameNefrex,
-  FrameOctagon,
-  FrameUnderline,
-  useFrameAssembler
+  FrameKranox,
+  FrameNero,
+  FrameCircle,
+  FrameHeader
 } from '@arwes/react'
 import { theme } from '@/config'
 
 const Frames = (): JSX.Element => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  useFrameAssembler(containerRef)
   return (
     <div
-      ref={containerRef}
       className="flex flex-row flex-wrap gap-4"
       style={{
         // @ts-expect-error css variables
         '--arwes-frames-bg-color': theme.colors.secondary.main(10),
-        '--arwes-frames-bg-filter': `drop-shadow(0 0 2px ${theme.colors.secondary.main(10)})`,
-        '--arwes-frames-line-color': theme.colors.secondary.main(3),
-        '--arwes-frames-line-filter': `drop-shadow(0 0 2px ${theme.colors.secondary.main(3)})`
+        '--arwes-frames-bg-stroke': theme.colors.secondary.main(8),
+        '--arwes-frames-bg-filter': `drop-shadow(0 0 2px ${theme.colors.secondary.main(8)})`,
+        '--arwes-frames-line-color': theme.colors.secondary.main(6),
+        '--arwes-frames-line-filter': `drop-shadow(0 0 2px ${theme.colors.secondary.main(6)})`,
+        '--arwes-frames-deco-color': theme.colors.secondary.main(3),
+        '--arwes-frames-deco-filter': `drop-shadow(0 0 2px ${theme.colors.secondary.main(3)})`
       }}
     >
-      <FrameOctagon
+      <FrameUnderline
         className="!relative !inset-auto !w-36 !h-32 md:!w-48"
         padding={4}
         strokeWidth={2}
         squareSize={20}
       />
-      <FrameUnderline
+      <FrameOctagon
         className="!relative !inset-auto !w-36 !h-32 md:!w-48"
         padding={4}
         strokeWidth={2}
@@ -71,6 +73,13 @@ const Frames = (): JSX.Element => {
         smallLineLength={10}
         largeLineLength={20}
       />
+      <FrameNero className="!relative !inset-auto !w-36 !h-32 md:!w-48" padding={4} />
+      <FrameCircle className="!relative !inset-auto !w-32 !h-32 md:!w-36 md:!h-36" padding={4} />
+      <FrameHeader
+        className="!relative !inset-auto !w-36 !h-12 md:!w-48"
+        padding={4}
+        contentLength={theme.spacen(14)}
+      />
     </div>
   )
 }
@@ -79,12 +88,12 @@ const Example = (): JSX.Element => {
   const [active, setActive] = useState(true)
 
   useEffect(() => {
-    const tid = setTimeout(() => setActive(!active), active ? 2_500 : 1_500)
+    const tid = setTimeout(() => setActive(!active), active ? 2_500 : 1_000)
     return () => clearTimeout(tid)
   }, [active])
 
   return (
-    <AnimatorGeneralProvider disabled={false} dismissed={false} duration={{ enter: 1, exit: 1 }}>
+    <AnimatorGeneralProvider disabled={false} dismissed={false} duration={{ enter: 1, exit: 0.5 }}>
       <Animator root active={active}>
         <Frames />
       </Animator>

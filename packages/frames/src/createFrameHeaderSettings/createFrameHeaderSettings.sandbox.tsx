@@ -4,7 +4,7 @@ import { createAnimatorSystem } from '@arwes/animator'
 let active = false
 const system = createAnimatorSystem()
 const animator = system.register(undefined, {
-  getSettings: () => ({ active, duration: { enter: 1, exit: 1 } })
+  getSettings: () => ({ active, duration: { enter: 1, exit: 0.5 } })
 })
 
 const root = document.querySelector('#root')!
@@ -112,7 +112,7 @@ createFrame(root.querySelector<SVGSVGElement>('.frame8')!, {
 const update = (): void => {
   active = !active
   animator.send('update')
-  setTimeout(update, active ? 3_000 : 1_500)
+  setTimeout(update, active ? 3_000 : 1_000)
 }
 
 animator.send('setup')

@@ -1,5 +1,4 @@
 import { filterProps } from '@arwes/tools'
-import { animateDraw } from '@arwes/animated'
 import type { FrameSettingsPathDefinition, FrameSettings, FrameSettingsElement } from '../types.js'
 
 type CreateFrameLinesSettingsProps = {
@@ -102,22 +101,7 @@ const createFrameLinesSettings = (props?: CreateFrameLinesSettingsProps): FrameS
           (polyline) =>
             ({
               name: 'line',
-              animated: animated && {
-                transitions: {
-                  entering: ({ element, duration }) =>
-                    animateDraw({
-                      element: element as SVGPathElement,
-                      duration,
-                      isEntering: true
-                    }),
-                  exiting: ({ element, duration }) =>
-                    animateDraw({
-                      element: element as SVGPathElement,
-                      duration,
-                      isEntering: false
-                    })
-                }
-              },
+              animated: animated && ['draw'],
               path: polyline
             }) satisfies FrameSettingsElement
         )
@@ -133,9 +117,9 @@ const createFrameLinesSettings = (props?: CreateFrameLinesSettingsProps): FrameS
         animated: animated && {
           transitions: {
             entering: ({ element, duration, animate }) =>
-              animate(element, { opacity: [0, 1] }, { duration: duration / 2 }),
+              animate(element, { opacity: [0, 1, 0.5, 1] }, { duration: duration / 2 }),
             exiting: ({ element, duration, animate }) =>
-              animate(element, { opacity: [1, 0] }, { delay: duration / 2, duration: duration / 2 })
+              animate(element, { opacity: [1, 0, 0.5, 0] }, { duration: duration / 2 })
           }
         },
         elements: smallPolylines.map(
