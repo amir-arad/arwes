@@ -23,7 +23,10 @@ type AnimatedElementProps<Element = HTMLElement | SVGElement> = {
   }
 }
 
-type AnimatedElement = {
+type AnimatedElement<Element = HTMLElement | SVGElement> = {
+  settingsRef: {
+    current: AnimatedElementPropsSettings<Element>
+  }
   cancel: () => void
 }
 
@@ -35,7 +38,7 @@ const animatedPresets = {
 
 const createAnimatedElement = <Element extends HTMLElement | SVGElement = HTMLElement>(
   props: AnimatedElementProps<Element>
-): AnimatedElement => {
+): AnimatedElement<Element> => {
   const { element, animator } = props
 
   const getSettings = (): AnimatedElementPropsSettings<Element> => ({
@@ -187,7 +190,7 @@ const createAnimatedElement = <Element extends HTMLElement | SVGElement = HTMLEl
     animations.clear()
   }
 
-  return Object.freeze({ cancel })
+  return Object.freeze({ settingsRef: props.settingsRef, cancel })
 }
 
 export type { AnimatedElementPropsSettings, AnimatedElementProps, AnimatedElement }

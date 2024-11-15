@@ -1,6 +1,7 @@
 import type { AnimatorNode } from '@arwes/animator'
 import {
   type AnimatedXAnimationFunctionReturn,
+  type AnimatedElement,
   createAnimatedElement,
   applyAnimatedCSSProps
 } from '@arwes/animated'
@@ -59,27 +60,39 @@ const renderFrameElements = (
       }
     }
 
-    // TODO: Update `animatedElement` when it was already created.
-
     if (animator && settings.animated) {
       const elementAnimations =
         animations.get(element) ?? new Map<string, AnimatedXAnimationFunctionReturn>()
 
-      // Reset existing animations if currently running.
-      elementAnimations.get('__animator__')?.cancel()
+      const currentAnimatedElement = elementAnimations.get('__animator__') as
+        | undefined
+        | AnimatedElement<SVGElement>
 
-      const animatedElement = createAnimatedElement({
-        element,
-        animator,
-        settingsRef: {
-          current: {
-            ...settings.animatedSettings,
-            animated: settings.animated
-          }
+      if (currentAnimatedElement) {
+        // TODO: Should it check if the same animator node is received on re-render and update it?
+        // Or just assume it is always the same and leave it as it is?
+
+        currentAnimatedElement.settingsRef.current = {
+          ...settings.animatedSettings,
+          animated: settings.animated
         }
-      })
+      }
+      //
+      else {
+        const animatedElement = createAnimatedElement({
+          element,
+          animator,
+          settingsRef: {
+            current: {
+              ...settings.animatedSettings,
+              animated: settings.animated
+            }
+          }
+        })
 
-      elementAnimations.set('__animator__', animatedElement)
+        elementAnimations.set('__animator__', animatedElement)
+      }
+
       animations.set(element, elementAnimations)
     }
 

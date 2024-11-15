@@ -19,11 +19,22 @@ type FrameBaseProps = {
   settings: FrameSettings
   className?: string
   style?: CSSProperties
+  preserveAspectRatio?: string
   children?: ReactNode
 }
 
 const FrameBase = memo((props: FrameBaseProps): ReactElement => {
-  const { elementRef, positioned = true, settings, className, style, children } = props
+  const {
+    elementRef,
+    positioned = true,
+    settings,
+    className,
+    style,
+    // Even if the SVG is still resized automatically, in case there is a delay
+    // or the ResizeObserver API is not available, the SVG should be resized.
+    preserveAspectRatio = 'none',
+    children
+  } = props
 
   const animator = useAnimator()
   const svgRef = useRef<SVGSVGElement>(null)
@@ -44,6 +55,10 @@ const FrameBase = memo((props: FrameBaseProps): ReactElement => {
     return () => frameRef.current?.remove()
   }, [animator])
 
+  // TODO: Should it also re-render if the animator changes too?
+  // The @arwes/animated `createAnimatedElement` will preserve the same animator
+  // if the frame is re-rendered.
+
   useUpdateEffect(() => {
     frameRef.current?.render()
   }, [settings])
@@ -55,9 +70,7 @@ const FrameBase = memo((props: FrameBaseProps): ReactElement => {
       className={cx('arwes-frames-frame', className)}
       style={{ ...(positioned ? positionedStyle : null), ...style }}
       xmlns="http://www.w3.org/2000/svg"
-      // Even if it is still resized automatically, in case there is a delay
-      // or the ResizeObserver API is not available, the SVG should be resized.
-      preserveAspectRatio="none"
+      preserveAspectRatio={preserveAspectRatio}
     >
       {children}
     </svg>
