@@ -155,22 +155,13 @@ addStyles(`
   }
 `)
 
-const MainFrame = (): ReactElement => {
-  const svgRef = useRef<SVGSVGElement>(null)
-  useFrameAssembler(svgRef)
-  return (
-    <div
-      className="main-frame"
-      style={{
-        clipPath: styleFrameClipOctagon({ leftBottom: false, rightTop: false })
-      }}
-    >
-      <div className="main-frame-bg" />
-      <FrameNefrex elementRef={svgRef} />
-      <Illuminator color={theme.colors.primary(7, { alpha: 0.05 })} />
-    </div>
-  )
-}
+const MainFrame = (): ReactElement => (
+  <div className="main-frame" style={{ clipPath: styleFrameClipOctagon() }}>
+    <div className="main-frame-bg" />
+    <FrameNefrex leftBottom rightTop />
+    <Illuminator color={theme.colors.primary(7, { alpha: 0.05 })} />
+  </div>
+)
 addStyles(`
   .main-frame {
     position: absolute;
@@ -303,11 +294,7 @@ const Sandbox = (): ReactElement => {
                   src="/assets/images/logotype.svg"
                   animated={[
                     'flicker',
-                    {
-                      transitions: {
-                        entering: { y: [100, 0], delay: 0.6, duration: 0.2 }
-                      }
-                    }
+                    { transitions: { entering: { y: [100, 0], delay: 0.6, duration: 0.2 } } }
                   ]}
                 />
               </Animator>
@@ -334,7 +321,7 @@ const Sandbox = (): ReactElement => {
 
               <Animator>
                 <Animated as="p" animated={['flicker', ['y', 20, 0, 0]]}>
-                  Arwes is a web framework to build user interfaces based on futuristic science
+                  ARWES is a web framework to build user interfaces based on futuristic science
                   fiction designs, animations, and sound effects.
                 </Animated>
               </Animator>
@@ -348,7 +335,7 @@ const Sandbox = (): ReactElement => {
 
               <Animator>
                 <Animated className="page-header" animated={['flicker', ['x', -10, 0, 0]]}>
-                  Arwes Demo Project |
+                  ARWES Demo Project |
                 </Animated>
                 <Animated className="page-footer" animated={['flicker', ['x', 10, 0, 0]]}>
                   | Futuristic Sci-Fi UI Web Framework
@@ -400,15 +387,15 @@ addStyles(`
   .page-footer {
     position: absolute;
     font-size: 0.625rem;
-    color: ${theme.colors.primary(9)};
+    color: ${theme.colors.primary(8)};
   }
   .page-header {
-    right: 4px;
-    top: 4px;
+    right: 1.5rem;
+    top: 0.5rem;
   }
   .page-footer {
-    left: 4px;
-    bottom: 4px;
+    left: 1.5rem;
+    bottom: 0.5rem;
   }
 
   .page img {
