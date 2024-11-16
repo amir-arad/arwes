@@ -6,23 +6,20 @@ const appsItems = require('../static/assets/community/apps/apps.json')
 
 const README_FILE_PATH = path.join(process.cwd(), 'README.md')
 const README_FILE_ENCODING = 'utf-8'
-const APPS_ITEMS_PER_LINE = 3
-const APPS_ITEM_WIDTH = 252 // In desktop, the GitHub readme page width divided by 3.
+const APPS_ITEMS_PER_LINE = 4
+const APPS_ITEM_WIDTH = 756 / 4 // In desktop, the GitHub readme page width divided by APPS_ITEMS_PER_LINE.
 
 const appsRowsHTML = appsItems
   .map((item) => ({
     ...item,
-    repositoryName: item.repository.replace(/^https?:\/\/[^/]+\//, ''),
-    imageRelativePath: './' + path.join('static/assets/community/apps/images', item.image)
+    imageRelativePath: './' + path.join('static/assets/community/apps/media', item.image)
   }))
-  .map(({ name, url, repository, repositoryName, imageRelativePath }) =>
+  .map(({ name, url, imageRelativePath }) =>
     [
       '<td align="center">',
       `<a href="${url}"><img src="${imageRelativePath}" width="${APPS_ITEM_WIDTH}px;" alt="${name}" /></a>`,
       '<br />',
       `<a href="${url}">${name}</a>`,
-      '<br />',
-      repository ? `<a href="${repository}"><sub>${repositoryName}</sub></a>` : '<sub>--</sub>',
       '</td>'
     ].join('')
   )

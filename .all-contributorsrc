@@ -63,6 +63,20 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/25426233?v=4",
       "profile": "https://www.frityet.net/",
       "contributions": ["financial"]
+    },
+    {
+      "login": "AthelesE",
+      "name": "AthelesE",
+      "avatar_url": "https://avatars.githubusercontent.com/u/179262613?v=4",
+      "profile": "https://github.com/AthelesE",
+      "contributions": ["financial"]
+    },
+    {
+      "login": "r4mbhardwaj",
+      "name": "Ram",
+      "avatar_url": "https://avatars.githubusercontent.com/u/63110845?v=4",
+      "profile": "https://github.com/r4mbhardwaj",
+      "contributions": ["financial"]
     }
   ],
   "contributorsPerLine": 5
