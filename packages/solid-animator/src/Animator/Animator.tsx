@@ -9,7 +9,6 @@
 import { type JSX, type Component, createMemo, createEffect, onCleanup } from 'solid-js'
 import { filterProps } from '@arwes/tools'
 import {
-  type AnimatorControl,
   type AnimatorInterface,
   type AnimatorSettingsPartial,
   createAnimatorSystem
@@ -31,7 +30,6 @@ const Animator: Component<AnimatorProps> = (props) => {
 
   const settingsComponentRef: { current: AnimatorSettingsPartial } = { current: {} }
   const settingsDynamicRef: { current: AnimatorSettingsPartial | null } = { current: null }
-  const foreignRef: { current: unknown } = { current: null }
 
   const getParentInterface = createMemo<AnimatorInterface | undefined>(() =>
     props.root ? undefined : parentAnimatorInterface
@@ -93,37 +91,9 @@ const Animator: Component<AnimatorProps> = (props) => {
         }
       }
 
-      const setSettings = (value: AnimatorSettingsPartial | null): void => {
-        if (value === null) {
-          settingsDynamicRef.current = null
-          return
-        }
-
-        settingsDynamicRef.current = {
-          ...settingsDynamicRef.current,
-          duration: {
-            ...settingsDynamicRef.current?.duration,
-            ...value.duration
-          }
-        }
-      }
-
-      const getForeignRef = (): unknown => foreignRef.current
-
-      const setForeignRef = (value: unknown): void => {
-        foreignRef.current = value
-      }
-
-      const control: AnimatorControl = Object.freeze({
-        getSettings,
-        setSettings,
-        getForeignRef,
-        setForeignRef
-      })
-
       const system = parentInterface ? parentInterface.system : createAnimatorSystem()
       const parentNode = parentInterface ? parentInterface.node : undefined
-      const node = system.register(parentNode, control)
+      const node = system.register(parentNode, { getSettings })
 
       return Object.freeze({ system, node })
     }
