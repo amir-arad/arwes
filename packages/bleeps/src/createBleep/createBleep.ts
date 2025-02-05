@@ -254,7 +254,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
 
     const newVolume = muted || isExternallyMuted ? 0 : volume
     if (newVolume !== gain.gain.value) {
-      gain.gain.setValueAtTime(newVolume, context.currentTime)
+      gain.gain.value = newVolume
     }
   }
 
