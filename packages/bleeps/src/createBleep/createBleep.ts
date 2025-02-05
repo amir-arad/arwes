@@ -76,6 +76,8 @@ const createBleep = (props: BleepProps): Bleep | null => {
           callback()
         })
     } catch (err) {
+      isBufferError = true
+      isBufferLoading = false
       console.error(`ARWES bleep throws when fetched.`)
     }
   }
