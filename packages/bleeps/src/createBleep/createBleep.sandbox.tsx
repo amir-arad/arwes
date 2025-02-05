@@ -13,6 +13,7 @@ const bleep = createBleep({
     { src: '/assets/sounds/click.mp3', type: 'audio/mpeg' }
   ]
   // preload: true,
+  // asyncLoad: false,
   // loop: false,
   // volume: 1,
   // fetchHeaders: null,
