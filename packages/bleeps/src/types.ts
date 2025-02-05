@@ -3,7 +3,15 @@
 export type BleepCategory = 'background' | 'transition' | 'interaction' | 'notification' | 'voice'
 
 export type BleepGeneralProps = {
+  /**
+   * Load the first applicable audio file at instantiation time.
+   */
   preload?: boolean
+  /**
+   * When the audio file is to be loaded, schedule the load to another event loop
+   * task asynchronously to delay it.
+   */
+  asyncLoad?: boolean
   volume?: number
   muted?: boolean
   fetchHeaders?: Headers

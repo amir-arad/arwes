@@ -17,6 +17,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
   const {
     sources,
     preload = true,
+    asyncLoad,
     loop,
     fetchHeaders,
     masterGain,
@@ -31,6 +32,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
   let isBufferError = false
   let isBufferPlaying = false
   let playbackCallbackTime = 0
+  let asyncLoadCallbackId: number | undefined
 
   let bleepSource: BleepSource | null = null
   let buffer: AudioBuffer | null = null
@@ -41,7 +43,46 @@ const createBleep = (props: BleepProps): Bleep | null => {
   const gain = context.createGain()
   const callersAccount = new Set<string>()
 
-  function fetchAudioBuffer(): void {
+  const fetchAudioFile = (src: string, type: string, callback: () => void): void => {
+    // Some browser extensions or users might try to overwrite the global fetch function
+    // and cause errors, particularly with fetching non-JSON resources.
+    try {
+      void window
+        .fetch(src, {
+          method: 'GET',
+          headers: fetchHeaders
+        })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('ARWES bleep source could not be fetched.')
+          }
+          return response
+        })
+        .then((response) => response.arrayBuffer())
+        .then((audioArrayBuffer) => context.decodeAudioData(audioArrayBuffer))
+        .then((audioBuffer) => {
+          buffer = audioBuffer
+          duration = buffer.duration
+        })
+        .catch((err) => {
+          isBufferError = true
+          console.error(
+            `ARWES bleep with source URL "${src}" and type "${type}" could not be used:`,
+            err
+          )
+        })
+        .then(() => {
+          isBufferLoading = false
+          callback()
+        })
+    } catch (err) {
+      isBufferError = true
+      isBufferLoading = false
+      console.error(`ARWES bleep throws when fetched.`)
+    }
+  }
+
+  function loadAudioBuffer(): void {
     if (buffer || isBufferLoading || isBufferError) {
       return
     }
@@ -77,33 +118,15 @@ const createBleep = (props: BleepProps): Bleep | null => {
 
     isBufferLoading = true
 
-    fetchPromise = window
-      .fetch(src, {
-        method: 'GET',
-        headers: fetchHeaders
-      })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('ARWES bleep source could not be fetched.')
-        }
-        return response
-      })
-      .then((response) => response.arrayBuffer())
-      .then((audioArrayBuffer) => context.decodeAudioData(audioArrayBuffer))
-      .then((audioBuffer) => {
-        buffer = audioBuffer
-        duration = buffer.duration
-      })
-      .catch((err) => {
-        isBufferError = true
-        console.error(
-          `ARWES bleep with source URL "${src}" and type "${type}" could not be used:`,
-          err
-        )
-      })
-      .then(() => {
-        isBufferLoading = false
-      })
+    fetchPromise = new Promise((resolve) => {
+      if (asyncLoad) {
+        asyncLoadCallbackId = window.setTimeout(() => {
+          fetchAudioFile(src, type, resolve)
+        }, 0)
+      } else {
+        fetchAudioFile(src, type, resolve)
+      }
+    })
   }
 
   function onUserAllowAudio(): void {
@@ -148,7 +171,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
     }
 
     if (!buffer) {
-      fetchAudioBuffer()
+      loadAudioBuffer()
 
       void fetchPromise.then(schedulePlay)
 
@@ -222,7 +245,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
   }
 
   function load(): void {
-    fetchAudioBuffer()
+    loadAudioBuffer()
   }
 
   function unload(): void {
@@ -237,6 +260,8 @@ const createBleep = (props: BleepProps): Bleep | null => {
     isBufferLoading = false
     isBufferError = false
     isBufferPlaying = false
+
+    window.clearTimeout(asyncLoadCallbackId)
 
     window.removeEventListener('click', onUserAllowAudio)
     window.removeEventListener('focus', onUserWindowFocus)
@@ -254,7 +279,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
 
     const newVolume = muted || isExternallyMuted ? 0 : volume
     if (newVolume !== gain.gain.value) {
-      gain.gain.setValueAtTime(newVolume, context.currentTime)
+      gain.gain.value = newVolume
     }
   }
 
@@ -318,7 +343,7 @@ const createBleep = (props: BleepProps): Bleep | null => {
   update({ volume })
 
   if (preload) {
-    fetchAudioBuffer()
+    loadAudioBuffer()
   }
 
   if (muteOnWindowBlur) {
