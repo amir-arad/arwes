@@ -1,6 +1,6 @@
 {
   "name": "@arwes/frames",
-  "version": "1.0.0-next.25020501",
+  "version": "1.0.0-next.25020502",
   "publishConfig": {
     "access": "public"
   },
@@ -43,8 +43,8 @@
     "motion": "10"
   },
   "dependencies": {
-    "@arwes/animated": "^1.0.0-next.25020501",
-    "@arwes/tools": "^1.0.0-next.25020501",
+    "@arwes/animated": "^1.0.0-next.25020502",
+    "@arwes/tools": "^1.0.0-next.25020502",
     "csstype": "3",
     "tslib": "2"
   },

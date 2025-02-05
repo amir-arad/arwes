@@ -1,6 +1,6 @@
 {
   "name": "@arwes/react-animated",
-  "version": "1.0.0-next.25020501",
+  "version": "1.0.0-next.25020502",
   "publishConfig": {
     "access": "public"
   },
@@ -43,11 +43,11 @@
     "react": "18"
   },
   "dependencies": {
-    "@arwes/animated": "^1.0.0-next.25020501",
-    "@arwes/animator": "^1.0.0-next.25020501",
-    "@arwes/react-animator": "^1.0.0-next.25020501",
-    "@arwes/react-tools": "^1.0.0-next.25020501",
-    "@arwes/tools": "^1.0.0-next.25020501",
+    "@arwes/animated": "^1.0.0-next.25020502",
+    "@arwes/animator": "^1.0.0-next.25020502",
+    "@arwes/react-animator": "^1.0.0-next.25020502",
+    "@arwes/react-tools": "^1.0.0-next.25020502",
+    "@arwes/tools": "^1.0.0-next.25020502",
     "tslib": "2"
   },
   "scripts": {
