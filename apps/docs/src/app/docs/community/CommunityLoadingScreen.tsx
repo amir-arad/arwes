@@ -1,4 +1,4 @@
-import { type ReactNode , type ReactElement } from 'react'
+import { type ReactNode, type ReactElement } from 'react'
 import { Animated, Animator, AnimatorGeneralProvider, Text, cx, memo } from '@arwes/react'
 import { FastArrowRight, NavArrowRight } from 'iconoir-react'
 

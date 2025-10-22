@@ -1,4 +1,4 @@
-import { memo , type ReactElement } from 'react'
+import { memo, type ReactElement } from 'react'
 import { type IconProps, Icon } from './Icon'
 
 export const IconSolid = memo((props: IconProps): ReactElement => {

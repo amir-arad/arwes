@@ -1,4 +1,4 @@
-import React, { type HTMLAttributes, type ReactNode , type ReactElement } from 'react'
+import React, { type HTMLAttributes, type ReactNode, type ReactElement } from 'react'
 import { type AnimatedProp, Animated, cx, memo, useBleeps } from '@arwes/react'
 
 import { type BleepNames } from '@/config'

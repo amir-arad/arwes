@@ -1,4 +1,4 @@
-import { useRef , type ReactElement } from 'react'
+import { useRef, type ReactElement } from 'react'
 import { useMedia } from 'react-use'
 import {
   Animated,

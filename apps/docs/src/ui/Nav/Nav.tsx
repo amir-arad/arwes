@@ -1,4 +1,4 @@
-import { Children, type ReactNode , type ReactElement } from 'react'
+import { Children, type ReactNode, type ReactElement } from 'react'
 import { memo, Animator, Animated, flicker, cx, styleFrameClipOctagon } from '@arwes/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'

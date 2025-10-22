@@ -1,4 +1,4 @@
-import { Children, useEffect, useRef , type ReactElement } from 'react'
+import { Children, useEffect, useRef, type ReactElement } from 'react'
 import {
   Animated,
   FrameOctagon,

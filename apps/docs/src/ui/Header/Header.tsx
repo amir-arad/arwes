@@ -1,4 +1,4 @@
-import React, { useCallback, useState , type ReactElement } from 'react'
+import React, { useCallback, useState, type ReactElement } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { useAtom } from 'jotai'

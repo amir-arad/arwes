@@ -1,4 +1,4 @@
-import { type ReactNode , type ReactElement } from 'react'
+import { type ReactNode, type ReactElement } from 'react'
 
 export type IconProps = {
   className?: string

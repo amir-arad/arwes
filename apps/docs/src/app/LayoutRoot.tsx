@@ -1,6 +1,6 @@
 'use client'
 
-import React, { type ReactNode , type ReactElement } from 'react'
+import React, { type ReactNode, type ReactElement } from 'react'
 import { AnimatorGeneralProvider, BleepsProvider, Animator } from '@arwes/react'
 import { Titillium_Web, Source_Code_Pro } from 'next/font/google'
 import { IconoirProvider } from 'iconoir-react'

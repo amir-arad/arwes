@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState , type ReactElement } from 'react'
+import { useEffect, useState, type ReactElement } from 'react'
 import { Animated, Animator, draw, useAnimator } from '@arwes/react'
 
 const ExampleText = (): ReactElement => {

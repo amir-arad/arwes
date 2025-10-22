@@ -1,4 +1,4 @@
-import { type ReactNode , type ReactElement } from 'react'
+import { type ReactNode, type ReactElement } from 'react'
 import { Animator, Animated, cx, memo, styleFrameClipOctagon } from '@arwes/react'
 import { Heart, Github, X, Discord } from 'iconoir-react'
 import Link from 'next/link'

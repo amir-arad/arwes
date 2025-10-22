@@ -1,4 +1,4 @@
-import { type HTMLAttributes , type ReactElement } from 'react'
+import { type HTMLAttributes, type ReactElement } from 'react'
 import { Animated, Animator, Text, type TextProps, cx } from '@arwes/react'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, FastArrowRight, OpenNewWindow } from 'iconoir-react'

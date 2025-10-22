@@ -1,4 +1,4 @@
-import { useEffect, useState , type ReactElement } from 'react'
+import { useEffect, useState, type ReactElement } from 'react'
 import { Animated, Animator, AnimatorGeneralProvider, cx } from '@arwes/react'
 import { theme } from '@/config'
 

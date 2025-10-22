@@ -1,4 +1,4 @@
-import React, { memo , type ReactElement } from 'react'
+import React, { memo, type ReactElement } from 'react'
 import {
   type AnimatedProp,
   type StyleSeparatorProps,

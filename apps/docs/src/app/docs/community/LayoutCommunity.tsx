@@ -1,6 +1,6 @@
 'use client'
 
-import { type ReactNode , type ReactElement } from 'react'
+import { type ReactNode, type ReactElement } from 'react'
 import { Animator, FrameHeader, cx } from '@arwes/react'
 
 import { CommunityLoadingScreen } from './CommunityLoadingScreen'

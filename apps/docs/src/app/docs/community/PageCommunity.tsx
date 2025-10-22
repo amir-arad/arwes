@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect , type ReactElement } from 'react'
+import { useEffect, type ReactElement } from 'react'
 import { useRouter } from 'next/navigation'
 
 const PageCommunity = (): ReactElement => {

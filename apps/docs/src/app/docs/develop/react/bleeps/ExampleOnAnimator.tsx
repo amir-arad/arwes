@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState , type ReactElement } from 'react'
+import { useEffect, useRef, useState, type ReactElement } from 'react'
 import {
   type BleepsProviderSettings,
   Animator,

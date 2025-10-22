@@ -1,4 +1,4 @@
-import { Fragment , type ReactElement } from 'react'
+import { Fragment, type ReactElement } from 'react'
 import { cx, type AnimatedProp, Animated } from '@arwes/react'
 import { FastArrowRight } from 'iconoir-react'
 import Link from 'next/link'

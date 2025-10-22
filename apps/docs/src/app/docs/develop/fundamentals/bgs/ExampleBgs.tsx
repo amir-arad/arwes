@@ -1,4 +1,4 @@
-import { useState, useEffect , type ReactElement } from 'react'
+import { useState, useEffect, type ReactElement } from 'react'
 import {
   Animated,
   Animator,
