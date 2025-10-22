@@ -1,5 +1,6 @@
 {
   "name": "arwes",
+  "description": "Fork of Arwes with React 19 support - Published as @arwes-amir/* packages",
   "private": true,
   "engines": {
     "node": ">=20"

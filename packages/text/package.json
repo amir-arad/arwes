@@ -1,5 +1,5 @@
 {
-  "name": "@arwes/text",
+  "name": "@arwes-amir/text",
   "version": "1.0.0-next.25020502",
   "publishConfig": {
     "access": "public"
@@ -14,13 +14,13 @@
     "sci-fi",
     "science-fiction"
   ],
-  "homepage": "https://arwes.dev",
+  "homepage": "https://github.com/amir-arad/arwes",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arwes/arwes.git"
+    "url": "git+https://github.com/amir-arad/arwes.git"
   },
   "bugs": {
-    "url": "https://github.com/arwes/arwes/issues"
+    "url": "https://github.com/amir-arad/arwes/issues"
   },
   "funding": "https://github.com/sponsors/romelperez",
   "license": "MIT",
@@ -40,9 +40,9 @@
   "module": "./build/esm/index.js",
   "main": "./build/cjs/index.js",
   "dependencies": {
-    "@arwes/animated": "^1.0.0-next.25020502",
-    "@arwes/tools": "^1.0.0-next.25020502",
-    "tslib": "2"
+    "tslib": "2",
+    "@arwes-amir/animated": "^1.0.0-next.25020502",
+    "@arwes-amir/tools": "^1.0.0-next.25020502"
   },
   "scripts": {
     "build": "npm run build-esm && npm run build-cjs",
