@@ -1,9 +1,10 @@
+import type { ReactElement } from 'react'
 import { settings } from '@/config/settings'
 import { LayoutRoot } from './LayoutRoot'
 
 import '@/ui/globals.css'
 
-const RootLayout = ({ children }: { children: React.ReactNode }): JSX.Element => {
+const RootLayout = ({ children }: { children: React.ReactNode }): ReactElement => {
   return (
     <html lang="en">
       <head>

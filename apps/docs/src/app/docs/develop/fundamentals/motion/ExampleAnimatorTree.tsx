@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState , type ReactElement } from 'react'
 import { AnimatorGeneralProvider, Animator, Animated, useAnimator } from '@arwes/react'
 
 import { theme } from '@/config'
 
-const ExampleNodeTextState = (): JSX.Element => {
+const ExampleNodeTextState = (): ReactElement => {
   const animator = useAnimator()!
   const [state, setState] = useState('')
 
@@ -14,7 +14,7 @@ const ExampleNodeTextState = (): JSX.Element => {
   return <>{state}</>
 }
 
-const ExampleNodeText = (props: { x: string; y: string }): JSX.Element => {
+const ExampleNodeText = (props: { x: string; y: string }): ReactElement => {
   const { x, y } = props
   return (
     <Animated<SVGTextElement>
@@ -30,7 +30,7 @@ const ExampleNodeText = (props: { x: string; y: string }): JSX.Element => {
   )
 }
 
-const ExampleNodeBg = (props: { x: string; y: string }): JSX.Element => {
+const ExampleNodeBg = (props: { x: string; y: string }): ReactElement => {
   const { x, y } = props
   return (
     <Animated<SVGRectElement>
@@ -64,7 +64,7 @@ const ExampleNodeBg = (props: { x: string; y: string }): JSX.Element => {
 
 type ExampleProps = { inSequence?: boolean; hasCombinations?: boolean }
 
-const Example = (props: ExampleProps): JSX.Element => {
+const Example = (props: ExampleProps): ReactElement => {
   const { inSequence, hasCombinations } = props
 
   const [active, setActive] = useState(false)
@@ -139,7 +139,7 @@ const Example = (props: ExampleProps): JSX.Element => {
   )
 }
 
-const ExampleAnimatorTree = (props: ExampleProps): JSX.Element => (
+const ExampleAnimatorTree = (props: ExampleProps): ReactElement => (
   <Animator unmountOnExited>
     <Animated data-name="example">
       <Example {...props} />

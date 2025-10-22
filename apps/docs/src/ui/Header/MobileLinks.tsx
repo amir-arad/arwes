@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react'
+import { type ReactNode , type ReactElement } from 'react'
 import { Animator, Animated, cx, memo, styleFrameClipOctagon } from '@arwes/react'
 import { Heart, Github, X, Discord } from 'iconoir-react'
 import Link from 'next/link'
@@ -12,7 +12,7 @@ type MobileLinkProps = {
   children: ReactNode
 }
 
-const MobileLink = memo((props: MobileLinkProps): JSX.Element => {
+const MobileLink = memo((props: MobileLinkProps): ReactElement => {
   const { className, href, target, children } = props
   return (
     <Animator>
@@ -44,7 +44,7 @@ type MobileLinksProps = {
   className?: string
 }
 
-const MobileLinks = memo((props: MobileLinksProps): JSX.Element => {
+const MobileLinks = memo((props: MobileLinksProps): ReactElement => {
   const { className } = props
   return (
     <div className={cx('flex flex-row justify-between items-center gap-2', className)}>

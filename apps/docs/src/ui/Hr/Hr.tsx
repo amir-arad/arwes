@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo , type ReactElement } from 'react'
 import {
   type AnimatedProp,
   type StyleSeparatorProps,
@@ -16,7 +16,7 @@ type HrProps = Omit<StyleSeparatorProps, 'colorStatic' | 'colorActive'> & {
   animated?: AnimatedProp
 }
 
-const Hr = memo((props: HrProps): JSX.Element => {
+const Hr = memo((props: HrProps): ReactElement => {
   const { className, color = 'primary', size = 1, direction, isVertical, animated } = props
 
   const colorFn =

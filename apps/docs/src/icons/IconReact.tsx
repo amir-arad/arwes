@@ -1,7 +1,7 @@
-import { memo } from 'react'
+import { memo , type ReactElement } from 'react'
 import { type IconProps, Icon } from './Icon'
 
-export const IconReact = memo((props: IconProps): JSX.Element => {
+export const IconReact = memo((props: IconProps): ReactElement => {
   return (
     <Icon {...props}>
       <path

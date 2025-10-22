@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { type ReactElement, useMemo } from 'react'
 import { cx } from '@arwes/tools'
 import { memo } from '@arwes/react-tools'
 import { type CreateFrameKranoxSettingsProps, createFrameKranoxSettings } from '@arwes/frames'
@@ -7,7 +7,7 @@ import { type FrameBaseProps, FrameBase } from '../FrameBase/index.js'
 
 type FrameKranoxProps = Omit<FrameBaseProps, 'settings'> & CreateFrameKranoxSettingsProps
 
-const FrameKranox = memo((props: FrameKranoxProps): JSX.Element => {
+const FrameKranox = memo((props: FrameKranoxProps): ReactElement => {
   const {
     styled,
     animated,

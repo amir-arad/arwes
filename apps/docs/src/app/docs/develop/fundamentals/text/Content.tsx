@@ -1,9 +1,11 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import { AR } from '@/ui'
 import { ExampleText } from './ExampleText'
 
-export default (): JSX.Element => (
+export default (): ReactElement => (
   <>
     <AR.Header>Text Fundamentals</AR.Header>
 

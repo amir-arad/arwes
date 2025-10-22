@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { type ReactElement } from 'react'
 import { Animator, Animated, BleepsOnAnimator, cx } from '@arwes/react'
 import Link from 'next/link'
 import { Page, Codepen, CollageFrame, DashboardSpeed } from 'iconoir-react'
@@ -8,7 +8,7 @@ import { Page, Codepen, CollageFrame, DashboardSpeed } from 'iconoir-react'
 import { type BleepNames, settings, theme } from '@/config'
 import { ArwesLogoType, ButtonSimple } from '@/ui'
 
-const PageHome = (): JSX.Element => {
+const PageHome = (): ReactElement => {
   return (
     <Animator combine manager="sequenceReverse">
       <BleepsOnAnimator<BleepNames> transitions={{ entering: 'intro' }} continuous />

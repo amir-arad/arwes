@@ -1,4 +1,4 @@
-import { Children, useEffect, useRef } from 'react'
+import { Children, useEffect, useRef , type ReactElement } from 'react'
 import {
   Animated,
   FrameOctagon,
@@ -25,7 +25,7 @@ const CONTAINER_WIDTH_CLASS = 'w-full min-w-0 max-w-screen-3xl min-h-0'
 const ASIDE_WIDTH_CLASS = 'w-full min-w-0 max-w-[16rem] min-h-0'
 const MAIN_WIDTH_CLASS = 'w-full min-w-0 max-w-[50rem] min-h-0'
 
-const LayoutContent = memo((props: LayoutContentProps): JSX.Element => {
+const LayoutContent = memo((props: LayoutContentProps): ReactElement => {
   const { className, left, right, children } = props
 
   const pathname = usePathname()

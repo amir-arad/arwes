@@ -1,4 +1,4 @@
-import React, { type ReactNode, type MouseEvent, useEffect, useRef, useState } from 'react'
+import React, { type ReactNode, type MouseEvent, useEffect, useRef, useState , type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
   createThemeUnit,
@@ -84,11 +84,11 @@ type ButtonProps = {
   children: ReactNode
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
 }
-const Button = memo((props: ButtonProps): JSX.Element => {
+const Button = memo((props: ButtonProps): ReactElement => {
   const { className, color = 'primary', variant = 'fill', animated, children, onClick } = props
 
   const bleeps = useBleeps<BleepsNames>()
-  const frameRef = useRef<SVGSVGElement>(null)
+  const frameRef = useRef<SVGSVGElement>(null!)
 
   useFrameAssembler(frameRef)
 
@@ -207,7 +207,7 @@ addStyles(`
 `)
 
 const IconExample = memo(
-  (): JSX.Element => (
+  (): ReactElement => (
     <svg
       width="1.25em"
       height="1.25em"
@@ -221,7 +221,7 @@ const IconExample = memo(
   )
 )
 
-const Sandbox = (): JSX.Element => {
+const Sandbox = (): ReactElement => {
   const [active, setActive] = useState(true)
 
   useEffect(() => {

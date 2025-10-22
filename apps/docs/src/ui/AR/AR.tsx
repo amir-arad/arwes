@@ -1,4 +1,4 @@
-import { type HTMLAttributes } from 'react'
+import { type HTMLAttributes , type ReactElement } from 'react'
 import { Animated, Animator, Text, type TextProps, cx } from '@arwes/react'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, FastArrowRight, OpenNewWindow } from 'iconoir-react'
@@ -14,7 +14,7 @@ import { type BreadcrumbsProps, Breadcrumbs } from '../Breadcrumbs'
 import { NavPath } from '../NavPath'
 
 const AR = {
-  Header: ({ children, ...props }: HTMLAttributes<HTMLDivElement>): JSX.Element => (
+  Header: ({ children, ...props }: HTMLAttributes<HTMLDivElement>): ReactElement => (
     <Animator combine manager="stagger">
       <Animated
         {...props}
@@ -50,7 +50,7 @@ const AR = {
     </Animator>
   ),
 
-  H2: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement> & TextProps): JSX.Element => (
+  H2: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement> & TextProps): ReactElement => (
     <Animator>
       <Text
         {...props}
@@ -63,7 +63,7 @@ const AR = {
     </Animator>
   ),
 
-  H3: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement> & TextProps): JSX.Element => (
+  H3: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement> & TextProps): ReactElement => (
     <Animator>
       <Text {...props} as="h3" fixed>
         {children}
@@ -71,7 +71,7 @@ const AR = {
     </Animator>
   ),
 
-  HR: (props: HrProps): JSX.Element => (
+  HR: (props: HrProps): ReactElement => (
     <Animator>
       <Hr
         {...props}
@@ -84,7 +84,7 @@ const AR = {
     </Animator>
   ),
 
-  P: ({ children, ...props }: HTMLAttributes<HTMLParagraphElement>): JSX.Element => (
+  P: ({ children, ...props }: HTMLAttributes<HTMLParagraphElement>): ReactElement => (
     <Animator>
       <Animated
         {...props}
@@ -97,7 +97,7 @@ const AR = {
     </Animator>
   ),
 
-  Blockquote: ({ children, ...props }: HTMLAttributes<HTMLDivElement>): JSX.Element => (
+  Blockquote: ({ children, ...props }: HTMLAttributes<HTMLDivElement>): ReactElement => (
     <Animator>
       <Animated {...props} as="blockquote" animated={['flicker']}>
         {children}
@@ -105,7 +105,7 @@ const AR = {
     </Animator>
   ),
 
-  UL: ({ children, ...props }: HTMLAttributes<HTMLUListElement>): JSX.Element => (
+  UL: ({ children, ...props }: HTMLAttributes<HTMLUListElement>): ReactElement => (
     <Animator>
       <Animated<HTMLUListElement>
         {...props}
@@ -123,7 +123,7 @@ const AR = {
     </Animator>
   ),
 
-  OL: ({ children, ...props }: HTMLAttributes<HTMLOListElement>): JSX.Element => (
+  OL: ({ children, ...props }: HTMLAttributes<HTMLOListElement>): ReactElement => (
     <Animator>
       <Animated<HTMLOListElement>
         {...props}
@@ -141,7 +141,7 @@ const AR = {
     </Animator>
   ),
 
-  Table: ({ children, ...props }: TableProps): JSX.Element => (
+  Table: ({ children, ...props }: TableProps): ReactElement => (
     <Animator>
       <Table
         {...props}
@@ -169,7 +169,7 @@ const AR = {
   Links: (props: {
     compact?: boolean
     links: Array<{ href: string; target?: string; text: string; icon?: React.ReactNode }>
-  }): JSX.Element => {
+  }): ReactElement => {
     return (
       <Animator>
         <Animated
@@ -204,7 +204,7 @@ const AR = {
     )
   },
 
-  Breadcrumbs: (props: BreadcrumbsProps): JSX.Element => (
+  Breadcrumbs: (props: BreadcrumbsProps): ReactElement => (
     <Animator>
       <Breadcrumbs
         {...props}
@@ -219,7 +219,7 @@ const AR = {
     prev?: string
     next?: string
     nextHref?: string
-  }): JSX.Element => (
+  }): ReactElement => (
     <Animator>
       <nav className={cx('flex flex-col gap-6 mt-6 lg:gap-8 lg:mt-8')}>
         <Hr className="!m-0 origin-left" direction="both" animated={[['scaleX', 0, 1]]} />
@@ -253,7 +253,7 @@ const AR = {
     </Animator>
   ),
 
-  Playground: (props: { className?: string; url: string }): JSX.Element => (
+  Playground: (props: { className?: string; url: string }): ReactElement => (
     <Animator>
       <Animated
         as="iframe"

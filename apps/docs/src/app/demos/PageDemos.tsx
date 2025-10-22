@@ -1,5 +1,7 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import Link from 'next/link'
 import { Animated, Animator, BleepsOnAnimator, Text } from '@arwes/react'
 import { DroneXmark as IconDevelopment, Page as IconDocs, Codepen as IconPlay } from 'iconoir-react'
@@ -7,7 +9,7 @@ import { DroneXmark as IconDevelopment, Page as IconDocs, Codepen as IconPlay } 
 import { type BleepNames, theme } from '@/config'
 import { Button, FrameAlert } from '@/ui'
 
-const PageDemos = (): JSX.Element => {
+const PageDemos = (): ReactElement => {
   return (
     <Animator combine>
       <BleepsOnAnimator<BleepNames> transitions={{ entering: 'error' }} continuous />

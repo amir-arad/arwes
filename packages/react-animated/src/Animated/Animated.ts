@@ -4,6 +4,7 @@ import {
   type CSSProperties,
   type ForwardedRef,
   type ReactNode,
+  type ReactElement,
   createElement,
   useRef,
   useMemo
@@ -34,7 +35,7 @@ const AnimatedComponent = <
   P = E extends HTMLElement ? HTMLProps<E> : SVGProps<E>
 >(
   props: AnimatedProps<E> & NoInfer<P>
-): JSX.Element => {
+): ReactElement => {
   const {
     as: asProvided,
     animated,

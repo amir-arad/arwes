@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState , type ReactElement } from 'react'
 import { Animated, Animator, AnimatorGeneralProvider, Text } from '@arwes/react'
 
-const Example = (): JSX.Element => {
+const Example = (): ReactElement => {
   const [active, setActive] = useState(false)
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Example = (): JSX.Element => {
   )
 }
 
-const ExampleText = (): JSX.Element => (
+const ExampleText = (): ReactElement => (
   <Animator unmountOnExited>
     <Animated data-name="example">
       <Example />

@@ -1,8 +1,10 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import { Animator, Text } from '@arwes/react'
 
-export default (): JSX.Element => (
+export default (): ReactElement => (
   <Animator>
     <div className="flex m-auto p-4">
       <Text as="div" contentClassName="flex-1 flex flex-col gap-4">

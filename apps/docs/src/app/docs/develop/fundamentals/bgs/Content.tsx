@@ -1,9 +1,11 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import { AR } from '@/ui'
 import { ExampleBgs } from './ExampleBgs'
 
-export default (): JSX.Element => (
+export default (): ReactElement => (
   <>
     <AR.Header>Background Fundamentals</AR.Header>
 

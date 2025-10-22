@@ -1,12 +1,14 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import { LayoutContent, Nav } from '@/ui'
 
 type LayoutDocsProps = {
   children?: React.ReactNode
 }
 
-const LayoutDevelop = (props: LayoutDocsProps): JSX.Element => {
+const LayoutDevelop = (props: LayoutDocsProps): ReactElement => {
   const { children } = props
   return (
     <LayoutContent left={<Nav className="mb-auto" path="docs" />}>

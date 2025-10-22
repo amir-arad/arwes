@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef , type ReactElement } from 'react'
 import { useMedia } from 'react-use'
 import {
   Animated,
@@ -20,11 +20,11 @@ type CardProps = {
   icon: React.ReactNode
 }
 
-const Card = (props: CardProps): JSX.Element => {
+const Card = (props: CardProps): ReactElement => {
   const { title, description, icon } = props
 
   const isXL = useMedia(theme.breakpoints.up('xl', { strip: true }), false)
-  const frameRef = useRef<SVGSVGElement>(null)
+  const frameRef = useRef<SVGSVGElement>(null!)
 
   useFrameAssembler(frameRef)
 

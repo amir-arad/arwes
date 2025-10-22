@@ -1,8 +1,10 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import { Animated, Animator, AnimatorGeneralProvider, FrameOctagon } from '@arwes/react'
 
-const Example = (): JSX.Element => {
+const Example = (): ReactElement => {
   return (
     <AnimatorGeneralProvider disabled={false} dismissed={false} duration={{ enter: 2, exit: 2 }}>
       <Animator root active>
@@ -36,7 +38,7 @@ const Example = (): JSX.Element => {
   )
 }
 
-const ExampleFrameProvided = (): JSX.Element => {
+const ExampleFrameProvided = (): ReactElement => {
   return (
     <Animator unmountOnExited>
       <Animated data-name="example" className="inline-block size-[15rem]">

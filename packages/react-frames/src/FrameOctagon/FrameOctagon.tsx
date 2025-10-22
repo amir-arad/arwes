@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { type ReactElement, useMemo } from 'react'
 import { cx } from '@arwes/tools'
 import { memo } from '@arwes/react-tools'
 import { type CreateFrameOctagonSettingsProps, createFrameOctagonSettings } from '@arwes/frames'
@@ -7,7 +7,7 @@ import { type FrameBaseProps, FrameBase } from '../FrameBase/index.js'
 
 type FrameOctagonProps = Omit<FrameBaseProps, 'settings'> & CreateFrameOctagonSettingsProps
 
-const FrameOctagon = memo((props: FrameOctagonProps): JSX.Element => {
+const FrameOctagon = memo((props: FrameOctagonProps): ReactElement => {
   const {
     styled,
     animated,

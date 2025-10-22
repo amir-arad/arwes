@@ -1,4 +1,4 @@
-import { Children, useRef, type ReactNode } from 'react'
+import { Children, useRef, type ReactNode , type ReactElement } from 'react'
 import {
   cx,
   memo,
@@ -24,10 +24,10 @@ interface ModalProps {
   onClose?: () => void
 }
 
-const Modal = memo((props: ModalProps): JSX.Element => {
+const Modal = memo((props: ModalProps): ReactElement => {
   const { className, contentClassName, header, footer, children, onClose } = props
 
-  const frameRef = useRef<SVGSVGElement>(null)
+  const frameRef = useRef<SVGSVGElement>(null!)
   const bleeps = useBleeps<BleepNames>()
 
   useFrameAssembler(frameRef)

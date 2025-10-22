@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react'
+import { type ReactNode , type ReactElement } from 'react'
 
 export type IconProps = {
   className?: string
@@ -7,7 +7,7 @@ export type IconProps = {
   children?: ReactNode
 }
 
-export const Icon = (props: IconProps): JSX.Element => (
+export const Icon = (props: IconProps): ReactElement => (
   <svg
     className={props.className}
     width={props.width ?? '1em'}

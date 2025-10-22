@@ -1,5 +1,7 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import { Animated, Animator, Text, cx } from '@arwes/react'
 import Link from 'next/link'
 import {
@@ -10,7 +12,7 @@ import {
 
 import { Hr, Card, ArwesLogoIcon } from '@/ui'
 
-const PageDocs = (): JSX.Element => {
+const PageDocs = (): ReactElement => {
   return (
     <Animator combine manager="sequence">
       <div

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState , type ReactElement } from 'react'
 import {
   Animated,
   Animator,
@@ -17,7 +17,7 @@ import {
 } from '@arwes/react'
 import { theme } from '@/config'
 
-const Frames = (): JSX.Element => {
+const Frames = (): ReactElement => {
   return (
     <div
       className="flex flex-row flex-wrap gap-4"
@@ -84,7 +84,7 @@ const Frames = (): JSX.Element => {
   )
 }
 
-const Example = (): JSX.Element => {
+const Example = (): ReactElement => {
   const [active, setActive] = useState(true)
 
   useEffect(() => {
@@ -101,7 +101,7 @@ const Example = (): JSX.Element => {
   )
 }
 
-const ExampleFrames = (): JSX.Element => {
+const ExampleFrames = (): ReactElement => {
   return (
     <Animator unmountOnExited>
       <Animated data-name="example">

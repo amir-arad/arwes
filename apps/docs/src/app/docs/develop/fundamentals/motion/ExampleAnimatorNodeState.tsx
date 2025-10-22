@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState , type ReactElement } from 'react'
 import { Animated, Animator, cx, useAnimator } from '@arwes/react'
 
 import { theme } from '@/config'
 
-const ExampleText = (): JSX.Element => {
+const ExampleText = (): ReactElement => {
   const animator = useAnimator()!
   const [state, setState] = useState('')
 
@@ -14,7 +14,7 @@ const ExampleText = (): JSX.Element => {
   return <>{state}</>
 }
 
-const Example = (): JSX.Element => {
+const Example = (): ReactElement => {
   const [active, setActive] = useState(false)
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const Example = (): JSX.Element => {
   )
 }
 
-const ExampleAnimatorNodeState = (): JSX.Element => (
+const ExampleAnimatorNodeState = (): ReactElement => (
   <Animator unmountOnExited>
     <Animated data-name="example">
       <Example />

@@ -1,5 +1,7 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import Link from 'next/link'
 import { Codepen as IconPlay } from 'iconoir-react'
 
@@ -8,7 +10,7 @@ import { ExampleFrameProvided } from './ExampleFrameProvided'
 import { Animated, Animator } from '@arwes/react'
 import { ExampleFrameCustom } from './ExampleFrameCustom'
 
-export default (): JSX.Element => (
+export default (): ReactElement => (
   <>
     <AR.Header>React Frames</AR.Header>
 

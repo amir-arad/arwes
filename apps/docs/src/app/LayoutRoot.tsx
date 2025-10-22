@@ -1,6 +1,6 @@
 'use client'
 
-import React, { type ReactNode } from 'react'
+import React, { type ReactNode , type ReactElement } from 'react'
 import { AnimatorGeneralProvider, BleepsProvider, Animator } from '@arwes/react'
 import { Titillium_Web, Source_Code_Pro } from 'next/font/google'
 import { IconoirProvider } from 'iconoir-react'
@@ -28,7 +28,7 @@ const fontSourceCodePro = Source_Code_Pro({
   preload: false
 })
 
-const LayoutRoot = (props: { children: ReactNode }): JSX.Element => {
+const LayoutRoot = (props: { children: ReactNode }): ReactElement => {
   const [isMotionEnabled] = useAtom(atomMotionEnabled)
   const [isAudioEnabled] = useAtom(atomAudioEnabled)
 

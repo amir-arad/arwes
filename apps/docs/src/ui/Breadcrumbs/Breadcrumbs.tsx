@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment , type ReactElement } from 'react'
 import { cx, type AnimatedProp, Animated } from '@arwes/react'
 import { FastArrowRight } from 'iconoir-react'
 import Link from 'next/link'
@@ -9,7 +9,7 @@ type BreadcrumbsProps = {
   items: Array<{ text: React.ReactNode; href?: string }>
 }
 
-const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
+const Breadcrumbs = (props: BreadcrumbsProps): ReactElement => {
   const { className, animated, items } = props
 
   return (

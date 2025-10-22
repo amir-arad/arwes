@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import { Animated, type AnimatedProp, cx, Animator, memo } from '@arwes/react'
 import { Highlight, themes } from 'prism-react-renderer'
 
@@ -12,7 +13,7 @@ type CodeBlockProps = {
   code: string
 }
 
-const CodeBlock = memo((props: CodeBlockProps): JSX.Element => {
+const CodeBlock = memo((props: CodeBlockProps): ReactElement => {
   const { className, animated, filename, lang = 'tsx', code, highlightLines } = props
 
   return (

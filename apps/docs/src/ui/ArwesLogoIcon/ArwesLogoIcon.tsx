@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import { Animated, type AnimatedProp, cx, memo } from '@arwes/react'
 
 import styles from './ArwesLogoIcon.module.css'
@@ -8,7 +9,7 @@ interface ArwesLogoIconProps {
   hasRotation?: boolean
 }
 
-const ArwesLogoIcon = memo((props: ArwesLogoIconProps): JSX.Element => {
+const ArwesLogoIcon = memo((props: ArwesLogoIconProps): ReactElement => {
   const { className, animated, hasRotation = true } = props
   return (
     <Animated<SVGSVGElement>

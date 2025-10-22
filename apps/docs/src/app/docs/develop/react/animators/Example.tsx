@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState , type ReactElement } from 'react'
 import { Animated, Animator, AnimatorGeneralProvider, cx } from '@arwes/react'
 import { theme } from '@/config'
 
@@ -7,7 +7,7 @@ type Props = {
   isPolished?: boolean
 }
 
-const Content = (props: Props): JSX.Element => {
+const Content = (props: Props): ReactElement => {
   const [active, setActive] = useState(false)
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const Content = (props: Props): JSX.Element => {
   )
 }
 
-const Example = (props: Props): JSX.Element => (
+const Example = (props: Props): ReactElement => (
   <Animator unmountOnExited>
     <AnimatorGeneralProvider disabled={false} dismissed={false}>
       <Animated data-name="example">

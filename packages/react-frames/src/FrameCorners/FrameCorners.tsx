@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { type ReactElement, useMemo } from 'react'
 import { cx } from '@arwes/tools'
 import { memo } from '@arwes/react-tools'
 import { type CreateFrameCornersSettingsProps, createFrameCornersSettings } from '@arwes/frames'
@@ -7,7 +7,7 @@ import { type FrameBaseProps, FrameBase } from '../FrameBase/index.js'
 
 type FrameCornersProps = Omit<FrameBaseProps, 'settings'> & CreateFrameCornersSettingsProps
 
-const FrameCorners = memo((props: FrameCornersProps): JSX.Element => {
+const FrameCorners = memo((props: FrameCornersProps): ReactElement => {
   const { styled, animated, padding, strokeWidth, cornerLength } = props
 
   const settings = useMemo(

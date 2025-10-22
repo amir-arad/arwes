@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { type ReactElement, useMemo } from 'react'
 import { cx } from '@arwes/tools'
 import { memo } from '@arwes/react-tools'
 import { type CreateFrameCircleSettingsProps, createFrameCircleSettings } from '@arwes/frames'
@@ -7,7 +7,7 @@ import { type FrameBaseProps, FrameBase } from '../FrameBase/index.js'
 
 type FrameCircleProps = Omit<FrameBaseProps, 'settings'> & CreateFrameCircleSettingsProps
 
-const FrameCircle = memo((props: FrameCircleProps): JSX.Element => {
+const FrameCircle = memo((props: FrameCircleProps): ReactElement => {
   const { styled, animated, padding, strokeWidth, separation, sideWidth } = props
 
   const settings = useMemo(

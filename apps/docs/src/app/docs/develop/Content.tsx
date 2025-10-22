@@ -1,12 +1,14 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import { Axes as IconFundamentals, Cube as IconVanilla } from 'iconoir-react'
 
 import { IconReact, IconTailwind, IconSolid, IconSvelte } from '@/icons'
 
 import { AR } from '@/ui'
 
-export default (): JSX.Element => (
+export default (): ReactElement => (
   <>
     <AR.Header>Develop</AR.Header>
 
