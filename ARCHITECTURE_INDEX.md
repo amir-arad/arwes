@@ -5,9 +5,11 @@ This directory contains comprehensive documentation of the Arwes framework's arc
 ## Documentation Files
 
 ### 1. ARCHITECTURE.md (13 KB)
+
 **Comprehensive architectural overview** - Start here for a complete understanding of the framework.
 
 **Contains**:
+
 - Overview of the monorepo structure
 - Detailed breakdown of vanilla vs React packages
 - Package categories and purposes
@@ -24,9 +26,11 @@ This directory contains comprehensive documentation of the Arwes framework's arc
 ---
 
 ### 2. ARCHITECTURE_QUICK_REFERENCE.md (11 KB)
+
 **Quick lookup guide** - Use this for rapid reference during development.
 
 **Contains**:
+
 - ASCII package relationship diagram
 - Vanilla package quick guide with code examples
 - React wrapper package quick guide
@@ -41,9 +45,11 @@ This directory contains comprehensive documentation of the Arwes framework's arc
 ---
 
 ### 3. PACKAGES_REFERENCE.md (10 KB)
+
 **Detailed package-by-package breakdown** - Reference specific packages here.
 
 **Contains**:
+
 - Vanilla packages:
   - @arwes/tools
   - @arwes/animator
@@ -70,11 +76,13 @@ This directory contains comprehensive documentation of the Arwes framework's arc
 ## Quick Navigation
 
 ### Understanding Package Relationships
+
 1. Start with package diagram in **ARCHITECTURE_QUICK_REFERENCE.md**
 2. Get details in **PACKAGES_REFERENCE.md**
 3. Deep dive in **ARCHITECTURE.md** sections on dependency graph
 
 ### Learning the Animation System
+
 1. Read "Animator System" in **ARCHITECTURE.md**
 2. Check "@arwes/animator" in **PACKAGES_REFERENCE.md**
 3. Look at code examples in **ARCHITECTURE_QUICK_REFERENCE.md**
@@ -83,6 +91,7 @@ This directory contains comprehensive documentation of the Arwes framework's arc
    - `/packages/animator/src/internal/createAnimatorMachine/createAnimatorMachine.ts`
 
 ### Learning the Sound System
+
 1. Read "Bleeps System" in **ARCHITECTURE.md**
 2. Check "@arwes/bleeps" in **PACKAGES_REFERENCE.md**
 3. Look at code examples in **ARCHITECTURE_QUICK_REFERENCE.md**
@@ -91,6 +100,7 @@ This directory contains comprehensive documentation of the Arwes framework's arc
    - `/packages/bleeps/src/createBleepsManager/createBleepsManager.ts`
 
 ### Working with React Integration
+
 1. Read "React Integration Patterns" in **ARCHITECTURE.md**
 2. Check "@arwes/react-animator" and "@arwes/react-bleeps" in **PACKAGES_REFERENCE.md**
 3. Look at component patterns in **ARCHITECTURE_QUICK_REFERENCE.md**
@@ -99,6 +109,7 @@ This directory contains comprehensive documentation of the Arwes framework's arc
    - `/packages/react-bleeps/src/BleepsProvider/BleepsProvider.tsx`
 
 ### Understanding the Build System
+
 1. Read "Build System Architecture" in **ARCHITECTURE.md**
 2. Check "Build System Essentials" in **ARCHITECTURE_QUICK_REFERENCE.md**
 3. Examine scripts in `/scripts/`:
@@ -109,47 +120,53 @@ This directory contains comprehensive documentation of the Arwes framework's arc
 ## Key Architectural Concepts
 
 ### 1. Vanilla/React Separation
+
 - **Vanilla packages**: Pure JavaScript/TypeScript, no React dependency
 - **React packages**: Thin wrappers providing React Context and hooks
 - **Pattern**: Single-responsibility, composable, framework-agnostic logic
 
 ### 2. Factory Function Pattern
+
 All vanilla packages use this pattern:
+
 ```typescript
 const createXXX = (props: XXXProps): XXX => {
   // Private state
   // Public API via Object.defineProperties
   // Returns immutable interface with private implementation
-};
+}
 ```
 
 ### 3. State Machine Architecture (Animator)
+
 - **States**: exited, entering, entered, exiting
 - **Transitions**: Triggered by actions (enter, exit, update, setup, refresh)
 - **Managers**: Pluggable strategies for coordinating child animations
 
 ### 4. Multi-Format Builds
+
 - **ESM**: Modern JavaScript modules
 - **CJS**: CommonJS for Node.js
 - **UMD**: Browser bundles with minified production version
 
 ### 5. Peer Dependencies
+
 - Prevents version conflicts
 - Allows framework-agnostic packages
 - Clear dependency graph
 
 ## Common Tasks & Where to Look
 
-| Task | Primary Doc | Secondary Doc | Key Files |
-|------|------------|---------------|-----------|
-| Add new animation feature | ARCHITECTURE.md | ARCHITECTURE_QUICK_REFERENCE.md | animator/src/* |
-| Add new sound effect | ARCHITECTURE.md | PACKAGES_REFERENCE.md | bleeps/src/* |
-| Create React wrapper | ARCHITECTURE_QUICK_REFERENCE.md | ARCHITECTURE.md | react-*/src/* |
-| Fix animation timing | ARCHITECTURE_QUICK_REFERENCE.md (debug) | ARCHITECTURE.md | animator/src/internal/* |
-| Modify build system | ARCHITECTURE.md | ARCHITECTURE_QUICK_REFERENCE.md | scripts/* |
-| Understand dependencies | PACKAGES_REFERENCE.md | ARCHITECTURE.md | package.json files |
-| Debug state transitions | ARCHITECTURE.md | ARCHITECTURE_QUICK_REFERENCE.md | animator FSM code |
-| Working with audio | PACKAGES_REFERENCE.md | ARCHITECTURE.md | bleeps/src/* |
+| Task                      | Primary Doc                             | Secondary Doc                   | Key Files                |
+| ------------------------- | --------------------------------------- | ------------------------------- | ------------------------ |
+| Add new animation feature | ARCHITECTURE.md                         | ARCHITECTURE_QUICK_REFERENCE.md | animator/src/\*          |
+| Add new sound effect      | ARCHITECTURE.md                         | PACKAGES_REFERENCE.md           | bleeps/src/\*            |
+| Create React wrapper      | ARCHITECTURE_QUICK_REFERENCE.md         | ARCHITECTURE.md                 | react-_/src/_            |
+| Fix animation timing      | ARCHITECTURE_QUICK_REFERENCE.md (debug) | ARCHITECTURE.md                 | animator/src/internal/\* |
+| Modify build system       | ARCHITECTURE.md                         | ARCHITECTURE_QUICK_REFERENCE.md | scripts/\*               |
+| Understand dependencies   | PACKAGES_REFERENCE.md                   | ARCHITECTURE.md                 | package.json files       |
+| Debug state transitions   | ARCHITECTURE.md                         | ARCHITECTURE_QUICK_REFERENCE.md | animator FSM code        |
+| Working with audio        | PACKAGES_REFERENCE.md                   | ARCHITECTURE.md                 | bleeps/src/\*            |
 
 ## File Organization Reference
 
@@ -180,6 +197,7 @@ arwes/
 ```
 
 ## Version Information
+
 - **Current Version**: 1.0.0-alpha.20
 - **Node.js**: ^18.16
 - **TypeScript**: 4.9.x
@@ -189,12 +207,14 @@ arwes/
 ## Key Files to Study
 
 ### Entry Points
+
 - `/packages/animator/src/index.ts` - Animator exports
 - `/packages/bleeps/src/index.ts` - Bleeps exports
 - `/packages/react-animator/src/index.ts` - React animator exports
 - `/packages/react-bleeps/src/index.ts` - React bleeps exports
 
 ### Core Implementations
+
 - `/packages/animator/src/createAnimatorSystem/` - System creation
 - `/packages/animator/src/internal/createAnimatorMachine/` - State machine
 - `/packages/animator/src/internal/createAnimatorManager/` - Manager strategies
@@ -202,11 +222,13 @@ arwes/
 - `/packages/animated/src/easing/` - Easing functions
 
 ### React Integration
+
 - `/packages/react-animator/src/Animator/` - Main React component
 - `/packages/react-bleeps/src/BleepsProvider/` - Provider component
 - `/packages/react-*/src/use*/` - Custom hooks
 
 ### Build Configuration
+
 - `/tsconfig.build.esm.json` - ESM configuration
 - `/tsconfig.build.cjs.json` - CJS configuration
 - `/scripts/pkg-build-*.sh` - Build scripts
@@ -222,6 +244,7 @@ When exploring this codebase:
 5. **Look at actual source code** for implementation details
 
 The three documentation files complement each other:
+
 - ARCHITECTURE.md provides breadth and depth
 - QUICK_REFERENCE.md provides breadth and quick examples
 - PACKAGES_REFERENCE.md provides focused package details
@@ -231,6 +254,7 @@ Together, they form a comprehensive guide to the Arwes framework architecture.
 ## Architectural Highlights
 
 ### Strengths
+
 - Clean separation of vanilla and React packages
 - Type-safe factory pattern for encapsulation
 - Flexible animation choreography with multiple strategies
@@ -239,6 +263,7 @@ Together, they form a comprehensive guide to the Arwes framework architecture.
 - Peer dependencies prevent version conflicts
 
 ### Design Patterns
+
 - Factory functions (all vanilla packages)
 - State machines (animator system)
 - Strategy pattern (manager strategies)
@@ -246,6 +271,7 @@ Together, they form a comprehensive guide to the Arwes framework architecture.
 - Object.defineProperties for property descriptors (immutability)
 
 ### Performance Considerations
+
 - Lazy loading of audio files
 - Efficient scheduler for animations
 - Tree-based animator node structure
@@ -257,4 +283,3 @@ Together, they form a comprehensive guide to the Arwes framework architecture.
 **Last Updated**: October 22, 2025
 **Framework**: Arwes v1.0.0-alpha.20
 **Documentation Version**: 1.0
-
