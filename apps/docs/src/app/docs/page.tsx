@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import type { Metadata } from 'next'
 
 import { settings } from '@/config/settings'
@@ -8,4 +9,4 @@ export const metadata: Metadata = {
   description: settings.description
 }
 
-export default (): JSX.Element => <PageDocs />
+export default (): ReactElement => <PageDocs />

@@ -1,12 +1,12 @@
 'use client'
 
-import { type ReactNode } from 'react'
+import { type ReactNode, type ReactElement } from 'react'
 import { Animator, FrameHeader, cx } from '@arwes/react'
 
 import { CommunityLoadingScreen } from './CommunityLoadingScreen'
 import { CommunityHeader } from './CommunityHeader'
 
-const LayoutCommunity = (props: { children: ReactNode }): JSX.Element => {
+const LayoutCommunity = (props: { children: ReactNode }): ReactElement => {
   return (
     <Animator combine manager="sequence">
       <div className="flex-1 flex justify-center min-w-0 min-h-0">

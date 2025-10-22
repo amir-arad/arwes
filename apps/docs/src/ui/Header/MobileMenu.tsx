@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import { Animator, Animated } from '@arwes/react'
 
 import { settings } from '@/config'
@@ -10,7 +11,7 @@ type MobileMenuProps = {
   closeMenu: () => void
 }
 
-const MobileMenu = (props: MobileMenuProps): JSX.Element => {
+const MobileMenu = (props: MobileMenuProps): ReactElement => {
   const { isMenuOpen, closeMenu } = props
 
   return (

@@ -1,4 +1,4 @@
-import React, { type HTMLAttributes, type ReactNode } from 'react'
+import React, { type HTMLAttributes, type ReactNode, type ReactElement } from 'react'
 import { type AnimatedProp, Animated, cx, memo, useBleeps } from '@arwes/react'
 
 import { type BleepNames } from '@/config'
@@ -11,7 +11,7 @@ interface MenuProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode
 }
 
-const MenuItem = memo((props: MenuProps): JSX.Element => {
+const MenuItem = memo((props: MenuProps): ReactElement => {
   const { className, animated, children, active, ...otherProps } = props
 
   const bleeps = useBleeps<BleepNames>()

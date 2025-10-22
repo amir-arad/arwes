@@ -1,12 +1,14 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import Link from 'next/link'
 import { Codepen as IconPlay } from 'iconoir-react'
 
 import { AR } from '@/ui'
 import { Example } from './Example'
 
-export default (): JSX.Element => (
+export default (): ReactElement => (
   <>
     <AR.Header>React Animators</AR.Header>
 
@@ -31,7 +33,7 @@ export default (): JSX.Element => (
     <AR.CodeBlock
       filename="Card.tsx"
       lang="tsx"
-      code={`const Card = (): JSX.Element => (
+      code={`const Card = (): ReactElement => (
   <article className='card'>
     <img className='card-image' src='logo.svg' />
     <h1 className='card-title'>ARWES</h1>
@@ -61,7 +63,7 @@ export default (): JSX.Element => (
       highlightLines={[4, 6, 9, 12]}
       code={`import { Animator } from '@arwes/react'
 
-const Card = (): JSX.Element => (
+const Card = (): ReactElement => (
   <Animator>
     <article className='card'>
       <Animator>
@@ -95,7 +97,7 @@ const Card = (): JSX.Element => (
       highlightLines={[5, 7, 10, 13]}
       code={`import { Animator, Animated } from '@arwes/react'
 
-const Card = (): JSX.Element => (
+const Card = (): ReactElement => (
   <Animator>
     <Animated as='article' className='card'>
       <Animator>
@@ -359,7 +361,7 @@ const animated: AnimatedProp = {
   }
 }
 
-const Card = (): JSX.Element => (
+const Card = (): ReactElement => (
   <Animator>
     <Animated
       as='article'

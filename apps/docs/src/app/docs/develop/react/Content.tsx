@@ -1,5 +1,7 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import Link from 'next/link'
 import { Animated, Animator } from '@arwes/react'
 import { Cube as IconVanilla, Codepen as IconPlay } from 'iconoir-react'
@@ -7,7 +9,7 @@ import { Cube as IconVanilla, Codepen as IconPlay } from 'iconoir-react'
 import { IconReact } from '@/icons'
 import { AR } from '@/ui'
 
-export default (): JSX.Element => (
+export default (): ReactElement => (
   <>
     <AR.Header>React</AR.Header>
 

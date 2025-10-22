@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, type ReactElement } from 'react'
 import {
   Animated,
   Animator,
@@ -26,7 +26,7 @@ type CommunityAppProps = {
   children: string
 }
 
-const CommunityApp = memo((props: CommunityAppProps): JSX.Element => {
+const CommunityApp = memo((props: CommunityAppProps): ReactElement => {
   const {
     className,
     url,

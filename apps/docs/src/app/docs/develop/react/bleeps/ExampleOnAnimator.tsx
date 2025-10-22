@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type ReactElement } from 'react'
 import {
   type BleepsProviderSettings,
   Animator,
@@ -36,7 +36,7 @@ const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
   }
 }
 
-const OnAnimator = (): JSX.Element => {
+const OnAnimator = (): ReactElement => {
   const [enabled, setEnabled] = useState(false)
   const [active, setActive] = useState(false)
 
@@ -69,7 +69,7 @@ const OnAnimator = (): JSX.Element => {
   )
 }
 
-const ExampleOnAnimator = (): JSX.Element => {
+const ExampleOnAnimator = (): ReactElement => {
   return (
     <AnimatorGeneralProvider disabled={false} dismissed={false}>
       <BleepsProvider {...bleepsSettings}>

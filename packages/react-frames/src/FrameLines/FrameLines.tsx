@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { type ReactElement, useMemo } from 'react'
 import { cx } from '@arwes/tools'
 import { memo } from '@arwes/react-tools'
 import { type CreateFrameLinesSettingsProps, createFrameLinesSettings } from '@arwes/frames'
@@ -7,7 +7,7 @@ import { type FrameBaseProps, FrameBase } from '../FrameBase/index.js'
 
 type FrameLinesProps = Omit<FrameBaseProps, 'settings'> & CreateFrameLinesSettingsProps
 
-const FrameLines = memo((props: FrameLinesProps): JSX.Element => {
+const FrameLines = memo((props: FrameLinesProps): ReactElement => {
   const { styled, animated, padding, largeLineWidth, smallLineWidth, smallLineLength } = props
 
   const settings = useMemo(

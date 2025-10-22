@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import { usePathname } from 'next/navigation'
 
 import { Breadcrumbs, type BreadcrumbsProps } from '../Breadcrumbs'
@@ -20,7 +21,7 @@ const paths: Record<string, string> = {
   '/demos': 'Demos'
 }
 
-const NavPath = memo((props: NavPathProps): JSX.Element => {
+const NavPath = memo((props: NavPathProps): ReactElement => {
   const pathname = usePathname()
 
   const fragments = pathname.split('/').filter(Boolean)

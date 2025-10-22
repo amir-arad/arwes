@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import {
   type BleepsProviderSettings,
   Animated,
@@ -41,7 +42,7 @@ const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
   }
 }
 
-const Button = (): JSX.Element => {
+const Button = (): ReactElement => {
   const bleeps = useBleeps<BleepsNames>()
 
   return (
@@ -63,7 +64,7 @@ const Button = (): JSX.Element => {
   )
 }
 
-const ExampleButton = (): JSX.Element => {
+const ExampleButton = (): ReactElement => {
   return (
     <BleepsProvider {...bleepsSettings}>
       <Animator>

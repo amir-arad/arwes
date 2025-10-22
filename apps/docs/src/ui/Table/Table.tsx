@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import { Animated, type AnimatedProp, cx } from '@arwes/react'
 
 type TableProps = {
@@ -7,7 +8,7 @@ type TableProps = {
   children: React.ReactNode
 }
 
-const Table = (props: TableProps): JSX.Element => {
+const Table = (props: TableProps): ReactElement => {
   const { className, animated, minWidth, children } = props
   return (
     <Animated
@@ -27,7 +28,7 @@ type RowProps = {
   children: React.ReactNode
 }
 
-const Row = (props: RowProps): JSX.Element => {
+const Row = (props: RowProps): ReactElement => {
   const { className, children } = props
   return (
     <div role="row" className={cx('group flex flex-row gap-1 min-w-0 min-h-0', className)}>
@@ -42,7 +43,7 @@ type CellProps = {
   children: React.ReactNode
 }
 
-const Cell = (props: CellProps): JSX.Element => {
+const Cell = (props: CellProps): ReactElement => {
   const { className, isHeader, children } = props
   return (
     <div

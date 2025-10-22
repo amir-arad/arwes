@@ -1,9 +1,11 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import { Animated, Animator, AnimatorGeneralProvider, Puffs } from '@arwes/react'
 import { theme } from '@/config'
 
-const Example = (): JSX.Element => {
+const Example = (): ReactElement => {
   return (
     <AnimatorGeneralProvider disabled={false} dismissed={false} duration={{ enter: 1, exit: 1 }}>
       <Animator root active>
@@ -23,7 +25,7 @@ const Example = (): JSX.Element => {
   )
 }
 
-const ExampleBg = (): JSX.Element => {
+const ExampleBg = (): ReactElement => {
   return (
     <Animator unmountOnExited>
       <Animated data-name="example">

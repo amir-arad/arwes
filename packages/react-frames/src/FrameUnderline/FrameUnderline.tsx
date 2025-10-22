@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { type ReactElement, useMemo } from 'react'
 import { cx } from '@arwes/tools'
 import { memo } from '@arwes/react-tools'
 import { type CreateFrameUnderlineSettingsProps, createFrameUnderlineSettings } from '@arwes/frames'
@@ -7,7 +7,7 @@ import { type FrameBaseProps, FrameBase } from '../FrameBase/index.js'
 
 type FrameUnderlineProps = Omit<FrameBaseProps, 'settings'> & CreateFrameUnderlineSettingsProps
 
-const FrameUnderline = memo((props: FrameUnderlineProps): JSX.Element => {
+const FrameUnderline = memo((props: FrameUnderlineProps): ReactElement => {
   const { styled, squareSize, strokeWidth, padding } = props
 
   const settings = useMemo(

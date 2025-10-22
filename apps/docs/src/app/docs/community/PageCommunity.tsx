@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, type ReactElement } from 'react'
 import { useRouter } from 'next/navigation'
 
-const PageCommunity = (): JSX.Element => {
+const PageCommunity = (): ReactElement => {
   const router = useRouter()
   useEffect(() => router.push('/docs/community/apps'), [])
   return <></>

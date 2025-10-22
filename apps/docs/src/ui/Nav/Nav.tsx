@@ -1,4 +1,4 @@
-import { Children, type ReactNode } from 'react'
+import { Children, type ReactNode, type ReactElement } from 'react'
 import { memo, Animator, Animated, flicker, cx, styleFrameClipOctagon } from '@arwes/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -25,7 +25,7 @@ type ListProps = {
   children: ReactNode
 }
 
-const List = (props: ListProps): JSX.Element => {
+const List = (props: ListProps): ReactElement => {
   const { className, children } = props
   return (
     <Animated as="ul" className={cx('flex flex-col w-full', className)}>
@@ -42,7 +42,7 @@ type ItemProps = {
   onLink?: () => void
 }
 
-const Item = (props: ItemProps): JSX.Element => {
+const Item = (props: ItemProps): ReactElement => {
   const { href, icon, text, children, onLink } = props
 
   const pathname = usePathname()
@@ -108,7 +108,7 @@ type NavSectionProps = {
   onLink?: () => void
 }
 
-const NavDocs = (props: NavSectionProps): JSX.Element => {
+const NavDocs = (props: NavSectionProps): ReactElement => {
   const { onLink } = props
   return (
     <>
@@ -157,7 +157,7 @@ const NavDocs = (props: NavSectionProps): JSX.Element => {
   )
 }
 
-const NavRoot = (props: NavSectionProps): JSX.Element => {
+const NavRoot = (props: NavSectionProps): ReactElement => {
   const { onLink } = props
   return (
     <Item href="/" icon={<IconRoot />} text="Root" onLink={onLink}>
@@ -177,7 +177,7 @@ type NavProps = {
   onLink?: () => void
 }
 
-const Nav = memo((props: NavProps): JSX.Element => {
+const Nav = memo((props: NavProps): ReactElement => {
   const { className, path, onLink } = props
 
   return (

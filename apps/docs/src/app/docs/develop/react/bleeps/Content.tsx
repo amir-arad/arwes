@@ -1,5 +1,7 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import Link from 'next/link'
 import { Codepen as IconPlay } from 'iconoir-react'
 
@@ -7,7 +9,7 @@ import { AR } from '@/ui'
 import { ExampleButton } from './ExampleButton'
 import { ExampleOnAnimator } from './ExampleOnAnimator'
 
-export default (): JSX.Element => (
+export default (): ReactElement => (
   <>
     <AR.Header>React Bleeps</AR.Header>
 
@@ -89,7 +91,7 @@ const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
   }
 }
 
-const App = (): JSX.Element => (
+const App = (): ReactElement => (
   <BleepsProvider {...bleepsSettings}>
     {/* ... */}
   </BleepsProvider>
@@ -106,7 +108,7 @@ const App = (): JSX.Element => (
       code={`import { useBleeps } from '@arwes/react'
 import type { BleepsNames } from './types.ts'
 
-const Button = (): JSX.Element => {
+const Button = (): ReactElement => {
   const bleeps = useBleeps<BleepsNames>()
   return (
     <button
@@ -138,7 +140,7 @@ const Button = (): JSX.Element => {
       code={`import { Animator, Text, BleepsOnAnimator } from '@arwes/react'
 import type { BleepsNames } from './types.ts'
 
-const Content = (): JSX.Element => (
+const Content = (): ReactElement => (
   <Animator>
     <BleepsOnAnimator<BleepsNames>
       transitions={{ entering: 'type', exiting: 'type' }}

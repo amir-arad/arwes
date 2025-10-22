@@ -54,3 +54,10 @@ www
 .next
 apps/docs/src/dynamics.ts
 apps/play/src/playground/typeDefinitions.js
+
+# Architecture documentation files with long lines and missing language specs
+ARCHITECTURE_INDEX.md
+ARCHITECTURE_QUICK_REFERENCE.md
+ARCHITECTURE.md
+CLAUDE.md
+PACKAGES_REFERENCE.md

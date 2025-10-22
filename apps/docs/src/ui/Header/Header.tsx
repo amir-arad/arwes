@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, type ReactElement } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { useAtom } from 'jotai'
@@ -45,7 +45,7 @@ interface HeaderProps {
 
 const HEIGHT_CLASS = 'h-10 md:h-12'
 
-const Header = memo((props: HeaderProps): JSX.Element => {
+const Header = memo((props: HeaderProps): ReactElement => {
   const { className, animated } = props
 
   const pathname = usePathname()

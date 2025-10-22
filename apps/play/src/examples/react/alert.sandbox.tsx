@@ -143,7 +143,7 @@ const pageFrameSettings: FrameSettings = {
   ]
 }
 const PageFrame = (): ReactElement => {
-  const frameRef = useRef<SVGSVGElement>(null)
+  const frameRef = useRef<SVGSVGElement>(null!)
   useFrameAssembler(frameRef)
   return <FrameBase elementRef={frameRef} className="page-frame" settings={pageFrameSettings} />
 }
@@ -188,7 +188,7 @@ addStyles(`
 
 const Button = (props: { animated?: AnimatedProp; children: ReactNode }): ReactElement => {
   const bleeps = useBleeps<BleepsNames>()
-  const frameRef = useRef<SVGSVGElement>(null)
+  const frameRef = useRef<SVGSVGElement>(null!)
   useFrameAssembler(frameRef)
   return (
     <Animated

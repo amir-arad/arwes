@@ -1,12 +1,14 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import Link from 'next/link'
 import { Codepen as IconPlay } from 'iconoir-react'
 
 import { AR } from '@/ui'
 import { ExampleBg } from './ExampleBg'
 
-export default (): JSX.Element => (
+export default (): ReactElement => (
   <>
     <AR.Header>React Backgrounds</AR.Header>
 

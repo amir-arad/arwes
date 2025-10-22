@@ -1,5 +1,7 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import { Animated, Animator } from '@arwes/react'
 
 import { AR } from '@/ui'
@@ -8,7 +10,7 @@ import { ExampleAnimatorTree } from './ExampleAnimatorTree'
 import { ExampleAnimated } from './ExampleAnimated'
 import { ExampleText } from './ExampleText'
 
-export default (): JSX.Element => (
+export default (): ReactElement => (
   <>
     <AR.Header>Motion Fundamentals</AR.Header>
 

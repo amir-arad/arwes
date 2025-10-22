@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { type ReactElement, useMemo } from 'react'
 import { cx } from '@arwes/tools'
 import { memo } from '@arwes/react-tools'
 import { type CreateFrameNefrexSettingsProps, createFrameNefrexSettings } from '@arwes/frames'
@@ -7,7 +7,7 @@ import { type FrameBaseProps, FrameBase } from '../FrameBase/index.js'
 
 type FrameNefrexProps = Omit<FrameBaseProps, 'settings'> & CreateFrameNefrexSettingsProps
 
-const FrameNefrex = memo((props: FrameNefrexProps): JSX.Element => {
+const FrameNefrex = memo((props: FrameNefrexProps): ReactElement => {
   const {
     styled,
     animated,

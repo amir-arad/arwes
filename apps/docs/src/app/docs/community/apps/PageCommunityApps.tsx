@@ -1,5 +1,7 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import { Animator, cx } from '@arwes/react'
 import { PlusCircle } from 'iconoir-react'
 
@@ -10,7 +12,7 @@ const communityAppsList = communityApps.toSorted((a, b) =>
   !!a.outdated === !!b.outdated ? 0 : a.outdated && !b.outdated ? 1 : -1
 )
 
-const PageCommunityApps = (): JSX.Element => {
+const PageCommunityApps = (): ReactElement => {
   return (
     <Animator combine manager="stagger" duration={{ stagger: 0.05 }}>
       <div className="flex flex-col gap-8 md:gap-12">

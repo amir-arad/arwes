@@ -1,4 +1,4 @@
-import React, { type HTMLProps, type ReactNode } from 'react'
+import React, { type HTMLProps, type ReactNode, type ReactElement } from 'react'
 import {
   type AnimatedProp,
   memo,
@@ -19,7 +19,7 @@ interface ButtonProps extends HTMLProps<HTMLButtonElement> {
   children: ReactNode
 }
 
-const Button = memo((props: ButtonProps): JSX.Element => {
+const Button = memo((props: ButtonProps): ReactElement => {
   const { className, animated, children, ...otherProps } = props
 
   const bleeps = useBleeps<BleepNames>()

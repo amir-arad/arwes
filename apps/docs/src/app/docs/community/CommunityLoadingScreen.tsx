@@ -1,10 +1,10 @@
-import { type ReactNode } from 'react'
+import { type ReactNode, type ReactElement } from 'react'
 import { Animated, Animator, AnimatorGeneralProvider, Text, cx, memo } from '@arwes/react'
 import { FastArrowRight, NavArrowRight } from 'iconoir-react'
 
 import communityApps from '../../../../../../static/assets/community/apps/apps.json'
 
-const LineMajor = (props: { children: ReactNode; offset?: number }): JSX.Element => (
+const LineMajor = (props: { children: ReactNode; offset?: number }): ReactElement => (
   <Animator duration={{ offset: props.offset }} unmountOnExited>
     <Text blink={false} contentClassName="flex flex-row items-start gap-1 text-primary-main-5">
       <FastArrowRight className="inline-block flex-shrink-0 mt-1" /> {props.children}
@@ -12,7 +12,7 @@ const LineMajor = (props: { children: ReactNode; offset?: number }): JSX.Element
   </Animator>
 )
 
-const LineMinor = (props: { children: ReactNode; offset?: number }): JSX.Element => (
+const LineMinor = (props: { children: ReactNode; offset?: number }): ReactElement => (
   <Animator duration={{ offset: props.offset }} unmountOnExited>
     <Text blink={false} contentClassName="flex flex-row items-start gap-1 text-primary-main-6">
       <NavArrowRight className="inline-block flex-shrink-0 mt-1" /> {props.children}
@@ -20,7 +20,7 @@ const LineMinor = (props: { children: ReactNode; offset?: number }): JSX.Element
   </Animator>
 )
 
-const CommunityLoadingScreen = memo((): JSX.Element => {
+const CommunityLoadingScreen = memo((): ReactElement => {
   return (
     <AnimatorGeneralProvider duration={{ enter: 0.1, stagger: 0.07 }}>
       <Animator combine manager="stagger" unmountOnEntered unmountOnDisabled>

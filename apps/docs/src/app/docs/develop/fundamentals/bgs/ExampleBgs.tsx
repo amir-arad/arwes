@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type ReactElement } from 'react'
 import {
   Animated,
   Animator,
@@ -13,7 +13,7 @@ import { theme } from '@/config'
 
 const color = theme.colors.secondary.main(3, { alpha: 0.5 })
 
-const ExampleBgs = (): JSX.Element => {
+const ExampleBgs = (): ReactElement => {
   const [active, setActive] = useState(true)
 
   useEffect(() => {

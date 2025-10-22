@@ -1,4 +1,4 @@
-import React, { type ReactNode } from 'react'
+import React, { type ReactNode, type ReactElement } from 'react'
 import { type AnimatedProp, Animated, cx, memo } from '@arwes/react'
 
 interface MenuProps {
@@ -7,7 +7,7 @@ interface MenuProps {
   children: ReactNode
 }
 
-const Menu = memo((props: MenuProps): JSX.Element => {
+const Menu = memo((props: MenuProps): ReactElement => {
   const { className, animated, children } = props
 
   return (

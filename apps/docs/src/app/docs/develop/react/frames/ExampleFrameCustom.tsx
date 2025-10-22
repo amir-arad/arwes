@@ -1,5 +1,7 @@
 'use client'
 
+import type { ReactElement } from 'react'
+
 import {
   Animated,
   Animator,
@@ -37,7 +39,7 @@ const frameSettings: FrameSettings = {
   ]
 }
 
-const Example = (): JSX.Element => {
+const Example = (): ReactElement => {
   return (
     <AnimatorGeneralProvider disabled={false} dismissed={false} duration={{ enter: 2, exit: 2 }}>
       <Animator root active>
@@ -63,7 +65,7 @@ const Example = (): JSX.Element => {
   )
 }
 
-const ExampleFrameCustom = (): JSX.Element => {
+const ExampleFrameCustom = (): ReactElement => {
   return (
     <Animator unmountOnExited>
       <Animated data-name="example" className="inline-block size-[15rem]">
