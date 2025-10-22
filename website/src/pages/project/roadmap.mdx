@@ -1,33 +1,35 @@
-import { PageContentLayout } from '../../components/PageContentLayout';
-export default props => <PageContentLayout
-  headProps={{ title: 'Roadmap' }}
-  styles={{
-    'main h2': {
-      padding: 10,
-      backgroundColor: 'rgba(126, 252, 246, 0.2)'
-    },
-    'main h3': {
-      padding: 10,
-      backgroundColor: 'rgba(126, 252, 246, 0.1)'
-    },
-    'main ul': {
-      paddingLeft: 0
-    },
-    'main ul li': {
-      marginBottom: '0.5em',
-      paddingLeft: 0,
-      '&::marker': {
-        content: '""'
+import { PageContentLayout } from '../../components/PageContentLayout'
+export default (props) => (
+  <PageContentLayout
+    headProps={{ title: 'Roadmap' }}
+    styles={{
+      'main h2': {
+        padding: 10,
+        backgroundColor: 'rgba(126, 252, 246, 0.2)'
       },
-      'input[type="checkbox"]': {
-        display: 'inline-block',
-        width: 'auto',
-        marginRight: 2
+      'main h3': {
+        padding: 10,
+        backgroundColor: 'rgba(126, 252, 246, 0.1)'
+      },
+      'main ul': {
+        paddingLeft: 0
+      },
+      'main ul li': {
+        marginBottom: '0.5em',
+        paddingLeft: 0,
+        '&::marker': {
+          content: '""'
+        },
+        'input[type="checkbox"]': {
+          display: 'inline-block',
+          width: 'auto',
+          marginRight: 2
+        }
       }
-    }
-  }}
-  {...props}
-/>;
+    }}
+    {...props}
+  />
+)
 
 # Roadmap
 
@@ -39,7 +41,7 @@ The order in the lists does not exactly represent priority, order, neither execu
 
 The roadmap is subject to changes according to the development progress.
 
-----
+---
 
 ## 2014 - 2018
 
@@ -55,12 +57,12 @@ to decide and build the foundation of the framework.
 #### General
 
 - [x] Define and implement a new project architecture to improve organization,
-simplify tooling, and facilitate developers contributions.
+      simplify tooling, and facilitate developers contributions.
 - [x] Research and playground new ideas and concepts to implement in the project
-with the [soulextract.com](https://github.com/soulextract/soulextract.com) side
-project. The results are going to be used in Arwes.
+      with the [soulextract.com](https://github.com/soulextract/soulextract.com) side
+      project. The results are going to be used in Arwes.
 - [x] Complete started animation and sounds guidelines. These guidelines will
-establish the ground concepts for the framework to work.
+      establish the ground concepts for the framework to work.
 
 ### 2019-Q2
 
@@ -80,7 +82,7 @@ establish the ground concepts for the framework to work.
 #### General
 
 - [x] Complete started purpose guideline document. This will clarify what
-the vision of the project is.
+      the vision of the project is.
 
 #### `@arwes/animator`
 
@@ -95,9 +97,13 @@ the vision of the project is.
 - [x] Create animation management components.
 - [x] Create unit and group animation components.
 
-<a name='2020' href='#2020'><h2>2020</h2></a>
+<a name="2020" href="#2020">
+  <h2>2020</h2>
+</a>
 
-<a name='2020-Q4' href='#2020-Q4'><h3>2020-Q4</h3></a>
+<a name="2020-Q4" href="#2020-Q4">
+  <h3>2020-Q4</h3>
+</a>
 
 #### General
 
@@ -105,33 +111,37 @@ the vision of the project is.
 - [x] Define repository and website documentation file structure.
 - [x] Create documentation guidelines for systems, states, and events.
 - [x] [#64](https://github.com/arwes/arwes/issues/64) Create Arwes UI/UX design
-specification. _[Ongoing]_
+      specification. _[Ongoing]_
 - [x] [#61](https://github.com/arwes/arwes/issues/61) Migrate project packages
-source code to TypeScript.
+      source code to TypeScript.
 - [x] [#62](https://github.com/arwes/arwes/issues/62) Setup UMD distribution support.
 
 #### Playground
 
 - [x] [#24](https://github.com/arwes/arwes/issues/24) Add playground support for
-multiple sandboxes.
+      multiple sandboxes.
 - [x] Update playground application UX.
 
 #### `@arwes/animator`
 
 - [x] [#70](https://github.com/arwes/arwes/issues/70) Add declarative and extensible
-animation component tools.
+      animation component tools.
 - [x] [#36](https://github.com/arwes/arwes/issues/36) Add non-parallel animation
-management support.
+      management support.
 - [x] Create animation management documentation.
 
 #### `@arwes/sounds`
 
 - [x] [#81](https://github.com/arwes/arwes/issues/81) Add bleeps provider and bleeps
-component set up tools.
+      component set up tools.
 
-<a name='2021' href='#2021'><h2>2021</h2></a>
+<a name="2021" href="#2021">
+  <h2>2021</h2>
+</a>
 
-<a name='2021-Q1' href='#2021-Q1'><h3>2021-Q1</h3></a>
+<a name="2021-Q1" href="#2021-Q1">
+  <h3>2021-Q1</h3>
+</a>
 
 #### General
 
@@ -145,33 +155,33 @@ component set up tools.
 #### `@arwes/design`
 
 - [x] Research current React styling tools state to define which ones to use for
-the Arwes theming/styling tools.
+      the Arwes theming/styling tools.
 - [x] [#83](https://github.com/arwes/arwes/issues/83) Define and create design
-style and theme tools.
+      style and theme tools.
 - [x] Create design management documentation.
 
 #### `@arwes/animator`
 
 - [x] Simplify animator TypeScript typing names.
 - [x] [#95](https://github.com/arwes/arwes/issues/95) Refactor Animator animate
-hooks to event functions.
+      hooks to event functions.
 
 #### `@arwes/sounds`
 
 - [x] Create sounds management documentation.
 - [x] [#99](https://github.com/arwes/arwes/issues/99) Bleeps players shared across
-components.
+      components.
 - [x] [#101](https://github.com/arwes/arwes/issues/101) Multiple component loop
-bleep sounds support.
+      bleep sounds support.
 
 #### `@arwes/core`
 
 - [x] [#93](https://github.com/arwes/arwes/issues/93) Define strategy to extend
-core components styles. _[Ongoing]_
+      core components styles. _[Ongoing]_
 - [x] [#96](https://github.com/arwes/arwes/issues/96) Add application sounds starter
-package. _[Ongoing]_
+      package. _[Ongoing]_
 - [x] [#102](https://github.com/arwes/arwes/issues/102) Component loop bleeps are
-not stopped when window is unfocused.
+      not stopped when window is unfocused.
 
 ##### Providers
 
@@ -200,7 +210,9 @@ not stopped when window is unfocused.
 
 - [x] [#105](https://github.com/arwes/arwes/issues/105) Add FrameUnderline component. _[Ongoing]_
 
-<a name='2021-Q2' href='#2021-Q2'><h3>2021-Q2 [CURRENT]</h3></a>
+<a name="2021-Q2" href="#2021-Q2">
+  <h3>2021-Q2 [CURRENT]</h3>
+</a>
 
 #### General
 
@@ -220,11 +232,11 @@ not stopped when window is unfocused.
 #### `@arwes/animator`
 
 - [ ] [#106](https://github.com/arwes/arwes/issues/106) Research and create animator
-animated HTML element primitives.
+      animated HTML element primitives.
 - [ ] [#94](https://github.com/arwes/arwes/issues/94) Animator unmount children
-on flow exited.
+      on flow exited.
 - [ ] [#63](https://github.com/arwes/arwes/issues/63) Research SEO support for
-animated components.
+      animated components.
 - [ ] Research and define ways to handle transitions out/in of systems/sub-systems.
 - [ ] Create external animator manager API for dynamically transitioned components.
 
@@ -235,9 +247,9 @@ animated components.
 #### `@arwes/core`
 
 - [ ] [#96](https://github.com/arwes/arwes/issues/96) Add application sounds starter
-package. _[Ongoing]_
+      package. _[Ongoing]_
 - [ ] Define and implement custom application resources loading with integration
-with bleeps API [#97](https://github.com/arwes/arwes/issues/97) and viewport support.
+      with bleeps API [#97](https://github.com/arwes/arwes/issues/97) and viewport support.
 
 ##### Providers
 
@@ -287,7 +299,9 @@ with bleeps API [#97](https://github.com/arwes/arwes/issues/97) and viewport sup
 - [ ] Add Puffs component.
 - [ ] Add Highlight component.
 
-<a name='2021-Q3' href='#2021-Q3'><h3>2021-Q3</h3></a>
+<a name="2021-Q3" href="#2021-Q3">
+  <h3>2021-Q3</h3>
+</a>
 
 #### General
 
@@ -301,7 +315,7 @@ with bleeps API [#97](https://github.com/arwes/arwes/issues/97) and viewport sup
 #### Playground
 
 - [ ] [#69](https://github.com/arwes/arwes/issues/69) Playground application UI/UX
-design.
+      design.
 
 #### `@arwes/core`
 
@@ -320,9 +334,11 @@ design.
 
 - [ ] Add Logo component.
 
-<a name='2021-Q4' href='#2021-Q4'><h3>2021-Q4</h3></a>
+<a name="2021-Q4" href="#2021-Q4">
+  <h3>2021-Q4</h3>
+</a>
 
 #### `@arwes/animator`
 
 - [ ] [#98](https://github.com/arwes/arwes/issues/98) Animator performance
-optimizations.
+      optimizations.

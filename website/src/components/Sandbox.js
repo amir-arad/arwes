@@ -1,17 +1,17 @@
 /** @jsx jsx */
-import { jsx, useTheme } from '@emotion/react';
-import PropTypes from 'prop-types';
-import { LiveProvider, LiveEditor, withLive } from 'react-live';
-import prismThemeVSDark from 'prism-react-renderer/themes/vsDark';
-import { rgba } from 'polished';
-import anime from 'animejs';
-import howler from 'howler';
+import { jsx, useTheme } from '@emotion/react'
+import PropTypes from 'prop-types'
+import { LiveProvider, LiveEditor, withLive } from 'react-live'
+import prismThemeVSDark from 'prism-react-renderer/themes/vsDark'
+import { rgba } from 'polished'
+import anime from 'animejs'
+import howler from 'howler'
 
-import * as design from '@repository/packages/design';
-import * as animator from '@repository/packages/animator';
-import * as sounds from '@repository/packages/sounds';
+import * as design from '@repository/packages/design'
+import * as animator from '@repository/packages/animator'
+import * as sounds from '@repository/packages/sounds'
 
-const packagesScope = Object.assign({ anime, howler }, design, animator, sounds);
+const packagesScope = Object.assign({ anime, howler }, design, animator, sounds)
 
 const generateStyles = ({ breakpoints, palette, typography }) => ({
   root: {
@@ -81,7 +81,7 @@ const generateStyles = ({ breakpoints, palette, typography }) => ({
       }
     }
   }
-});
+})
 
 const cssStyles = {
   liveEditor: ({ palette, typography }) => ({
@@ -99,7 +99,7 @@ const cssStyles = {
       }
     }
   })
-};
+}
 
 const SandboxResultComponent = ({ styles, live }) => (
   <div css={styles.result}>
@@ -108,13 +108,9 @@ const SandboxResultComponent = ({ styles, live }) => (
         <live.element />
       </div>
     )}
-    {!live.element && (
-      <pre css={styles.resultError}>
-        {live.error}
-      </pre>
-    )}
+    {!live.element && <pre css={styles.resultError}>{live.error}</pre>}
   </div>
-);
+)
 
 SandboxResultComponent.propTypes = {
   styles: PropTypes.object.isRequired,
@@ -122,22 +118,17 @@ SandboxResultComponent.propTypes = {
     element: PropTypes.any,
     error: PropTypes.any
   })
-};
+}
 
-const SandboxResult = withLive(SandboxResultComponent);
+const SandboxResult = withLive(SandboxResultComponent)
 
 const Sandbox = ({ className, children }) => {
-  const theme = useTheme();
-  const styles = generateStyles(theme);
+  const theme = useTheme()
+  const styles = generateStyles(theme)
 
   return (
     <div className={className} css={styles.root}>
-      <LiveProvider
-        noInline
-        scope={packagesScope}
-        theme={prismThemeVSDark}
-        code={children}
-      >
+      <LiveProvider noInline scope={packagesScope} theme={prismThemeVSDark} code={children}>
         <SandboxResult styles={styles} />
         <div css={styles.edition}>
           <div css={styles.editionLang}>JSX</div>
@@ -147,12 +138,12 @@ const Sandbox = ({ className, children }) => {
         </div>
       </LiveProvider>
     </div>
-  );
-};
+  )
+}
 
 Sandbox.propTypes = {
   className: PropTypes.string,
   children: PropTypes.string.isRequired
-};
+}
 
-export { Sandbox };
+export { Sandbox }

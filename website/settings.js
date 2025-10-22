@@ -84,9 +84,7 @@ module.exports = {
     {
       name: 'Community',
       path: 'community',
-      items: [
-        { name: 'Code of Conduct', path: 'code-of-conduct' }
-      ]
+      items: [{ name: 'Code of Conduct', path: 'code-of-conduct' }]
     }
   ]
-};
+}

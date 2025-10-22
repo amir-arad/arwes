@@ -1,6 +1,6 @@
-import { PageContentLayout } from '../components/PageContentLayout';
-import { PackageState } from '../components/PackageState';
-export default props => <PageContentLayout headProps={{ title: 'Develop' }} {...props} />;
+import { PageContentLayout } from '../components/PageContentLayout'
+import { PackageState } from '../components/PackageState'
+export default (props) => <PageContentLayout headProps={{ title: 'Develop' }} {...props} />
 
 # Develop
 
@@ -25,25 +25,41 @@ to solve.
 
 ### `@arwes/tools`
 
-<PackageState name='tools' status='specification' projectBoard='https://github.com/arwes/arwes/projects/2' />
+<PackageState
+  name="tools"
+  status="specification"
+  projectBoard="https://github.com/arwes/arwes/projects/2"
+/>
 
 Resource loading, responsive control, and general browser API tools.
 
 ### [`@arwes/design`](/develop/design)
 
-<PackageState name='design' status='polishing' projectBoard='https://github.com/arwes/arwes/projects/6' />
+<PackageState
+  name="design"
+  status="polishing"
+  projectBoard="https://github.com/arwes/arwes/projects/6"
+/>
 
 Theming and styling tools with focus in [Emotion](https://emotion.sh) in [React](https://reactjs.org).
 
 ### [`@arwes/animator`](/develop/animator)
 
-<PackageState name='animator' status='polishing' projectBoard='https://github.com/arwes/arwes/projects/7' />
+<PackageState
+  name="animator"
+  status="polishing"
+  projectBoard="https://github.com/arwes/arwes/projects/7"
+/>
 
 Assemble and disassemble user interfaces using animation controls in [React](https://reactjs.org).
 
 ### [`@arwes/sounds`](/develop/sounds)
 
-<PackageState name='sounds' status='polishing' projectBoard='https://github.com/arwes/arwes/projects/4' />
+<PackageState
+  name="sounds"
+  status="polishing"
+  projectBoard="https://github.com/arwes/arwes/projects/4"
+/>
 
 Define, manage, and control interactive sound effects using [Howler](https://howlerjs.com)
 in [React](https://reactjs.org).
@@ -58,12 +74,12 @@ for all the implementation packages related planning tasks.
 
 ### [`@arwes/core`](/develop/core)
 
-<PackageState name='core' status='development' />
+<PackageState name="core" status="development" />
 
 Framework core set of components.
 
 ### `@arwes/arwes`
 
-<PackageState name='arwes' status='concept' />
+<PackageState name="arwes" status="concept" />
 
 Arwes specific design components.

@@ -1,6 +1,6 @@
-import { PageContentLayout } from '../../components/PageContentLayout';
-import { Sandbox } from '../../components/Sandbox';
-export default props => <PageContentLayout headProps={{ title: 'Animation' }} {...props} />;
+import { PageContentLayout } from '../../components/PageContentLayout'
+import { Sandbox } from '../../components/Sandbox'
+export default (props) => <PageContentLayout headProps={{ title: 'Animation' }} {...props} />
 
 # `@arwes/animator`
 
@@ -54,8 +54,8 @@ So class/function components with specific initial settings can be created.
 A HTML button component can be animated like:
 
 ```tsx
-import React, { FC, useRef, MutableRefObject } from 'react';
-import { AnimatorRef, AnimatorClassSettings, withAnimator } from '@arwes/animator';
+import React, { FC, useRef, MutableRefObject } from 'react'
+import { AnimatorRef, AnimatorClassSettings, withAnimator } from '@arwes/animator'
 
 interface ButtonProps {
   // An animated component will receive the `animator` prop with
@@ -63,23 +63,19 @@ interface ButtonProps {
   animator: AnimatorRef
 }
 
-const ButtonComponent: FC<ButtonProps> = props => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
+const ButtonComponent: FC<ButtonProps> = (props) => {
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
   // Here you can set any kind of data you want to pass to the
   // animator "animate events". In this case, a HTML button ref.
-  props.animator.setupAnimateRefs(buttonRef);
+  props.animator.setupAnimateRefs(buttonRef)
 
-  return (
-    <button ref={buttonRef}>
-      {props.children}
-    </button>
-  );
-};
+  return <button ref={buttonRef}>{props.children}</button>
+}
 
 // "enter" is the duration to transition from exited to entering to entered.
 // "exit" is the duration to transition from entered to exiting to exited.
-const duration = { enter: 200, exit: 200 };
+const duration = { enter: 200, exit: 200 }
 
 const onAnimateEntering = (
   animator: AnimatorRef,
@@ -87,7 +83,7 @@ const onAnimateEntering = (
 ): void => {
   // On flow entering:
   // You can animate the references passed as the second parameter.
-};
+}
 
 const onAnimateExiting = (
   animator: AnimatorRef,
@@ -95,17 +91,17 @@ const onAnimateExiting = (
 ): void => {
   // On flow exiting:
   // You can animate the references passed as the second parameter.
-};
+}
 
 const animatorClassSettings: AnimatorClassSettings = {
   duration,
   onAnimateEntering,
   onAnimateExiting
-};
+}
 
-const Button = withAnimator(animatorClassSettings)(ButtonComponent);
+const Button = withAnimator(animatorClassSettings)(ButtonComponent)
 
-export { ButtonProps, Button };
+export { ButtonProps, Button }
 ```
 
 The new wrapped component `<Button/>` by the HOC will have animations
@@ -134,7 +130,7 @@ If the example `<Button/>` component should have animations:
 They could be written like this using [animejs](https://animejs.com):
 
 ```tsx
-import anime from 'animejs';
+import anime from 'animejs'
 
 // ...
 
@@ -147,8 +143,8 @@ const onAnimateEntering = (
     duration: animator.duration.enter,
     easing: 'linear',
     opacity: [0, 1]
-  });
-};
+  })
+}
 
 const onAnimateExiting = (
   animator: AnimatorRef,
@@ -159,8 +155,8 @@ const onAnimateExiting = (
     duration: animator.duration.exit,
     easing: 'linear',
     opacity: [1, 0]
-  });
-};
+  })
+}
 
 // ...
 ```
@@ -317,18 +313,16 @@ For example, to provide common animator durations to all animated children nodes
 something like this can be done:
 
 ```tsx
-import React, { FC } from 'react';
-import { AnimatorGeneralProvider, AnimatorGeneralProviderSettings } from '@arwes/animator';
+import React, { FC } from 'react'
+import { AnimatorGeneralProvider, AnimatorGeneralProviderSettings } from '@arwes/animator'
 
 const animatorGeneralSettings: AnimatorGeneralProviderSettings = {
   duration: { enter: 200, exit: 100 }
-};
+}
 
 // ...
 
-<AnimatorGeneralProvider animator={animatorGeneralSettings}>
-  {/* ... */}
-</AnimatorGeneralProvider>
+;<AnimatorGeneralProvider animator={animatorGeneralSettings}>{/* ... */}</AnimatorGeneralProvider>
 
 // ...
 ```
@@ -342,13 +336,13 @@ animations when the browser window looses focus. In animejs this behavior
 can be disabled using:
 
 ```tsx
-import anime from 'animejs';
+import anime from 'animejs'
 
-anime.suspendWhenDocumentHidden = false;
+anime.suspendWhenDocumentHidden = false
 ```
 
 You can see more at [anime - suspend on visibility change](https://animejs.com/documentation/#visibilitychange).
 
-----
+---
 
 You can see and play with more examples in the [playground](https://playground.arwes.dev/animator/withAnimator/basic).
