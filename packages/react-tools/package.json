@@ -50,5 +50,6 @@
     "build-esm": "sh ../../scripts/pkg-build-esm.sh",
     "build-cjs": "sh ../../scripts/pkg-build-cjs.sh",
     "dev": "sh ../../scripts/pkg-build-esm.sh --watch"
-  }
+  },
+  "gitHead": "9606f2caa44bfb29efc19ff3892028e6ddcf3605"
 }
