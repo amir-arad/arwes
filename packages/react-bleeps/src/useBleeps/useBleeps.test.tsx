@@ -1,41 +1,53 @@
-/* eslint-env jest */
+import { vi, test, expect, beforeEach, afterEach } from 'vitest'
+import type { ReactElement } from 'react'
+import React from 'react'
+import { render, cleanup } from '@testing-library/react'
 
-import type { ReactElement } from 'react';
-import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { BleepsProvider } from '../BleepsProvider/index'
+import { useBleeps } from '../index'
 
-import { BleepsProvider } from '../BleepsProvider/index';
-import { useBleeps } from '../index';
+const mockAudioContextDestination = Symbol('destination')
 
 beforeEach(() => {
   class AudioContext {
-    createGain (): object {
-      return {
-        connect: jest.fn(),
-        gain: {
-          setValueAtTime: jest.fn()
-        }
-      };
-    }
-  };
+    state = 'suspended'
+    destination = mockAudioContextDestination
+    resume = vi.fn()
 
-  window.AudioContext = AudioContext as any;
-});
+    createGain(): object {
+      return {
+        connect: vi.fn(),
+        gain: {
+          value: 0,
+          setValueAtTime: vi.fn()
+        }
+      }
+    }
+  }
+
+  class Audio {
+    canPlayType = vi.fn((type) => (type === 'audio/mpeg' ? 'probably' : ''))
+  }
+
+  window.AudioContext = AudioContext as any
+  window.Audio = Audio as any
+  window.fetch = vi.fn()
+})
 
 afterEach(() => {
-  window.AudioContext = null as any;
+  window.AudioContext = null as any
+  window.Audio = null as any
+  window.fetch = null as any
 
-  cleanup();
-});
+  cleanup()
+})
 
 test('Should render bleeps provider content', () => {
   const Button = (): ReactElement => {
-    const bleeps = useBleeps();
-    expect(bleeps).toMatchObject({
-      click: expect.any(Object)
-    });
-    return <button>Click</button>;
-  };
+    const bleeps = useBleeps()
+    expect(bleeps.click).toBeTruthy()
+    return <button>Click</button>
+  }
 
   const { container } = render(
     <BleepsProvider
@@ -51,6 +63,6 @@ test('Should render bleeps provider content', () => {
     >
       <Button />
     </BleepsProvider>
-  );
-  expect(container.innerHTML).toBe('<button>Click</button>');
-});
+  )
+  expect(container.innerHTML).toBe('<button>Click</button>')
+})

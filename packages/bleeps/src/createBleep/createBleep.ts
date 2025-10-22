@@ -1,206 +1,310 @@
-import { IS_BROWSER, IS_BROWSER_SAFARI } from '@arwes/tools';
-
-import type { BleepProps, Bleep, BleepPropsUpdatable } from '../types';
+import type { BleepProps, Bleep, BleepPropsUpdatable } from '../types.js'
+import { type BleepSource, createBleepSource } from './createBleepSource.js'
 
 const createBleep = (props: BleepProps): Bleep | null => {
-  if (!IS_BROWSER) {
-    return null;
+  const isBrowser: boolean = typeof window !== 'undefined'
+  const isBrowserSafari: boolean =
+    isBrowser &&
+    window.navigator.userAgent.includes('Safari') &&
+    !window.navigator.userAgent.includes('Chrome')
+
+  const isBleepsAvailable = isBrowser && !!window.AudioContext
+
+  if (!isBleepsAvailable) {
+    return null
   }
 
   const {
     sources,
     preload = true,
-    loop = false,
-    volume = 1.0,
+    asyncLoad,
+    loop,
     fetchHeaders,
-    masterGain
-  } = props;
+    masterGain,
+    maxPlaybackDelay = 0.25,
+    muteOnWindowBlur
+  } = props
 
-  let isBufferLoading = false;
-  let isBufferError = false;
-  let isBufferPlaying = false;
+  let volume = props.volume ?? 1
+  let muted = !!props.muted
+  let isExternallyMuted = false
+  let isBufferLoading = false
+  let isBufferError = false
+  let isBufferPlaying = false
+  let playbackCallbackTime = 0
+  let asyncLoadCallbackId: number | undefined
 
-  let source: AudioBufferSourceNode | null = null;
-  let buffer: AudioBuffer | null = null;
-  let duration = 0;
+  let bleepSource: BleepSource | null = null
+  let buffer: AudioBuffer | null = null
+  let duration = 0
+  let fetchPromise: Promise<void>
 
-  const context = props.context ?? new window.AudioContext();
-  const gain = context.createGain();
-  const callersAccount = new Set<string>();
+  const context = props.context ?? new window.AudioContext()
+  const gain = context.createGain()
+  const callersAccount = new Set<string>()
 
-  const fetchAudioBuffer = (): void => {
+  const fetchAudioFile = (src: string, type: string, callback: () => void): void => {
+    // Some browser extensions or users might try to overwrite the global fetch function
+    // and cause errors, particularly with fetching non-JSON resources.
+    try {
+      void window
+        .fetch(src, {
+          method: 'GET',
+          headers: fetchHeaders
+        })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('ARWES bleep source could not be fetched.')
+          }
+          return response
+        })
+        .then((response) => response.arrayBuffer())
+        .then((audioArrayBuffer) => context.decodeAudioData(audioArrayBuffer))
+        .then((audioBuffer) => {
+          buffer = audioBuffer
+          duration = buffer.duration
+        })
+        .catch((err) => {
+          isBufferError = true
+          console.error(
+            `ARWES bleep with source URL "${src}" and type "${type}" could not be used:`,
+            err
+          )
+        })
+        .then(() => {
+          isBufferLoading = false
+          callback()
+        })
+    } catch (err) {
+      isBufferError = true
+      isBufferLoading = false
+      console.error(`ARWES bleep throws when fetched.`)
+    }
+  }
+
+  function loadAudioBuffer(): void {
     if (buffer || isBufferLoading || isBufferError) {
-      return;
+      return
     }
 
     if (!sources.length) {
-      isBufferError = true;
-      console.error('Every bleep must have at least one source with a valid audio file URL and type.');
-      return;
+      isBufferError = true
+      console.error(
+        'ARWES bleep must have at least one source with a valid audio file URL and type.'
+      )
+      return
     }
 
-    const audioTest = new window.Audio();
-    const source = sources.find(source => {
+    const audioTest = new window.Audio()
+    const source = sources.find((source) => {
       // "webm" and "weba" file formats are not supported on Safari.
-      if (IS_BROWSER_SAFARI && source.type.includes('audio/webm')) {
-        return false;
+      if (isBrowserSafari && source.type.includes('audio/webm')) {
+        return false
       }
 
-      const support = audioTest.canPlayType(source.type || '');
-      return support === 'probably' || support === 'maybe';
-    });
+      const support = audioTest.canPlayType(source.type || '')
+      return support === 'probably' || support === 'maybe'
+    })
 
     if (!source) {
-      isBufferError = true;
-      console.error(`The bleep sources "${JSON.stringify(sources)}" are not supported on this navigator.`);
-      return;
+      isBufferError = true
+      console.error(
+        `ARWES bleep sources "${JSON.stringify(sources)}" are not supported on this navigator.`
+      )
+      return
     }
 
-    const { src, type } = source;
+    const { src, type } = source
 
-    isBufferLoading = true;
+    isBufferLoading = true
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    window.fetch(src, {
-      method: 'GET',
-      headers: fetchHeaders
+    fetchPromise = new Promise((resolve) => {
+      if (asyncLoad) {
+        asyncLoadCallbackId = window.setTimeout(() => {
+          fetchAudioFile(src, type, resolve)
+        }, 0)
+      } else {
+        fetchAudioFile(src, type, resolve)
+      }
     })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Bleep source could not be fetched.');
-        }
-        return response;
-      })
-      .then(response => response.arrayBuffer())
-      .then(audioArrayBuffer => context.decodeAudioData(audioArrayBuffer))
-      .then(audioBuffer => {
-        buffer = audioBuffer;
-        duration = buffer.duration;
-      })
-      .catch(err => {
-        isBufferError = true;
-        console.error(`The bleep with source URL "${src}" and type "${type}" could not be used:`, err);
-      })
-      .then(() => (isBufferLoading = false));
-  };
+  }
 
-  const getDuration = (): number => duration;
-  const getIsPlaying = (): boolean => isBufferPlaying;
-  const getIsLoaded = (): boolean => !!buffer;
+  function onUserAllowAudio(): void {
+    window.removeEventListener('click', onUserAllowAudio)
 
-  const play = (caller?: string): void => {
+    if (context.state === 'suspended') {
+      void context.resume()
+    }
+  }
+
+  function onUserWindowFocus(): void {
+    if (muteOnWindowBlur) {
+      isExternallyMuted = false
+      update({})
+    }
+  }
+
+  function onUserWindowBlur(): void {
+    if (muteOnWindowBlur) {
+      isExternallyMuted = true
+      update({})
+    }
+  }
+
+  function play(caller?: string): void {
+    const schedulePlay = (): void => {
+      if (Date.now() <= playbackCallbackTime + maxPlaybackDelay * 1_000) {
+        play(caller)
+      }
+    }
+
+    playbackCallbackTime = Date.now()
+
+    if (isBufferError) {
+      return
+    }
+
+    if (isBufferLoading) {
+      void fetchPromise.then(schedulePlay)
+
+      return
+    }
+
     if (!buffer) {
-      fetchAudioBuffer();
-      return;
+      loadAudioBuffer()
+
+      void fetchPromise.then(schedulePlay)
+
+      return
+    }
+
+    if (caller !== undefined) {
+      callersAccount.add(caller)
     }
 
     if (loop && isBufferPlaying) {
-      return;
+      return
     }
 
     // If the user has not yet interacted with the browser, audio is locked
     // so try to unlock it.
     if (context.state === 'suspended') {
-      let isResumeError = false;
+      window.addEventListener('click', onUserAllowAudio)
 
-      context.resume().catch((err: Event) => {
-        isResumeError = true;
-        console.error(`The bleep audio context with sources "${JSON.stringify(sources)}" could not be resumed to be played:`, err);
-      });
+      context
+        .resume()
+        .then(schedulePlay)
+        .catch((err: Event) => {
+          const sourcesText = JSON.stringify(sources)
+          console.error(
+            `ARWES bleep audio context with sources "${sourcesText}" could not be resumed to be played:`,
+            err
+          )
+        })
 
-      if (isResumeError) {
-        return;
+      return
+    }
+
+    if (bleepSource) {
+      bleepSource.stop()
+    }
+
+    bleepSource = createBleepSource({
+      context,
+      buffer,
+      gain,
+      loop,
+      onStop() {
+        isBufferPlaying = false
       }
-    }
+    })
 
-    if (caller) {
-      callersAccount.add(caller);
-    }
+    isBufferPlaying = true
 
-    isBufferPlaying = true;
+    bleepSource.start()
+  }
 
-    if (source) {
-      source.stop();
-      source.disconnect(gain);
-      source = null;
-    }
-
-    source = context.createBufferSource();
-    source.buffer = buffer;
-    source.loop = loop;
-
-    if (loop) {
-      source.loopStart = 0;
-      source.loopEnd = buffer.duration;
-    }
-
-    source.connect(gain);
-    source.start();
-
-    source.onended = () => {
-      isBufferPlaying = false;
-    };
-  };
-
-  const stop = (caller?: string): void => {
+  function stop(caller?: string): void {
     if (!buffer) {
-      return;
+      return
     }
 
-    if (caller) {
-      callersAccount.delete(caller);
+    if (caller !== undefined) {
+      callersAccount.delete(caller)
     }
 
-    const canStop = loop ? !callersAccount.size : true;
+    const canStop = loop ? !callersAccount.size : true
 
     if (canStop) {
-      if (source) {
-        source.stop();
-        source.disconnect(gain);
-        source = null;
+      if (bleepSource) {
+        bleepSource.stop()
       }
 
-      isBufferPlaying = false;
+      isBufferPlaying = false
     }
-  };
+  }
 
-  const load = (): void => {
-    fetchAudioBuffer();
-  };
+  function load(): void {
+    loadAudioBuffer()
+  }
 
-  const unload = (): void => {
-    if (source) {
-      source.stop();
-      source.disconnect(gain);
-      source = null;
+  function unload(): void {
+    if (bleepSource) {
+      bleepSource.stop()
     }
 
     // Remove audio buffer from memory.
-    buffer = null;
+    bleepSource = null
+    buffer = null
 
-    isBufferLoading = false;
-    isBufferError = false;
-  };
+    isBufferLoading = false
+    isBufferError = false
+    isBufferPlaying = false
 
-  const update = (props: BleepPropsUpdatable): void => {
-    if (props.volume !== undefined) {
-      const bleepVolume = Math.max(0, Math.min(1, props.volume));
-      gain.gain.setValueAtTime(bleepVolume, context.currentTime);
+    window.clearTimeout(asyncLoadCallbackId)
+
+    window.removeEventListener('click', onUserAllowAudio)
+    window.removeEventListener('focus', onUserWindowFocus)
+    window.removeEventListener('blur', onUserWindowBlur)
+  }
+
+  function update(newProps: BleepPropsUpdatable): void {
+    if (newProps.volume !== undefined) {
+      volume = Math.max(0, Math.min(1, newProps.volume))
     }
-  };
 
-  const bleep = {} as unknown as Bleep;
+    if (newProps.muted !== undefined) {
+      muted = !!newProps.muted
+    }
+
+    const newVolume = muted || isExternallyMuted ? 0 : volume
+    if (newVolume !== gain.gain.value) {
+      gain.gain.value = newVolume
+    }
+  }
+
+  const bleep = {} as unknown as Bleep
   const bleepAPI: { [P in keyof Bleep]: PropertyDescriptor } = {
     duration: {
-      get: getDuration,
+      get: () => duration,
+      enumerable: true
+    },
+    volume: {
+      get: () => volume,
+      set: (volume: number) => update({ volume }),
+      enumerable: true
+    },
+    muted: {
+      get: () => muted,
+      set: (muted: boolean) => update({ muted }),
       enumerable: true
     },
     isPlaying: {
-      get: getIsPlaying,
+      get: () => isBufferPlaying,
       enumerable: true
     },
     isLoaded: {
-      get: getIsLoaded,
+      get: () => !!buffer,
       enumerable: true
     },
     play: {
@@ -223,27 +327,31 @@ const createBleep = (props: BleepProps): Bleep | null => {
       value: update,
       enumerable: true
     }
-  };
+  }
 
-  Object.defineProperties(bleep, bleepAPI);
+  Object.defineProperties(bleep, bleepAPI)
 
   // If there is a master GainNode provided, subscribe to it so a global volume
   // can be set from there. Otherwise, subscribe to the context directly.
   if (masterGain) {
-    gain.connect(masterGain);
-  }
-  else {
-    gain.connect(context.destination);
+    gain.connect(masterGain)
+  } else {
+    gain.connect(context.destination)
   }
 
   // Set initial bleep volume.
-  update({ volume });
+  update({ volume })
 
   if (preload) {
-    fetchAudioBuffer();
+    loadAudioBuffer()
   }
 
-  return bleep;
-};
+  if (muteOnWindowBlur) {
+    window.addEventListener('focus', onUserWindowFocus)
+    window.addEventListener('blur', onUserWindowBlur)
+  }
 
-export { createBleep };
+  return bleep
+}
+
+export { createBleep }

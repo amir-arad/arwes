@@ -1,63 +1,80 @@
-import { type HTMLProps, type ReactElement } from 'react';
-import { Highlight, themes } from 'prism-react-renderer';
-import { type AnimatedProp, Animated, cx } from '@arwes/react';
+import { Animated, type AnimatedProp, cx, Animator, memo } from '@arwes/react'
+import { Highlight, themes } from 'prism-react-renderer'
 
-import { theme as t } from '@app/theme';
-import * as classes from './CodeBlock.css';
+import { theme } from '@/config'
 
-interface CodeBlockProps extends HTMLProps<HTMLPreElement> {
+type CodeBlockProps = {
   className?: string
   animated?: AnimatedProp
+  filename?: string
+  lang?: 'html' | 'css' | 'tsx' | 'json' | 'bash'
+  highlightLines?: number[]
   code: string
 }
 
-const CodeBlock = (props: CodeBlockProps): ReactElement => {
-  const { className, animated, code, ...otherProps } = props;
-
-  // TODO: Fix type.
+const CodeBlock = memo((props: CodeBlockProps): JSX.Element => {
+  const { className, animated, filename, lang = 'tsx', code, highlightLines } = props
 
   return (
-    <Animated<HTMLPreElement, HTMLProps<HTMLPreElement>>
-      {...otherProps as any}
-      animated={animated}
-      className={cx(classes.root, className)}
-    >
-      <Highlight
-        theme={themes.vsDark}
-        code={code}
-        language="tsx"
-      >
-        {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre
-            className={cx(classes.pre, className)}
-            style={{
-              ...style,
-              background: t.dark
-                ? `linear-gradient(
-                  to right,
-                  ${t.colors.primary.text(6, { alpha: 0.1 })},
-                  ${t.colors.primary.text(9, { alpha: 0.1 })}
-                )`
-                : t.colors.primary.bg(2)
-            }}
+    <Animated data-name="codeblock" className={cx('flex flex-col', className)} animated={animated}>
+      {filename && (
+        <Animator>
+          <Animated
+            className={cx(
+              'flex flex-row justify-between items-center gap-4 border-b px-4 py-2',
+              'font-code leading-none',
+              'border-primary-main-7 text-primary-main-4 bg-primary-main-5/10'
+            )}
+            animated={['flicker']}
           >
-            {tokens.map((line, i) => {
-              // TODO: Fix overflow content parent resize.
-              const tokenProps = getLineProps({ line });
-              return (
-                <div key={i} {...tokenProps} className={cx(classes.line, tokenProps.className)}>
-                  {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({ token })} />
-                  ))}
-                </div>
-              );
-            })}
-          </pre>
-        )}
-      </Highlight>
+            {filename}
+          </Animated>
+        </Animator>
+      )}
+      <Animator>
+        <Animated animated={['flicker']}>
+          <Highlight theme={themes.vsDark} code={code} language={lang}>
+            {({ className, style, tokens, getLineProps, getTokenProps }) => (
+              <pre
+                className={className}
+                style={{
+                  ...style,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  margin: 0,
+                  fontFamily: theme.fontFamily.code.join(),
+                  fontWeight: 400,
+                  borderRadius: '0',
+                  background: theme.colors.primary.main(9, { alpha: 0.1 })
+                }}
+              >
+                {tokens.map((line, i) => {
+                  const lineProps = getLineProps({ line })
+                  const isHighlighted = highlightLines && highlightLines.includes(i + 1)
+                  return (
+                    <div
+                      key={i}
+                      {...lineProps}
+                      className={cx(
+                        lineProps.className,
+                        'mr-auto',
+                        isHighlighted && 'bg-secondary-main-9/50'
+                      )}
+                    >
+                      {line.map((token, key) => (
+                        <span key={key} {...getTokenProps({ token })} />
+                      ))}
+                    </div>
+                  )
+                })}
+              </pre>
+            )}
+          </Highlight>
+        </Animated>
+      </Animator>
     </Animated>
-  );
-};
+  )
+})
 
-export type { CodeBlockProps };
-export { CodeBlock };
+export type { CodeBlockProps }
+export { CodeBlock }

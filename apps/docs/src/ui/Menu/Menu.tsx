@@ -1,27 +1,24 @@
-import { type ReactElement, type ReactNode } from 'react';
-import { type AnimatedProp, Animated, cx } from '@arwes/react';
-
-import * as classes from './Menu.css';
+import React, { type ReactNode } from 'react'
+import { type AnimatedProp, Animated, cx, memo } from '@arwes/react'
 
 interface MenuProps {
   className?: string
   animated?: AnimatedProp
-  children?: ReactNode
+  children: ReactNode
 }
 
-const Menu = (props: MenuProps): ReactElement => {
-  const { className, animated, children } = props;
+const Menu = memo((props: MenuProps): JSX.Element => {
+  const { className, animated, children } = props
 
   return (
     <Animated
-      as='ul'
-      className={cx(classes.root, className)}
+      as="ul"
+      className={cx('flex flex-row justify-center items-center gap-2', 'xl:gap-1', className)}
       animated={animated}
     >
       {children}
     </Animated>
-  );
-};
+  )
+})
 
-export type { MenuProps };
-export { Menu };
+export { Menu }

@@ -1,6 +1,6 @@
-import { easing, createAnimation } from '@arwes/animated';
+import { easing, createAnimation } from '@arwes/animated'
 
-const rootElement = document.querySelector('#root') as HTMLElement;
+const rootElement = document.querySelector('#root')!
 
 rootElement.innerHTML = `
   <style>
@@ -11,28 +11,28 @@ rootElement.innerHTML = `
     .item {
       padding: 2px;
       width: 80px;
-      background-color: #077;
+      background: #077;
       color: #fff;
     }
   </style>
 
   <div class="easings"></div>
-`;
+`
 
-const easingsElement = rootElement.querySelector('.easings') as HTMLDivElement;
-const easingNames = Object.keys(easing) as Array<keyof typeof easing>;
+const easingsElement = rootElement.querySelector('.easings')!
+const easingNames = Object.keys(easing) as Array<keyof typeof easing>
 
-easingNames.forEach(easingName => {
-  const itemElement = document.createElement('div');
-  itemElement.classList.add('item');
-  itemElement.textContent = easingName;
-  easingsElement.appendChild(itemElement);
+easingNames.forEach((easingName) => {
+  const itemElement = document.createElement('div')
+  itemElement.classList.add('item')
+  itemElement.textContent = easingName
+  easingsElement.appendChild(itemElement)
 
   createAnimation({
     duration: 1,
     easing: easingName,
-    onUpdate: progress => {
-      itemElement.style.transform = `translateX(${progress * 200}px)`;
+    onUpdate: (progress) => {
+      itemElement.style.transform = `translateX(${progress * 200}px)`
     }
-  });
-});
+  })
+})

@@ -1,1 +1,1 @@
-export { createThemeMultiplier } from './createThemeMultiplier';
+export { createThemeMultiplier } from './createThemeMultiplier.js'

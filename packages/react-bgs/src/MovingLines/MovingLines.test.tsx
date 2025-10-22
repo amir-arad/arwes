@@ -1,15 +1,14 @@
-/* eslint-env jest */
+import { test, expect, afterEach } from 'vitest'
+import React from 'react'
+import { render, cleanup } from '@testing-library/react'
 
-import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { MovingLines } from './index'
 
-import { MovingLines } from './index';
-
-afterEach(cleanup);
+afterEach(cleanup)
 
 test('Should render canvas element with arwes class', () => {
-  const { container } = render(<MovingLines sets={10} />);
-  const element = container.firstChild as HTMLElement;
-  expect(element.tagName).toBe('CANVAS');
-  expect(element.classList.contains('arwes-react-bgs-movinglines')).toBeTruthy();
-});
+  const { container } = render(<MovingLines sets={10} />)
+  const element = container.firstChild as HTMLElement
+  expect(element.tagName).toBe('CANVAS')
+  expect(element.classList.contains('arwes-bgs-movinglines')).toBeTruthy()
+})

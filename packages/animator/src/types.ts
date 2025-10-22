@@ -1,18 +1,29 @@
-import type { TOScheduler } from '@arwes/tools';
+import type { TOScheduler } from '@arwes/tools'
 
-export interface AnimatorControl {
-  readonly getSettings: () => AnimatorSettings
-  readonly setDynamicSettings: (settings: AnimatorSettingsPartial | null) => void
-  readonly getDynamicSettings: () => AnimatorSettingsPartial | null
-  readonly setForeignRef: (ref: unknown) => void
-  readonly getForeignRef: () => unknown
+export type AnimatorControl = {
+  /**
+   * Get the animator settings.
+   * @returns Animator settings.
+   */
+  readonly getSettings: () => AnimatorSettingsPartial
+  /**
+   * Set the animator settings.
+   * @param settings - New dynamic settings.
+   */
+  readonly setSettings: (settings: AnimatorSettingsPartial | null) => void
+  /**
+   * Get the foreign value stored for this animator.
+   */
+  readonly getForeign: () => unknown
+  /**
+   * Set a foreign value to store for this animator.
+   * It is like a data which can be used for any purpose in the animator.
+   * @param foreign - Any value.
+   */
+  readonly setForeign: (foreign: unknown) => void
 }
 
-export type AnimatorState =
-  | 'entered'
-  | 'entering'
-  | 'exiting'
-  | 'exited';
+export type AnimatorState = 'entered' | 'entering' | 'exiting' | 'exited'
 
 export type AnimatorAction =
   | 'setup'
@@ -21,7 +32,7 @@ export type AnimatorAction =
   | 'exit'
   | 'exitEnd'
   | 'update'
-  | 'refresh';
+  | 'refresh'
 
 export type AnimatorManagerName =
   | 'parallel'
@@ -29,36 +40,48 @@ export type AnimatorManagerName =
   | 'staggerReverse'
   | 'sequence'
   | 'sequenceReverse'
-  | 'switch';
+  | 'switch'
 
-export type AnimatorSubscriber = (node: AnimatorNode) => void;
+export type AnimatorSubscriber = (node: AnimatorNode) => void
+export type AnimatorWatcher = (node: AnimatorNode) => void
 
 export interface AnimatorManager {
   readonly name: AnimatorManagerName
   readonly getDurationEnter: (childrenNodes?: AnimatorNode[]) => number
-  readonly enterChildren: (childrenNodes?: AnimatorNode[]) => void
-  readonly destroy?: () => void
+  readonly enterChildren: (childrenNodes: AnimatorNode[]) => void
+  readonly exitChildren: (childrenNodes: AnimatorNode[]) => void
+  readonly destroy: () => void
 }
 
 export interface AnimatorNode {
+  readonly _parent?: AnimatorNode
+  readonly _children: Set<AnimatorNode>
+  readonly _subscribers: Set<AnimatorSubscriber>
+  readonly _watchers: Set<AnimatorWatcher>
+  readonly _scheduler: TOScheduler
+  readonly _getUserSettings: () => AnimatorSettings
+  _manager: AnimatorManager
+
   readonly id: string
-  readonly control: AnimatorControl
-  readonly parent?: AnimatorNode
-  readonly children: Set<AnimatorNode>
-  readonly subscribers: Set<AnimatorSubscriber>
-  readonly scheduler: TOScheduler
-  readonly duration: { enter: number, exit: number }
   readonly state: AnimatorState
-  readonly subscribe: (subscriber: AnimatorSubscriber) => (() => void)
+  readonly control: AnimatorControl
+  readonly settings: AnimatorSettings
+  readonly subscribe: (subscriber: AnimatorSubscriber) => () => void
   readonly unsubscribe: (subscriber: AnimatorSubscriber) => void
   readonly send: (newAction: AnimatorAction) => void
-  manager: AnimatorManager
+}
+
+export type AnimatorSystemRegisterSetup = {
+  getSettings: () => AnimatorSettingsPartial
 }
 
 export interface AnimatorSystem {
   readonly id: string
   readonly root: AnimatorNode | null
-  readonly register: (parentNode: AnimatorNode | undefined | null, control: AnimatorControl) => AnimatorNode
+  readonly register: (
+    parentNode?: undefined | null | AnimatorNode,
+    setup?: AnimatorSystemRegisterSetup
+  ) => AnimatorNode
   readonly unregister: (node: AnimatorNode) => void
 }
 
@@ -68,6 +91,7 @@ export interface AnimatorDuration {
   delay: number
   offset: number
   stagger: number
+  limit: number
   [duration: string]: number
 }
 
@@ -78,15 +102,13 @@ export interface AnimatorSettings {
   merge: boolean
   combine: boolean
   initialState: 'exited' | 'entered'
-  condition?: (node: AnimatorNode) => boolean
+  condition?: boolean | ((node: AnimatorNode) => boolean)
   onTransition?: (node: AnimatorNode) => void
 }
 
-// TODO: The duration type should only allow numeric values, otherwise they should
-// not be present. Right now it allows `undefined` values which triggers errors.
 export type AnimatorSettingsPartial = Partial<Omit<AnimatorSettings, 'duration'>> & {
   duration?: Partial<AnimatorDuration>
-};
+}
 
 export interface AnimatorInterface {
   readonly system: AnimatorSystem

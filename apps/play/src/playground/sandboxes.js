@@ -1,381 +1,683 @@
 /* eslint-disable import/no-webpack-loader-syntax */
 
-const isProduction = process.env.NODE_ENV === 'production';
-
 export const sandboxes = [
   {
-    name: 'Visual Design',
+    name: 'Vanilla',
     children: [
       {
-        name: '@arwes/theme',
+        name: 'Visual',
         children: [
           {
-            name: 'createThemeUnit',
+            name: '@arwes/theme',
             children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeUnit/createThemeUnit.basic.sandbox.tsx') }
+              {
+                name: 'createThemeMultiplier',
+                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeMultiplier/createThemeMultiplier.sandbox.tsx')
+              },
+              {
+                name: 'createThemeUnit',
+                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeUnit/createThemeUnit.sandbox.tsx')
+              },
+              {
+                name: 'createThemeColor',
+                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeColor/createThemeColor.sandbox.tsx'),
+                children: [
+                  {
+                    name: 'alpha',
+                    code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeColor/createThemeColor.alpha.sandbox.tsx')
+                  }
+                ]
+              },
+              {
+                name: 'createThemeStyle',
+                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeStyle/createThemeStyle.sandbox.tsx')
+              },
+              {
+                name: 'createThemeBreakpoints',
+                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeBreakpoints/createThemeBreakpoints.sandbox.tsx')
+              },
+              {
+                name: 'createCreateTheme',
+                code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createCreateTheme/createCreateTheme.sandbox.tsx')
+              }
             ]
           },
           {
-            name: 'createThemeColor',
+            name: '@arwes/styles',
             children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeColor/createThemeColor.basic.sandbox.tsx') },
-              { name: 'variations', code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeColor/createThemeColor.variations.sandbox.tsx') },
-              { name: 'alpha', code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeColor/createThemeColor.alpha.sandbox.tsx') }
-            ]
-          },
-          {
-            name: 'createThemeStyle',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeStyle/createThemeStyle.basic.sandbox.tsx') }
-            ]
-          },
-          {
-            name: 'createThemeBreakpoints',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeBreakpoints/createThemeBreakpoints.basic.sandbox.tsx') },
-              { name: 'series', code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeBreakpoints/createThemeBreakpoints.series.sandbox.tsx') },
-              { name: 'labels', code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createThemeBreakpoints/createThemeBreakpoints.labels.sandbox.tsx') }
-            ]
-          },
-          {
-            name: 'createCreateTheme',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createCreateTheme/createCreateTheme.basic.sandbox.tsx') }
-            ]
-          },
-          {
-            name: 'createAppTheme',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createAppTheme/createAppTheme.basic.sandbox.tsx') },
-              { name: 'extension', code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createAppTheme/createAppTheme.extension.sandbox.tsx') },
-              { name: 'dark', code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createAppTheme/createAppTheme.dark.sandbox.tsx') },
-              { name: 'light', code: require('!raw-loader?esModule=false!@repository/packages/theme/src/createAppTheme/createAppTheme.light.sandbox.tsx') }
-            ]
-          }
-        ]
-      },
-      !isProduction && {
-        name: '@arwes/react-styles',
-        children: [
-          {
-            name: 'useStyles',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-styles/src/useStyles/useStyles.basic.sandbox.tsx') },
-              { name: 'props', code: require('!raw-loader?esModule=false!@repository/packages/react-styles/src/useStyles/useStyles.props.sandbox.tsx') }
-            ]
-          },
-          {
-            name: 'useThemeStyles',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-styles/src/useThemeStyles/useThemeStyles.basic.sandbox.tsx') },
-              { name: 'props', code: require('!raw-loader?esModule=false!@repository/packages/react-styles/src/useThemeStyles/useThemeStyles.props.sandbox.tsx') }
-            ]
-          }
-        ]
-      }
-    ].filter(Boolean)
-  },
-  {
-    name: 'Motion Design',
-    children: [
-      {
-        name: '@arwes/animator',
-        children: [
-          {
-            name: 'createAnimatorSystem',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/animator/src/createAnimatorSystem/createAnimatorSystem.basic.sandbox.tsx') }
+              {
+                name: 'styleSteps',
+                code: require('!raw-loader?esModule=false!@repository/packages/styles/src/styleSteps/styleSteps.sandbox.tsx')
+              },
+              {
+                name: 'styleStrip',
+                code: require('!raw-loader?esModule=false!@repository/packages/styles/src/styleStrip/styleStrip.sandbox.tsx')
+              },
+              {
+                name: 'styleSeparator',
+                code: require('!raw-loader?esModule=false!@repository/packages/styles/src/styleSeparator/styleSeparator.sandbox.tsx')
+              }
             ]
           }
         ]
       },
       {
-        name: '@arwes/animated',
+        name: 'Motion',
         children: [
           {
-            name: 'createAnimation',
+            name: '@arwes/animator',
             children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/animated/src/createAnimation/createAnimation.basic.sandbox.tsx') },
-              { name: 'easing', code: require('!raw-loader?esModule=false!@repository/packages/animated/src/createAnimation/createAnimation.easing.sandbox.tsx') }
+              {
+                name: 'createAnimatorSystem',
+                code: require('!raw-loader?esModule=false!@repository/packages/animator/src/createAnimatorSystem/createAnimatorSystem.sandbox.tsx')
+              }
+            ]
+          },
+          {
+            name: '@arwes/animated',
+            children: [
+              {
+                name: 'createAnimation',
+                code: require('!raw-loader?esModule=false!@repository/packages/animated/src/createAnimation/createAnimation.sandbox.tsx'),
+                children: [
+                  {
+                    name: 'easing',
+                    code: require('!raw-loader?esModule=false!@repository/packages/animated/src/createAnimation/createAnimation.easing.sandbox.tsx')
+                  }
+                ]
+              },
+              {
+                name: 'createAnimatedElement',
+                code: require('!raw-loader?esModule=false!@repository/packages/animated/src/createAnimatedElement/createAnimatedElement.sandbox.tsx')
+              },
+              {
+                name: 'createAnimatedXElement',
+                code: require('!raw-loader?esModule=false!@repository/packages/animated/src/createAnimatedXElement/createAnimatedXElement.sandbox.tsx')
+              },
+              {
+                name: 'animateDraw',
+                code: require('!raw-loader?esModule=false!@repository/packages/animated/src/animateDraw/animateDraw.sandbox.tsx')
+              }
             ]
           }
         ]
       },
       {
-        name: '@arwes/react-animator',
+        name: 'Audio',
         children: [
           {
-            name: 'Animator',
+            name: '@arwes/bleeps',
             children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.basic.sandbox.tsx') },
-              { name: 'nesting', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.nesting.sandbox.tsx') },
-              { name: 'combine', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.combine.sandbox.tsx') },
-              { name: 'combineNesting', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.combineNesting.sandbox.tsx') },
-              { name: 'root', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.root.sandbox.tsx') },
-              { name: 'managerStagger', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.managerStagger.sandbox.tsx') },
-              { name: 'managerSequence', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.managerSequence.sandbox.tsx') },
-              { name: 'managerSwitch', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.managerSwitch.sandbox.tsx') },
-              { name: 'unmountOn', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.unmountOn.sandbox.tsx') },
-              { name: 'condition', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.condition.sandbox.tsx') },
-              { name: 'initialState', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.initialState.sandbox.tsx') },
-              { name: 'disabled', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.disabled.sandbox.tsx') },
-              { name: 'dismissed', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.dismissed.sandbox.tsx') },
-              { name: 'dynamicRendering', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.dynamicRendering.sandbox.tsx') },
-              { name: 'externalManagement', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.externalManagement.sandbox.tsx') },
-              { name: 'subsystemsTransitions', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.subsystemsTransitions.sandbox.tsx') },
-              { name: 'scrollList', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.scrollList.sandbox.tsx') }
-            ]
-          },
-          {
-            name: 'AnimatorGeneralProvider',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/AnimatorGeneralProvider/AnimatorGeneralProvider.basic.sandbox.tsx') }
+              {
+                name: 'createBleep',
+                code: require('!raw-loader?esModule=false!@repository/packages/bleeps/src/createBleep/createBleep.sandbox.tsx'),
+                children: [
+                  {
+                    name: 'looping',
+                    code: require('!raw-loader?esModule=false!@repository/packages/bleeps/src/createBleep/createBleep.looping.sandbox.tsx')
+                  },
+                  {
+                    name: 'sources',
+                    code: require('!raw-loader?esModule=false!@repository/packages/bleeps/src/createBleep/createBleep.sources.sandbox.tsx')
+                  },
+                  {
+                    name: 'dynamic',
+                    code: require('!raw-loader?esModule=false!@repository/packages/bleeps/src/createBleep/createBleep.dynamic.sandbox.tsx')
+                  }
+                ]
+              },
+              {
+                name: 'createBleepsManager',
+                code: require('!raw-loader?esModule=false!@repository/packages/bleeps/src/createBleepsManager/createBleepsManager.sandbox.tsx'),
+                children: [
+                  {
+                    name: 'categories',
+                    code: require('!raw-loader?esModule=false!@repository/packages/bleeps/src/createBleepsManager/createBleepsManager.categories.sandbox.tsx')
+                  },
+                  {
+                    name: 'dynamic',
+                    code: require('!raw-loader?esModule=false!@repository/packages/bleeps/src/createBleepsManager/createBleepsManager.dynamic.sandbox.tsx')
+                  }
+                ]
+              }
             ]
           }
         ]
       },
       {
-        name: '@arwes/react-animated',
+        name: 'Text',
         children: [
           {
-            name: 'Animated',
+            name: '@arwes/text',
             children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.basic.sandbox.tsx') },
-              { name: 'functions', code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.functions.sandbox.tsx') },
-              { name: 'composition', code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.composition.sandbox.tsx') },
-              { name: 'hidden', code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.hidden.sandbox.tsx') },
-              { name: 'disabled', code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.disabled.sandbox.tsx') }
+              {
+                name: 'animateTextSequence',
+                code: require('!raw-loader?esModule=false!@repository/packages/text/src/animateTextSequence/animateTextSequence.sandbox.tsx')
+              },
+              {
+                name: 'animateTextDecipher',
+                code: require('!raw-loader?esModule=false!@repository/packages/text/src/animateTextDecipher/animateTextDecipher.sandbox.tsx')
+              }
             ]
+          }
+        ]
+      },
+      {
+        name: 'Frames',
+        children: [
+          {
+            name: '@arwes/frames',
+            children: [
+              {
+                name: 'createFrame',
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrame/createFrame.sandbox.tsx'),
+                children: [
+                  {
+                    name: 'shapes',
+                    code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrame/createFrame.shapes.sandbox.tsx')
+                  },
+                  {
+                    name: 'clipping',
+                    code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrame/createFrame.clipping.sandbox.tsx')
+                  },
+                  {
+                    name: 'masking',
+                    code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrame/createFrame.masking.sandbox.tsx')
+                  },
+                  {
+                    name: 'patterns',
+                    code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrame/createFrame.patterns.sandbox.tsx')
+                  },
+                  {
+                    name: 'contextClasses',
+                    code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrame/createFrame.contextClasses.sandbox.tsx')
+                  },
+                  {
+                    name: 'contextStyles',
+                    code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrame/createFrame.contextStyles.sandbox.tsx')
+                  },
+                  {
+                    name: 'contextAnimations',
+                    code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrame/createFrame.contextAnimations.sandbox.tsx')
+                  },
+                  {
+                    name: 'contextAttrs',
+                    code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrame/createFrame.contextAttrs.sandbox.tsx')
+                  },
+                  {
+                    name: 'animator',
+                    code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrame/createFrame.animator.sandbox.tsx')
+                  },
+                  {
+                    name: 'drawing',
+                    code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrame/createFrame.drawing.sandbox.tsx')
+                  },
+                  {
+                    name: 'skewing',
+                    code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrame/createFrame.skewing.sandbox.tsx')
+                  }
+                ]
+              },
+              {
+                name: 'createFrameUnderlineSettings',
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameUnderlineSettings/createFrameUnderlineSettings.sandbox.tsx')
+              },
+              {
+                name: 'createFrameLinesSettings',
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameLinesSettings/createFrameLinesSettings.sandbox.tsx')
+              },
+              {
+                name: 'createFrameCornersSettings',
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameCornersSettings/createFrameCornersSettings.sandbox.tsx')
+              },
+              {
+                name: 'createFrameOctagonSettings',
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameOctagonSettings/createFrameOctagonSettings.sandbox.tsx')
+              },
+              {
+                name: 'createFrameNeroSettings',
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameNeroSettings/createFrameNeroSettings.sandbox.tsx')
+              },
+              {
+                name: 'createFrameNefrexSettings',
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameNefrexSettings/createFrameNefrexSettings.sandbox.tsx')
+              },
+              {
+                name: 'createFrameKranoxSettings',
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameKranoxSettings/createFrameKranoxSettings.sandbox.tsx')
+              },
+              {
+                name: 'createFrameHeaderSettings',
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameHeaderSettings/createFrameHeaderSettings.sandbox.tsx')
+              },
+              {
+                name: 'createFrameCircleSettings',
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameCircleSettings/createFrameCircleSettings.sandbox.tsx')
+              },
+              {
+                name: 'animateFrameAssembler',
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/animateFrameAssembler/animateFrameAssembler.sandbox.tsx')
+              },
+              {
+                name: 'styleFrameClipOctagon',
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/styleFrameClipOctagon/styleFrameClipOctagon.sandbox.tsx')
+              },
+              {
+                name: 'styleFrameClipKranox',
+                code: require('!raw-loader?esModule=false!@repository/packages/frames/src/styleFrameClipKranox/styleFrameClipKranox.sandbox.tsx')
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: 'Backgrounds',
+        children: [
+          {
+            name: '@arwes/bgs',
+            children: [
+              {
+                name: 'createBackgroundDots',
+                code: require('!raw-loader?esModule=false!@repository/packages/bgs/src/createBackgroundDots/createBackgroundDots.sandbox.tsx'),
+                children: [
+                  {
+                    name: 'variation',
+                    code: require('!raw-loader?esModule=false!@repository/packages/bgs/src/createBackgroundDots/createBackgroundDots.variation.sandbox.tsx')
+                  },
+                  {
+                    name: 'crosses',
+                    code: require('!raw-loader?esModule=false!@repository/packages/bgs/src/createBackgroundDots/createBackgroundDots.crosses.sandbox.tsx')
+                  },
+                  {
+                    name: 'tiles',
+                    code: require('!raw-loader?esModule=false!@repository/packages/bgs/src/createBackgroundDots/createBackgroundDots.tiles.sandbox.tsx')
+                  }
+                ]
+              },
+              {
+                name: 'createBackgroundGridLines',
+                code: require('!raw-loader?esModule=false!@repository/packages/bgs/src/createBackgroundGridLines/createBackgroundGridLines.sandbox.tsx')
+              },
+              {
+                name: 'createBackgroundMovingLines',
+                code: require('!raw-loader?esModule=false!@repository/packages/bgs/src/createBackgroundMovingLines/createBackgroundMovingLines.sandbox.tsx')
+              },
+              {
+                name: 'createBackgroundPuffs',
+                code: require('!raw-loader?esModule=false!@repository/packages/bgs/src/createBackgroundPuffs/createBackgroundPuffs.sandbox.tsx'),
+                children: [
+                  {
+                    name: 'customDirection',
+                    code: require('!raw-loader?esModule=false!@repository/packages/bgs/src/createBackgroundPuffs/createBackgroundPuffs.customDirection.sandbox.tsx')
+                  },
+                  {
+                    name: 'randomDirections',
+                    code: require('!raw-loader?esModule=false!@repository/packages/bgs/src/createBackgroundPuffs/createBackgroundPuffs.randomDirections.sandbox.tsx')
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: 'Effects',
+        children: [
+          {
+            name: 'createEffectIlluminator',
+            code: require('!raw-loader?esModule=false!@repository/packages/effects/src/createEffectIlluminator/createEffectIlluminator.sandbox.tsx')
           },
           {
-            name: 'AnimatedX',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/AnimatedX/AnimatedX.basic.sandbox.tsx') },
-              { name: 'options', code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/AnimatedX/AnimatedX.options.sandbox.tsx') },
-              { name: 'disabled', code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/AnimatedX/AnimatedX.disabled.sandbox.tsx') }
-            ]
-          },
-          {
-            name: 'animations',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/animations/animations.basic.sandbox.tsx') }
-            ]
+            name: 'createEffectIlluminatorSVG',
+            code: require('!raw-loader?esModule=false!@repository/packages/effects/src/createEffectIlluminatorSVG/createEffectIlluminatorSVG.sandbox.tsx')
           }
         ]
       }
     ]
   },
+
+  //
+  // REACT
+  //
+
   {
-    name: 'Audio Design',
+    name: 'React',
     children: [
+      // {
+      //   name: 'Visual',
+      //   children: []
+      // },
       {
-        name: '@arwes/bleeps',
+        name: 'Motion',
         children: [
           {
-            name: 'createBleep',
+            name: '@arwes/react-animator',
             children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/bleeps/src/createBleep/createBleep.basic.sandbox.tsx') },
-              { name: 'looping', code: require('!raw-loader?esModule=false!@repository/packages/bleeps/src/createBleep/createBleep.looping.sandbox.tsx') },
-              { name: 'sources', code: require('!raw-loader?esModule=false!@repository/packages/bleeps/src/createBleep/createBleep.sources.sandbox.tsx') },
-              { name: 'dynamic', code: require('!raw-loader?esModule=false!@repository/packages/bleeps/src/createBleep/createBleep.dynamic.sandbox.tsx') }
+              {
+                name: 'Animator',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.sandbox.tsx'),
+                children: [
+                  {
+                    name: 'nesting',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.nesting.sandbox.tsx')
+                  },
+                  {
+                    name: 'combine',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.combine.sandbox.tsx')
+                  },
+                  {
+                    name: 'combineNesting',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.combineNesting.sandbox.tsx')
+                  },
+                  {
+                    name: 'root',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.root.sandbox.tsx')
+                  },
+                  {
+                    name: 'managerStagger',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.managerStagger.sandbox.tsx')
+                  },
+                  {
+                    name: 'managerSequence',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.managerSequence.sandbox.tsx')
+                  },
+                  {
+                    name: 'managerSwitch',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.managerSwitch.sandbox.tsx')
+                  },
+                  {
+                    name: 'condition',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.condition.sandbox.tsx')
+                  },
+                  {
+                    name: 'unmountOn',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.unmountOn.sandbox.tsx')
+                  },
+                  {
+                    name: 'initialState',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.initialState.sandbox.tsx')
+                  },
+                  {
+                    name: 'disabled',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.disabled.sandbox.tsx')
+                  },
+                  {
+                    name: 'dismissed',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.dismissed.sandbox.tsx')
+                  },
+                  {
+                    name: 'dynamicRendering',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/Animator/Animator.dynamicRendering.sandbox.tsx')
+                  }
+                ]
+              },
+              {
+                name: 'AnimatorGeneralProvider',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-animator/src/AnimatorGeneralProvider/AnimatorGeneralProvider.sandbox.tsx')
+              }
             ]
           },
           {
-            name: 'createBleepsManager',
+            name: '@arwes/react-animated',
             children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/bleeps/src/createBleepsManager/createBleepsManager.basic.sandbox.tsx') },
-              { name: 'categories', code: require('!raw-loader?esModule=false!@repository/packages/bleeps/src/createBleepsManager/createBleepsManager.categories.sandbox.tsx') },
-              { name: 'dynamic', code: require('!raw-loader?esModule=false!@repository/packages/bleeps/src/createBleepsManager/createBleepsManager.dynamic.sandbox.tsx') }
+              {
+                name: 'Animated',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.sandbox.tsx'),
+                children: [
+                  {
+                    name: 'transition',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.transition.sandbox.tsx')
+                  },
+                  {
+                    name: 'fade',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.fade.sandbox.tsx')
+                  },
+                  {
+                    name: 'flicker',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.flicker.sandbox.tsx')
+                  },
+                  {
+                    name: 'draw',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.draw.sandbox.tsx')
+                  },
+                  {
+                    name: 'functions',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.functions.sandbox.tsx')
+                  },
+                  {
+                    name: 'composition',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.composition.sandbox.tsx')
+                  },
+                  {
+                    name: 'hidden',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.hidden.sandbox.tsx')
+                  },
+                  {
+                    name: 'disabled',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/Animated/Animated.disabled.sandbox.tsx')
+                  }
+                ]
+              },
+              {
+                name: 'useAnimated',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/useAnimated/useAnimated.sandbox.tsx')
+              },
+              {
+                name: 'AnimatedX',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/AnimatedX/AnimatedX.sandbox.tsx'),
+                children: [
+                  {
+                    name: 'disabled',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/AnimatedX/AnimatedX.disabled.sandbox.tsx')
+                  }
+                ]
+              },
+              {
+                name: 'useAnimatedX',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/useAnimatedX/useAnimatedX.sandbox.tsx'),
+                children: [
+                  {
+                    name: 'hideOnStates',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-animated/src/useAnimatedX/useAnimatedX.hideOnStates.sandbox.tsx')
+                  }
+                ]
+              }
             ]
           }
         ]
       },
       {
-        name: '@arwes/react-bleeps',
+        name: 'Audio',
         children: [
           {
-            name: 'BleepsProvider',
+            name: '@arwes/react-bleeps',
             children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-bleeps/src/BleepsProvider/BleepsProvider.basic.sandbox.tsx') }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    name: 'Components',
-    children: [
-      {
-        name: '@arwes/core',
-        children: [
-          {
-            name: 'createAppStylesBaseline',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/core/src/createAppStylesBaseline/createAppStylesBaseline.basic.sandbox.tsx') },
-              { name: 'light', code: require('!raw-loader?esModule=false!@repository/packages/core/src/createAppStylesBaseline/createAppStylesBaseline.light.sandbox.tsx') }
+              {
+                name: 'BleepsProvider',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-bleeps/src/BleepsProvider/BleepsProvider.sandbox.tsx')
+              }
             ]
           }
         ]
       },
       {
-        name: '@arwes/react-text',
+        name: 'Text',
         children: [
           {
-            name: 'Text',
+            name: '@arwes/react-text',
             children: [
-              { name: 'base', code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.base.sandbox.tsx') },
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.basic.sandbox.tsx') },
-              { name: 'multiple', code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.multiple.sandbox.tsx') },
-              { name: 'managerDecipher', code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.managerDecipher.sandbox.tsx') },
-              { name: 'updates', code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.updates.sandbox.tsx') },
-              { name: 'intercepting', code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.intercepting.sandbox.tsx') }
+              {
+                name: 'Text',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.sandbox.tsx'),
+                children: [
+                  {
+                    name: 'nested',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.nested.sandbox.tsx')
+                  },
+                  {
+                    name: 'multiple',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.multiple.sandbox.tsx')
+                  },
+                  {
+                    name: 'blink',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.blink.sandbox.tsx')
+                  },
+                  {
+                    name: 'managerDecipher',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.managerDecipher.sandbox.tsx')
+                  },
+                  {
+                    name: 'updates',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.updates.sandbox.tsx')
+                  },
+                  {
+                    name: 'intercepting',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.intercepting.sandbox.tsx')
+                  },
+                  {
+                    name: 'static',
+                    code: require('!raw-loader?esModule=false!@repository/packages/react-text/src/Text/Text.static.sandbox.tsx')
+                  }
+                ]
+              }
             ]
           }
         ]
       },
       {
-        name: '@arwes/frames',
+        name: 'Frames',
         children: [
           {
-            name: 'createFrameOctagonClip',
+            name: '@arwes/react-frames',
+            code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/basic.sandbox.tsx'),
             children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameOctagonClip/createFrameOctagonClip.basic.sandbox.tsx') },
-              { name: 'corners', code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameOctagonClip/createFrameOctagonClip.corners.sandbox.tsx') }
-            ]
-          },
-          {
-            name: 'createFrameKranoxClip',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameKranoxClip/createFrameKranoxClip.basic.sandbox.tsx') },
-              { name: 'lengths', code: require('!raw-loader?esModule=false!@repository/packages/frames/src/createFrameKranoxClip/createFrameKranoxClip.lengths.sandbox.tsx') }
+              {
+                name: 'FrameUnderline',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameUnderline/FrameUnderline.sandbox.tsx')
+              },
+              {
+                name: 'FrameLines',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameLines/FrameLines.sandbox.tsx')
+              },
+              {
+                name: 'FrameCorners',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameCorners/FrameCorners.sandbox.tsx')
+              },
+              {
+                name: 'FrameOctagon',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameOctagon/FrameOctagon.sandbox.tsx')
+              },
+              {
+                name: 'FrameNero',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameNero/FrameNero.sandbox.tsx')
+              },
+              {
+                name: 'FrameNefrex',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameNefrex/FrameNefrex.sandbox.tsx')
+              },
+              {
+                name: 'FrameKranox',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameKranox/FrameKranox.sandbox.tsx')
+              },
+              {
+                name: 'FrameHeader',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameHeader/FrameHeader.sandbox.tsx')
+              },
+              {
+                name: 'FrameCircle',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameCircle/FrameCircle.sandbox.tsx')
+              },
+              {
+                name: 'FrameBase',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameBase/FrameBase.sandbox.tsx')
+              },
+              {
+                name: 'useFrameAssembler',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/useFrameAssembler/useFrameAssembler.sandbox.tsx')
+              }
             ]
           }
         ]
       },
       {
-        name: '@arwes/react-frames',
+        name: 'Backgrounds',
         children: [
           {
-            name: 'useFrameSVGRenderer',
+            name: '@arwes/react-bgs',
+            code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/basic.sandbox.tsx'),
             children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/useFrameSVGRenderer/useFrameSVGRenderer.basic.sandbox.tsx') },
-              { name: 'commands', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/useFrameSVGRenderer/useFrameSVGRenderer.commands.sandbox.tsx') },
-              { name: 'clipping', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/useFrameSVGRenderer/useFrameSVGRenderer.clipping.sandbox.tsx') }
+              {
+                name: 'Dots',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/Dots/Dots.sandbox.tsx')
+              },
+              {
+                name: 'Puffs',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/Puffs/Puffs.sandbox.tsx')
+              },
+              {
+                name: 'GridLines',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/GridLines/GridLines.sandbox.tsx')
+              },
+              {
+                name: 'MovingLines',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/MovingLines/MovingLines.sandbox.tsx')
+              }
             ]
-          },
+          }
+        ]
+      },
+      {
+        name: 'Effects',
+        children: [
           {
-            name: 'FrameSVG',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVG/FrameSVG.basic.sandbox.tsx') }
-            ]
-          },
-          {
-            name: 'FrameSVGOctagon',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGOctagon/FrameSVGOctagon.basic.sandbox.tsx') },
-              { name: 'corners', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGOctagon/FrameSVGOctagon.corners.sandbox.tsx') },
-              { name: 'assembling', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGOctagon/FrameSVGOctagon.assembling.sandbox.tsx') }
-            ]
-          },
-          {
-            name: 'FrameSVGUnderline',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGUnderline/FrameSVGUnderline.basic.sandbox.tsx') },
-              { name: 'squareSize', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGUnderline/FrameSVGUnderline.squareSize.sandbox.tsx') },
-              { name: 'assembling', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGUnderline/FrameSVGUnderline.assembling.sandbox.tsx') }
-            ]
-          },
-          {
-            name: 'FrameSVGCorners',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGCorners/FrameSVGCorners.basic.sandbox.tsx') },
-              { name: 'corners', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGCorners/FrameSVGCorners.corners.sandbox.tsx') },
-              { name: 'assembling', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGCorners/FrameSVGCorners.assembling.sandbox.tsx') }
-            ]
-          },
-          {
-            name: 'FrameSVGLines',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGLines/FrameSVGLines.basic.sandbox.tsx') },
-              { name: 'lines', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGLines/FrameSVGLines.lines.sandbox.tsx') },
-              { name: 'assembling', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGLines/FrameSVGLines.assembling.sandbox.tsx') }
-            ]
-          },
-          {
-            name: 'FrameSVGNefrex',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGNefrex/FrameSVGNefrex.basic.sandbox.tsx') },
-              { name: 'assembling', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGNefrex/FrameSVGNefrex.assembling.sandbox.tsx') }
-            ]
-          },
-          {
-            name: 'FrameSVGKranox',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGKranox/FrameSVGKranox.basic.sandbox.tsx') },
-              { name: 'assembling', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/FrameSVGKranox/FrameSVGKranox.assembling.sandbox.tsx') }
-            ]
+            name: 'Illuminator',
+            code: require('!raw-loader?esModule=false!@repository/packages/react-effects/src/Illuminator/Illuminator.sandbox.tsx')
           },
           {
             name: 'IlluminatorSVG',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/IlluminatorSVG/IlluminatorSVG.basic.sandbox.tsx') }
-            ]
-          },
+            code: require('!raw-loader?esModule=false!@repository/packages/react-effects/src/IlluminatorSVG/IlluminatorSVG.sandbox.tsx')
+          }
+        ]
+      },
+      {
+        name: 'General',
+        children: [
           {
-            name: 'Illuminator',
+            name: '@arwes/react-core',
             children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/Illuminator/Illuminator.basic.sandbox.tsx') }
+              {
+                name: 'BleepsOnAnimator',
+                code: require('!raw-loader?esModule=false!@repository/packages/react-core/src/BleepsOnAnimator/BleepsOnAnimator.sandbox.tsx')
+              }
             ]
           }
         ]
       },
       {
-        name: '@arwes/react-bgs',
+        name: 'Examples',
         children: [
           {
-            name: 'Dots',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/Dots/Dots.basic.sandbox.tsx') },
-              { name: 'variation', code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/Dots/Dots.variation.sandbox.tsx') },
-              { name: 'tiles', code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/Dots/Dots.tiles.sandbox.tsx') }
-            ]
+            name: 'button',
+            code: require('!raw-loader?esModule=false!../examples/react/button.sandbox.tsx')
           },
           {
-            name: 'Puffs',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/Puffs/Puffs.basic.sandbox.tsx') },
-              { name: 'customDirection', code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/Puffs/Puffs.customDirection.sandbox.tsx') },
-              { name: 'randomDirections', code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/Puffs/Puffs.randomDirections.sandbox.tsx') }
-            ]
+            name: 'backgrounds',
+            code: require('!raw-loader?esModule=false!../examples/react/backgrounds.sandbox.tsx')
           },
           {
-            name: 'GridLines',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/GridLines/GridLines.basic.sandbox.tsx') },
-              { name: 'dashes', code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/GridLines/GridLines.dashes.sandbox.tsx') }
-            ]
+            name: 'alert',
+            code: require('!raw-loader?esModule=false!../examples/react/alert.sandbox.tsx')
           },
           {
-            name: 'MovingLines',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/MovingLines/MovingLines.basic.sandbox.tsx') },
-              { name: 'composition', code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/MovingLines/MovingLines.composition.sandbox.tsx') }
-            ]
-          }
-        ]
-      },
-      {
-        name: '@arwes/react-core',
-        children: [
+            name: 'scrollList',
+            code: require('!raw-loader?esModule=false!../examples/react/scrollList.sandbox.tsx')
+          },
           {
-            name: 'BleepsOnAnimator',
-            children: [
-              { name: 'basic', code: require('!raw-loader?esModule=false!@repository/packages/react-core/src/BleepsOnAnimator/BleepsOnAnimator.basic.sandbox.tsx') }
-            ]
+            name: 'subsystems',
+            code: require('!raw-loader?esModule=false!../examples/react/subsystems.sandbox.tsx')
           }
         ]
       }
     ]
   }
-];
+]

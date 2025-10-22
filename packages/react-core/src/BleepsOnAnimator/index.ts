@@ -1,7 +1,7 @@
-import { memo } from '@arwes/react-tools';
-import { BleepsOnAnimator as Component } from './BleepsOnAnimator';
+import { memo } from '@arwes/react-tools'
+import { BleepsOnAnimator as Component } from './BleepsOnAnimator.js'
 
-const BleepsOnAnimator = memo(Component);
+const BleepsOnAnimator = memo(Component)
 
-export * from './BleepsOnAnimator';
-export { BleepsOnAnimator };
+export * from './BleepsOnAnimator.js'
+export { BleepsOnAnimator }

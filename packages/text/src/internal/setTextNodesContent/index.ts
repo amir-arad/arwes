@@ -1,1 +1,1 @@
-export * from './setTextNodesContent';
+export * from './setTextNodesContent.js'

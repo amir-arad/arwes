@@ -1,153 +1,252 @@
-import { createTOScheduler } from '@arwes/tools';
+import { createTOScheduler, filterProps } from '@arwes/tools'
 
 import type {
   AnimatorControl,
   AnimatorSubscriber,
+  AnimatorWatcher,
   AnimatorNode,
-  AnimatorSystem
-} from '../types';
-import { createAnimatorMachine } from '../internal/createAnimatorMachine/index';
-import { createAnimatorManager } from '../internal/createAnimatorManager/index';
+  AnimatorSystem,
+  AnimatorSystemRegisterSetup,
+  AnimatorSettings,
+  AnimatorSettingsPartial
+} from '../types.js'
+import { ANIMATOR_DEFAULT_SETTINGS } from '../constants.js'
+import { createAnimatorMachine } from '../internal/createAnimatorMachine.js'
+import { createAnimatorManager } from '../internal/createAnimatorManager.js'
+import { isNodeConditionCorrect } from '../internal/isNodeConditionCorrect.js'
 
 const createAnimatorSystem = (): AnimatorSystem => {
-  const systemId = `s${Math.random()}`.replace('.', '');
+  const systemId = `s${Math.random()}`.replace('.', '')
 
-  let nodeIdCounter = 0;
-  let root: AnimatorNode | undefined;
+  let nodeIdCounter = 0
+  let root: AnimatorNode | undefined
 
-  const createNode = (parent: AnimatorNode | undefined | null, control: AnimatorControl): AnimatorNode => {
-    const nodeId = `${systemId}-n${nodeIdCounter++}`;
+  const createNode = (
+    parent?: undefined | null | AnimatorNode,
+    setup?: AnimatorSystemRegisterSetup
+  ): AnimatorNode => {
+    const nodeId = `${systemId}-n${nodeIdCounter++}`
 
     // The node object reference is passed around in multiple places with some
     // circular references, so this is an object base and later is modified
     // with specific readonly and writable properties.
-    const node = { id: nodeId } as unknown as AnimatorNode;
+    const node = { id: nodeId } as unknown as AnimatorNode
 
-    const settings = control.getSettings();
-    const machine = createAnimatorMachine(node, settings.initialState);
-    const manager = createAnimatorManager(node, settings.manager);
+    let dynamicSettingsOptional: null | AnimatorSettingsPartial = null
+    let foreign: unknown = null
+
+    const control: AnimatorControl = Object.freeze({
+      getSettings: () => {
+        const setupSettings = setup?.getSettings() || {}
+        const dynamicSettings = dynamicSettingsOptional || {}
+        return {
+          ...setupSettings,
+          ...dynamicSettings,
+          duration: {
+            ...setupSettings.duration,
+            ...dynamicSettings.duration
+          },
+          condition:
+            dynamicSettings.condition !== undefined
+              ? dynamicSettings.condition
+              : setupSettings.condition !== undefined
+                ? setupSettings.condition
+                : undefined,
+          onTransition: (node) => {
+            setupSettings.onTransition?.(node)
+            dynamicSettings.onTransition?.(node)
+          }
+        }
+      },
+
+      setSettings: (newSettings) => {
+        if (newSettings === null) {
+          dynamicSettingsOptional = null
+          return
+        }
+        dynamicSettingsOptional = {
+          ...dynamicSettingsOptional,
+          ...newSettings,
+          duration: {
+            ...dynamicSettingsOptional?.duration,
+            ...newSettings.duration
+          }
+        }
+      },
+
+      getForeign: () => foreign,
+
+      setForeign: (value) => {
+        foreign = value
+      }
+    })
+
+    const initialSettings = control.getSettings()
+    const machine = createAnimatorMachine(
+      node,
+      initialSettings.initialState ?? ANIMATOR_DEFAULT_SETTINGS.initialState
+    )
+    const manager = createAnimatorManager(
+      node,
+      initialSettings.manager ?? ANIMATOR_DEFAULT_SETTINGS.manager
+    )
 
     const nodeProps: { [P in keyof AnimatorNode]: PropertyDescriptor } = {
-      id: {
-        value: nodeId,
-        enumerable: true
-      },
-      control: {
-        value: control,
-        enumerable: true
-      },
-      parent: {
+      _parent: {
         value: parent,
         enumerable: true
       },
-      children: {
+      _children: {
         value: new Set<AnimatorNode>(),
         enumerable: true
       },
-      subscribers: {
+      _subscribers: {
         value: new Set<AnimatorSubscriber>(),
         enumerable: true
       },
-      scheduler: {
+      _watchers: {
+        value: new Set<AnimatorWatcher>(),
+        enumerable: true
+      },
+      _scheduler: {
         value: createTOScheduler(),
         enumerable: true
       },
-      duration: {
-        get: (): { enter: number, exit: number } => {
-          const { duration, combine } = node.control.getSettings();
-          const enter = combine
-            ? node.manager.getDurationEnter(Array.from(node.children))
-            : duration.enter || 0;
-          const exit = duration.exit || 0;
-          return { enter, exit };
+      _getUserSettings: {
+        value: () => {
+          const controlSettings = node.control.getSettings()
+          return {
+            ...ANIMATOR_DEFAULT_SETTINGS,
+            ...filterProps(controlSettings),
+            duration: {
+              ...ANIMATOR_DEFAULT_SETTINGS.duration,
+              ...(controlSettings.duration ? filterProps(controlSettings.duration) : null)
+            }
+          }
         },
+        enumerable: true
+      },
+      _manager: {
+        value: manager,
+        enumerable: true,
+        writable: true
+      },
+
+      id: {
+        value: nodeId,
         enumerable: true
       },
       state: {
         get: () => machine.getState(),
         enumerable: true
       },
+      control: {
+        value: control,
+        enumerable: true
+      },
+      settings: {
+        get: (): AnimatorSettings => {
+          const settings = node._getUserSettings()
+          let enter = settings.duration.enter
+          if (settings.combine) {
+            const children = Array.from(node._children).filter((child) => {
+              const { condition } = child.control.getSettings()
+              return isNodeConditionCorrect(child, condition)
+            })
+            enter = node._manager.getDurationEnter(children)
+          }
+          return { ...settings, duration: { ...settings.duration, enter } }
+        },
+        enumerable: true
+      },
       subscribe: {
         value: (subscriber: AnimatorSubscriber): (() => void) => {
-          node.subscribers.add(subscriber);
-          subscriber(node);
-          return () => node.subscribers.delete(subscriber);
+          node._subscribers.add(subscriber)
+          subscriber(node)
+          return () => node._subscribers.delete(subscriber)
         },
         enumerable: true
       },
       unsubscribe: {
         value: (subscriber: AnimatorSubscriber): void => {
-          node.subscribers.delete(subscriber);
+          node._subscribers.delete(subscriber)
         },
         enumerable: true
       },
       send: {
         value: machine.send,
         enumerable: true
-      },
-      manager: {
-        value: manager,
-        enumerable: true,
-        writable: true
       }
-    };
+    }
 
-    Object.defineProperties(node, nodeProps);
+    Object.defineProperties(node, nodeProps)
 
     if (parent) {
-      parent.children.add(node);
+      parent._children.add(node)
     }
 
-    return node;
-  };
+    return node
+  }
 
   const removeNode = (node: AnimatorNode): void => {
-    node.scheduler.stopAll();
+    node._scheduler.stopAll()
 
-    for (const child of node.children) {
-      removeNode(child);
+    for (const child of node._children) {
+      removeNode(child)
     }
 
-    if (node.parent) {
-      node.parent.children.delete(node);
+    if (node._parent) {
+      node._parent._children.delete(node)
     }
 
-    node.children.clear();
-    node.subscribers.clear();
-  };
+    node._children.clear()
+    node._subscribers.clear()
+    node._watchers.clear()
+  }
 
-  const register = (parentNode: AnimatorNode | undefined | null, control: AnimatorControl): AnimatorNode => {
+  const register = (
+    parentNode?: undefined | null | AnimatorNode,
+    setup?: AnimatorSystemRegisterSetup
+  ): AnimatorNode => {
     if (parentNode === undefined || parentNode === null) {
       if (root) {
-        throw new Error('The root node must be unregistered before registering another root node.');
+        throw new Error(
+          'ARWES animator root node must be unregistered before registering another root node.'
+        )
       }
 
-      root = createNode(undefined, control);
+      root = createNode(undefined, setup)
 
-      return root;
+      return root
     }
 
     if (!root) {
-      throw new Error('A root node needs to be registered first in the system before registering children nodes.');
+      throw new Error(
+        'ARWES animator system requires an animator root node before registering children nodes. This means the provided animator parent node does not belong to the system.'
+      )
     }
 
-    return createNode(parentNode, control);
-  };
+    return createNode(parentNode, setup)
+  }
 
   const unregister = (node: AnimatorNode): void => {
     if (!root) {
-      return;
+      return
     }
 
-    removeNode(node);
+    for (const watcher of node._watchers) {
+      watcher(node)
+    }
+
+    removeNode(node)
 
     if (root.id === node.id) {
-      root = undefined;
+      root = undefined
     }
-  };
+  }
 
   // System object reference so it can have dynamic object properties setup later.
-  const system = {} as unknown as AnimatorSystem;
+  const system = {} as unknown as AnimatorSystem
 
   const systemProps: { [P in keyof AnimatorSystem]: PropertyDescriptor } = {
     id: {
@@ -166,11 +265,11 @@ const createAnimatorSystem = (): AnimatorSystem => {
       value: unregister,
       enumerable: true
     }
-  };
+  }
 
-  Object.defineProperties(system, systemProps);
+  Object.defineProperties(system, systemProps)
 
-  return system;
-};
+  return system
+}
 
-export { createAnimatorSystem };
+export { createAnimatorSystem }

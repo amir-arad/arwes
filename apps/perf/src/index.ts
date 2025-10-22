@@ -1,7 +1,9 @@
-import perfTestsList from '../perfTestsList.json';
+import perfTestsList from '../perfTestsList.json'
 
-const listElement = document.querySelector('#perf-tests-list') as HTMLUListElement;
+const listElement = document.querySelector('#perf-tests-list')
 
-listElement.innerHTML = perfTestsList
-  .map(name => `<li><a href="/perf/tests/${name}">${name}</a></li>`)
-  .join('');
+if (listElement) {
+  listElement.innerHTML = perfTestsList
+    .map((name) => `<li><a href="/perf/tests/${name}">${name}</a></li>`)
+    .join('')
+}

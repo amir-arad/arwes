@@ -1,1 +1,1 @@
-export * from './BleepsOnAnimator/index';
+export * from './BleepsOnAnimator/index.js'

@@ -1,6 +1,6 @@
-import React, { type ReactElement } from 'react';
-import { createRoot } from 'react-dom/client';
-import { AnimatedX } from '@arwes/react-animated';
+import React, { type ReactElement } from 'react'
+import { createRoot } from 'react-dom/client'
+import { AnimatedX } from '@arwes/react-animated'
 
 const Sandbox = (): ReactElement => {
   return (
@@ -8,7 +8,7 @@ const Sandbox = (): ReactElement => {
       style={{ margin: 10, width: 50, height: 50, backgroundColor: '#777' }}
       state={undefined} // No state provided.
       animated={{
-        initialStyle: { x: 0, backgroundColor: '#0ff' },
+        initialStyle: { x: 0, backgroundColor: '#fff' },
         transitions: {
           a: { x: 0, backgroundColor: '#0ff' },
           b: { x: 100, backgroundColor: '#ff0' },
@@ -16,7 +16,7 @@ const Sandbox = (): ReactElement => {
         }
       }}
     />
-  );
-};
+  )
+}
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
+createRoot(document.querySelector('#root')!).render(<Sandbox />)

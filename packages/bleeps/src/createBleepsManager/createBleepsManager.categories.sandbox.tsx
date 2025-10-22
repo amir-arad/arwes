@@ -1,18 +1,18 @@
-import { createBleepsManager } from '@arwes/bleeps';
+import { createBleepsManager } from '@arwes/bleeps'
 
-const rootElement = document.querySelector('#root') as HTMLElement;
+const rootElement = document.querySelector('#root')!
 
 rootElement.innerHTML = `
   <button class="click">Click</button>
   <button class="error">Error</button>
   <button class="type">Readout</button>
-`;
+`
 
-const clickElement = rootElement.querySelector('.click') as HTMLButtonElement;
-const errorElement = rootElement.querySelector('.error') as HTMLButtonElement;
-const assembleElement = rootElement.querySelector('.type') as HTMLButtonElement;
+const clickElement = rootElement.querySelector('.click')!
+const errorElement = rootElement.querySelector('.error')!
+const assembleElement = rootElement.querySelector('.type')!
 
-type BleepNames = 'click' | 'error' | 'type';
+type BleepNames = 'click' | 'error' | 'type'
 
 const bleepsManager = createBleepsManager<BleepNames>({
   common: {
@@ -32,27 +32,27 @@ const bleepsManager = createBleepsManager<BleepNames>({
   bleeps: {
     click: {
       category: 'interaction',
-      sources: [{ src: '/assets/sounds/click.webm', type: 'audio/webm' }]
+      sources: [{ src: '/assets/sounds/click.mp3', type: 'audio/mpeg' }]
     },
     error: {
       category: 'notification',
-      sources: [{ src: '/assets/sounds/error.webm', type: 'audio/webm' }]
+      sources: [{ src: '/assets/sounds/error.mp3', type: 'audio/mpeg' }]
     },
     type: {
       category: 'transition',
-      sources: [{ src: '/assets/sounds/type.webm', type: 'audio/webm' }]
+      sources: [{ src: '/assets/sounds/type.mp3', type: 'audio/mpeg' }]
     }
   }
-});
+})
 
 clickElement.addEventListener('click', () => {
-  bleepsManager?.bleeps.click?.play();
-});
+  bleepsManager.bleeps.click?.play()
+})
 
 errorElement.addEventListener('click', () => {
-  bleepsManager?.bleeps.error?.play();
-});
+  bleepsManager.bleeps.error?.play()
+})
 
 assembleElement.addEventListener('click', () => {
-  bleepsManager?.bleeps.type?.play();
-});
+  bleepsManager.bleeps.type?.play()
+})

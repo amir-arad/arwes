@@ -1,7 +1,7 @@
-import { createContext } from 'react';
+import { createContext } from 'react'
 
-import type { AnimatorInterface } from '@arwes/animator';
+import type { AnimatorInterface } from '@arwes/animator'
 
-const AnimatorContext = createContext<AnimatorInterface | undefined>(undefined);
+const AnimatorContext = createContext<AnimatorInterface | undefined>(undefined)
 
-export { AnimatorContext };
+export { AnimatorContext }

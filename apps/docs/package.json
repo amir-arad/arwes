@@ -1,18 +1,22 @@
 {
-  "name": "@arwes/app-docs",
-  "version": "1.0.0-alpha.20",
+  "name": "apps-docs",
+  "version": "1.0.0-next.25020502",
   "private": true,
   "dependencies": {
-    "@arwes/react": "^1.0.0-alpha.20",
-    "@vanilla-extract/next-plugin": "^2.1.2",
-    "iconoir-react": "^6.6.0",
-    "jotai": "^2.1.0",
-    "next": "^15.1.0",
-    "prism-react-renderer": "^2.0.3"
+    "@arwes/react": "^1.0.0-next.25020502",
+    "@tailwindcss/typography": "^0.5.14",
+    "autoprefixer": "^10.4.20",
+    "iconoir-react": "^7.8.0",
+    "jotai": "^2.9.2",
+    "next": "^14.2.5",
+    "postcss": "^8.4.41",
+    "prism-react-renderer": "^2.3.1",
+    "react-use": "^17.5.1",
+    "tailwindcss": "^3.4.9"
   },
   "scripts": {
-    "dev": "sh ../../scripts/docs-generate-dynamics.sh && next dev -p 9200",
-    "build": "sh ../../scripts/docs-generate-dynamics.sh && next build && next export",
-    "start": "serve ./out -p 9200"
+    "dev": "sh ./scripts/setup.sh && next dev -p 9002",
+    "build": "sh ./scripts/setup.sh && next build",
+    "start": "serve ./build -p 9002"
   }
 }

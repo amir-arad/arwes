@@ -2,29 +2,20 @@ import {
   type HTMLProps,
   type SVGProps,
   type CSSProperties,
-  type ReactElement,
   type ForwardedRef,
   type ReactNode,
   createElement,
   useRef,
-  useMemo,
-  useState,
-  useEffect
-} from 'react';
-import { animate } from 'motion';
+  useMemo
+} from 'react'
 
-import { type NoInfer } from '@arwes/tools';
-import { mergeRefs } from '@arwes/react-tools';
-import { ANIMATOR_STATES as STATES } from '@arwes/animator';
-import { useAnimator } from '@arwes/react-animator';
+import type { NoInfer } from '@arwes/tools'
+import { memo, mergeRefs } from '@arwes/react-tools'
+import type { AnimatorNode } from '@arwes/animator'
+import { useAnimator } from '@arwes/react-animator'
+import { type AnimatedProp, formatAnimatedCSSProps } from '@arwes/animated'
 
-import type {
-  AnimatedSettings,
-  AnimatedSettingsTransition,
-  AnimatedSettingsTransitionFunctionReturn,
-  AnimatedProp
-} from '../types';
-import { formatAnimatedCSSPropsShorthands } from '../internal/formatAnimatedCSSPropsShorthands/index';
+import { useAnimated } from '../useAnimated/index.js'
 
 interface AnimatedProps<E extends HTMLElement | SVGElement = HTMLDivElement> {
   elementRef?: ForwardedRef<E>
@@ -33,14 +24,17 @@ interface AnimatedProps<E extends HTMLElement | SVGElement = HTMLDivElement> {
   animated?: AnimatedProp
   hideOnExited?: boolean
   hideOnEntered?: boolean
+  onTransition?: (element: E, node: AnimatorNode) => void
   as?: keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap
   children?: ReactNode
 }
 
-const Animated = <
+const AnimatedComponent = <
   E extends HTMLElement | SVGElement = HTMLDivElement,
-  P extends HTMLProps<HTMLElement> | SVGProps<SVGElement> = HTMLProps<HTMLDivElement>
->(props: AnimatedProps<E> & NoInfer<P>): ReactElement => {
+  P = E extends HTMLElement ? HTMLProps<E> : SVGProps<E>
+>(
+  props: AnimatedProps<E> & NoInfer<P>
+): JSX.Element => {
   const {
     as: asProvided,
     animated,
@@ -49,109 +43,59 @@ const Animated = <
     elementRef: externalElementRef,
     hideOnExited = true,
     hideOnEntered,
+    onTransition,
     ...otherProps
-  } = props;
+  } = props
 
-  const animator = useAnimator();
+  const animator = useAnimator()
+  const as = useMemo(() => asProvided || 'div', [])
+  const elementRef = useRef<E | null>(null)
 
-  const as = useMemo(() => asProvided || 'div', []);
-  const elementRef = useRef<E | null>(null);
-  const animatedSettingsRef = useRef<AnimatedSettings[]>([]);
-  const animationControlsRef = useRef<AnimatedSettingsTransitionFunctionReturn[]>([]);
-  const [isExited, setIsExited] = useState(() => animator?.node.state === STATES.exited);
-  const [isEntered, setIsEntered] = useState(() => animator?.node.state === STATES.entered);
+  useAnimated(elementRef, animated, {
+    renderInitials: false,
+    hideOnExited,
+    hideOnEntered,
+    onTransition
+  })
 
-  const animatedSettingsListReceived = Array.isArray(animated) ? animated : [animated];
-  const animatedSettingsList = animatedSettingsListReceived.filter(Boolean) as AnimatedSettings[];
+  const animatedSettingsListReceived = Array.isArray(animated) ? animated : [animated]
+  const animatedSettingsList = animatedSettingsListReceived
+    .map((item) => (typeof item === 'string' || Array.isArray(item) ? undefined : item))
+    .filter(Boolean)
 
-  // The animations list is passed as a reference so the Animator node subscription
-  // and its respective functionalities are only initialized once for performance.
-  animatedSettingsRef.current = animatedSettingsList;
-
-  useEffect(() => {
-    if (!animator) {
-      return;
-    }
-
-    const cancelSubscription = animator.node.subscribe(node => {
-      setIsExited(node.state === STATES.exited);
-      setIsEntered(node.state === STATES.entered);
-
-      animationControlsRef.current = [];
-
-      const element = elementRef.current;
-
-      // Weird case if the element is removed and the subscription is not cancelled.
-      if (!element) {
-        return;
-      }
-
-      const settingsList = animatedSettingsRef.current;
-      const { duration } = node;
-      const durationTransition = node.state === STATES.entering || node.state === STATES.entered
-        ? duration.enter
-        : duration.exit;
-
-      settingsList
-        .map(settingsItem => settingsItem.transitions?.[node.state] as AnimatedSettingsTransition)
-        .filter(Boolean)
-        .map(transitions => Array.isArray(transitions) ? transitions : [transitions])
-        .flat(1)
-        .forEach(transition => {
-          if (typeof transition === 'function') {
-            const control = transition({
-              element,
-              duration: durationTransition
-            });
-            if (control) {
-              animationControlsRef.current.push(control);
-            }
-          }
-          else {
-            const { duration, delay, easing, options, ...definition } = transition;
-            const control = animate(
-              element,
-              definition,
-              { duration: duration || durationTransition, delay, easing, ...options }
-            );
-            animationControlsRef.current.push(control);
-          }
-        });
-    });
-
-    return () => {
-      cancelSubscription();
-      animationControlsRef.current.forEach(control => control.stop());
-    };
-  }, [animator]);
-
-  let initialAttributes: object | undefined;
+  let initialAttributes: object | undefined
   if (animator) {
-    // TODO: Fix type.
     initialAttributes = animatedSettingsList
-      .map(item => item?.initialAttributes)
-      .reduce<any>((total: object, item: object | undefined) => ({ ...total, ...item }), {});
+      .map((item) => (item ? item.initialAttributes : undefined))
+      .reduce<any>((total: object, item: object | undefined) => ({ ...total, ...item }), {})
   }
 
-  let dynamicStyles: CSSProperties | undefined;
+  let dynamicStyles: CSSProperties | undefined
   if (animator) {
     dynamicStyles = animatedSettingsList
-      .map(item => formatAnimatedCSSPropsShorthands(item?.initialStyle))
-      .reduce((total, item) => ({ ...total, ...item }), {});
+      .map((item) => (item ? item.initialStyle : undefined))
+      .filter(Boolean)
+      .map((styles) => formatAnimatedCSSProps(styles!))
+      .reduce((total, item) => ({ ...total, ...item }), {})
   }
 
   return createElement(as, {
     ...otherProps,
     ...initialAttributes,
+    ref: mergeRefs(externalElementRef, elementRef),
     className,
     style: {
       ...style,
-      ...dynamicStyles,
-      visibility: animator && ((hideOnExited && isExited) || (hideOnEntered && isEntered)) ? 'hidden' : 'visible'
-    },
-    ref: mergeRefs(externalElementRef, elementRef)
-  });
-};
+      visibility:
+        animator &&
+        ((hideOnExited && animator.node.state === 'exited') ||
+          (hideOnEntered && animator.node.state === 'entered'))
+          ? 'hidden'
+          : '',
+      ...dynamicStyles
+    }
+  })
+}
 
-export type { AnimatedProps };
-export { Animated };
+export type { AnimatedProps }
+export const Animated = memo(AnimatedComponent)

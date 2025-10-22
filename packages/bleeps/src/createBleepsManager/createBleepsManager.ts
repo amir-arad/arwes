@@ -1,105 +1,147 @@
-import { IS_BROWSER } from '@arwes/tools';
+import { filterProps } from '@arwes/tools'
 
 import type {
   Bleep,
   BleepGeneralProps,
   BleepsManagerPropsUpdatable,
   BleepsManager,
-  BleepsManagerProps
-} from '../types';
-import { createBleep } from '../createBleep/index';
+  BleepsManagerProps,
+  BleepCategory,
+  BleepProps
+} from '../types.js'
+import { BLEEPS_CATEGORIES } from '../constants.js'
+import { createBleep } from '../createBleep/index.js'
+
+const categoryNames = Object.keys(BLEEPS_CATEGORIES) as BleepCategory[]
 
 const createBleepsManager = <Names extends string>(
-  props: BleepsManagerProps<Names>
+  propsInitials: BleepsManagerProps<Names>
 ): BleepsManager<Names> => {
+  const props: BleepsManagerProps<Names> = structuredClone(propsInitials)
+
   // In non-browser environments, the bleeps manager is still created but without
   // actual functionalities.
-  const context = IS_BROWSER ? new window.AudioContext() : null as unknown as AudioContext;
-  const masterGain = IS_BROWSER ? context.createGain() : null as unknown as GainNode;
+  const isBleepsAvailable = typeof window !== 'undefined' && !!window.AudioContext
+  const context = isBleepsAvailable ? new window.AudioContext() : (null as unknown as AudioContext)
+  const masterGain = isBleepsAvailable ? context.createGain() : (null as unknown as GainNode)
 
-  const bleeps = {} as unknown as Record<Names, Bleep | null>;
-  const bleepNames = Object.keys(props.bleeps) as Names[];
+  const bleepNames = new Set(Object.keys(props.bleeps) as Names[])
+  const bleepsInternal = {} as unknown as Record<Names, Bleep | null>
 
-  bleepNames.forEach(bleepName => {
-    const bleepProps = props.bleeps[bleepName];
-    const categoryProps = bleepProps.category
-      ? props.categories?.[bleepProps.category]
-      : null;
+  const syncVolume = (): void => {
+    const globalVolume = Math.max(0, Math.min(1, props.master?.volume ?? 1))
+    masterGain.gain.setValueAtTime(globalVolume, context.currentTime)
+  }
 
-    const generalProps: BleepGeneralProps = {
-      ...props.common,
-      ...categoryProps
-    };
+  const getBleepProps = (bleepName: Names): BleepProps => {
+    const bleepProps = props.bleeps[bleepName]
+    const category = bleepProps.category ?? props.common?.category
+    const categoryProps = category ? props.categories?.[category] : null
+    const generalProps: BleepGeneralProps = { ...props.common, ...categoryProps }
 
-    bleeps[bleepName] = generalProps.disabled
-      ? null
-      : createBleep({
-        ...generalProps,
-        ...bleepProps,
-        context,
-        masterGain
-      });
-  });
-
-  if (IS_BROWSER) {
-    masterGain.connect(context.destination);
-
-    // Set initial master gain value.
-    const globalVolume = Math.max(0, Math.min(1, props?.master?.volume ?? 1));
-    masterGain.gain.setValueAtTime(globalVolume, context.currentTime);
+    return { ...generalProps, ...bleepProps, context, masterGain }
   }
 
   const unload = (): void => {
-    bleepNames.forEach(bleepName => {
-      bleeps[bleepName]?.unload();
-    });
-  };
-
-  const update = (newProps: BleepsManagerPropsUpdatable): void => {
-    // Global settings.
-
-    if (newProps.master?.volume !== undefined) {
-      const globalVolume = Math.max(0, Math.min(1, newProps.master.volume));
-      masterGain.gain.setValueAtTime(globalVolume, context.currentTime);
+    if (!isBleepsAvailable) {
+      return
     }
 
-    // Bleep settings.
+    bleepNames.forEach((bleepName) => {
+      bleepsInternal[bleepName]?.unload()
+    })
+  }
 
-    bleepNames.forEach(bleepName => {
-      const baseBleepProps = props.bleeps[bleepName];
-      const category = baseBleepProps?.category;
-      const newCategoryProps = category
-        ? newProps.categories?.[category]
-        : null;
-      const generalProps: BleepGeneralProps = {
-        ...newProps.common,
-        ...newCategoryProps
-      };
+  const updateProps = (newProps: BleepsManagerPropsUpdatable): void => {
+    if (newProps.master) {
+      props.master = { ...props.master, ...filterProps(newProps.master) }
+    }
 
-      if (generalProps.disabled) {
-        bleeps[bleepName]?.unload();
-        bleeps[bleepName] = null;
-      }
-      else {
-        if (bleeps[bleepName]) {
-          bleeps[bleepName]?.update({
-            ...generalProps,
-            ...newProps.bleeps?.[bleepName]
-          });
+    if (newProps.common) {
+      props.common = { ...props.common, ...filterProps(newProps.common) }
+    }
+
+    const newCategoriesProps = newProps.categories
+    if (newCategoriesProps) {
+      categoryNames.forEach((category) => {
+        props.categories = props.categories ?? {}
+        props.categories[category] = {
+          ...props.categories?.[category],
+          ...newCategoriesProps[category]
         }
-        else {
-          bleeps[bleepName] = createBleep({
-            ...generalProps,
-            ...baseBleepProps,
-            context,
-            masterGain
-          });
+      })
+    }
+
+    const newBleepsProps = newProps.bleeps
+    if (newBleepsProps) {
+      // In case new bleeps are added in the update.
+      Object.keys(newBleepsProps).forEach((key) => bleepNames.add(key as Names))
+
+      bleepNames.forEach((bleepName) => {
+        props.bleeps[bleepName] = {
+          ...props.bleeps[bleepName],
+          ...newBleepsProps[bleepName]
+        }
+      })
+    }
+  }
+
+  const updateBleeps = (): void => {
+    bleepNames.forEach((bleepName) => {
+      const bleepProps = getBleepProps(bleepName)
+
+      if (bleepProps.disabled) {
+        const bleep = bleepsInternal[bleepName]
+        if (bleep) {
+          // In case the reference to the bleep was already used somewhere else,
+          // mute the sound to prevent playback when it is supposed to be disabled.
+          bleep.muted = true
+
+          bleep.unload()
+        }
+        bleepsInternal[bleepName] = null
+      } else {
+        const bleep = bleepsInternal[bleepName]
+        if (bleep) {
+          bleep.update(bleepProps)
+        } else {
+          bleepsInternal[bleepName] = createBleep(bleepProps)
         }
       }
-    });
-  };
+    })
+  }
 
-  return Object.freeze({ bleeps, unload, update });
-};
+  const update = (newProps: BleepsManagerPropsUpdatable): void => {
+    if (!isBleepsAvailable) {
+      return
+    }
 
-export { createBleepsManager };
+    updateProps(newProps)
+    syncVolume()
+    updateBleeps()
+  }
+
+  if (isBleepsAvailable) {
+    masterGain.connect(context.destination)
+
+    syncVolume()
+    updateBleeps()
+  }
+
+  const bleeps = new Proxy(bleepsInternal, {
+    get(obj, key) {
+      const bleepName = key as Names
+      if (bleepNames.has(bleepName)) {
+        return obj[bleepName]
+      }
+      console.error(
+        `ARWES bleeps manager bleep "${bleepName}" was not found and can not be played.`
+      )
+      return null
+    }
+  }) as unknown as Record<Names, Bleep | null>
+
+  return Object.freeze({ bleeps, unload, update })
+}
+
+export { createBleepsManager }

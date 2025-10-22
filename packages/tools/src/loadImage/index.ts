@@ -1,1 +1,1 @@
-export * from './loadImage';
+export * from './loadImage.js'

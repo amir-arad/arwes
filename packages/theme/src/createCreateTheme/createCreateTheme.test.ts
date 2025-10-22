@@ -1,4 +1,4 @@
-/** eslint-env jest */
+import { test, expect } from 'vitest'
 
 import type {
   ThemeSettingsMultiplier,
@@ -10,8 +10,8 @@ import type {
   ThemeColor,
   ThemeStyle,
   ThemeCreatorStructure
-} from '../types';
-import { createCreateTheme } from './createCreateTheme';
+} from '../types'
+import { createCreateTheme } from './createCreateTheme'
 
 test('Should create theme creator with plain theme structure object', () => {
   interface ThemeSettings {
@@ -34,25 +34,25 @@ test('Should create theme creator with plain theme structure object', () => {
     color: 'color',
     font: 'style',
     other: 'other'
-  };
+  }
   const themeDefaults: ThemeSettings = {
     space: 1,
     size: () => '20px',
     color: () => [0, 0, 0, 0],
     font: [{ fontSize: '10px' }],
     other: 'something else'
-  };
-  const createTheme = createCreateTheme<ThemeSettings, Theme>(themeStructure, themeDefaults);
+  }
+  const createTheme = createCreateTheme<ThemeSettings, Theme>(themeStructure, themeDefaults)
   const theme = createTheme({
     space: 3
-  });
-  expect(theme).toBeInstanceOf(Object);
-  expect(theme.space).toBeInstanceOf(Function);
-  expect(theme.size).toBeInstanceOf(Function);
-  expect(theme.color).toBeInstanceOf(Function);
-  expect(theme.font).toBeInstanceOf(Function);
-  expect(theme.other).toBe('something else');
-});
+  })
+  expect(theme).toBeInstanceOf(Object)
+  expect(theme.space).toBeInstanceOf(Function)
+  expect(theme.size).toBeInstanceOf(Function)
+  expect(theme.color).toBeInstanceOf(Function)
+  expect(theme.font).toBeInstanceOf(Function)
+  expect(theme.other).toBe('something else')
+})
 
 test('Should create theme creator with deep theme structure object', () => {
   interface ThemeSettings {
@@ -101,7 +101,7 @@ test('Should create theme creator with deep theme structure object', () => {
       o1: 'other',
       o2: 'other'
     }
-  };
+  }
   const themeDefaults: ThemeSettings = {
     space: 1,
     width: 10,
@@ -117,27 +117,27 @@ test('Should create theme creator with deep theme structure object', () => {
       o1: 'hello',
       o2: 100
     }
-  };
-  const createTheme = createCreateTheme<ThemeSettings, Theme>(themeStructure, themeDefaults);
+  }
+  const createTheme = createCreateTheme<ThemeSettings, Theme>(themeStructure, themeDefaults)
   const providedThemeSettings = {
     space: 3,
     colors: {
       c2: () => [0, 0, 0, 0]
     }
-  };
-  const theme = createTheme(providedThemeSettings);
-  expect(theme).toBeInstanceOf(Object);
-  expect(theme.space).toBeInstanceOf(Function);
-  expect(theme.colors).toBeInstanceOf(Object);
-  expect(theme.colors.c1).toBeInstanceOf(Function);
-  expect(theme.colors.c2).toBeInstanceOf(Function);
-  expect(theme.fonts).toBeInstanceOf(Object);
-  expect(theme.fonts.f1).toBeInstanceOf(Function);
-  expect(theme.fonts.f2).toBeInstanceOf(Function);
-  expect(theme.others).toBeInstanceOf(Object);
-  expect(theme.others.o1).toBe('hello');
-  expect(theme.others.o2).toBe(100);
-});
+  }
+  const theme = createTheme(providedThemeSettings)
+  expect(theme).toBeInstanceOf(Object)
+  expect(theme.space).toBeInstanceOf(Function)
+  expect(theme.colors).toBeInstanceOf(Object)
+  expect(theme.colors.c1).toBeInstanceOf(Function)
+  expect(theme.colors.c2).toBeInstanceOf(Function)
+  expect(theme.fonts).toBeInstanceOf(Object)
+  expect(theme.fonts.f1).toBeInstanceOf(Function)
+  expect(theme.fonts.f2).toBeInstanceOf(Function)
+  expect(theme.others).toBeInstanceOf(Object)
+  expect(theme.others.o1).toBe('hello')
+  expect(theme.others.o2).toBe(100)
+})
 
 test('Should throw error if theme structure object has invalid key', () => {
   interface ThemeSettings {
@@ -151,11 +151,11 @@ test('Should throw error if theme structure object has invalid key', () => {
   const themeStructure: ThemeCreatorStructure = {
     space: 'multiplier',
     size: 'xxx' as any as ThemeCreatorStructure
-  };
+  }
   const themeDefaults: ThemeSettings = {
     space: 1,
     size: () => '20px'
-  };
-  const createTheme = createCreateTheme<ThemeSettings, Theme>(themeStructure, themeDefaults);
-  expect(() => createTheme()).toThrow('Invalid theme structure key "xxx" provided.');
-});
+  }
+  const createTheme = createCreateTheme<ThemeSettings, Theme>(themeStructure, themeDefaults)
+  expect(() => createTheme()).toThrow('Invalid theme structure key "xxx" provided.')
+})

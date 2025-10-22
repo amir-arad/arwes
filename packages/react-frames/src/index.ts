@@ -1,11 +1,13 @@
-export * from './useFrameSVGRenderer/index';
-export * from './useFrameSVGAssemblingAnimation/index';
-export * from './FrameSVG/index';
-export * from './FrameSVGOctagon/index';
-export * from './FrameSVGUnderline/index';
-export * from './FrameSVGCorners/index';
-export * from './FrameSVGLines/index';
-export * from './FrameSVGNefrex/index';
-export * from './FrameSVGKranox/index';
-export * from './IlluminatorSVG/index';
-export * from './Illuminator/index';
+export * from './FrameBase/index.js'
+
+export * from './FrameOctagon/index.js'
+export * from './FrameUnderline/index.js'
+export * from './FrameCorners/index.js'
+export * from './FrameLines/index.js'
+export * from './FrameNero/index.js'
+export * from './FrameNefrex/index.js'
+export * from './FrameKranox/index.js'
+export * from './FrameHeader/index.js'
+export * from './FrameCircle/index.js'
+
+export * from './useFrameAssembler/index.js'

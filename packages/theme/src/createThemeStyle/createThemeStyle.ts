@@ -1,14 +1,14 @@
-import type { ThemeSettingsStyle, ThemeStyleValue } from '../types';
+import type { ThemeSettingsStyle, ThemeStyleValue } from '../types.js'
 
 const createThemeStyle = (series: ThemeSettingsStyle) => {
   return (indexProvided: number): ThemeStyleValue => {
     if (!series.length) {
-      return {};
+      return {}
     }
 
-    const index = Math.round(indexProvided);
-    return series[index] || series[series.length - 1];
-  };
-};
+    const index = Math.round(indexProvided)
+    return series[index] || series[series.length - 1]
+  }
+}
 
-export { createThemeStyle };
+export { createThemeStyle }

@@ -1,51 +1,41 @@
-import React, { type ReactElement, useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
-import { type AnimatorProps, Animator } from '@arwes/react-animator';
-import { Animated } from '@arwes/react-animated';
+import React, { type ReactElement, useState, useEffect } from 'react'
+import { createRoot } from 'react-dom/client'
+import { type AnimatorProps, Animator } from '@arwes/react-animator'
+import { Animated } from '@arwes/react-animated'
 
-interface ItemProps extends AnimatorProps {}
-
-const Item = (props: ItemProps): ReactElement => {
+const Item = (props: AnimatorProps): ReactElement => {
   return (
     <Animator {...props}>
       <Animated
-        style={{ margin: 10, width: 40, height: 20, backgroundColor: '#777' }}
-        animated={{
-          transitions: {
-            entering: { x: [0, 50], backgroundColor: ['#0ff', '#ff0'] },
-            exiting: { x: [50, 0], backgroundColor: ['#ff0', '#0ff'] }
-          }
-        }}
+        style={{ margin: 10, width: 40, height: 20, background: '#777' }}
+        animated={[
+          ['x', 0, 100],
+          ['background', '#0ff', '#ff0']
+        ]}
         hideOnExited={false}
       />
     </Animator>
-  );
-};
+  )
+}
 
 const Sandbox = (): ReactElement => {
-  const [active, setActive] = useState(true);
-  const [enabled, setEnabled] = useState(false);
+  const [active, setActive] = useState(true)
+  const [enabled, setEnabled] = useState(false)
 
   useEffect(() => {
-    const tid = setInterval(() => setActive(active => !active), 2000);
-    return () => clearInterval(tid);
-  }, []);
+    const tid = setInterval(() => setActive((v) => !v), 2_000)
+    return () => clearInterval(tid)
+  }, [])
 
   return (
     <div>
-      <div>
-        <button onClick={() => setEnabled(v => !v)}>
-          {enabled ? 'Disable' : 'Enable'}
-        </button>
+      <div style={{ color: 'cyan' }}>
+        <div>{active ? 'Active' : 'Inactive'}</div>
+        <div>{enabled ? 'Enabled' : 'Disabled'}</div>
+        <button onClick={() => setEnabled((v) => !v)}>{enabled ? 'Disable' : 'Enable'}</button>
       </div>
 
-      <Animator
-        active={active}
-        combine
-        manager='stagger'
-        checkToSend={[enabled]}
-        checkToSendAction='refresh'
-      >
+      <Animator active={active} combine manager="stagger" refreshOn={[enabled]}>
         <Item />
         <Item />
         <Item condition={() => enabled} />
@@ -53,7 +43,7 @@ const Sandbox = (): ReactElement => {
         <Item />
       </Animator>
     </div>
-  );
-};
+  )
+}
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<Sandbox />);
+createRoot(document.querySelector('#root')!).render(<Sandbox />)

@@ -1,1 +1,1 @@
-export { createThemeColor } from './createThemeColor';
+export { createThemeColor } from './createThemeColor.js'

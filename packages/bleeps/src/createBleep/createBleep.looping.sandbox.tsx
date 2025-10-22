@@ -1,26 +1,26 @@
-import { createBleep } from '@arwes/bleeps';
+import { createBleep } from '@arwes/bleeps'
 
-const rootElement = document.querySelector('#root') as HTMLElement;
+const rootElement = document.querySelector('#root')!
 
-rootElement.innerHTML = '<button class="bleep">Play</button>';
+rootElement.innerHTML = '<button class="bleep">Play</button>'
 
-const bleepElement = rootElement.querySelector('.bleep') as HTMLButtonElement;
+const bleepElement = rootElement.querySelector('.bleep')!
 
 const bleep = createBleep({
   sources: [{ src: '/assets/sounds/type.mp3', type: 'audio/mpeg' }],
+  volume: 0.5,
   loop: true,
-  volume: 0.5
-});
+  muteOnWindowBlur: true
+})
 
 bleepElement.addEventListener('click', () => {
   if (bleep) {
     if (bleep.isPlaying) {
-      bleep.stop();
-      bleepElement.textContent = 'Play';
-    }
-    else {
-      bleep.play();
-      bleepElement.textContent = 'Stop';
+      bleep.stop()
+      bleepElement.textContent = 'Play'
+    } else {
+      bleep.play()
+      bleepElement.textContent = 'Stop'
     }
   }
-});
+})
