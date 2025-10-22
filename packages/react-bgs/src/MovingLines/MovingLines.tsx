@@ -31,20 +31,28 @@ const createLinesSet = (config: MovingLinesLineConfig): MovingLinesLine[] => {
   });
 };
 
-const defaultProps: Required<Pick<MovingLinesProps, 'lineColor' | 'lineWidth' | 'distance' | 'sets'>> = {
-  lineWidth: 1,
-  lineColor: '#777',
-  distance: 30,
-  sets: 5
-};
-
 const MovingLines = (props: MovingLinesProps): ReactElement => {
-  const propsFull = { ...defaultProps, ...props };
   const {
     elementRef: elementRefExternal,
     className,
-    style
-  } = propsFull;
+    style,
+    lineWidth = 1,
+    lineColor = '#777',
+    distance = 30,
+    sets = 5,
+    ...restProps
+  } = props;
+
+  const propsFull = {
+    elementRef: elementRefExternal,
+    className,
+    style,
+    lineWidth,
+    lineColor,
+    distance,
+    sets,
+    ...restProps
+  };
 
   const animator = useAnimator();
   const elementRef = useRef<HTMLCanvasElement>(null);

@@ -32,7 +32,7 @@ const FrameSVG = (props: FrameSVGProps): ReactElement => {
     ...otherProps
   } = props;
 
-  const svgRef = useRef<SVGSVGElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null!);
 
   const onRender = useCallback((svg: SVGSVGElement, width: number, height: number) => {
     if (paths) {

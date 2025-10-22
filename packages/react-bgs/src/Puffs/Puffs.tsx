@@ -23,24 +23,32 @@ const { entering, entered, exiting, exited } = ANIMATOR_STATES;
 
 const minmaxOverflow01 = (value: number): number => Math.min(1, Math.max(0, value === 1 ? 1 : value % 1));
 
-const defaultProps: Required<Pick<
-PuffsProps, 'padding' | 'xOffset' | 'yOffset' | 'radiusInitial' | 'radiusOffset' | 'sets'
->> = {
-  padding: 50,
-  xOffset: [0, 0],
-  yOffset: [-10, -100],
-  radiusInitial: 4,
-  radiusOffset: [4, 40],
-  sets: 5
-};
-
 const Puffs = (props: PuffsProps): ReactElement => {
-  const propsFull = { ...defaultProps, ...props };
   const {
     elementRef: elementRefExternal,
     className,
-    style
-  } = propsFull;
+    style,
+    padding = 50,
+    xOffset = [0, 0],
+    yOffset = [-10, -100],
+    radiusInitial = 4,
+    radiusOffset = [4, 40],
+    sets = 5,
+    ...restProps
+  } = props;
+
+  const propsFull = {
+    elementRef: elementRefExternal,
+    className,
+    style,
+    padding,
+    xOffset,
+    yOffset,
+    radiusInitial,
+    radiusOffset,
+    sets,
+    ...restProps
+  };
 
   const animator = useAnimator();
   const elementRef = useRef<HTMLCanvasElement>(null);

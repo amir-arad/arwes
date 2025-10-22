@@ -10,21 +10,30 @@ import { getDistanceFromOriginToCornerProgress } from './getDistanceFromOriginTo
 
 const { entering, exiting } = ANIMATOR_STATES;
 
-const defaultProps: Required<Pick<DotsProps, 'color' | 'type' | 'distance' | 'size' | 'origin'>> = {
-  color: '#777',
-  type: 'box',
-  distance: 30,
-  size: 4,
-  origin: 'center'
-};
-
 const Dots = (props: DotsProps): ReactElement => {
-  const propsFull = { ...defaultProps, ...props };
   const {
     elementRef: elementRefExternal,
     className,
-    style
-  } = propsFull;
+    style,
+    color = '#777',
+    type = 'box',
+    distance = 30,
+    size = 4,
+    origin = 'center',
+    ...restProps
+  } = props;
+
+  const propsFull = {
+    elementRef: elementRefExternal,
+    className,
+    style,
+    color,
+    type,
+    distance,
+    size,
+    origin,
+    ...restProps
+  };
 
   const animator = useAnimator();
   const elementRef = useRef<HTMLCanvasElement>(null);

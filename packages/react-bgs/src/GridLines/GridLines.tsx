@@ -9,21 +9,30 @@ import { type GridLinesProps } from './GridLines.types';
 
 const { entering, exiting } = ANIMATOR_STATES;
 
-const defaultProps: Required<Pick<GridLinesProps, 'lineWidth' | 'lineColor' | 'horizontalLineDash' | 'verticalLineDash' | 'distance'>> = {
-  lineWidth: 1,
-  lineColor: '#777',
-  horizontalLineDash: [4],
-  verticalLineDash: [],
-  distance: 30
-};
-
 const GridLines = (props: GridLinesProps): ReactElement => {
-  const propsFull = { ...defaultProps, ...props };
   const {
     elementRef: elementRefExternal,
     className,
-    style
-  } = propsFull;
+    style,
+    lineWidth = 1,
+    lineColor = '#777',
+    horizontalLineDash = [4],
+    verticalLineDash = [],
+    distance = 30,
+    ...restProps
+  } = props;
+
+  const propsFull = {
+    elementRef: elementRefExternal,
+    className,
+    style,
+    lineWidth,
+    lineColor,
+    horizontalLineDash,
+    verticalLineDash,
+    distance,
+    ...restProps
+  };
 
   const animator = useAnimator();
   const elementRef = useRef<HTMLCanvasElement>(null);
