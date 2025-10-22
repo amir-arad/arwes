@@ -8,6 +8,60 @@ Arwes is a futuristic sci-fi UI web framework for building user interfaces with 
 
 **Status:** Alpha release (v1.0.0-alpha.20) - APIs may change. Branch `main` is for stable alpha releases, `next` is for active development.
 
+## Fork Information
+
+**This is a fork with React 19 support**, published independently as `@arwes-amir/*` packages on npm.
+
+- **Original repo**: https://github.com/arwes/arwes (packages: `@arwes/*`)
+- **This fork**: https://github.com/amir-arad/arwes (packages: `@arwes-amir/*`)
+- **Published version**: 1.0.0-next.25020502
+- **Public branch**: `public` (for publishing this fork)
+- **Upstream PR**: Pending merge of React 19 upgrade to original repo
+
+### Branch Strategy
+
+- `main` - Stable releases from upstream
+- `next` - Active development from upstream
+- `opgrade-react` - React 19 upgrade work
+- **`public`** - Published fork with `@arwes-amir/*` scope (use for independent releases)
+
+### Installing This Fork
+
+Users can install this fork's packages instead of the original:
+
+```bash
+# Main React bundle
+npm install @arwes-amir/react
+
+# Individual packages
+npm install @arwes-amir/react-animator
+npm install @arwes-amir/animator
+npm install @arwes-amir/bleeps  # Note: "bleeps" not "sounds"
+npm install @arwes-amir/animated  # Note: "animated" not "animation"
+```
+
+**All 23 published packages:**
+
+- Main: `@arwes-amir/react`, `@arwes-amir/arwes`
+- Vanilla: `animated`, `animator`, `bgs`, `bleeps`, `effects`, `frames`, `styles`, `text`, `theme`, `tools`
+- React: `react-animated`, `react-animator`, `react-bgs`, `react-bleeps`, `react-core`, `react-effects`, `react-frames`, `react-text`, `react-tools`
+- Solid: `solid`, `solid-animator`
+
+### Publishing Updates to Fork
+
+When publishing updates to the `@arwes-amir/*` packages:
+
+```bash
+# Ensure you're on the public branch
+git checkout public
+
+# Build all packages
+npm run build
+
+# Publish to npm (from public branch only - configured in lerna.json)
+npx lerna publish from-package --yes
+```
+
 ## Commands
 
 ### Development
@@ -254,8 +308,11 @@ Build scripts in: `scripts/pkg-build-*.sh`
 - **Build order matters**: Nx handles dependency-aware builds with parallel execution
 - **Test isolation**: Each package has isolated tests
 - **Commit conventions**: Conventional commits (commitlint configured)
-- **Branch strategy**: `main` for alpha releases, `next` for development
-- **Release from**: `dev` branch only (configured in lerna.json)
+- **Branch strategy**: `main` for alpha releases, `next` for development, `public` for fork publishing
+- **Release from**:
+  - Original repo: `dev` branch only
+  - **This fork**: `public` branch only (configured in lerna.json on public branch)
+- **Fork maintenance**: When upstream merges React 19 changes, this fork can be archived or merged back
 
 ## Documentation
 
