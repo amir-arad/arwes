@@ -126,7 +126,10 @@ export default (): ReactElement => (
         { name: '@arwes-amir/react-animated', description: 'React elements animations' },
         { name: '@arwes-amir/react-bleeps', description: 'React short sounds management' },
         { name: '@arwes-amir/react-text', description: 'React text rendering effects' },
-        { name: '@arwes-amir/react-frames', description: 'React responsive scalable vector graphics' },
+        {
+          name: '@arwes-amir/react-frames',
+          description: 'React responsive scalable vector graphics'
+        },
         { name: '@arwes-amir/react-bgs', description: 'React passive background ambiences' },
         { name: '@arwes-amir/react-effects', description: 'React special effects' },
         { name: '@arwes-amir/react-core', description: 'React integration functionalities' },

@@ -48,8 +48,12 @@ All animations are controlled through the `<Animator>` component which creates a
 ### 2. Component Hierarchy
 
 ```tsx
-<Animator>           {/* Controls animation flow */}
-  <Animated>         {/* Runs animations on state changes */}
+<Animator>
+  {' '}
+  {/* Controls animation flow */}
+  <Animated>
+    {' '}
+    {/* Runs animations on state changes */}
     {/* Your content */}
   </Animated>
 </Animator>
@@ -67,11 +71,7 @@ import { Animator, Animated } from '@arwes-amir/react'
 function MyComponent() {
   return (
     <Animator duration={{ enter: 0.6, exit: 0.3 }}>
-      <Animated
-        as="div"
-        animated={['fade']}
-        style={{ padding: '2rem' }}
-      >
+      <Animated as="div" animated={['fade']} style={{ padding: '2rem' }}>
         <h1>Futuristic UI</h1>
       </Animated>
     </Animator>
@@ -86,10 +86,7 @@ import { AnimatorGeneralProvider } from '@arwes-amir/react'
 
 function App() {
   return (
-    <AnimatorGeneralProvider
-      disabled={false}
-      duration={{ enter: 0.4, exit: 0.4, stagger: 0.04 }}
-    >
+    <AnimatorGeneralProvider disabled={false} duration={{ enter: 0.4, exit: 0.4, stagger: 0.04 }}>
       {/* Your app components */}
     </AnimatorGeneralProvider>
   )
@@ -170,14 +167,11 @@ Use custom animation libraries like Motion One or GSAP:
 
 ```tsx
 import { animate } from 'motion'
-
-<Animated
+;<Animated
   animated={{
     transitions: {
-      entering: ({ element, duration }) =>
-        animate(element, { opacity: [0, 1] }, { duration }),
-      exiting: ({ element, duration }) =>
-        animate(element, { opacity: [1, 0] }, { duration })
+      entering: ({ element, duration }) => animate(element, { opacity: [0, 1] }, { duration }),
+      exiting: ({ element, duration }) => animate(element, { opacity: [1, 0] }, { duration })
     }
   }}
 />
@@ -186,6 +180,7 @@ import { animate } from 'motion'
 ## Frame Components
 
 Frames are responsive SVG borders and containers. All frames support:
+
 - `positioned={false}` - Remove absolute positioning
 - `styled={false}` - Remove default styles
 - `animated={false}` - Disable animations
@@ -217,9 +212,7 @@ import {
     }}
     animated={false}
   />
-  <div style={{ position: 'relative', padding: '1rem' }}>
-    Panel Content
-  </div>
+  <div style={{ position: 'relative', padding: '1rem' }}>Panel Content</div>
 </div>
 ```
 
@@ -290,14 +283,8 @@ import { Dots, Puffs, GridLines, MovingLines } from '@arwes-amir/react'
 
 ```tsx
 <Animator>
-  <Dots
-    color="hsl(180deg 75% 50% / 0.5)"
-    distance={30}
-    size={1}
-  />
-  <div style={{ position: 'relative' }}>
-    Content
-  </div>
+  <Dots color="hsl(180deg 75% 50% / 0.5)" distance={30} size={1} />
+  <div style={{ position: 'relative' }}>Content</div>
 </Animator>
 ```
 
@@ -313,9 +300,7 @@ import { Dots, Puffs, GridLines, MovingLines } from '@arwes-amir/react'
     yOffset={[-20, -80]}
     radiusOffset={[4, 20]}
   />
-  <div style={{ position: 'relative' }}>
-    Content
-  </div>
+  <div style={{ position: 'relative' }}>Content</div>
 </Animator>
 ```
 
@@ -323,13 +308,8 @@ import { Dots, Puffs, GridLines, MovingLines } from '@arwes-amir/react'
 
 ```tsx
 <Animator>
-  <GridLines
-    lineColor="hsl(180deg 75% 50% / 0.2)"
-    distance={40}
-  />
-  <div style={{ position: 'relative' }}>
-    Content
-  </div>
+  <GridLines lineColor="hsl(180deg 75% 50% / 0.2)" distance={40} />
+  <div style={{ position: 'relative' }}>Content</div>
 </Animator>
 ```
 
@@ -337,14 +317,8 @@ import { Dots, Puffs, GridLines, MovingLines } from '@arwes-amir/react'
 
 ```tsx
 <Animator>
-  <MovingLines
-    lineColor="hsl(180deg 75% 50%)"
-    distance={100}
-    sets={3}
-  />
-  <div style={{ position: 'relative' }}>
-    Scanning Effect
-  </div>
+  <MovingLines lineColor="hsl(180deg 75% 50%)" distance={100} sets={3} />
+  <div style={{ position: 'relative' }}>Scanning Effect</div>
 </Animator>
 ```
 
@@ -356,15 +330,16 @@ Text components animate character-by-character and work with the Animator system
 
 ```tsx
 import { Text } from '@arwes-amir/react'
-
-<Animator duration={{ enter: 2 }}>
+;<Animator duration={{ enter: 2 }}>
   <Text
     as="div"
-    manager="sequence"  // Default
+    manager="sequence" // Default
     contentStyle={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
   >
     <h3>Title</h3>
-    <p>A paragraph with <b>bold</b> text.</p>
+    <p>
+      A paragraph with <b>bold</b> text.
+    </p>
     <p>Another paragraph with animations.</p>
   </Text>
 </Animator>
@@ -378,7 +353,7 @@ Best for short, centered, or monospace text:
 <Animator duration={{ enter: 1, exit: 1 }}>
   <Text
     manager="decipher"
-    fixed  // Use animator's duration instead of calculating from text length
+    fixed // Use animator's duration instead of calculating from text length
   >
     CLASSIFIED DATA
   </Text>
@@ -418,7 +393,7 @@ import type { BleepsNames } from './types'
 
 const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
   master: {
-    volume: 0.5  // 50% of OS volume
+    volume: 0.5 // 50% of OS volume
   },
   common: {
     disabled: false
@@ -434,7 +409,7 @@ const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
       category: 'interaction',
       sources: [
         { src: '/sounds/hover.webm', type: 'audio/webm' },
-        { src: '/sounds/hover.mp3', type: 'audio/mpeg' }  // Fallback
+        { src: '/sounds/hover.mp3', type: 'audio/mpeg' } // Fallback
       ]
     },
     click: {
@@ -463,11 +438,7 @@ const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
 }
 
 function App() {
-  return (
-    <BleepsProvider {...bleepsSettings}>
-      {/* Your app */}
-    </BleepsProvider>
-  )
+  return <BleepsProvider {...bleepsSettings}>{/* Your app */}</BleepsProvider>
 }
 ```
 
@@ -481,10 +452,7 @@ function Button() {
   const bleeps = useBleeps<BleepsNames>()
 
   return (
-    <button
-      onMouseEnter={() => bleeps.hover?.play()}
-      onClick={() => bleeps.click?.play()}
-    >
+    <button onMouseEnter={() => bleeps.hover?.play()} onClick={() => bleeps.click?.play()}>
       Interactive Button
     </button>
   )
@@ -496,15 +464,12 @@ function Button() {
 ```tsx
 import { Animator, Text, BleepsOnAnimator } from '@arwes-amir/react'
 import type { BleepsNames } from './types'
-
-<Animator>
+;<Animator>
   <BleepsOnAnimator<BleepsNames>
     transitions={{ entering: 'type', exiting: 'type' }}
-    continuous={false}  // Set true for long sounds
+    continuous={false} // Set true for long sounds
   />
-  <Text>
-    Sound plays when animator enters and exits
-  </Text>
+  <Text>Sound plays when animator enters and exits</Text>
 </Animator>
 ```
 
@@ -586,16 +551,10 @@ export default SpaceshipPanel
 ```tsx
 <div style={{ position: 'relative', width: '100%', height: 400 }}>
   <Animator>
-    <FrameOctagon
-      style={{ '--arwes-frames-line-color': 'cyan' }}
-    />
+    <FrameOctagon style={{ '--arwes-frames-line-color': 'cyan' }} />
     <GridLines lineColor="rgba(0, 255, 255, 0.15)" />
     <MovingLines lineColor="cyan" sets={2} />
-    <Animated
-      as="div"
-      style={{ position: 'relative', padding: '2rem' }}
-      animated={['fade']}
-    >
+    <Animated as="div" style={{ position: 'relative', padding: '2rem' }} animated={['fade']}>
       <Text as="h2">Panel Title</Text>
       <p>Panel content here</p>
     </Animated>
@@ -609,10 +568,7 @@ export default SpaceshipPanel
 <Animator manager="stagger" duration={{ stagger: 0.08 }}>
   {items.map((item) => (
     <Animator key={item.id}>
-      <Animated
-        as="div"
-        animated={['fade', ['x', 20, 0]]}
-      >
+      <Animated as="div" animated={['fade', ['x', 20, 0]]}>
         {item.content}
       </Animated>
     </Animator>
@@ -624,9 +580,7 @@ export default SpaceshipPanel
 
 ```tsx
 <Animator>
-  <BleepsOnAnimator<BleepsNames>
-    transitions={{ entering: 'error' }}
-  />
+  <BleepsOnAnimator<BleepsNames> transitions={{ entering: 'error' }} />
   <Animated
     as="div"
     animated={['flicker']}
@@ -669,16 +623,16 @@ const colors = {
 Frames automatically scale with their container:
 
 ```tsx
-<div style={{
-  position: 'relative',
-  width: '100%',
-  maxWidth: 600,
-  aspectRatio: '16/9'
-}}>
+<div
+  style={{
+    position: 'relative',
+    width: '100%',
+    maxWidth: 600,
+    aspectRatio: '16/9'
+  }}
+>
   <FrameOctagon />
-  <div style={{ position: 'relative' }}>
-    Responsive content
-  </div>
+  <div style={{ position: 'relative' }}>Responsive content</div>
 </div>
 ```
 
@@ -691,25 +645,26 @@ Stack multiple effects using z-index:
   <GridLines style={{ zIndex: 1 }} />
   <MovingLines style={{ zIndex: 2 }} />
   <FrameCorners style={{ zIndex: 3 }} />
-  <div style={{ position: 'relative', zIndex: 4 }}>
-    Content on top
-  </div>
+  <div style={{ position: 'relative', zIndex: 4 }}>Content on top</div>
 </div>
 ```
 
 ## Performance Tips
 
 1. **Disable animations when not needed:**
+
    ```tsx
    <AnimatorGeneralProvider disabled={reduceMotion}>
    ```
 
 2. **Use `animated={false}` on static frames:**
+
    ```tsx
    <FrameCorners animated={false} />
    ```
 
 3. **Simplify complex animations:**
+
    - Use fewer child animators when possible
    - Combine animations in one element instead of nesting
    - Use CSS transforms over layout properties
@@ -723,6 +678,7 @@ Stack multiple effects using z-index:
 ### Issue: Components not animating
 
 **Solutions:**
+
 - Ensure `<Animator>` wraps your `<Animated>` components
 - Check that `AnimatorGeneralProvider` has `disabled={false}`
 - Verify animations aren't set to `animated={false}`
@@ -730,6 +686,7 @@ Stack multiple effects using z-index:
 ### Issue: Frames not responsive
 
 **Solutions:**
+
 - Ensure parent has `position: relative`
 - Check that frame has default positioning (or `positioned={true}`)
 - Verify parent has explicit dimensions
@@ -737,6 +694,7 @@ Stack multiple effects using z-index:
 ### Issue: Sounds not playing
 
 **Solutions:**
+
 - Check browser console for audio loading errors
 - Verify audio file paths are correct
 - Ensure user interaction occurred (browsers block autoplay)
@@ -745,6 +703,7 @@ Stack multiple effects using z-index:
 ### Issue: React Strict Mode errors
 
 **Solution:**
+
 - Arwes does not support React Strict Mode
 - Remove `<React.StrictMode>` wrapper
 - Or exclude Arwes components from strict mode
@@ -752,6 +711,7 @@ Stack multiple effects using z-index:
 ### Issue: Next.js hydration errors
 
 **Solutions:**
+
 - Add `'use client'` directive to components using Arwes
 - Don't use Arwes in React Server Components
 - Ensure SSR compatibility by checking for browser APIs
@@ -770,10 +730,12 @@ Stack multiple effects using z-index:
 All packages in `@arwes-amir/*` scope (this fork):
 
 **Main Bundles:**
+
 - `@arwes-amir/react` - All React packages
 - `@arwes-amir/arwes` - All vanilla packages
 
 **Vanilla (Framework-agnostic):**
+
 - `@arwes-amir/animator` - Animation orchestration
 - `@arwes-amir/animated` - HTML element animations
 - `@arwes-amir/bleeps` - Web Audio API wrapper
@@ -784,6 +746,7 @@ All packages in `@arwes-amir/*` scope (this fork):
 - `@arwes-amir/tools` - Utilities
 
 **React Wrappers:**
+
 - `@arwes-amir/react-animator` - React animator components
 - `@arwes-amir/react-animated` - Animated elements
 - `@arwes-amir/react-bleeps` - Sound manager
