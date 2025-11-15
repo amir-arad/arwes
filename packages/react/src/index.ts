@@ -1,4 +1,4 @@
-export * from 'arwes'
+export * from '@arwes-amir/arwes'
 export * from '@arwes-amir/react-tools'
 export * from '@arwes-amir/react-animator'
 export * from '@arwes-amir/react-animated'
