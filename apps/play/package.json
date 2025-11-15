@@ -1,9 +1,9 @@
 {
   "name": "apps-play",
-  "version": "1.0.0-next.25020502",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@arwes-amir/react": "^1.0.0-next.25020502",
+    "@arwes-amir/react": "^1.0.0",
     "@babel/core": "^7.25.2",
     "@babel/preset-react": "^7.24.7",
     "arwes": "^1.0.0-next.25020502",
