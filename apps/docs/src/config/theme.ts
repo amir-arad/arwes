@@ -3,7 +3,7 @@ import {
   createThemeColor,
   createThemeMultiplier,
   createThemeUnit
-} from '@arwes/react'
+} from '@arwes-amir/react'
 
 import { settings } from './settings'
 

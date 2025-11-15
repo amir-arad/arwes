@@ -8,7 +8,7 @@ import {
   useBleeps,
   useFrameAssembler,
   Text
-} from '@arwes/react'
+} from '@arwes-amir/react'
 import { Xmark as IconClose } from 'iconoir-react'
 
 import { type BleepNames } from '@/config'

@@ -10,7 +10,7 @@ const generateTypes = () => {
     .readdirSync(arwesPackagesPath)
     .filter((filePath) => fs.lstatSync(path.join(arwesPackagesPath, filePath)).isDirectory())
     .map((name) => ({
-      name: `@arwes/${name}`,
+      name: `@arwes-amir/${name}`,
       path: path.join(arwesPackagesPath, name),
       typesPath: path.join(arwesPackagesPath, name, 'build/esm')
     }))

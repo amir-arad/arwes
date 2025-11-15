@@ -1,6 +1,6 @@
-import { randomizeList } from '@arwes/tools'
-import { type Animation, easing, createAnimation } from '@arwes/animated'
-import type { AnimatorNode } from '@arwes/animator'
+import { randomizeList } from '@arwes-amir/tools'
+import { type Animation, easing, createAnimation } from '@arwes-amir/animated'
+import type { AnimatorNode } from '@arwes-amir/animator'
 
 interface CreateBackgroundMovingLinesSettings {
   lineWidth?: number

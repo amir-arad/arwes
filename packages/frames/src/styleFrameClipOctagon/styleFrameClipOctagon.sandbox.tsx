@@ -1,4 +1,4 @@
-import { styleFrameClipOctagon } from '@arwes/frames'
+import { styleFrameClipOctagon } from '@arwes-amir/frames'
 
 const root = document.querySelector('#root')!
 

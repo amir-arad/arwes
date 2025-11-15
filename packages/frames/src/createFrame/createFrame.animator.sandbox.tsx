@@ -1,5 +1,5 @@
-import { createAnimatorSystem } from '@arwes/animator'
-import { type FrameSettings, createFrame } from '@arwes/frames'
+import { createAnimatorSystem } from '@arwes-amir/animator'
+import { type FrameSettings, createFrame } from '@arwes-amir/frames'
 
 let active = false
 

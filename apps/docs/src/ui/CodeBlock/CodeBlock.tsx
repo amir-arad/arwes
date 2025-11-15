@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react'
-import { Animated, type AnimatedProp, cx, Animator, memo } from '@arwes/react'
+import { Animated, type AnimatedProp, cx, Animator, memo } from '@arwes-amir/react'
 import { Highlight, themes } from 'prism-react-renderer'
 
 import { theme } from '@/config'

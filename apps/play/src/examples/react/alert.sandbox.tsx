@@ -21,7 +21,7 @@ import {
   BleepsProvider,
   useBleeps,
   BleepsOnAnimator
-} from '@arwes/react'
+} from '@arwes-amir/react'
 
 const addStyles = (css: string) => {
   const style = document.createElement('style')

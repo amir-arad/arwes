@@ -1,5 +1,5 @@
 //
-import { createFrame } from '@arwes/frames'
+import { createFrame } from '@arwes-amir/frames'
 
 const root = document.querySelector('#root')!
 root.innerHTML = `<svg width="100%" height="500" xmlns="http://www.w3.org/2000/svg"></svg>`

@@ -1,4 +1,4 @@
-import type { AnimatorGeneralProviderSettings } from '@arwes/react'
+import type { AnimatorGeneralProviderSettings } from '@arwes-amir/react'
 
 export const animatorGeneralSettings: AnimatorGeneralProviderSettings = {
   duration: {

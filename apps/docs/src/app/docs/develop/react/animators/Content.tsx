@@ -1,12 +1,10 @@
 'use client'
 
-import type { ReactElement } from 'react'
-
-import Link from 'next/link'
-import { Codepen as IconPlay } from 'iconoir-react'
-
 import { AR } from '@/ui'
 import { Example } from './Example'
+import { Codepen as IconPlay } from 'iconoir-react'
+import Link from 'next/link'
+import type { ReactElement } from 'react'
 
 export default (): ReactElement => (
   <>
@@ -61,7 +59,7 @@ export default (): ReactElement => (
       filename="Card.tsx"
       lang="tsx"
       highlightLines={[4, 6, 9, 12]}
-      code={`import { Animator } from '@arwes/react'
+      code={`import { Animator } from '@arwes-amir/react'
 
 const Card = (): ReactElement => (
   <Animator>
@@ -95,7 +93,7 @@ const Card = (): ReactElement => (
       filename="Card.tsx"
       lang="tsx"
       highlightLines={[5, 7, 10, 13]}
-      code={`import { Animator, Animated } from '@arwes/react'
+      code={`import { Animator, Animated } from '@arwes-amir/react'
 
 const Card = (): ReactElement => (
   <Animator>
@@ -314,7 +312,7 @@ import { animate } from 'motion'
 
     <AR.CodeBlock
       lang="tsx"
-      code={`import { AnimatorGeneralProvider } from '@arwes/react'
+      code={`import { AnimatorGeneralProvider } from '@arwes-amir/react'
 
 <AnimatorGeneralProvider
   disabled={false}
@@ -336,7 +334,7 @@ import { animate } from 'motion'
     <AR.CodeBlock
       filename="Card.tsx"
       lang="tsx"
-      code={`import { Animator, Animated, type AnimatedProp } from '@arwes/react'
+      code={`import { Animator, Animated, type AnimatedProp } from '@arwes-amir/react'
 import { timeline, stagger } from 'motion'
 
 const animated: AnimatedProp = {

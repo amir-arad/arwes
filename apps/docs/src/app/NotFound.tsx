@@ -1,8 +1,8 @@
 'use client'
 
-import type { ReactElement } from 'react'
+import { Animator, Text } from '@arwes-amir/react'
 
-import { Animator, Text } from '@arwes/react'
+import type { ReactElement } from 'react'
 
 export default (): ReactElement => (
   <Animator>

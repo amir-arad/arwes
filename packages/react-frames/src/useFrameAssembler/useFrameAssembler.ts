@@ -1,7 +1,7 @@
 import { type RefObject, useEffect } from 'react'
 import type { AnimationControls } from 'motion'
-import { animateFrameAssembler } from '@arwes/frames'
-import { useAnimator } from '@arwes/react-animator'
+import { animateFrameAssembler } from '@arwes-amir/frames'
+import { useAnimator } from '@arwes-amir/react-animator'
 
 const useFrameAssembler = (svgRef: RefObject<SVGElement | HTMLElement>): void => {
   const animator = useAnimator()

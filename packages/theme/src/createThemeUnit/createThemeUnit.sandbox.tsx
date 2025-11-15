@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createThemeUnit } from '@arwes/theme'
+import { createThemeUnit } from '@arwes-amir/theme'
 
 const size = createThemeUnit((i) => `${i * 0.25}rem`)
 // size(2) => '0.5rem'

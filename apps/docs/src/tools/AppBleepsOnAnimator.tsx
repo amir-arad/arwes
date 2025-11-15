@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react'
-import { type BleepsOnAnimatorProps, BleepsOnAnimator } from '@arwes/react'
+import { type BleepsOnAnimatorProps, BleepsOnAnimator } from '@arwes-amir/react'
 import { type BleepNames } from '@/config'
 
 const AppBleepsOnAnimator = (props: BleepsOnAnimatorProps<BleepNames>): ReactElement => {

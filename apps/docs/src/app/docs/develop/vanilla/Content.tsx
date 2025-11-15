@@ -1,13 +1,12 @@
 'use client'
 
-import type { ReactElement } from 'react'
-
-import Link from 'next/link'
-import { Animated, Animator } from '@arwes/react'
-import { Codepen as IconPlay } from 'iconoir-react'
+import { Animated, Animator } from '@arwes-amir/react'
 
 import { AR } from '@/ui'
+import { Codepen as IconPlay } from 'iconoir-react'
 import { IconReact } from '@/icons'
+import Link from 'next/link'
+import type { ReactElement } from 'react'
 
 export default (): ReactElement => (
   <>
@@ -62,17 +61,17 @@ export default (): ReactElement => (
         <AR.Cell isHeader>Description</AR.Cell>
       </AR.Row>
       {[
-        { name: '@arwes/tools', description: 'General browser utilities' },
-        { name: '@arwes/theme', description: 'Visual themes scaffolding' },
-        { name: '@arwes/styles', description: 'Special visual styles' },
-        { name: '@arwes/animator', description: 'Interfaces assembling' },
-        { name: '@arwes/animated', description: 'Animation sequences effects' },
-        { name: '@arwes/bleeps', description: 'Short sounds management' },
-        { name: '@arwes/text', description: 'Text rendering effects' },
-        { name: '@arwes/frames', description: 'Responsive scalable vector graphics' },
-        { name: '@arwes/bgs', description: 'Passive background ambiences' },
-        { name: '@arwes/effects', description: 'Special effects' },
-        { name: '@arwes/core', description: 'Integration functionalities' },
+        { name: '@arwes-amir/tools', description: 'General browser utilities' },
+        { name: '@arwes-amir/theme', description: 'Visual themes scaffolding' },
+        { name: '@arwes-amir/styles', description: 'Special visual styles' },
+        { name: '@arwes-amir/animator', description: 'Interfaces assembling' },
+        { name: '@arwes-amir/animated', description: 'Animation sequences effects' },
+        { name: '@arwes-amir/bleeps', description: 'Short sounds management' },
+        { name: '@arwes-amir/text', description: 'Text rendering effects' },
+        { name: '@arwes-amir/frames', description: 'Responsive scalable vector graphics' },
+        { name: '@arwes-amir/bgs', description: 'Passive background ambiences' },
+        { name: '@arwes-amir/effects', description: 'Special effects' },
+        { name: '@arwes-amir/core', description: 'Integration functionalities' },
         { name: 'arwes', description: 'All vanilla packages bundle' }
       ].map(({ name, description }) => (
         <AR.Row key={name} className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">

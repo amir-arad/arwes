@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { styleFrameClipOctagon } from '@arwes/frames'
-import { Illuminator } from '@arwes/react-effects'
+import { styleFrameClipOctagon } from '@arwes-amir/frames'
+import { Illuminator } from '@arwes-amir/react-effects'
 
 const Sandbox = (): ReactElement => {
   return (

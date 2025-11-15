@@ -1,7 +1,7 @@
 'use client'
 
 import { type ReactNode, type ReactElement } from 'react'
-import { Animator, FrameHeader, cx } from '@arwes/react'
+import { Animator, FrameHeader, cx } from '@arwes-amir/react'
 
 import { CommunityLoadingScreen } from './CommunityLoadingScreen'
 import { CommunityHeader } from './CommunityHeader'

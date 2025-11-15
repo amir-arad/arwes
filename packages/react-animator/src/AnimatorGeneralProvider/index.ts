@@ -1,5 +1,5 @@
-import { memo } from '@arwes/react-tools'
 import { AnimatorGeneralProvider as Component } from './AnimatorGeneralProvider.js'
+import { memo } from '@arwes-amir/react-tools'
 
 // TODO: Optimize props comparision.
 const AnimatorGeneralProvider = memo(Component)

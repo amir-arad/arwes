@@ -1,5 +1,6 @@
-import { createFrame, createFrameNeroSettings } from '@arwes/frames'
-import { createAnimatorSystem } from '@arwes/animator'
+import { createFrame, createFrameNeroSettings } from '@arwes-amir/frames'
+
+import { createAnimatorSystem } from '@arwes-amir/animator'
 
 let active = false
 const system = createAnimatorSystem()

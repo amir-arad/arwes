@@ -1,4 +1,4 @@
-import type { PartialDeep } from '@arwes/tools';
+import type { PartialDeep } from '@arwes-amir/tools';
 
 // Theme Extensions
 

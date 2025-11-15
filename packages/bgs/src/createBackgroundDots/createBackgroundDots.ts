@@ -1,5 +1,5 @@
-import { type Easing, type Animation, easing, createAnimation } from '@arwes/animated'
-import type { AnimatorNode } from '@arwes/animator'
+import { type Easing, type Animation, easing, createAnimation } from '@arwes-amir/animated'
+import type { AnimatorNode } from '@arwes-amir/animator'
 
 import { getDistanceFromOriginToCornerProgress } from './getDistanceFromOriginToCornerProgress.js'
 

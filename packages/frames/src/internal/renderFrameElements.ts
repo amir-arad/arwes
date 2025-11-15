@@ -1,10 +1,10 @@
-import type { AnimatorNode } from '@arwes/animator'
+import type { AnimatorNode } from '@arwes-amir/animator'
 import {
   type AnimatedXAnimationFunctionReturn,
   type AnimatedElement,
   createAnimatedElement,
   applyAnimatedCSSProps
-} from '@arwes/animated'
+} from '@arwes-amir/animated'
 
 import type { FrameSettingsElement } from '../types.js'
 

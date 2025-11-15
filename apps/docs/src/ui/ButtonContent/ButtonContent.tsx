@@ -1,5 +1,5 @@
 import React, { type HTMLProps, type ReactNode, type ReactElement } from 'react'
-import { type AnimatedProp, memo, Animated, FrameOctagon, useBleeps, cx } from '@arwes/react'
+import { type AnimatedProp, memo, Animated, FrameOctagon, useBleeps, cx } from '@arwes-amir/react'
 
 import { type BleepNames, theme } from '@/config'
 import styles from './ButtonContent.module.css'

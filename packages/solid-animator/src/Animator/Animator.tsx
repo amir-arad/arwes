@@ -6,22 +6,23 @@
 // TODO: Add support for prop unmountOnDisabled.
 // TODO: Add support for prop nodeRef.
 
-import { type JSX, type Component, createMemo, createEffect, onCleanup } from 'solid-js'
-import { filterProps } from '@arwes/tools'
+import { type Component, createMemo, createEffect, onCleanup } from 'solid-js'
+import { filterProps } from '@arwes-amir/tools'
 import {
   type AnimatorInterface,
   type AnimatorSettingsPartial,
   createAnimatorSystem
-} from '@arwes/animator'
+} from '@arwes-amir/animator'
 
 import { AnimatorContext } from '../internal/AnimatorContext.js'
 import { useGetAnimator } from '../useGetAnimator/index.js'
+import { type ReactElement } from 'react'
 
 interface AnimatorProps extends AnimatorSettingsPartial {
   root?: boolean
   disabled?: boolean
   dismissed?: boolean
-  children?: JSX.Element
+  children?: ReactElement
 }
 
 const Animator: Component<AnimatorProps> = (props) => {

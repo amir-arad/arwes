@@ -1,12 +1,11 @@
 'use client'
 
-import type { ReactElement } from 'react'
-
-import { Animated, Animator } from '@arwes/react'
+import { Animated, Animator } from '@arwes-amir/react'
 
 import { AR } from '@/ui'
-import { ExampleFrames } from './ExampleFrames'
 import { ExampleFrame } from './ExampleFrame'
+import { ExampleFrames } from './ExampleFrames'
+import type { ReactElement } from 'react'
 
 export default (): ReactElement => (
   <>

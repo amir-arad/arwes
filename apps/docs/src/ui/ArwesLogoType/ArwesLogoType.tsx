@@ -1,5 +1,5 @@
 import React, { type ReactElement } from 'react'
-import { type AnimatedProp, memo, Animated, cx } from '@arwes/react'
+import { type AnimatedProp, memo, Animated, cx } from '@arwes-amir/react'
 import { animate, stagger } from 'motion'
 
 interface ArwesLogoTypeProps {

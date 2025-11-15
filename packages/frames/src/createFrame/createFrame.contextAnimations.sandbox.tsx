@@ -1,4 +1,4 @@
-import { type FrameSettings, createFrame } from '@arwes/frames'
+import { type FrameSettings, createFrame } from '@arwes-amir/frames'
 import { spring } from 'motion'
 
 const root = document.querySelector('#root')!

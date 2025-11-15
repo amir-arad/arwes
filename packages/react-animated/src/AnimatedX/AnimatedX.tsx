@@ -10,9 +10,13 @@ import {
   useMemo
 } from 'react'
 
-import type { NoInfer } from '@arwes/tools'
-import { mergeRefs } from '@arwes/react-tools'
-import { type AnimatedSettings, type AnimatedXProp, formatAnimatedCSSProps } from '@arwes/animated'
+import type { NoInfer } from '@arwes-amir/tools'
+import { mergeRefs } from '@arwes-amir/react-tools'
+import {
+  type AnimatedSettings,
+  type AnimatedXProp,
+  formatAnimatedCSSProps
+} from '@arwes-amir/animated'
 
 import { useAnimatedX } from '../useAnimatedX/index.js'
 

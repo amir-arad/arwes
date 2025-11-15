@@ -1,13 +1,11 @@
 'use client'
 
-import type { ReactElement } from 'react'
-
-import Link from 'next/link'
-import { Codepen as IconPlay } from 'iconoir-react'
-
 import { AR } from '@/ui'
-import { ExampleTextSequence } from './ExampleTextSequence'
 import { ExampleTextDecipher } from './ExampleTextDecipher'
+import { ExampleTextSequence } from './ExampleTextSequence'
+import { Codepen as IconPlay } from 'iconoir-react'
+import Link from 'next/link'
+import type { ReactElement } from 'react'
 
 export default (): ReactElement => (
   <>
@@ -34,7 +32,7 @@ export default (): ReactElement => (
 
     <AR.CodeBlock
       lang="tsx"
-      code={`import { Animator, Text } from '@arwes/react'
+      code={`import { Animator, Text } from '@arwes-amir/react'
 
 <Animator>
   <Text>
@@ -58,7 +56,7 @@ export default (): ReactElement => (
 
     <AR.CodeBlock
       lang="tsx"
-      code={`import { Animator, Text } from '@arwes/react'
+      code={`import { Animator, Text } from '@arwes-amir/react'
 
 // By default, the duration provided by the animator will be the maximum based on
 // the dynamic calculation of the text length.
@@ -97,7 +95,7 @@ export default (): ReactElement => (
     <AR.CodeBlock
       lang="tsx"
       highlightLines={[7]}
-      code={`import { Animator, Text } from '@arwes/react'
+      code={`import { Animator, Text } from '@arwes-amir/react'
 
 <Animator duration={{ enter: 1, exit: 1 }}>
   <Text className='text-decipher' manager='decipher' fixed>

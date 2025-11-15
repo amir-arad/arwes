@@ -1,4 +1,4 @@
-import { createEffectIlluminatorSVG } from '@arwes/effects'
+import { createEffectIlluminatorSVG } from '@arwes-amir/effects'
 
 const root = document.querySelector('#root')!
 

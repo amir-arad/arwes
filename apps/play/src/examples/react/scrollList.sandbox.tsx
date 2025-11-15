@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { type ReactElement, useState, useEffect, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
-import { AnimatorGeneralProvider, Animator, useAnimator } from '@arwes/react-animator'
-import { Animated } from '@arwes/react-animated'
-import { styleFrameClipOctagon } from '@arwes/frames'
+import { AnimatorGeneralProvider, Animator, useAnimator } from '@arwes-amir/react-animator'
+import { Animated } from '@arwes-amir/react-animated'
+import { styleFrameClipOctagon } from '@arwes-amir/frames'
 
 const List = (): ReactElement => {
   const animator = useAnimator()

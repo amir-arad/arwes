@@ -1,5 +1,5 @@
-import { createAnimatorSystem } from '@arwes/animator'
-import { createBackgroundDots } from '@arwes/bgs'
+import { createAnimatorSystem } from '@arwes-amir/animator'
+import { createBackgroundDots } from '@arwes-amir/bgs'
 
 const root = document.querySelector('#root')!
 const canvas = document.createElement('canvas')

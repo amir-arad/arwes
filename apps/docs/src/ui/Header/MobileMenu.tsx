@@ -1,10 +1,10 @@
-import type { ReactElement } from 'react'
-import { Animator, Animated } from '@arwes/react'
+import { Animated, Animator } from '@arwes-amir/react'
 
-import { settings } from '@/config'
+import { MobileLinks } from './MobileLinks'
 import { Modal } from '../Modal'
 import { Nav } from '../Nav'
-import { MobileLinks } from './MobileLinks'
+import type { ReactElement } from 'react'
+import { settings } from '@/config'
 
 type MobileMenuProps = {
   isMenuOpen: boolean

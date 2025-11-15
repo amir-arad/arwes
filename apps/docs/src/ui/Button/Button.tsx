@@ -8,7 +8,7 @@ import {
   Illuminator,
   useBleeps,
   cx
-} from '@arwes/react'
+} from '@arwes-amir/react'
 
 import { type BleepNames, theme } from '@/config'
 import styles from './Button.module.css'

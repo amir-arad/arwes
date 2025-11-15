@@ -1,10 +1,11 @@
-import type { AnimatorNode } from '@arwes/animator'
 import type {
-  AnimatedProp,
-  AnimatedElementPropsSettings,
   AnimatedCSSProps,
+  AnimatedElementPropsSettings,
+  AnimatedProp,
   AnimatedXAnimation
-} from '@arwes/animated'
+} from '@arwes-amir/animated'
+
+import type { AnimatorNode } from '@arwes-amir/animator'
 
 type ContextType = Record<string, string>
 

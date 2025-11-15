@@ -6,7 +6,7 @@ import {
   useBleeps,
   BleepsProvider,
   cx
-} from '@arwes/react'
+} from '@arwes-amir/react'
 
 type BleepsNames = 'hover' | 'click'
 

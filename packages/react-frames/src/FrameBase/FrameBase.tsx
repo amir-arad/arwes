@@ -6,10 +6,10 @@ import React, {
   useRef,
   useEffect
 } from 'react'
-import { cx } from '@arwes/tools'
-import { memo, mergeRefs, useUpdateEffect } from '@arwes/react-tools'
-import { useAnimator } from '@arwes/react-animator'
-import { type FrameSettings, type Frame, createFrame } from '@arwes/frames'
+import { cx } from '@arwes-amir/tools'
+import { memo, mergeRefs, useUpdateEffect } from '@arwes-amir/react-tools'
+import { useAnimator } from '@arwes-amir/react-animator'
+import { type FrameSettings, type Frame, createFrame } from '@arwes-amir/frames'
 
 import { positionedStyle } from '../internal/styles.js'
 
@@ -56,7 +56,7 @@ const FrameBase = memo((props: FrameBaseProps): ReactElement => {
   }, [animator])
 
   // TODO: Should it also re-render if the animator changes too?
-  // The @arwes/animated `createAnimatedElement` will preserve the same animator
+  // The @arwes-amir/animated `createAnimatedElement` will preserve the same animator
   // if the frame is re-rendered.
 
   useUpdateEffect(() => {

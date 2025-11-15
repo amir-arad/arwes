@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 
-import type { PartialDeep } from '@arwes/tools'
+import type { ThemeCreator, ThemeCreatorStructure } from '../types.js'
 
-import type { ThemeCreatorStructure, ThemeCreator } from '../types.js'
-import { createThemeMultiplier } from '../createThemeMultiplier/index.js'
-import { createThemeUnit } from '../createThemeUnit/index.js'
-import { createThemeColor } from '../createThemeColor/index.js'
-import { createThemeStyle } from '../createThemeStyle/index.js'
+import type { PartialDeep } from '@arwes-amir/tools'
 import { createThemeBreakpoints } from '../createThemeBreakpoints/index.js'
+import { createThemeColor } from '../createThemeColor/index.js'
+import { createThemeMultiplier } from '../createThemeMultiplier/index.js'
+import { createThemeStyle } from '../createThemeStyle/index.js'
+import { createThemeUnit } from '../createThemeUnit/index.js'
 
 // TODO: Set typing.
 const extendDeepObject = (structure: any, defaults: any, extension: any): any => {

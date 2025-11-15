@@ -1,14 +1,13 @@
 'use client'
 
-import type { ReactElement } from 'react'
-
-import Link from 'next/link'
-import { Codepen as IconPlay } from 'iconoir-react'
+import { Animated, Animator } from '@arwes-amir/react'
 
 import { AR } from '@/ui'
-import { ExampleFrameProvided } from './ExampleFrameProvided'
-import { Animated, Animator } from '@arwes/react'
 import { ExampleFrameCustom } from './ExampleFrameCustom'
+import { ExampleFrameProvided } from './ExampleFrameProvided'
+import { Codepen as IconPlay } from 'iconoir-react'
+import Link from 'next/link'
+import type { ReactElement } from 'react'
 
 export default (): ReactElement => (
   <>
@@ -43,7 +42,7 @@ export default (): ReactElement => (
     <AR.P>For example, the octagon frame:</AR.P>
 
     <AR.CodeBlock
-      code={`import { FrameOctagon } from '@arwes/react'
+      code={`import { FrameOctagon } from '@arwes-amir/react'
 
 <div style={{ position: 'relative', width: 300, height: 300 }}>
   <FrameOctagon
@@ -116,7 +115,7 @@ export default (): ReactElement => (
     <AR.P>The following frame definition can be created:</AR.P>
 
     <AR.CodeBlock
-      code={`import { type FrameSettings } from '@arwes/react'
+      code={`import { type FrameSettings } from '@arwes-amir/react'
 
 const frameSettings: FrameSettings = {
   elements: [
@@ -156,7 +155,7 @@ const frameSettings: FrameSettings = {
 
     <AR.CodeBlock
       highlightLines={[4]}
-      code={`import { FrameBase } from '@arwes/react'
+      code={`import { FrameBase } from '@arwes-amir/react'
 
 <div style={{ position: 'relative', width: 300, height: 300 }}>
   <FrameBase settings={frameSettings} />

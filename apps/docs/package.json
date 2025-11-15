@@ -3,7 +3,7 @@
   "version": "1.0.0-next.25020502",
   "private": true,
   "dependencies": {
-    "@arwes/react": "^1.0.0-next.25020502",
+    "@arwes-amir/react": "^1.0.0-next.25020502",
     "@tailwindcss/typography": "^0.5.14",
     "autoprefixer": "^10.4.20",
     "iconoir-react": "^7.8.0",

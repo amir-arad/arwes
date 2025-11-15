@@ -3,7 +3,7 @@
 import type { ReactElement } from 'react'
 
 import Link from 'next/link'
-import { Animated, Animator, BleepsOnAnimator, Text } from '@arwes/react'
+import { Animated, Animator, BleepsOnAnimator, Text } from '@arwes-amir/react'
 import { DroneXmark as IconDevelopment, Page as IconDocs, Codepen as IconPlay } from 'iconoir-react'
 
 import { type BleepNames, theme } from '@/config'

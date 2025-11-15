@@ -1,6 +1,6 @@
 import React, { useRef, type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { IlluminatorSVG } from '@arwes/react-effects'
+import { IlluminatorSVG } from '@arwes-amir/react-effects'
 
 const Sandbox = (): ReactElement => {
   const svgRef = useRef<SVGSVGElement>(null)

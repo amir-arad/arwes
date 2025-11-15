@@ -1,16 +1,15 @@
 'use client'
 
-import type { ReactElement } from 'react'
-
-import { Animated, Animator, Text, cx } from '@arwes/react'
-import Link from 'next/link'
+import { Animated, Animator, Text, cx } from '@arwes-amir/react'
+import { ArwesLogoIcon, Card, Hr } from '@/ui'
 import {
-  Code as IconDocsDevelop,
+  Community as IconDocsCommunity,
   DesignNib as IconDocsDesign,
-  Community as IconDocsCommunity
+  Code as IconDocsDevelop
 } from 'iconoir-react'
 
-import { Hr, Card, ArwesLogoIcon } from '@/ui'
+import Link from 'next/link'
+import type { ReactElement } from 'react'
 
 const PageDocs = (): ReactElement => {
   return (

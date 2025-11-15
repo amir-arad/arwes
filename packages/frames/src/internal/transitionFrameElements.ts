@@ -2,7 +2,7 @@ import {
   type AnimatedXAnimationFunctionReturn,
   applyAnimatedCSSProps,
   createAnimatedXElement
-} from '@arwes/animated'
+} from '@arwes-amir/animated'
 
 import type { FrameSettingsElement } from '../types.js'
 

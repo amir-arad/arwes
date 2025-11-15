@@ -1,6 +1,6 @@
-import { filterProps } from '@arwes/tools'
-import { animateDraw } from '@arwes/animated'
 import type { FrameSettings } from '../types.js'
+import { animateDraw } from '@arwes-amir/animated'
+import { filterProps } from '@arwes-amir/tools'
 
 type CreateFrameUnderlineSettingsProps = {
   styled?: boolean

@@ -1,4 +1,4 @@
-import { filterProps } from '@arwes/tools'
+import { filterProps } from '@arwes-amir/tools'
 import type { FrameSettingsPathDefinition, FrameSettings, FrameSettingsElement } from '../types.js'
 
 type CreateFrameLinesSettingsProps = {

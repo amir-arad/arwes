@@ -7,7 +7,7 @@ import {
   Text,
   BleepsOnAnimator,
   Animated
-} from '@arwes/react'
+} from '@arwes-amir/react'
 
 type BleepsNames = 'type'
 

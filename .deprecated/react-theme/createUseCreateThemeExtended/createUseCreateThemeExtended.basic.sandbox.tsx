@@ -10,12 +10,12 @@ import {
   type ThemeColor,
   type ThemeStyle,
   type ThemeCreatorStructure
-} from '@arwes/theme';
+} from '@arwes-amir/theme';
 import {
   type ThemeSettingsExtend,
   type ThemeExtend,
   createUseCreateThemeExtended
-} from '@arwes/react-theme';
+} from '@arwes-amir/react-theme';
 
 interface ThemeSettings {
   space: ThemeSettingsMultiplier

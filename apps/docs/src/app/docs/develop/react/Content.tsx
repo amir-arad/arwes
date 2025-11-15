@@ -1,13 +1,12 @@
 'use client'
 
-import type { ReactElement } from 'react'
+import { Animated, Animator } from '@arwes-amir/react'
+import { Codepen as IconPlay, Cube as IconVanilla } from 'iconoir-react'
 
-import Link from 'next/link'
-import { Animated, Animator } from '@arwes/react'
-import { Cube as IconVanilla, Codepen as IconPlay } from 'iconoir-react'
-
-import { IconReact } from '@/icons'
 import { AR } from '@/ui'
+import { IconReact } from '@/icons'
+import Link from 'next/link'
+import type { ReactElement } from 'react'
 
 export default (): ReactElement => (
   <>
@@ -18,12 +17,12 @@ export default (): ReactElement => (
         <img
           className="!m-0"
           alt="bundle size"
-          src="https://img.shields.io/bundlephobia/minzip/@arwes/react.svg"
+          src="https://img.shields.io/bundlephobia/minzip/@arwes-amir/react.svg"
         />
         <img
           className="!m-0"
           alt="installs"
-          src="https://img.shields.io/npm/dm/@arwes/react?label=installs&style=flat-square"
+          src="https://img.shields.io/npm/dm/@arwes-amir/react?label=installs&style=flat-square"
         />
       </Animated>
     </Animator>
@@ -60,12 +59,12 @@ export default (): ReactElement => (
       , install the package:
     </AR.P>
 
-    <AR.CodeBlock lang="bash" code="npm install @arwes/react" />
+    <AR.CodeBlock lang="bash" code="npm install @arwes-amir/react" />
 
     <AR.P>Make sure to disable React strict mode and use Client-Side Rendering (CSR).</AR.P>
 
     <AR.P>
-      <code>@arwes/react</code> package re-exports all <code>arwes</code> package exports.
+      <code>@arwes-amir/react</code> package re-exports all <code>arwes</code> package exports.
     </AR.P>
 
     <AR.P>Check out the following guides:</AR.P>
@@ -122,16 +121,16 @@ export default (): ReactElement => (
         <AR.Cell isHeader>Description</AR.Cell>
       </AR.Row>
       {[
-        { name: '@arwes/react-tools', description: 'React general utilities' },
-        { name: '@arwes/react-animator', description: 'React interfaces assembling' },
-        { name: '@arwes/react-animated', description: 'React elements animations' },
-        { name: '@arwes/react-bleeps', description: 'React short sounds management' },
-        { name: '@arwes/react-text', description: 'React text rendering effects' },
-        { name: '@arwes/react-frames', description: 'React responsive scalable vector graphics' },
-        { name: '@arwes/react-bgs', description: 'React passive background ambiences' },
-        { name: '@arwes/react-effects', description: 'React special effects' },
-        { name: '@arwes/react-core', description: 'React integration functionalities' },
-        { name: '@arwes/react', description: 'All vanilla and React packages bundle' }
+        { name: '@arwes-amir/react-tools', description: 'React general utilities' },
+        { name: '@arwes-amir/react-animator', description: 'React interfaces assembling' },
+        { name: '@arwes-amir/react-animated', description: 'React elements animations' },
+        { name: '@arwes-amir/react-bleeps', description: 'React short sounds management' },
+        { name: '@arwes-amir/react-text', description: 'React text rendering effects' },
+        { name: '@arwes-amir/react-frames', description: 'React responsive scalable vector graphics' },
+        { name: '@arwes-amir/react-bgs', description: 'React passive background ambiences' },
+        { name: '@arwes-amir/react-effects', description: 'React special effects' },
+        { name: '@arwes-amir/react-core', description: 'React integration functionalities' },
+        { name: '@arwes-amir/react', description: 'All vanilla and React packages bundle' }
       ].map(({ name, description }) => (
         <AR.Row key={name} className="grid grid-cols-[10rem_1fr] lg:grid-cols-[15rem_1fr]">
           <AR.Cell>

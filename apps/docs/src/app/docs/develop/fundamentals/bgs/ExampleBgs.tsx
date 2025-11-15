@@ -7,7 +7,7 @@ import {
   GridLines,
   MovingLines,
   Puffs
-} from '@arwes/react'
+} from '@arwes-amir/react'
 
 import { theme } from '@/config'
 

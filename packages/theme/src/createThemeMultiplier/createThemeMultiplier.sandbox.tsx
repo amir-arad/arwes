@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createThemeMultiplier } from '@arwes/theme'
+import { createThemeMultiplier } from '@arwes-amir/theme'
 
 const size = createThemeMultiplier((i) => i * 4)
 

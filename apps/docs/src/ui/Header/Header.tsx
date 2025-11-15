@@ -11,7 +11,7 @@ import {
   FrameOctagon,
   Illuminator,
   memo
-} from '@arwes/react'
+} from '@arwes-amir/react'
 import {
   X,
   Page,

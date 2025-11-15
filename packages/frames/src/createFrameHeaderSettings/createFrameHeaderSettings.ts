@@ -1,5 +1,5 @@
-import { filterProps } from '@arwes/tools'
-import { type AnimatedCSSProps, type AnimatedProp } from '@arwes/animated'
+import { filterProps } from '@arwes-amir/tools'
+import { type AnimatedCSSProps, type AnimatedProp } from '@arwes-amir/animated'
 import type { FrameSettings, FrameSettingsElement } from '../types.js'
 import { animate } from 'motion'
 

@@ -3,8 +3,8 @@ import {
   type AnimatedElementPropsSettings,
   type AnimatedProp,
   createAnimatedElement
-} from '@arwes/animated'
-import { useAnimator } from '@arwes/react-animator'
+} from '@arwes-amir/animated'
+import { useAnimator } from '@arwes-amir/react-animator'
 
 const useAnimated = <Element extends HTMLElement | SVGElement = HTMLElement>(
   elementRef: MutableRefObject<Element | null>,

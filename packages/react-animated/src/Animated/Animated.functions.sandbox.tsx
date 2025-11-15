@@ -1,8 +1,8 @@
 import React, { type ReactElement, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { animate } from 'motion'
-import { Animator } from '@arwes/react-animator'
-import { Animated } from '@arwes/react-animated'
+import { Animator } from '@arwes-amir/react-animator'
+import { Animated } from '@arwes-amir/react-animated'
 
 const Item = (): ReactElement => {
   return (

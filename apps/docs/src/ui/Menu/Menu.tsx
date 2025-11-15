@@ -1,5 +1,5 @@
 import React, { type ReactNode, type ReactElement } from 'react'
-import { type AnimatedProp, Animated, cx, memo } from '@arwes/react'
+import { type AnimatedProp, Animated, cx, memo } from '@arwes-amir/react'
 
 interface MenuProps {
   className?: string

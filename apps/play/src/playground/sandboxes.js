@@ -8,7 +8,7 @@ export const sandboxes = [
         name: 'Visual',
         children: [
           {
-            name: '@arwes/theme',
+            name: '@arwes-amir/theme',
             children: [
               {
                 name: 'createThemeMultiplier',
@@ -43,7 +43,7 @@ export const sandboxes = [
             ]
           },
           {
-            name: '@arwes/styles',
+            name: '@arwes-amir/styles',
             children: [
               {
                 name: 'styleSteps',
@@ -65,7 +65,7 @@ export const sandboxes = [
         name: 'Motion',
         children: [
           {
-            name: '@arwes/animator',
+            name: '@arwes-amir/animator',
             children: [
               {
                 name: 'createAnimatorSystem',
@@ -74,7 +74,7 @@ export const sandboxes = [
             ]
           },
           {
-            name: '@arwes/animated',
+            name: '@arwes-amir/animated',
             children: [
               {
                 name: 'createAnimation',
@@ -106,7 +106,7 @@ export const sandboxes = [
         name: 'Audio',
         children: [
           {
-            name: '@arwes/bleeps',
+            name: '@arwes-amir/bleeps',
             children: [
               {
                 name: 'createBleep',
@@ -148,7 +148,7 @@ export const sandboxes = [
         name: 'Text',
         children: [
           {
-            name: '@arwes/text',
+            name: '@arwes-amir/text',
             children: [
               {
                 name: 'animateTextSequence',
@@ -166,7 +166,7 @@ export const sandboxes = [
         name: 'Frames',
         children: [
           {
-            name: '@arwes/frames',
+            name: '@arwes-amir/frames',
             children: [
               {
                 name: 'createFrame',
@@ -274,7 +274,7 @@ export const sandboxes = [
         name: 'Backgrounds',
         children: [
           {
-            name: '@arwes/bgs',
+            name: '@arwes-amir/bgs',
             children: [
               {
                 name: 'createBackgroundDots',
@@ -351,7 +351,7 @@ export const sandboxes = [
         name: 'Motion',
         children: [
           {
-            name: '@arwes/react-animator',
+            name: '@arwes-amir/react-animator',
             children: [
               {
                 name: 'Animator',
@@ -418,7 +418,7 @@ export const sandboxes = [
             ]
           },
           {
-            name: '@arwes/react-animated',
+            name: '@arwes-amir/react-animated',
             children: [
               {
                 name: 'Animated',
@@ -490,7 +490,7 @@ export const sandboxes = [
         name: 'Audio',
         children: [
           {
-            name: '@arwes/react-bleeps',
+            name: '@arwes-amir/react-bleeps',
             children: [
               {
                 name: 'BleepsProvider',
@@ -504,7 +504,7 @@ export const sandboxes = [
         name: 'Text',
         children: [
           {
-            name: '@arwes/react-text',
+            name: '@arwes-amir/react-text',
             children: [
               {
                 name: 'Text',
@@ -548,7 +548,7 @@ export const sandboxes = [
         name: 'Frames',
         children: [
           {
-            name: '@arwes/react-frames',
+            name: '@arwes-amir/react-frames',
             code: require('!raw-loader?esModule=false!@repository/packages/react-frames/src/basic.sandbox.tsx'),
             children: [
               {
@@ -603,7 +603,7 @@ export const sandboxes = [
         name: 'Backgrounds',
         children: [
           {
-            name: '@arwes/react-bgs',
+            name: '@arwes-amir/react-bgs',
             code: require('!raw-loader?esModule=false!@repository/packages/react-bgs/src/basic.sandbox.tsx'),
             children: [
               {
@@ -643,7 +643,7 @@ export const sandboxes = [
         name: 'General',
         children: [
           {
-            name: '@arwes/react-core',
+            name: '@arwes-amir/react-core',
             children: [
               {
                 name: 'BleepsOnAnimator',

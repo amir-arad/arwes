@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { AnimatedX } from '@arwes/react-animated'
+import { AnimatedX } from '@arwes-amir/react-animated'
 
 const Sandbox = (): ReactElement => {
   return (

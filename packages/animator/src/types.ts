@@ -1,4 +1,4 @@
-import type { TOScheduler } from '@arwes/tools'
+import type { TOScheduler } from '@arwes-amir/tools'
 
 export type AnimatorControl = {
   /**

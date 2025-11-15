@@ -1,5 +1,5 @@
-import { filterProps } from '@arwes/tools'
-import { animateDraw } from '@arwes/animated'
+import { filterProps } from '@arwes-amir/tools'
+import { animateDraw } from '@arwes-amir/animated'
 import type { FrameSettingsPathDefinition, FrameSettingsElement, FrameSettings } from '../types.js'
 
 type CreateFrameCornersSettingsProps = {

@@ -1,13 +1,11 @@
 'use client'
 
-import type { ReactElement } from 'react'
-
-import Link from 'next/link'
-import { Codepen as IconPlay } from 'iconoir-react'
-
 import { AR } from '@/ui'
 import { ExampleButton } from './ExampleButton'
 import { ExampleOnAnimator } from './ExampleOnAnimator'
+import { Codepen as IconPlay } from 'iconoir-react'
+import Link from 'next/link'
+import type { ReactElement } from 'react'
 
 export default (): ReactElement => (
   <>
@@ -39,7 +37,7 @@ export type BleepsNames = 'hover' | 'type' | 'click' | 'error'`}
     <AR.CodeBlock
       filename="App.tsx"
       lang="tsx"
-      code={`import { type BleepsProviderSettings, BleepsProvider } from '@arwes/react'
+      code={`import { type BleepsProviderSettings, BleepsProvider } from '@arwes-amir/react'
 
 // Import the previous bleeps names type.
 import type { BleepsNames } from './types.ts'
@@ -105,7 +103,7 @@ const App = (): ReactElement => (
     <AR.CodeBlock
       filename="Button.tsx"
       lang="tsx"
-      code={`import { useBleeps } from '@arwes/react'
+      code={`import { useBleeps } from '@arwes-amir/react'
 import type { BleepsNames } from './types.ts'
 
 const Button = (): ReactElement => {
@@ -137,7 +135,7 @@ const Button = (): ReactElement => {
     <AR.CodeBlock
       filename="Content.tsx"
       lang="tsx"
-      code={`import { Animator, Text, BleepsOnAnimator } from '@arwes/react'
+      code={`import { Animator, Text, BleepsOnAnimator } from '@arwes-amir/react'
 import type { BleepsNames } from './types.ts'
 
 const Content = (): ReactElement => (

@@ -1,4 +1,4 @@
-import { easing, createAnimation } from '@arwes/animated'
+import { createAnimation, easing } from '@arwes-amir/animated'
 
 const rootElement = document.querySelector('#root')!
 

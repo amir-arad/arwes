@@ -18,7 +18,7 @@ import {
   ANIMATOR_STATES as STATES,
   ANIMATOR_ACTIONS as ACTIONS,
   createAnimatorSystem
-} from '@arwes/animator'
+} from '@arwes-amir/animator'
 import { AnimatorContext } from '../internal/AnimatorContext/index.js'
 import { AnimatorGeneralContext } from '../internal/AnimatorGeneralContext/index.js'
 

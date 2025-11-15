@@ -1,9 +1,9 @@
-import type { ReactNode, ReactElement } from 'react'
-import React, { useMemo, useEffect } from 'react'
-import type { BleepsManagerProps } from '@arwes/bleeps'
-import { createBleepsManager } from '@arwes/bleeps'
+import React, { useEffect, useMemo } from 'react'
+import type { ReactElement, ReactNode } from 'react'
 
 import { BleepsManagerContext } from '../internal/BleepsManagerContext.js'
+import type { BleepsManagerProps } from '@arwes-amir/bleeps'
+import { createBleepsManager } from '@arwes-amir/bleeps'
 
 interface BleepsProviderSettings<BleepsNames extends string = string>
   extends BleepsManagerProps<BleepsNames> {}

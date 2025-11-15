@@ -1,5 +1,5 @@
+import type { BleepsManager } from '@arwes-amir/bleeps'
 import { createContext } from 'react'
-import type { BleepsManager } from '@arwes/bleeps'
 
 const BleepsManagerContext = createContext<BleepsManager | null>(null)
 

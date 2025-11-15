@@ -4,8 +4,8 @@
 
 import React, { type ReactElement, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Animator } from '@arwes/react-animator'
-import { Text } from '@arwes/react-text'
+import { Animator } from '@arwes-amir/react-animator'
+import { Text } from '@arwes-amir/react-text'
 
 const Sandbox = (): ReactElement => {
   const [active, setActive] = useState(true)

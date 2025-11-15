@@ -5,10 +5,10 @@ import React, {
   useRef,
   useEffect
 } from 'react'
-import { cx } from '@arwes/tools'
-import { memo, mergeRefs } from '@arwes/react-tools'
-import { useAnimator } from '@arwes/react-animator'
-import { type CreateBackgroundGridLinesSettings, createBackgroundGridLines } from '@arwes/bgs'
+import { cx } from '@arwes-amir/tools'
+import { memo, mergeRefs } from '@arwes-amir/react-tools'
+import { useAnimator } from '@arwes-amir/react-animator'
+import { type CreateBackgroundGridLinesSettings, createBackgroundGridLines } from '@arwes-amir/bgs'
 
 import { positionedStyle } from '../internal/styles.js'
 

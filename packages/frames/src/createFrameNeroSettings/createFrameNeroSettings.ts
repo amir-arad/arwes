@@ -1,5 +1,5 @@
-import { filterProps } from '@arwes/tools'
 import type { FrameSettings } from '../types.js'
+import { filterProps } from '@arwes-amir/tools'
 
 type CreateFrameNeroSettingsProps = {
   styled?: boolean

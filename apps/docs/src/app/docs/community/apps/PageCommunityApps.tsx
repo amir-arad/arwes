@@ -1,12 +1,11 @@
 'use client'
 
-import type { ReactElement } from 'react'
+import { Animator, cx } from '@arwes-amir/react'
 
-import { Animator, cx } from '@arwes/react'
-import { PlusCircle } from 'iconoir-react'
-
-import communityApps from '../../../../../../../static/assets/community/apps/apps.json'
 import { CommunityApp } from './CommunityApp'
+import { PlusCircle } from 'iconoir-react'
+import type { ReactElement } from 'react'
+import communityApps from '../../../../../../../static/assets/community/apps/apps.json'
 
 const communityAppsList = communityApps.toSorted((a, b) =>
   !!a.outdated === !!b.outdated ? 0 : a.outdated && !b.outdated ? 1 : -1

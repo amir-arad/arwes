@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, type ReactElement } from 'react'
-import { Animated, Animator, AnimatorGeneralProvider, Text } from '@arwes/react'
+import { Animated, Animator, AnimatorGeneralProvider, Text } from '@arwes-amir/react'
 
 const Example = (): ReactElement => {
   const [active, setActive] = useState(true)

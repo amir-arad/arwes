@@ -1,5 +1,5 @@
-import { createEffectIlluminator } from '@arwes/effects'
-import { styleFrameClipOctagon } from '@arwes/frames'
+import { createEffectIlluminator } from '@arwes-amir/effects'
+import { styleFrameClipOctagon } from '@arwes-amir/frames'
 
 const root = document.querySelector('#root')!
 

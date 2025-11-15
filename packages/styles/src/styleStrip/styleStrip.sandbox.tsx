@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { styleStrip } from '@arwes/styles'
+import { styleStrip } from '@arwes-amir/styles'
 
 const Sandbox = (): ReactElement => {
   return (

@@ -5,9 +5,9 @@ import React, {
   useRef,
   useEffect
 } from 'react'
-import { cx } from '@arwes/tools'
-import { memo, mergeRefs } from '@arwes/react-tools'
-import { type CreateEffectIlluminatorProps, createEffectIlluminator } from '@arwes/effects'
+import { cx } from '@arwes-amir/tools'
+import { memo, mergeRefs } from '@arwes-amir/react-tools'
+import { type CreateEffectIlluminatorProps, createEffectIlluminator } from '@arwes-amir/effects'
 
 interface IlluminatorProps
   extends Omit<CreateEffectIlluminatorProps, 'container' | 'className' | 'style'>,

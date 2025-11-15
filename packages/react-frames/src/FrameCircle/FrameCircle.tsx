@@ -1,7 +1,7 @@
 import React, { type ReactElement, useMemo } from 'react'
-import { cx } from '@arwes/tools'
-import { memo } from '@arwes/react-tools'
-import { type CreateFrameCircleSettingsProps, createFrameCircleSettings } from '@arwes/frames'
+import { cx } from '@arwes-amir/tools'
+import { memo } from '@arwes-amir/react-tools'
+import { type CreateFrameCircleSettingsProps, createFrameCircleSettings } from '@arwes-amir/frames'
 
 import { type FrameBaseProps, FrameBase } from '../FrameBase/index.js'
 

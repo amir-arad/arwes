@@ -1,5 +1,5 @@
 import { type AnimationControls, type TimelineSegment, timeline } from 'motion'
-import { easing } from '@arwes/animated'
+import { easing } from '@arwes-amir/animated'
 
 type animateFrameAssemblerProps = {
   element: HTMLElement | SVGElement

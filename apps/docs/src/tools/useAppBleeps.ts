@@ -1,4 +1,4 @@
-import { type Bleep, useBleeps } from '@arwes/react'
+import { type Bleep, useBleeps } from '@arwes-amir/react'
 
 import { type BleepNames } from '@/config'
 

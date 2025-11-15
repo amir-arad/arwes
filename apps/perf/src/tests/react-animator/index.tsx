@@ -1,7 +1,7 @@
 import React, { type ReactElement, Profiler, Fragment, useState, useRef, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { AnimatorGeneralProvider, Animator, useAnimator } from '@arwes/react-animator'
+import { AnimatorGeneralProvider, Animator, useAnimator } from '@arwes-amir/react-animator'
 
 const Item = (): ReactElement => {
   const elementRef = useRef<HTMLDivElement>(null)

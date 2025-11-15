@@ -1,5 +1,5 @@
 import { type HTMLAttributes, type ReactElement } from 'react'
-import { Animated, Animator, Text, type TextProps, cx } from '@arwes/react'
+import { Animated, Animator, Text, type TextProps, cx } from '@arwes-amir/react'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, FastArrowRight, OpenNewWindow } from 'iconoir-react'
 import { animate, stagger } from 'motion'

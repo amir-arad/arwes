@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createThemeBreakpoints } from '@arwes/theme'
+import { createThemeBreakpoints } from '@arwes-amir/theme'
 
 const bps = createThemeBreakpoints([
   { key: 'small', value: '400px' },

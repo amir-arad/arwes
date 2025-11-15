@@ -1,5 +1,6 @@
-import { createFrame, createFrameUnderlineSettings } from '@arwes/frames'
-import { createAnimatorSystem } from '@arwes/animator'
+import { createFrame, createFrameUnderlineSettings } from '@arwes-amir/frames'
+
+import { createAnimatorSystem } from '@arwes-amir/animator'
 
 let active = false
 const system = createAnimatorSystem()

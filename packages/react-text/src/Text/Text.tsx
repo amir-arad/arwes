@@ -10,16 +10,16 @@ import {
   useRef,
   useEffect
 } from 'react'
-import { cx } from '@arwes/tools'
-import { memo, mergeRefs } from '@arwes/react-tools'
-import type { Easing, Animation } from '@arwes/animated'
-import { useAnimator } from '@arwes/react-animator'
+import { cx } from '@arwes-amir/tools'
+import { memo, mergeRefs } from '@arwes-amir/react-tools'
+import type { Easing, Animation } from '@arwes-amir/animated'
+import { useAnimator } from '@arwes-amir/react-animator'
 import {
   type AnimateTextManager,
   getAnimationTextDuration,
   animateTextSequence,
   animateTextDecipher
-} from '@arwes/text'
+} from '@arwes-amir/text'
 
 interface TextProps<E extends HTMLElement = HTMLSpanElement> extends HTMLProps<E> {
   as?: keyof HTMLElementTagNameMap

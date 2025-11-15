@@ -1,4 +1,4 @@
-import { type BleepsProviderSettings } from '@arwes/react'
+import { type BleepsProviderSettings } from '@arwes-amir/react'
 
 export type BleepNames =
   | 'click'

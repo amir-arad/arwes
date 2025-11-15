@@ -1,8 +1,8 @@
 'use client'
 
-import type { ReactElement } from 'react'
+import { Animated, Animator, AnimatorGeneralProvider, FrameOctagon } from '@arwes-amir/react'
 
-import { Animated, Animator, AnimatorGeneralProvider, FrameOctagon } from '@arwes/react'
+import type { ReactElement } from 'react'
 
 const Example = (): ReactElement => {
   return (

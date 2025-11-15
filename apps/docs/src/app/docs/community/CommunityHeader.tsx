@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactElement } from 'react'
-import { Animator, Text, FrameHeader, cx, memo } from '@arwes/react'
+import { Animator, Text, FrameHeader, cx, memo } from '@arwes-amir/react'
 
 const CommunityHeader = memo((): ReactElement => {
   const headingRef = useRef<HTMLDivElement>(null)

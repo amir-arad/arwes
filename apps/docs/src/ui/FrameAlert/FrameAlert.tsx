@@ -1,9 +1,9 @@
-import type { ReactElement } from 'react'
-import { useMedia } from 'react-use'
-import { Animated, Animator, FrameLines, Illuminator, memo } from '@arwes/react'
+import { Animated, Animator, FrameLines, Illuminator, memo } from '@arwes-amir/react'
 
-import { theme } from '@/config'
+import type { ReactElement } from 'react'
 import { spring } from 'motion'
+import { theme } from '@/config'
+import { useMedia } from 'react-use'
 
 const FrameAlert = memo((): ReactElement => {
   const isMD = useMedia(theme.breakpoints.up('md', { strip: true }), false)

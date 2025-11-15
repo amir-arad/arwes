@@ -1,2 +1,2 @@
 export * from 'arwes'
-export * from '@arwes/solid-animator'
+export * from '@arwes-amir/solid-animator'

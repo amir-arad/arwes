@@ -1,5 +1,6 @@
-import { filterProps } from '@arwes/tools'
-import type { FrameSettingsPathDefinition, FrameSettings } from '../types.js'
+import type { FrameSettings, FrameSettingsPathDefinition } from '../types.js'
+
+import { filterProps } from '@arwes-amir/tools'
 
 type CreateFrameOctagonSettingsProps = {
   styled?: boolean

@@ -7,7 +7,7 @@ import {
   cx,
   memo,
   styleFrameClipOctagon
-} from '@arwes/react'
+} from '@arwes-amir/react'
 import { Calendar, WarningTriangle } from 'iconoir-react'
 
 import { theme } from '@/config'

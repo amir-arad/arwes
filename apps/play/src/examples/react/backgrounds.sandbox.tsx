@@ -1,7 +1,7 @@
 import React, { type ReactElement, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Animator } from '@arwes/react-animator'
-import { GridLines, Dots, MovingLines } from '@arwes/react-bgs'
+import { Animator } from '@arwes-amir/react-animator'
+import { GridLines, Dots, MovingLines } from '@arwes-amir/react-bgs'
 
 const Sandbox = (): ReactElement => {
   const [active, setActive] = useState(true)

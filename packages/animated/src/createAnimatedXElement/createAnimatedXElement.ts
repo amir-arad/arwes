@@ -1,16 +1,15 @@
-import { animate, timeline, stagger, spring, glide } from 'motion'
-import { filterProps } from '@arwes/tools'
+import type {
+  AnimatedXAnimation,
+  AnimatedXAnimationFunctionReturn,
+  AnimatedXProp,
+  AnimatedXSettings,
+  EasingName
+} from '../types.js'
+import { animate, glide, spring, stagger, timeline } from 'motion'
 
 import { applyAnimatedCSSProps } from '../applyAnimatedCSSProps/index.js'
 import { easing } from '../easing/index.js'
-
-import type {
-  EasingName,
-  AnimatedXProp,
-  AnimatedXSettings,
-  AnimatedXAnimation,
-  AnimatedXAnimationFunctionReturn
-} from '../types.js'
+import { filterProps } from '@arwes-amir/tools'
 
 type AnimatedXElementPropsSettings<States extends string> = {
   state: States

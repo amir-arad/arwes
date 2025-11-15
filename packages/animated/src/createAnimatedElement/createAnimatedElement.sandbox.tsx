@@ -1,5 +1,5 @@
-import { createAnimatorSystem } from '@arwes/animator'
-import { createAnimatedElement } from '@arwes/animated'
+import { createAnimatedElement } from '@arwes-amir/animated'
+import { createAnimatorSystem } from '@arwes-amir/animator'
 
 const root = document.querySelector('#root')!
 root.innerHTML = `

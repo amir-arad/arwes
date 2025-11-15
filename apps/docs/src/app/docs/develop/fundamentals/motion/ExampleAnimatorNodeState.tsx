@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, type ReactElement } from 'react'
-import { Animated, Animator, cx, useAnimator } from '@arwes/react'
+import { Animated, Animator, cx, useAnimator } from '@arwes-amir/react'
 
 import { theme } from '@/config'
 

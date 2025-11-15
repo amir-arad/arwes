@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 import type { Properties as CSSProperties } from 'csstype'
-import type { PartialDeep } from '@arwes/tools'
+import type { PartialDeep } from '@arwes-amir/tools'
 
 // Theme Settings
 

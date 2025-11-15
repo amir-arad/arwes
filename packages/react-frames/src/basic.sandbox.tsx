@@ -1,8 +1,8 @@
-import React from 'react'
+import { FrameCorners } from '@arwes-amir/react-frames'
+import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { FrameCorners } from '@arwes/react-frames'
 
-const Sandbox = (): JSX.Element => {
+const Sandbox = (): ReactElement => {
   return (
     // The parent element of the frame component should be positioned.
     <div

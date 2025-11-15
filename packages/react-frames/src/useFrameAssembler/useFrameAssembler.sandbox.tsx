@@ -1,7 +1,7 @@
 import React, { type ReactElement, useRef, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Animator } from '@arwes/react-animator'
-import { FrameLines, useFrameAssembler } from '@arwes/react-frames'
+import { Animator } from '@arwes-amir/react-animator'
+import { FrameLines, useFrameAssembler } from '@arwes-amir/react-frames'
 
 const Frame = (): ReactElement => {
   const elementRef = useRef<SVGSVGElement>(null)

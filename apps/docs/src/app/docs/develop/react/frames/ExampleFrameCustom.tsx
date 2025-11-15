@@ -8,7 +8,7 @@ import {
   AnimatorGeneralProvider,
   FrameBase,
   type FrameSettings
-} from '@arwes/react'
+} from '@arwes-amir/react'
 
 const frameSettings: FrameSettings = {
   elements: [

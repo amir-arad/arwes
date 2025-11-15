@@ -9,7 +9,7 @@ import {
   cx,
   styleFrameClipOctagon,
   useFrameAssembler
-} from '@arwes/react'
+} from '@arwes-amir/react'
 
 import { theme } from '@/config'
 import styles from './Card.module.css'

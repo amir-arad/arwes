@@ -1,5 +1,5 @@
-import { filterProps } from '@arwes/tools'
-import { type Animation, createAnimation, easeAmong } from '@arwes/animated'
+import { filterProps } from '@arwes-amir/tools'
+import { type Animation, createAnimation, easeAmong } from '@arwes-amir/animated'
 
 import type { AnimateTextProps } from '../types.js'
 import { walkTextNodes } from '../internal/walkTextNodes/index.js'

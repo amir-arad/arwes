@@ -1,4 +1,4 @@
-import { createFrame, createFrameLinesSettings, animateFrameAssembler } from '@arwes/frames'
+import { animateFrameAssembler, createFrame, createFrameLinesSettings } from '@arwes-amir/frames'
 
 const root = document.querySelector('#root')!
 root.innerHTML = `

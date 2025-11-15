@@ -3,7 +3,7 @@ import {
   type AnimatedXProp,
   type AnimatedXElementPropsSettings,
   createAnimatedXElement
-} from '@arwes/animated'
+} from '@arwes-amir/animated'
 
 const useAnimatedX = <
   States extends string,

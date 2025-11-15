@@ -1,4 +1,4 @@
-import { styleFrameClipKranox } from '@arwes/frames'
+import { styleFrameClipKranox } from '@arwes-amir/frames'
 
 const root = document.querySelector('#root')!
 

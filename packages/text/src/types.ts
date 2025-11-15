@@ -1,4 +1,4 @@
-import type { Easing } from '@arwes/animated'
+import type { Easing } from '@arwes-amir/animated'
 
 export type AnimateTextManager = 'sequence' | 'decipher'
 

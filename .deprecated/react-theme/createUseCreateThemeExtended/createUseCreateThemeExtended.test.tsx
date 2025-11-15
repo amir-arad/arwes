@@ -10,7 +10,7 @@ import type {
   ThemeSettingsStyle,
   ThemeStyle,
   ThemeCreatorStructure
-} from '@arwes/theme';
+} from '@arwes-amir/theme';
 
 import type { ThemeExtend, ThemeSettingsExtend } from '../types';
 import { createUseCreateThemeExtended } from './createUseCreateThemeExtended';

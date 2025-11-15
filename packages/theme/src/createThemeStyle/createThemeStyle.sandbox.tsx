@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createThemeStyle } from '@arwes/theme'
+import { createThemeStyle } from '@arwes-amir/theme'
 
 const style = createThemeStyle([
   { fontSize: '30px', color: 'red' },

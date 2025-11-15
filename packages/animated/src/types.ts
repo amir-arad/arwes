@@ -1,7 +1,8 @@
+import type { AnimationOptionsWithOverrides, MotionKeyframesDefinition } from '@motionone/dom'
+import type { AnimatorDuration, AnimatorState } from '@arwes-amir/animator'
+import type { animate, glide, spring, stagger, timeline } from 'motion'
+
 import type { Properties as CSSProperties } from 'csstype'
-import type { MotionKeyframesDefinition, AnimationOptionsWithOverrides } from '@motionone/dom'
-import type { animate, timeline, stagger, spring, glide } from 'motion'
-import type { AnimatorState, AnimatorDuration } from '@arwes/animator'
 
 export type EasingFn = (x: number) => number
 export type EasingName =

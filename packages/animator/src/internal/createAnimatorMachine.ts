@@ -1,8 +1,8 @@
-import { isBrowser } from '@arwes/tools'
+import { ANIMATOR_ACTIONS as ACTIONS, ANIMATOR_STATES as STATES } from '../constants.js'
+import type { AnimatorAction, AnimatorNode, AnimatorState } from '../types.js'
 
-import type { AnimatorNode, AnimatorState, AnimatorAction } from '../types.js'
-import { ANIMATOR_STATES as STATES, ANIMATOR_ACTIONS as ACTIONS } from '../constants.js'
 import { createAnimatorManager } from './createAnimatorManager.js'
+import { isBrowser } from '@arwes-amir/tools'
 
 type ActionProcedure =
   | (() => AnimatorState)

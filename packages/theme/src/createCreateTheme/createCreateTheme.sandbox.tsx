@@ -11,7 +11,7 @@ import {
   type ThemeStyle,
   type ThemeCreatorStructure,
   createCreateTheme
-} from '@arwes/theme'
+} from '@arwes-amir/theme'
 
 interface ThemeSettings {
   space: ThemeSettingsUnit

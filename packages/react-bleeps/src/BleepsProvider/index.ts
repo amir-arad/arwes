@@ -1,5 +1,5 @@
-import { memo } from '@arwes/react-tools'
 import { BleepsProvider as Component } from './BleepsProvider.js'
+import { memo } from '@arwes-amir/react-tools'
 
 const BleepsProvider = memo(Component)
 

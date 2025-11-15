@@ -1,16 +1,16 @@
-import { filterProps } from '@arwes/tools'
-
 import type {
   Bleep,
+  BleepCategory,
   BleepGeneralProps,
-  BleepsManagerPropsUpdatable,
+  BleepProps,
   BleepsManager,
   BleepsManagerProps,
-  BleepCategory,
-  BleepProps
+  BleepsManagerPropsUpdatable
 } from '../types.js'
+
 import { BLEEPS_CATEGORIES } from '../constants.js'
 import { createBleep } from '../createBleep/index.js'
+import { filterProps } from '@arwes-amir/tools'
 
 const categoryNames = Object.keys(BLEEPS_CATEGORIES) as BleepCategory[]
 

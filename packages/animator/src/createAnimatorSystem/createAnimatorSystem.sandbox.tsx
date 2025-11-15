@@ -1,5 +1,5 @@
 // The "createAnimatorSystem" API is supposed to be used with abstractions APIs
-// such as packages "@arwes/react-animator" and "@arwes/react-animated".
+// such as packages "@arwes-amir/react-animator" and "@arwes-amir/react-animated".
 // This is just a demostration example on how the API could be used.
 
 import { animate } from 'motion'
@@ -9,7 +9,7 @@ import {
   type AnimatorSettingsPartial,
   type AnimatorInterface,
   createAnimatorSystem
-} from '@arwes/animator'
+} from '@arwes-amir/animator'
 
 // An example utility to scaffold an animator interface.
 // An animator interface contains the current node and the system it belongs to.

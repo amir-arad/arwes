@@ -5,7 +5,7 @@ import {
   Animated,
   cx,
   styleSeparator
-} from '@arwes/react'
+} from '@arwes-amir/react'
 
 import { theme } from '@/config'
 

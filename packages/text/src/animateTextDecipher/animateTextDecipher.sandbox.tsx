@@ -1,4 +1,4 @@
-import { animateTextDecipher } from '@arwes/text'
+import { animateTextDecipher } from '@arwes-amir/text'
 
 const root = document.querySelector('#root')!
 

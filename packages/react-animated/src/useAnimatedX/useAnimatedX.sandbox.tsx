@@ -1,6 +1,6 @@
 import React, { type ReactElement, useState, useEffect, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
-import { useAnimatedX } from '@arwes/react-animated'
+import { useAnimatedX } from '@arwes-amir/react-animated'
 
 type Positions = 'a' | 'b' | 'c'
 

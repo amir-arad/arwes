@@ -1,7 +1,7 @@
 'use client'
 
 import React, { type ReactElement } from 'react'
-import { Animator, Animated, BleepsOnAnimator, cx } from '@arwes/react'
+import { Animator, Animated, BleepsOnAnimator, cx } from '@arwes-amir/react'
 import Link from 'next/link'
 import { Page, Codepen, CollageFrame, DashboardSpeed } from 'iconoir-react'
 

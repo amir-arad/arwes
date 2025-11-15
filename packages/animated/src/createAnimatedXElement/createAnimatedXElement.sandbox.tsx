@@ -1,4 +1,4 @@
-import { type AnimatedXElementPropsSettings, createAnimatedXElement } from '@arwes/animated'
+import { type AnimatedXElementPropsSettings, createAnimatedXElement } from '@arwes-amir/animated'
 
 const root = document.querySelector('#root')!
 root.innerHTML = `

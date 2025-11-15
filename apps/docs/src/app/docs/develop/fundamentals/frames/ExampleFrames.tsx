@@ -14,7 +14,7 @@ import {
   FrameNero,
   FrameCircle,
   FrameHeader
-} from '@arwes/react'
+} from '@arwes-amir/react'
 import { theme } from '@/config'
 
 const Frames = (): ReactElement => {

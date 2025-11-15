@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react'
-import { Animated, type AnimatedProp, cx } from '@arwes/react'
+import { Animated, type AnimatedProp, cx } from '@arwes-amir/react'
 
 type TableProps = {
   className?: string

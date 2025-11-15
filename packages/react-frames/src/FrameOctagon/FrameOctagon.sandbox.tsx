@@ -2,8 +2,8 @@
 
 import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Animator } from '@arwes/react-animator'
-import { FrameOctagon } from '@arwes/react-frames'
+import { Animator } from '@arwes-amir/react-animator'
+import { FrameOctagon } from '@arwes-amir/react-frames'
 
 const Sandbox = (): ReactElement => {
   return (

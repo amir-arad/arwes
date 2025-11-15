@@ -10,11 +10,11 @@ import {
   useMemo
 } from 'react'
 
-import type { NoInfer } from '@arwes/tools'
-import { memo, mergeRefs } from '@arwes/react-tools'
-import type { AnimatorNode } from '@arwes/animator'
-import { useAnimator } from '@arwes/react-animator'
-import { type AnimatedProp, formatAnimatedCSSProps } from '@arwes/animated'
+import type { NoInfer } from '@arwes-amir/tools'
+import { memo, mergeRefs } from '@arwes-amir/react-tools'
+import type { AnimatorNode } from '@arwes-amir/animator'
+import { useAnimator } from '@arwes-amir/react-animator'
+import { type AnimatedProp, formatAnimatedCSSProps } from '@arwes-amir/animated'
 
 import { useAnimated } from '../useAnimated/index.js'
 

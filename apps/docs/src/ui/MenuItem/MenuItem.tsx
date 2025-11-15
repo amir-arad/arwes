@@ -1,5 +1,5 @@
 import React, { type HTMLAttributes, type ReactNode, type ReactElement } from 'react'
-import { type AnimatedProp, Animated, cx, memo, useBleeps } from '@arwes/react'
+import { type AnimatedProp, Animated, cx, memo, useBleeps } from '@arwes-amir/react'
 
 import { type BleepNames } from '@/config'
 import styles from './MenuItem.module.css'

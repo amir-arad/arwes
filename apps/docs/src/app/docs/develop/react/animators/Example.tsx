@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactElement } from 'react'
-import { Animated, Animator, AnimatorGeneralProvider, cx } from '@arwes/react'
+import { Animated, Animator, AnimatorGeneralProvider, cx } from '@arwes-amir/react'
 import { theme } from '@/config'
 
 type Props = {

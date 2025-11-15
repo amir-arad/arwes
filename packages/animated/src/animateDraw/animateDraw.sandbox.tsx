@@ -1,4 +1,4 @@
-import { animateDraw } from '@arwes/animated'
+import { animateDraw } from '@arwes-amir/animated'
 
 const root = document.querySelector('#root')!
 root.innerHTML = `

@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createThemeColor } from '@arwes/theme'
+import { createThemeColor } from '@arwes-amir/theme'
 
 const colors = [
   createThemeColor([

@@ -1,15 +1,15 @@
-import { createTOScheduler, filterProps } from '@arwes/tools'
-
 import type {
   AnimatorControl,
-  AnimatorSubscriber,
-  AnimatorWatcher,
   AnimatorNode,
+  AnimatorSettings,
+  AnimatorSettingsPartial,
+  AnimatorSubscriber,
   AnimatorSystem,
   AnimatorSystemRegisterSetup,
-  AnimatorSettings,
-  AnimatorSettingsPartial
+  AnimatorWatcher
 } from '../types.js'
+import { createTOScheduler, filterProps } from '@arwes-amir/tools'
+
 import { ANIMATOR_DEFAULT_SETTINGS } from '../constants.js'
 import { createAnimatorMachine } from '../internal/createAnimatorMachine.js'
 import { createAnimatorManager } from '../internal/createAnimatorManager.js'

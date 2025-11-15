@@ -1,5 +1,5 @@
-import { type Animation, createAnimation } from '@arwes/animated'
-import type { AnimatorNode } from '@arwes/animator'
+import { type Animation, createAnimation } from '@arwes-amir/animated'
+import type { AnimatorNode } from '@arwes-amir/animator'
 
 interface CreateBackgroundGridLinesSettings {
   lineWidth?: number

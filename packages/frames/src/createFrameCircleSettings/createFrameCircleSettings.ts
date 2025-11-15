@@ -1,6 +1,6 @@
-import { filterProps } from '@arwes/tools'
 import type { FrameSettings } from '../types.js'
 import { animate } from 'motion'
+import { filterProps } from '@arwes-amir/tools'
 
 type CreateFrameCircleSettingsProps = {
   styled?: boolean

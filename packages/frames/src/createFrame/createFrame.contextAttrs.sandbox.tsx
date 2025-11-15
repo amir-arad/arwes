@@ -1,4 +1,4 @@
-import { type FrameSettings, createFrame } from '@arwes/frames'
+import { type FrameSettings, createFrame } from '@arwes-amir/frames'
 
 const root = document.querySelector('#root')!
 root.innerHTML = `

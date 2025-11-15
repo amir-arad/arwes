@@ -1,12 +1,10 @@
 'use client'
 
-import type { ReactElement } from 'react'
-
-import Link from 'next/link'
-import { Codepen as IconPlay } from 'iconoir-react'
-
 import { AR } from '@/ui'
 import { ExampleBg } from './ExampleBg'
+import { Codepen as IconPlay } from 'iconoir-react'
+import Link from 'next/link'
+import type { ReactElement } from 'react'
 
 export default (): ReactElement => (
   <>
@@ -34,7 +32,7 @@ export default (): ReactElement => (
     </AR.P>
 
     <AR.CodeBlock
-      code={`import { Animator, Puffs } from '@arwes/react'
+      code={`import { Animator, Puffs } from '@arwes-amir/react'
 
 <Animator duration={{ enter: 1 }}>
   <Puffs

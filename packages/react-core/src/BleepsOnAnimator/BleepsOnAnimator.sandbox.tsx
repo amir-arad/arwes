@@ -1,10 +1,10 @@
 import React, { type ReactElement, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Animator } from '@arwes/react-animator'
-import { Animated } from '@arwes/react-animated'
-import type { BleepsManagerProps } from '@arwes/bleeps'
-import { BleepsProvider } from '@arwes/react-bleeps'
-import { BleepsOnAnimator } from '@arwes/react-core'
+import { Animator } from '@arwes-amir/react-animator'
+import { Animated } from '@arwes-amir/react-animated'
+import type { BleepsManagerProps } from '@arwes-amir/bleeps'
+import { BleepsProvider } from '@arwes-amir/react-bleeps'
+import { BleepsOnAnimator } from '@arwes-amir/react-core'
 
 type BleepsNames = 'click' | 'type'
 

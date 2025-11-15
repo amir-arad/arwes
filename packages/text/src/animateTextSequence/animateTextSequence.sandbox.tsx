@@ -1,4 +1,4 @@
-import { animateTextSequence, getAnimationTextDuration } from '@arwes/text'
+import { animateTextSequence, getAnimationTextDuration } from '@arwes-amir/text'
 
 const root = document.querySelector('#root')!
 

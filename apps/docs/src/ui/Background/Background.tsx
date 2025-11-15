@@ -1,6 +1,15 @@
 import React, { type ReactElement } from 'react'
 import { usePathname } from 'next/navigation'
-import { type AnimatedProp, memo, Animator, Animated, Dots, Puffs, cx, easing } from '@arwes/react'
+import {
+  type AnimatedProp,
+  memo,
+  Animator,
+  Animated,
+  Dots,
+  Puffs,
+  cx,
+  easing
+} from '@arwes-amir/react'
 
 interface BackgroundProps {
   className?: string

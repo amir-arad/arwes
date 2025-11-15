@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createThemeColor } from '@arwes/theme'
+import { createThemeColor } from '@arwes-amir/theme'
 
 // Calculated color alpha is always 0.5.
 const color = createThemeColor(() => [180, 100, 75, 0.5])

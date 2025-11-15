@@ -1,4 +1,4 @@
-import { type AnimatedXAnimationFunctionReturn } from '@arwes/animated'
+import { type AnimatedXAnimationFunctionReturn } from '@arwes-amir/animated'
 
 import type { FrameSettings, Frame } from '../types.js'
 import { renderFrameElements } from '../internal/renderFrameElements.js'

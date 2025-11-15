@@ -1,5 +1,6 @@
-import { filterProps } from '@arwes/tools'
-import type { FrameSettingsElement, FrameSettingsPathDefinition, FrameSettings } from '../types.js'
+import type { FrameSettings, FrameSettingsElement, FrameSettingsPathDefinition } from '../types.js'
+
+import { filterProps } from '@arwes-amir/tools'
 
 type CreateFrameNefrexSettingsProps = {
   styled?: boolean

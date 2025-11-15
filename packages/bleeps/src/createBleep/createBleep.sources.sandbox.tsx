@@ -1,4 +1,4 @@
-import { createBleep } from '@arwes/bleeps'
+import { createBleep } from '@arwes-amir/bleeps'
 
 const rootElement = document.querySelector('#root')!
 

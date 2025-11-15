@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { type FrameSettings } from '@arwes/frames'
-import { FrameBase } from '@arwes/react-frames'
+import { type FrameSettings } from '@arwes-amir/frames'
+import { FrameBase } from '@arwes-amir/react-frames'
 
 const frameSettings: FrameSettings = {
   elements: [

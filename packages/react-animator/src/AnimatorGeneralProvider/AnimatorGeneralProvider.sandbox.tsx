@@ -6,7 +6,7 @@ import {
   AnimatorGeneralProvider,
   Animator,
   useAnimator
-} from '@arwes/react-animator'
+} from '@arwes-amir/react-animator'
 
 const AnimatorUIListener = (): ReactElement => {
   const elementRef = useRef<HTMLDivElement>(null)

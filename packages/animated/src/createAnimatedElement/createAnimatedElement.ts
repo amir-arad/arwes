@@ -1,11 +1,11 @@
-import { animate, timeline, stagger, spring, glide } from 'motion'
-import { filterProps } from '@arwes/tools'
-import type { AnimatorNode } from '@arwes/animator'
+import type { AnimatedAnimationFunctionReturn, AnimatedProp, EasingName } from '../types.js'
+import { animate, glide, spring, stagger, timeline } from 'motion'
+import { draw, fade, flicker, transition } from '../transitions/index.js'
 
-import type { EasingName, AnimatedProp, AnimatedAnimationFunctionReturn } from '../types.js'
-import { easing } from '../easing/index.js'
+import type { AnimatorNode } from '@arwes-amir/animator'
 import { applyAnimatedCSSProps } from '../applyAnimatedCSSProps/index.js'
-import { transition, fade, flicker, draw } from '../transitions/index.js'
+import { easing } from '../easing/index.js'
+import { filterProps } from '@arwes-amir/tools'
 
 type AnimatedElementPropsSettings<Element = HTMLElement | SVGElement> = {
   animated: AnimatedProp

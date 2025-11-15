@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState, useEffect } from 'react';
-import { type PartialDeep } from '@arwes/tools';
-import { type ThemeCreatorStructure, type ThemeCreatorOptions, createCreateTheme } from '@arwes/theme';
+import { type PartialDeep } from '@arwes-amir/tools';
+import { type ThemeCreatorStructure, type ThemeCreatorOptions, createCreateTheme } from '@arwes-amir/theme';
 
 import type { ThemeExtensionColorScheme, ThemeSettingsExtend, ThemeExtend } from '../types';
 

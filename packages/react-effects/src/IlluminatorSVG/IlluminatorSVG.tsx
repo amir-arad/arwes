@@ -6,9 +6,12 @@ import React, {
   useEffect,
   useRef
 } from 'react'
-import { cx } from '@arwes/tools'
-import { memo, mergeRefs } from '@arwes/react-tools'
-import { type CreateEffectIlluminatorSVGProps, createEffectIlluminatorSVG } from '@arwes/effects'
+import { cx } from '@arwes-amir/tools'
+import { memo, mergeRefs } from '@arwes-amir/react-tools'
+import {
+  type CreateEffectIlluminatorSVGProps,
+  createEffectIlluminatorSVG
+} from '@arwes-amir/effects'
 
 interface IlluminatorSVGProps
   extends SVGProps<SVGGElement>,

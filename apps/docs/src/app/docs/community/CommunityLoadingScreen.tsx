@@ -1,5 +1,5 @@
 import { type ReactNode, type ReactElement } from 'react'
-import { Animated, Animator, AnimatorGeneralProvider, Text, cx, memo } from '@arwes/react'
+import { Animated, Animator, AnimatorGeneralProvider, Text, cx, memo } from '@arwes-amir/react'
 import { FastArrowRight, NavArrowRight } from 'iconoir-react'
 
 import communityApps from '../../../../../../static/assets/community/apps/apps.json'

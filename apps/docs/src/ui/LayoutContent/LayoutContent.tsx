@@ -8,7 +8,7 @@ import {
   cx,
   Animator,
   BleepsOnAnimator
-} from '@arwes/react'
+} from '@arwes-amir/react'
 import { usePathname } from 'next/navigation'
 
 import { type BleepNames, theme } from '@/config'
