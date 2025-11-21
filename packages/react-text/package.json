@@ -1,6 +1,6 @@
 {
   "name": "@arwes-amir/react-text",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "publishConfig": {
     "access": "public"
   },
@@ -46,7 +46,7 @@
     "@arwes-amir/animator": "^1.0.0",
     "@arwes-amir/react-animator": "^1.0.0",
     "@arwes-amir/react-tools": "^1.0.0",
-    "@arwes-amir/text": "^1.0.0",
+    "@arwes-amir/text": "^1.0.2",
     "@arwes-amir/tools": "^1.0.0",
     "tslib": "2"
   },

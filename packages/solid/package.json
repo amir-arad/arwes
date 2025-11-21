@@ -1,6 +1,6 @@
 {
   "name": "@arwes-amir/solid",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publishConfig": {
     "access": "public"
   },
@@ -43,7 +43,7 @@
     "solid-js": "1"
   },
   "dependencies": {
-    "@arwes-amir/arwes": "^1.0.0",
+    "@arwes-amir/arwes": "^1.0.2",
     "@arwes-amir/solid-animator": "^1.0.0",
     "tslib": "2"
   },

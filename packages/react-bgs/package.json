@@ -1,6 +1,6 @@
 {
   "name": "@arwes-amir/react-bgs",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "publishConfig": {
     "access": "public"
   },
@@ -43,9 +43,9 @@
     "react": "19"
   },
   "dependencies": {
-    "@arwes-amir/animated": "^1.0.0",
+    "@arwes-amir/animated": "^1.0.2",
     "@arwes-amir/animator": "^1.0.0",
-    "@arwes-amir/bgs": "^1.0.0",
+    "@arwes-amir/bgs": "^1.0.2",
     "@arwes-amir/react-animator": "^1.0.0",
     "@arwes-amir/react-tools": "^1.0.0",
     "@arwes-amir/tools": "^1.0.0",

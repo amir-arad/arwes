@@ -1,6 +1,6 @@
 {
   "name": "@arwes-amir/react-core",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "publishConfig": {
     "access": "public"
   },
@@ -44,7 +44,7 @@
     "react": "19"
   },
   "dependencies": {
-    "@arwes-amir/animated": "^1.0.0",
+    "@arwes-amir/animated": "^1.0.2",
     "@arwes-amir/animator": "^1.0.0",
     "@arwes-amir/bleeps": "^1.0.0",
     "@arwes-amir/react-animator": "^1.0.0",

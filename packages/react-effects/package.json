@@ -1,6 +1,6 @@
 {
   "name": "@arwes-amir/react-effects",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "publishConfig": {
     "access": "public"
   },
@@ -43,7 +43,7 @@
     "react": "19"
   },
   "dependencies": {
-    "@arwes-amir/effects": "^1.0.0",
+    "@arwes-amir/effects": "^1.0.2",
     "@arwes-amir/react-tools": "^1.0.0",
     "@arwes-amir/tools": "^1.0.0",
     "tslib": "2"
